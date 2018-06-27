@@ -88,7 +88,7 @@ void better_body_optimizer(
 
     best_diff = fwd_kinematics_observe(m,d,xyz_target_end_to_root,body_id_end,body_id_root);
     dx = 1.93 * 0.01 * best_diff + 0.0005;
-    for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
+    for(i = 15 ; i < CASSIE_QPOS_SIZE; i++)
     {
         pos_val_before_dx = d->qpos[i];
 
@@ -134,6 +134,7 @@ int allow_pelvis_to_be_grabbed_and_moved(mjData* d, mjvPerturb* pert, double* xy
 {
     if(pert->active) 
     {
+        // printf("selected: %d\n", pert->select);
         if(pert->select == 1)
         {
             d->qpos[0] = pert->refpos[0];

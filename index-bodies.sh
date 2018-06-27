@@ -1,0 +1,1 @@
+cat cassie.xml | grep "body name=" | sed "s;\s*<body name='\([^\']*\)\(.*\);\1;" | grep -v \! | cat -n
