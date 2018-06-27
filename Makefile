@@ -53,10 +53,18 @@ $(MJ) : | mjkey.txt
 	-rm -rf temp
 
 traj : simulate.o main-traj.o main.h | mjkey.txt $(CASSIE) $(MJ) 
-	g++ $(FLAGS) simulate.o main-traj.o -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o traj
+	g++ $(FLAGS) \
+	simulate.o main-traj.o \
+	-lmujoco150 -lGL -lglew \
+	mjpro150/bin/libglfw.so.3 \
+	-o traj
 
 jointtest : simulate.o main-joint.o main.h | mjkey.txt $(CASSIE) $(MJ) 
-	g++ $(FLAGS) simulate.o main-joint.o -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o jointtest
+	g++ $(FLAGS) \
+	simulate.o main-joint.o \
+	-lmujoco150 -lGL -lglew \
+	mjpro150/bin/libglfw.so.3 \
+	-o jointtest
 
 simulate.o : main.h simulate.c | mjkey.txt $(MJ)
 	gcc -c $(FLAGS) simulate.c

@@ -1277,6 +1277,8 @@ int main(int argc, const char** argv)
     // load model if filename given as argument
     if( argc==2 )
         loadmodel(window, argv[1]);
+    else
+        loadmodel(window, "cassie.xml");
 
     // main loop
     while( !glfwWindowShouldClose(window) )
