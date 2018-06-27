@@ -1,8 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx
 
-MAIN = traj
-OBJS = simulate.o trajmain.o
+MAIN = traj jointtest
 
 MJ = mjpro150/bin/libglewegl.so \
 mjpro150/bin/libglewosmesa.so \
@@ -35,6 +34,10 @@ cassie.xml
 
 all : $(MAIN) | mjkey.txt	
 
+mjkey.txt : 
+	$(error MuJoCo will need a product key to run the tool. \
+		Please provide a product key for MuJoCo and name it mjkey.txt)
+
 $(CASSIE) : | mjkey.txt
 	-rm -rf cassie-mujoco-sim
 	git clone "git@github.com:osudrl/cassie-mujoco-sim.git"
@@ -49,21 +52,30 @@ $(MJ) : | mjkey.txt
 	unzip temp/mjpro150_linux.zip
 	-rm -rf temp
 
-$(MAIN) :  $(OBJS) trajmain.h | mjkey.txt $(CASSIE) $(MJ) 
-	g++ $(FLAGS) $(OBJS) -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o $(MAIN)
+traj : simulate.o main-traj.o main.h | mjkey.txt $(CASSIE) $(MJ) 
+	g++ $(FLAGS) simulate.o main-traj.o -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o traj
 
-mjkey.txt : 
-	$(error MuJoCo will need a product key to run the tool. \
-		Please provide a product key for MuJoCo and name it mjkey.txt)
+jointtest : simulate.o main-joint.o main.h | mjkey.txt $(CASSIE) $(MJ) 
+	g++ $(FLAGS) simulate.o main-joint.o -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o jointtest
 
-simulate.o : trajmain.h simulate.c | mjkey.txt $(MJ)
+simulate.o : main.h simulate.c | mjkey.txt $(MJ)
 	gcc -c $(FLAGS) simulate.c
 
-trajmain.o : trajmain.h trajmain.c | mjkey.txt $(MJ)
-	gcc -c $(FLAGS) trajmain.c
+main-traj.o : main.h main-traj.c | mjkey.txt $(MJ)
+	gcc -c $(FLAGS) main-traj.c
+
+main-joint.o : main.h main-joint.c | mjkey.txt $(MJ)
+	gcc -c $(FLAGS) main-joint.c	
 
 clean :
 	-rm -f *.o $(MAIN)
+
+lpurge :
+	-rm -f *.o $(MAIN)
+	-rm -rf cassie-stl-meshes
+	-rm -rf cassie-mujoco-sim
+	-rm -f cassie.xml
+	-rm -rf mjpro150
 
 purge :
 	-rm -f *.o $(MAIN)

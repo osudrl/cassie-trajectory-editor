@@ -1,4 +1,4 @@
-#include "trajmain.h"
+#include "main.h"
 
 double body_get_apos(mjData* data, int body_id, int cord_id)
 {

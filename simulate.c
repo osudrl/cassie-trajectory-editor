@@ -11,7 +11,7 @@
 #include "string.h"
 #include "stdbool.h"
 
-#include "trajmain.h"
+#include "main.h"
  
 
 //-------------------------------- global variables -------------------------------------
