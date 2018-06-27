@@ -53,7 +53,7 @@ $(MAIN) :  $(OBJS) trajmain.h | mjkey.txt $(CASSIE) $(MJ)
 	g++ $(FLAGS) $(OBJS) -lmujoco150 -lGL -lglew mjpro150/bin/libglfw.so.3 -o $(MAIN)
 
 mjkey.txt : 
-	$(error MuJoCo will need a product key to actually run the tool. \
+	$(error MuJoCo will need a product key to run the tool. \
 		Please provide a product key for MuJoCo and name it mjkey.txt)
 
 simulate.o : trajmain.h simulate.c | mjkey.txt $(MJ)
