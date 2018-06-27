@@ -70,10 +70,10 @@ simulate.o : main.h simulate.c | mjkey.txt $(MJ)
 	gcc -c $(FLAGS) simulate.c
 
 main-traj.o : main.h main-traj.c | mjkey.txt $(MJ)
-	gcc -c $(FLAGS) main-traj.c
+	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement main-traj.c
 
 main-joint.o : main.h main-joint.c | mjkey.txt $(MJ)
-	gcc -c $(FLAGS) main-joint.c	
+	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement main-joint.c	
 
 clean :
 	-rm -f *.o $(MAIN)
