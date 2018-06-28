@@ -22,38 +22,29 @@ void vector3_subtraction(double* xyz_result, double* xyz_curr_end_to_root, doubl
     xyz_result[2] = xyz_target_end_to_root[2] - xyz_curr_end_to_root[2];
 }
 
-double norm_of_vector3_subtraction(double* xyz_curr_end_to_root, double* xyz_target_end_to_root)
+double norm_of_vector3_subtraction(double* xyz1, double* xyz2)
 {
     double xyz_result[3];
-    vector3_subtraction(xyz_result, xyz_curr_end_to_root, xyz_target_end_to_root);
+    vector3_subtraction(xyz_result, xyz1, xyz2);
     return mju_norm(xyz_result, 3);
 }
 
-double fwd_kinematics_observe(
+double fwd_kinematics_score(
     traj_required_info_t* traj_info,
-    double* xyz_target_end_to_root, 
-    int body_id_end, 
-    int body_id_root)
+    double* xyz_xpos_target, 
+    int body_id_end)
 {
-    double xyz_observed_dist[3];
-    double my[3];
+    double* xyz_xpos_curr_end;
 
-    mj_kinematics(traj_info->m,traj_info->d);
-    body_pos_difference(traj_info, xyz_observed_dist, body_id_end, body_id_root);
-    // observed_diff = norm_of_vector3_subtraction(xyz_observed_dist, xyz_target_end_to_root);
-    my[0] = body_get_pos(traj_info, body_id_end, 0);
-    my[1] = body_get_pos(traj_info, body_id_end, 1);
-    my[2] = body_get_pos(traj_info, body_id_end, 2);
-
-    // observed_diff = norm_of_vector3_subtraction(xyz_observed_dist, xyz_target_end_to_root);
-    return norm_of_vector3_subtraction(my, xyz_target_end_to_root);
+    mj_kinematics(traj_info->m,traj_info->d);   
+    xyz_xpos_curr_end = traj_info->d->xpos + body_id_end*3;
+    return norm_of_vector3_subtraction(xyz_xpos_curr_end, xyz_xpos_target);
 }
 
 void fwd_kinematics_compare_result(
     traj_required_info_t* traj_info,
-    double* xyz_target_end_to_root, 
-    int body_id_end, 
-    int body_id_root,
+    double* xyz_xpos_target, 
+    int body_id_end,
     double* best_diff,
     int* best_qpos_index,
     int* positive_axis,
@@ -62,7 +53,7 @@ void fwd_kinematics_compare_result(
 {
     double observed_diff;
 
-    observed_diff = fwd_kinematics_observe(traj_info,xyz_target_end_to_root,body_id_end,body_id_root);
+    observed_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
 
     if(observed_diff < *best_diff) 
     {
@@ -74,9 +65,8 @@ void fwd_kinematics_compare_result(
 
 void better_body_optimizer(
     traj_required_info_t* traj_info,
-    double* xyz_target_end_to_root, 
-    int body_id_end, 
-    int body_id_root)
+    double* xyz_xpos_target, 
+    int body_id_end)
 {
     int i;
     double best_diff;
@@ -85,7 +75,7 @@ void better_body_optimizer(
     int positive_axis = 0;
     double dx;
 
-    best_diff = fwd_kinematics_observe(traj_info,xyz_target_end_to_root,body_id_end,body_id_root);
+    best_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
     dx = 1.93 * 0.01 * best_diff + 0.0005;
     for(i = 15 ; i < CASSIE_QPOS_SIZE; i++)
     {
@@ -95,9 +85,8 @@ void better_body_optimizer(
 
         fwd_kinematics_compare_result(
             traj_info, 
-            xyz_target_end_to_root, 
-            body_id_end, 
-            body_id_root,
+            xyz_xpos_target, 
+            body_id_end,
             &best_diff,
             &best_qpos_index,
             &positive_axis,
@@ -108,9 +97,8 @@ void better_body_optimizer(
 
         fwd_kinematics_compare_result(
             traj_info,
-            xyz_target_end_to_root, 
-            body_id_end, 
-            body_id_root,
+            xyz_xpos_target, 
+            body_id_end,
             &best_diff,
             &best_qpos_index,
             &positive_axis,
@@ -131,7 +119,7 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double
 {
     if(traj_info->pert->active) 
     {
-        printf("selected: %d\n", traj_info->pert->select);
+        // printf("selected: %d\n", traj_info->pert->select);
         if(traj_info->pert->select == 1)
         {
             traj_info->d->qpos[0] = traj_info->pert->refpos[0];
@@ -152,14 +140,13 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double
 
 void traj_foreach_frame(traj_required_info_t* traj_info)
 {
-    double xyz_target_end_to_root[3] = {0,0,0};
+    double xyz_xpos_target[3];
     int mod = 0;
-    mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_target_end_to_root);
+    mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
 
     for(int z = 0; mod && z < 100; z++)
         better_body_optimizer(traj_info,
-            xyz_target_end_to_root,
-            traj_info->pert->select, 
+            xyz_xpos_target,
             traj_info->pert->select);
 
     mj_forward(traj_info->m, traj_info->d);

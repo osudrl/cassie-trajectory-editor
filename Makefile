@@ -109,7 +109,7 @@ purge :
 .PHONY: package
 
 package:
-	mkdir -p bin
+	@mkdir -p bin
 	@dpkg -l | grep libglfw3-dev > /dev/null
 	@echo $(LD_LIBRARY_PATH) | grep "mjpro150/bin" > /dev/null
 	
