@@ -2,8 +2,8 @@
 
 Required Packages:
 
-libglfw3-dev
-wget
+* libglfw3-dev
+* wget
 
 
 
