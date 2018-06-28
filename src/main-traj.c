@@ -113,11 +113,30 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
     return 0;
 }
 
+double xyz_plane_normal_vect[3] = {0,0,0};
+
 void traj_perform_initial_pert_caluclations(traj_info_t* traj_info)
 {
-    
-}
+    double* xyz_xpos_tarsus;
+    double* xyz_xpos_shin;
+    double* xyz_xpos_mouse;
+    double xyz_tarus_to_shin[3];
+    double xyz_mouse_to_tarsus[3];
 
+    if (traj_info->pert->select == 9 ||
+        traj_info->pert->select == 21)  // is tarsus
+    {
+        xyz_xpos_tarsus = traj_info->d->xpos + traj_info->pert->select*3;
+        xyz_xpos_shin = traj_info->d->xpos + (traj_info->pert->select-1)*3;
+        xyz_xpos_mouse = traj_info->pert->refpos;
+        vector3_subtraction(xyz_tarus_to_shin, xyz_xpos_tarsus, xyz_xpos_shin);
+        vector3_subtraction(xyz_mouse_to_tarsus, xyz_xpos_mouse, xyz_xpos_tarsus);
+        mju_cross(xyz_plane_normal_vect, xyz_tarus_to_shin, xyz_mouse_to_tarsus);
+        mju_normalize(xyz_mouse_to_tarsus,3);
+        mju_normalize(xyz_tarus_to_shin,3);
+        printf("dot: %.5f\n",mju_acos(mju_dot(xyz_tarus_to_shin, xyz_mouse_to_tarsus,3))*(180/3.1415));
+    }
+}
 
 int traj_foreach_frame_lastmod = 0;
 
@@ -131,6 +150,8 @@ void traj_foreach_frame(traj_info_t* traj_info)
         traj_foreach_frame_lastmod = mod;
         traj_perform_initial_pert_caluclations(traj_info);
     }
+    else if(!mod)
+        traj_foreach_frame_lastmod = mod;
 
     for(int z = 0; mod && z < 100; z++)
         better_body_optimizer(traj_info,

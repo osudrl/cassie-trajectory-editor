@@ -80,13 +80,13 @@ jointtest : bin/simulate.o bin/main-joint.o src/main.h | mjkey.txt package $(CAS
 	mjpro150/bin/libglfw.so.3 \
 	-o jointtest
 
-bin/simulate.o : src/main.h src/simulate.c | mjkey.txt package $(MJ)
+bin/simulate.o : src/main.h src/simulate.c | mjkey.txt package $(MJ) $(CASSIE)
 	gcc -c $(FLAGS) src/simulate.c -o bin/simulate.o
 
-bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt package $(MJ)
+bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt package $(MJ) $(CASSIE)
 	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-traj.c -o bin/main-traj.o
 
-bin/main-joint.o : src/main.h src/main-joint.c | mjkey.txt package $(MJ)
+bin/main-joint.o : src/main.h src/main-joint.c | mjkey.txt package $(MJ) $(CASSIE)
 	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-joint.c	-o bin/main-joint.o
 
 clean :
