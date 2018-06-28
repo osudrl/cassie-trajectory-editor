@@ -41,28 +41,6 @@ double fwd_kinematics_score(
     return norm_of_vector3_subtraction(xyz_xpos_curr_end, xyz_xpos_target);
 }
 
-void fwd_kinematics_compare_result(
-    traj_required_info_t* traj_info,
-    double* xyz_xpos_target, 
-    int body_id_end,
-    double* best_diff,
-    int* best_qpos_index,
-    int* positive_axis,
-    int current_index,
-    int is_positive)
-{
-    double observed_diff;
-
-    observed_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-
-    if(observed_diff < *best_diff) 
-    {
-        *best_diff = observed_diff;
-        *best_qpos_index = current_index;
-        *positive_axis = is_positive;
-    }
-}
-
 void better_body_optimizer(
     traj_required_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -74,6 +52,7 @@ void better_body_optimizer(
     int best_qpos_index = -1;
     int positive_axis = 0;
     double dx;
+    double observed_diff;
 
     best_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
     dx = 1.93 * 0.01 * best_diff + 0.0005;
@@ -83,27 +62,23 @@ void better_body_optimizer(
 
         traj_info->d->qpos[i] = pos_val_before_dx + dx;
 
-        fwd_kinematics_compare_result(
-            traj_info, 
-            xyz_xpos_target, 
-            body_id_end,
-            &best_diff,
-            &best_qpos_index,
-            &positive_axis,
-            i,
-            1);
+        observed_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
+        if(observed_diff < best_diff) 
+        {
+            best_diff = observed_diff;
+            best_qpos_index = i;
+            positive_axis = 1;
+        }
 
         traj_info->d->qpos[i] = pos_val_before_dx - dx;
 
-        fwd_kinematics_compare_result(
-            traj_info,
-            xyz_xpos_target, 
-            body_id_end,
-            &best_diff,
-            &best_qpos_index,
-            &positive_axis,
-            i,
-            0);
+        observed_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
+        if(observed_diff < best_diff) 
+        {
+            best_diff = observed_diff;
+            best_qpos_index = i;
+            positive_axis = 0;
+        }
 
         traj_info->d->qpos[i] = pos_val_before_dx;
     }
