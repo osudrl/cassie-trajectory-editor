@@ -3,7 +3,8 @@ FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx
 
 MAIN = traj jointtest
 
-MJ = mjpro150/bin/libglewegl.so \
+MJ = \
+mjpro150/bin/libglewegl.so \
 mjpro150/bin/libglewosmesa.so \
 mjpro150/bin/libglew.so \
 mjpro150/bin/libglfw.so.3 \
@@ -17,7 +18,8 @@ mjpro150/include/mjvisualize.h \
 mjpro150/include/mjxmacro.h \
 mjpro150/include/mujoco.h \
 
-CASSIE = cassie-stl-meshes/achilles-rod.stl \
+CASSIE = \
+cassie-stl-meshes/achilles-rod.stl \
 cassie-stl-meshes/foot-crank.stl \
 cassie-stl-meshes/foot.stl \
 cassie-stl-meshes/heel-spring.stl \
@@ -39,11 +41,22 @@ mjkey.txt :
 		Please provide a product key for MuJoCo and name it mjkey.txt)
 
 $(CASSIE) : | mjkey.txt
-	-rm -rf cassie-mujoco-sim
-	git clone "git@github.com:osudrl/cassie-mujoco-sim.git"
-	cp cassie-mujoco-sim/model/cassie.xml .
-	cp -rf cassie-mujoco-sim/model/cassie-stl-meshes .
-	rm -rf cassie-mujoco-sim
+	-rm -rf cassie-stl-meshes
+	mkdir -p cassie-stl-meshes
+	wget "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie.xml"
+	wget -O cassie-stl-meshes/achilles-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/achilles-rod.stl"
+	wget -O cassie-stl-meshes/foot-crank.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot-crank.stl"
+	wget -O cassie-stl-meshes/foot.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot.stl"
+	wget -O cassie-stl-meshes/heel-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/heel-spring.stl"
+	wget -O cassie-stl-meshes/hip-pitch.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-pitch.stl"
+	wget -O cassie-stl-meshes/hip-roll.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-roll.stl"
+	wget -O cassie-stl-meshes/hip-yaw.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-yaw.stl"
+	wget -O cassie-stl-meshes/knee-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee-spring.stl"
+	wget -O cassie-stl-meshes/knee.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee.stl"
+	wget -O cassie-stl-meshes/pelvis.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/pelvis.stl"
+	wget -O cassie-stl-meshes/plantar-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/plantar-rod.stl"
+	wget -O cassie-stl-meshes/shin.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/shin.stl"
+	wget -O cassie-stl-meshes/tarsus.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/tarsus.stl"
 
 $(MJ) : | mjkey.txt
 	mkdir -p temp
