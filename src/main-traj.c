@@ -1,11 +1,11 @@
 #include "main.h"
 
-double body_get_pos(traj_required_info_t* traj_info, int body_id, int cord_id)
+double body_get_pos(traj_info_t* traj_info, int body_id, int cord_id)
 {
     return traj_info->d->xpos[body_id*3 + cord_id];
 }
 
-void body_pos_difference(traj_required_info_t* traj_info, double* xyz_arr, int body_id_end, int body_id_root)
+void body_pos_difference(traj_info_t* traj_info, double* xyz_arr, int body_id_end, int body_id_root)
 {
     xyz_arr[0] = body_get_pos(traj_info, body_id_end, 0)
         - body_get_pos(traj_info, body_id_root, 0);
@@ -30,7 +30,7 @@ double norm_of_vector3_subtraction(double* xyz1, double* xyz2)
 }
 
 double fwd_kinematics_score(
-    traj_required_info_t* traj_info,
+    traj_info_t* traj_info,
     double* xyz_xpos_target, 
     int body_id_end)
 {
@@ -42,7 +42,7 @@ double fwd_kinematics_score(
 }
 
 void better_body_optimizer(
-    traj_required_info_t* traj_info,
+    traj_info_t* traj_info,
     double* xyz_xpos_target, 
     int body_id_end)
 {
@@ -56,7 +56,7 @@ void better_body_optimizer(
 
     best_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
     dx = 1.93 * 0.01 * best_diff + 0.0005;
-    for(i = 15 ; i < CASSIE_QPOS_SIZE; i++)
+    for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
     {
         pos_val_before_dx = traj_info->d->qpos[i];
 
@@ -90,7 +90,7 @@ void better_body_optimizer(
     
 }
 
-int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double* xyz_ref)
+int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
     if(traj_info->pert->active) 
     {
@@ -113,11 +113,24 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double
     return 0;
 }
 
-void traj_foreach_frame(traj_required_info_t* traj_info)
+void traj_perform_initial_pert_caluclations(traj_info_t* traj_info)
+{
+    
+}
+
+
+int traj_foreach_frame_lastmod = 0;
+
+void traj_foreach_frame(traj_info_t* traj_info)
 {
     double xyz_xpos_target[3];
-    int mod = 0;
+    int mod;
     mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
+    if(mod && mod != traj_foreach_frame_lastmod)
+    {
+        traj_foreach_frame_lastmod = mod;
+        traj_perform_initial_pert_caluclations(traj_info);
+    }
 
     for(int z = 0; mod && z < 100; z++)
         better_body_optimizer(traj_info,

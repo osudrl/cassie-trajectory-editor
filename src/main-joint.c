@@ -7,7 +7,7 @@ int oldksimcounter = -1;
 int kflip = 0;
 double oldpos;
 
-void traj_foreach_frame(traj_required_info_t* traj_info)
+void traj_foreach_frame(traj_info_t* traj_info)
 {
     float thing;
     double temp;

@@ -20,7 +20,7 @@
 mjModel* m = 0;
 mjData* d = 0;
 char lastfile[1000] = "";
-traj_required_info_t traj_info;
+traj_info_t traj_info;
 
 // user state
 bool paused = false;
