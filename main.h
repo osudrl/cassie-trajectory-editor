@@ -4,4 +4,13 @@
 
 #define CASSIE_QPOS_SIZE 34
 
-void traj_foreach_frame(mjModel* m, mjData* d, mjvPerturb* pert);
+struct _traj_required_info_
+{
+	mjModel* m;
+	mjData* d;
+	mjvPerturb* pert;
+};
+typedef struct _traj_required_info_ traj_required_info_t;
+
+
+void traj_foreach_frame(traj_required_info_t* traj_info);

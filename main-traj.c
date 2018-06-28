@@ -1,15 +1,18 @@
 #include "main.h"
 
-double body_get_pos(mjData* data, int body_id, int cord_id)
+double body_get_pos(traj_required_info_t* traj_info, int body_id, int cord_id)
 {
-    return data->xpos[body_id*3 + cord_id];
+    return traj_info->d->xpos[body_id*3 + cord_id];
 }
 
-void body_pos_difference(mjData* data, double* xyz_arr, int body_id_end, int body_id_root)
+void body_pos_difference(traj_required_info_t* traj_info, double* xyz_arr, int body_id_end, int body_id_root)
 {
-    xyz_arr[0] = body_get_pos(data, body_id_end, 0) - body_get_pos(data, body_id_root, 0);
-    xyz_arr[1] = body_get_pos(data, body_id_end, 1) - body_get_pos(data, body_id_root, 1);
-    xyz_arr[2] = body_get_pos(data, body_id_end, 2) - body_get_pos(data, body_id_root, 2);
+    xyz_arr[0] = body_get_pos(traj_info, body_id_end, 0)
+        - body_get_pos(traj_info, body_id_root, 0);
+    xyz_arr[1] = body_get_pos(traj_info, body_id_end, 1)
+        - body_get_pos(traj_info, body_id_root, 1);
+    xyz_arr[2] = body_get_pos(traj_info, body_id_end, 2)
+        - body_get_pos(traj_info, body_id_root, 2);
 }
 
 void vector3_subtraction(double* xyz_result, double* xyz_curr_end_to_root, double* xyz_target_end_to_root)
@@ -27,30 +30,27 @@ double norm_of_vector3_subtraction(double* xyz_curr_end_to_root, double* xyz_tar
 }
 
 double fwd_kinematics_observe(
-    mjModel* m, 
-    mjData* d, 
+    traj_required_info_t* traj_info,
     double* xyz_target_end_to_root, 
     int body_id_end, 
     int body_id_root)
 {
     double xyz_observed_dist[3];
+    double my[3];
 
-    mj_kinematics(m,d);
-    body_pos_difference(d, xyz_observed_dist, body_id_end, body_id_root);
+    mj_kinematics(traj_info->m,traj_info->d);
+    body_pos_difference(traj_info, xyz_observed_dist, body_id_end, body_id_root);
     // observed_diff = norm_of_vector3_subtraction(xyz_observed_dist, xyz_target_end_to_root);
-    double my[3] = {
-        body_get_pos(d, body_id_end, 0),
-        body_get_pos(d, body_id_end, 1),
-        body_get_pos(d, body_id_end, 2),
-    };
+    my[0] = body_get_pos(traj_info, body_id_end, 0);
+    my[1] = body_get_pos(traj_info, body_id_end, 1);
+    my[2] = body_get_pos(traj_info, body_id_end, 2);
 
     // observed_diff = norm_of_vector3_subtraction(xyz_observed_dist, xyz_target_end_to_root);
     return norm_of_vector3_subtraction(my, xyz_target_end_to_root);
 }
 
 void fwd_kinematics_compare_result(
-    mjModel* m, 
-    mjData* d, 
+    traj_required_info_t* traj_info,
     double* xyz_target_end_to_root, 
     int body_id_end, 
     int body_id_root,
@@ -62,7 +62,7 @@ void fwd_kinematics_compare_result(
 {
     double observed_diff;
 
-    observed_diff = fwd_kinematics_observe(m,d,xyz_target_end_to_root,body_id_end,body_id_root);
+    observed_diff = fwd_kinematics_observe(traj_info,xyz_target_end_to_root,body_id_end,body_id_root);
 
     if(observed_diff < *best_diff) 
     {
@@ -73,8 +73,7 @@ void fwd_kinematics_compare_result(
 }
 
 void better_body_optimizer(
-    mjModel* m, 
-    mjData* d, 
+    traj_required_info_t* traj_info,
     double* xyz_target_end_to_root, 
     int body_id_end, 
     int body_id_root)
@@ -86,17 +85,16 @@ void better_body_optimizer(
     int positive_axis = 0;
     double dx;
 
-    best_diff = fwd_kinematics_observe(m,d,xyz_target_end_to_root,body_id_end,body_id_root);
+    best_diff = fwd_kinematics_observe(traj_info,xyz_target_end_to_root,body_id_end,body_id_root);
     dx = 1.93 * 0.01 * best_diff + 0.0005;
     for(i = 15 ; i < CASSIE_QPOS_SIZE; i++)
     {
-        pos_val_before_dx = d->qpos[i];
+        pos_val_before_dx = traj_info->d->qpos[i];
 
-        d->qpos[i] = pos_val_before_dx + dx;
+        traj_info->d->qpos[i] = pos_val_before_dx + dx;
 
         fwd_kinematics_compare_result(
-            m, 
-            d, 
+            traj_info, 
             xyz_target_end_to_root, 
             body_id_end, 
             body_id_root,
@@ -106,11 +104,10 @@ void better_body_optimizer(
             i,
             1);
 
-        d->qpos[i] = pos_val_before_dx - dx;
+        traj_info->d->qpos[i] = pos_val_before_dx - dx;
 
         fwd_kinematics_compare_result(
-            m, 
-            d, 
+            traj_info,
             xyz_target_end_to_root, 
             body_id_end, 
             body_id_root,
@@ -120,48 +117,51 @@ void better_body_optimizer(
             i,
             0);
 
-        d->qpos[i] = pos_val_before_dx;
+        traj_info->d->qpos[i] = pos_val_before_dx;
     }
 
     if(!positive_axis)
         dx = -dx;
     if(best_qpos_index > 2)
-        d->qpos[best_qpos_index] += dx;
+        traj_info->d->qpos[best_qpos_index] += dx;
     
 }
 
-int allow_pelvis_to_be_grabbed_and_moved(mjData* d, mjvPerturb* pert, double* xyz_ref)
+int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double* xyz_ref)
 {
-    if(pert->active) 
+    if(traj_info->pert->active) 
     {
         // printf("selected: %d\n", pert->select);
-        if(pert->select == 1)
+        if(traj_info->pert->select == 1)
         {
-            d->qpos[0] = pert->refpos[0];
-            d->qpos[1] = pert->refpos[1];
-            d->qpos[2] = pert->refpos[2];
+            traj_info->d->qpos[0] = traj_info->pert->refpos[0];
+            traj_info->d->qpos[1] = traj_info->pert->refpos[1];
+            traj_info->d->qpos[2] = traj_info->pert->refpos[2];
             return 0;
         }
         else
         {
-            xyz_ref[0] = pert->refpos[0];
-            xyz_ref[1] = pert->refpos[1];
-            xyz_ref[2] = pert->refpos[2];
+            xyz_ref[0] = traj_info->pert->refpos[0];
+            xyz_ref[1] = traj_info->pert->refpos[1];
+            xyz_ref[2] = traj_info->pert->refpos[2];
             return 1;
         }
     }
     return 0;
 }
 
-void traj_foreach_frame(mjModel* m, mjData* d, mjvPerturb* pert)
+void traj_foreach_frame(traj_required_info_t* traj_info)
 {
     double xyz_target_end_to_root[3] = {0,0,0};
     int mod = 0;
-    mod = allow_pelvis_to_be_grabbed_and_moved(d,pert,xyz_target_end_to_root);
+    mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_target_end_to_root);
 
     for(int z = 0; mod && z < 100; z++)
-        better_body_optimizer(m,d,xyz_target_end_to_root,pert->select, pert->select);
+        better_body_optimizer(traj_info,
+            xyz_target_end_to_root,
+            traj_info->pert->select, 
+            traj_info->pert->select);
 
-    mj_forward(m, d);
+    mj_forward(traj_info->m, traj_info->d);
 }
 

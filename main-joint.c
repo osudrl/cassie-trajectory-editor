@@ -7,11 +7,14 @@ int oldksimcounter = -1;
 int kflip = 0;
 double oldpos;
 
-void traj_foreach_frame(mjModel* m, mjData* d, mjvPerturb* pert)
+void traj_foreach_frame(traj_required_info_t* traj_info)
 {
+    float thing;
+    double temp;
+
     countup++;
     countup %= 100;
-    float thing = countup; // 0 to 1000
+    thing = countup; // 0 to 1000
     thing -= 50; // -500 to 500
     thing = thing > 0 ? thing : -thing;
 
@@ -29,14 +32,14 @@ void traj_foreach_frame(mjModel* m, mjData* d, mjvPerturb* pert)
     if(ksimcounter != oldksimcounter)
     {
         printf("moving qpos index: %d\n",ksimcounter);
-        double temp = oldpos;
-        oldpos = d->qpos[ksimcounter];
-        d->qpos[oldksimcounter] = temp;
+        temp = oldpos;
+        oldpos = traj_info->d->qpos[ksimcounter];
+        traj_info->d->qpos[oldksimcounter] = temp;
         oldksimcounter = ksimcounter;
     }
 
-    d->qpos[ksimcounter] = thing/10;   
+    traj_info->d->qpos[ksimcounter] = thing/10;   
     
-    mj_forward(m, d);
+    mj_forward(traj_info->m, traj_info->d);
 }
 

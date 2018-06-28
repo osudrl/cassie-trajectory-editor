@@ -20,6 +20,7 @@
 mjModel* m = 0;
 mjData* d = 0;
 char lastfile[1000] = "";
+traj_required_info_t traj_info;
 
 // user state
 bool paused = false;
@@ -504,6 +505,10 @@ void loadmodel(GLFWwindow* window, const char* filename)
     // set window title to mode name
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
+
+    traj_info.m = m;
+    traj_info.d = d;
+    traj_info.pert = &pert;
 }
 
 
@@ -985,7 +990,7 @@ void simulation(void)
     }
     else
     {
-       traj_foreach_frame(m,d,&pert);
+       traj_foreach_frame(&traj_info);
     }
     /*
     // running
