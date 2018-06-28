@@ -1283,7 +1283,7 @@ int main(int argc, const char** argv)
     if( argc==2 )
         loadmodel(window, argv[1]);
     else
-        loadmodel(window, "cassie.xml");
+        loadmodel(window, "model/cassie.xml");
 
     // main loop
     while( !glfwWindowShouldClose(window) )

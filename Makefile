@@ -19,20 +19,20 @@ mjpro150/include/mjxmacro.h \
 mjpro150/include/mujoco.h \
 
 CASSIE = \
-cassie-stl-meshes/achilles-rod.stl \
-cassie-stl-meshes/foot-crank.stl \
-cassie-stl-meshes/foot.stl \
-cassie-stl-meshes/heel-spring.stl \
-cassie-stl-meshes/hip-pitch.stl \
-cassie-stl-meshes/hip-roll.stl \
-cassie-stl-meshes/hip-yaw.stl \
-cassie-stl-meshes/knee-spring.stl \
-cassie-stl-meshes/knee.stl \
-cassie-stl-meshes/pelvis.stl \
-cassie-stl-meshes/plantar-rod.stl \
-cassie-stl-meshes/shin.stl \
-cassie-stl-meshes/tarsus.stl \
-cassie.xml
+model/cassie-stl-meshes/achilles-rod.stl \
+model/cassie-stl-meshes/foot-crank.stl \
+model/cassie-stl-meshes/foot.stl \
+model/cassie-stl-meshes/heel-spring.stl \
+model/cassie-stl-meshes/hip-pitch.stl \
+model/cassie-stl-meshes/hip-roll.stl \
+model/cassie-stl-meshes/hip-yaw.stl \
+model/cassie-stl-meshes/knee-spring.stl \
+model/cassie-stl-meshes/knee.stl \
+model/cassie-stl-meshes/pelvis.stl \
+model/cassie-stl-meshes/plantar-rod.stl \
+model/cassie-stl-meshes/shin.stl \
+model/cassie-stl-meshes/tarsus.stl \
+model/cassie.xml
 
 all : $(MAIN) | mjkey.txt package
 
@@ -41,22 +41,23 @@ mjkey.txt :
 		Please provide a product key for MuJoCo and name it mjkey.txt)
 
 $(CASSIE) : | mjkey.txt package
-	-rm -rf cassie-stl-meshes
-	mkdir -p cassie-stl-meshes
-	wget -O cassie.xml "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie.xml"
-	wget -O cassie-stl-meshes/achilles-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/achilles-rod.stl"
-	wget -O cassie-stl-meshes/foot-crank.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot-crank.stl"
-	wget -O cassie-stl-meshes/foot.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot.stl"
-	wget -O cassie-stl-meshes/heel-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/heel-spring.stl"
-	wget -O cassie-stl-meshes/hip-pitch.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-pitch.stl"
-	wget -O cassie-stl-meshes/hip-roll.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-roll.stl"
-	wget -O cassie-stl-meshes/hip-yaw.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-yaw.stl"
-	wget -O cassie-stl-meshes/knee-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee-spring.stl"
-	wget -O cassie-stl-meshes/knee.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee.stl"
-	wget -O cassie-stl-meshes/pelvis.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/pelvis.stl"
-	wget -O cassie-stl-meshes/plantar-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/plantar-rod.stl"
-	wget -O cassie-stl-meshes/shin.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/shin.stl"
-	wget -O cassie-stl-meshes/tarsus.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/tarsus.stl"
+	-rm -rf model
+	mkdir -p model
+	mkdir -p model/cassie-stl-meshes
+	wget -O model/cassie.xml "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie.xml" 
+	wget -O model/cassie-stl-meshes/achilles-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/achilles-rod.stl" 
+	wget -O model/cassie-stl-meshes/foot-crank.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot-crank.stl" 
+	wget -O model/cassie-stl-meshes/foot.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot.stl" 
+	wget -O model/cassie-stl-meshes/heel-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/heel-spring.stl" 
+	wget -O model/cassie-stl-meshes/hip-pitch.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-pitch.stl" 
+	wget -O model/cassie-stl-meshes/hip-roll.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-roll.stl" 
+	wget -O model/cassie-stl-meshes/hip-yaw.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/hip-yaw.stl" 
+	wget -O model/cassie-stl-meshes/knee-spring.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee-spring.stl" 
+	wget -O model/cassie-stl-meshes/knee.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/knee.stl" 
+	wget -O model/cassie-stl-meshes/pelvis.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/pelvis.stl" 
+	wget -O model/cassie-stl-meshes/plantar-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/plantar-rod.stl" 
+	wget -O model/cassie-stl-meshes/shin.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/shin.stl" 
+	wget -O model/cassie-stl-meshes/tarsus.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/tarsus.stl" 
 
 $(MJ) : | mjkey.txt package
 	mkdir -p temp
@@ -65,50 +66,50 @@ $(MJ) : | mjkey.txt package
 	unzip temp/mjpro150_linux.zip
 	-rm -rf temp
 
-traj : simulate.o main-traj.o main.h | mjkey.txt package $(CASSIE) $(MJ) 
+traj : bin/simulate.o bin/main-traj.o src/main.h | mjkey.txt package $(CASSIE) $(MJ) 
 	g++ $(FLAGS) \
-	simulate.o main-traj.o \
+	bin/simulate.o bin/main-traj.o \
 	-lmujoco150 -lGL -lglew \
 	mjpro150/bin/libglfw.so.3 \
 	-o traj
 
-jointtest : simulate.o main-joint.o main.h | mjkey.txt package $(CASSIE) $(MJ)
+jointtest : bin/simulate.o bin/main-joint.o src/main.h | mjkey.txt package $(CASSIE) $(MJ)
 	g++ $(FLAGS) \
-	simulate.o main-joint.o \
+	bin/simulate.o bin/main-joint.o \
 	-lmujoco150 -lGL -lglew \
 	mjpro150/bin/libglfw.so.3 \
 	-o jointtest
 
-simulate.o : main.h simulate.c | mjkey.txt package $(MJ)
-	gcc -c $(FLAGS) simulate.c
+bin/simulate.o : src/main.h src/simulate.c | mjkey.txt package $(MJ)
+	gcc -c $(FLAGS) src/simulate.c -o bin/simulate.o
 
-main-traj.o : main.h main-traj.c | mjkey.txt package $(MJ)
-	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement main-traj.c
+bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt package $(MJ)
+	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-traj.c -o bin/main-traj.o
 
-main-joint.o : main.h main-joint.c | mjkey.txt package $(MJ)
-	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement main-joint.c	
+bin/main-joint.o : src/main.h src/main-joint.c | mjkey.txt package $(MJ)
+	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-joint.c	-o bin/main-joint.o
 
 clean :
-	-rm -f *.o $(MAIN)
+	-rm -rf bin 
+	-rm -rf $(MAIN)
 
 lpurge :
-	-rm -f *.o $(MAIN)
-	-rm -rf cassie-stl-meshes
-	-rm -rf cassie-mujoco-sim
-	-rm -f cassie.xml
+	-rm -rf bin 
+	-rm -rf $(MAIN)
+	-rm -rf model
 	-rm -rf mjpro150
 
 purge :
-	-rm -f *.o $(MAIN)
-	-rm -rf cassie-stl-meshes
-	-rm -rf cassie-mujoco-sim
-	-rm -f cassie.xml
+	-rm -rf bin 
+	-rm -rf $(MAIN)
+	-rm -rf model
 	-rm -rf mjpro150
 	-rm -f mjkey.txt
 
 .PHONY: package
 
 package:
+	mkdir -p bin
 	@dpkg -l | grep libglfw3-dev > /dev/null
 	@echo $(LD_LIBRARY_PATH) | grep "mjpro150/bin" > /dev/null
 	
