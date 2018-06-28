@@ -131,7 +131,7 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_required_info_t* traj_info, double
 {
     if(traj_info->pert->active) 
     {
-        // printf("selected: %d\n", pert->select);
+        printf("selected: %d\n", traj_info->pert->select);
         if(traj_info->pert->select == 1)
         {
             traj_info->d->qpos[0] = traj_info->pert->refpos[0];
