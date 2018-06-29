@@ -5,7 +5,7 @@ int out_c_frame = 0;
 
 void out_my_qposes(traj_info_t* traj_info)
 {
-    char buf[2048];
+    char buf[400000];
     int offset = 0;
     int i;
 
@@ -20,7 +20,7 @@ void out_my_qposes(traj_info_t* traj_info)
     }
     offset += sprintf(buf+offset,"%d",(out_c_frame++));
     for (i = 0; i < CASSIE_QPOS_SIZE; i++)
-            offset += sprintf(buf+offset,",%.10f",traj_info->d->qpos[i]);
+            offset += sprintf(buf+offset,",%.25f",traj_info->d->qpos[i]);
 
     fprintf(out_c_outfile,"%s\n",buf);
 }
