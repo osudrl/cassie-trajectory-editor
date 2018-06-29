@@ -13,7 +13,7 @@
 
 Error | Solution
 --- | ---
-MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt.  Stop. | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
+"MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
 
 
 
