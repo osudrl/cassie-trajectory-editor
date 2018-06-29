@@ -34,6 +34,12 @@ model/cassie-stl-meshes/shin.stl \
 model/cassie-stl-meshes/tarsus.stl \
 model/cassie.xml
 
+LCOMMON = -lmujoco150 -lGL -lglew \
+-Wl,-rpath,"\$$ORIGIN/mjpro150/bin" \
+mjpro150/bin/libglfw.so.3 
+
+CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
+
 all : $(MAIN) | mjkey.txt package
 
 mjkey.txt : 
@@ -67,27 +73,38 @@ $(MJ) : | mjkey.txt package
 	-rm -rf temp
 
 traj : bin/simulate.o bin/main-traj.o src/main.h | mjkey.txt package $(CASSIE) $(MJ) 
-	g++ $(FLAGS) \
-	bin/simulate.o bin/main-traj.o \
-	-lmujoco150 -lGL -lglew \
-	mjpro150/bin/libglfw.so.3 \
-	-o traj
+	g++ \
+		$(FLAGS) \
+	    bin/simulate.o bin/main-traj.o \
+	    $(LCOMMON) \
+	    -o traj
 
 jointtest : bin/simulate.o bin/main-joint.o src/main.h | mjkey.txt package $(CASSIE) $(MJ)
-	g++ $(FLAGS) \
-	bin/simulate.o bin/main-joint.o \
-	-lmujoco150 -lGL -lglew \
-	mjpro150/bin/libglfw.so.3 \
-	-o jointtest
+	g++ \
+		$(FLAGS) \
+		bin/simulate.o bin/main-joint.o \
+		$(LCOMMON) \
+		-o jointtest
 
 bin/simulate.o : src/main.h src/simulate.c | mjkey.txt package $(MJ) $(CASSIE)
-	gcc -c $(FLAGS) src/simulate.c -o bin/simulate.o
+	gcc -c \
+		$(FLAGS) \
+		src/simulate.c \
+		-o bin/simulate.o
 
 bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt package $(MJ) $(CASSIE)
-	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-traj.c -o bin/main-traj.o
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/main-traj.c \
+		-o bin/main-traj.o
 
 bin/main-joint.o : src/main.h src/main-joint.c | mjkey.txt package $(MJ) $(CASSIE)
-	gcc -c $(FLAGS) -std=gnu99 -pedantic -Wdeclaration-after-statement src/main-joint.c	-o bin/main-joint.o
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/main-joint.c \
+		-o bin/main-joint.o
 
 clean :
 	-rm -rf bin 
@@ -111,5 +128,4 @@ purge :
 package:
 	@mkdir -p bin
 	@dpkg -l | grep libglfw3-dev > /dev/null
-	@echo $(LD_LIBRARY_PATH) | grep "mjpro150/bin" > /dev/null
 	
