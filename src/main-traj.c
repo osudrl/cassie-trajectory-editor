@@ -55,7 +55,7 @@ void better_body_optimizer(
     double observed_diff;
 
     best_diff = fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * 0.01 * best_diff + 0.0005;
+    dx = 1.93 * 0.03 * best_diff + 0.0005;
     for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
     {
         pos_val_before_dx = traj_info->d->qpos[i];
@@ -134,7 +134,7 @@ void traj_perform_initial_pert_caluclations(traj_info_t* traj_info)
         mju_cross(xyz_plane_normal_vect, xyz_tarus_to_shin, xyz_mouse_to_tarsus);
         mju_normalize(xyz_mouse_to_tarsus,3);
         mju_normalize(xyz_tarus_to_shin,3);
-        printf("dot: %.5f\n",mju_acos(mju_dot(xyz_tarus_to_shin, xyz_mouse_to_tarsus,3))*(180/3.1415));
+        // printf("dot: %.5f\n",mju_acos(mju_dot(xyz_tarus_to_shin, xyz_mouse_to_tarsus,3))*(180/3.1415));
     }
 }
 
@@ -153,10 +153,13 @@ void traj_foreach_frame(traj_info_t* traj_info)
     else if(!mod)
         traj_foreach_frame_lastmod = mod;
 
-    for(int z = 0; mod && z < 100; z++)
+    for(int z = 0; mod && z < 20; z++)
+    {
         better_body_optimizer(traj_info,
             xyz_xpos_target,
             traj_info->pert->select);
+    }
+    out_my_qposes(traj_info);
 
     mj_forward(traj_info->m, traj_info->d);
 }

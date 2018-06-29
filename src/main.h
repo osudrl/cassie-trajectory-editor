@@ -1,3 +1,6 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #include "mujoco.h"
 #include "glfw3.h"
 #include <stdio.h>
@@ -12,4 +15,10 @@ struct _traj_info_
 };
 typedef struct _traj_info_ traj_info_t;
 
+#include "out.h"
+#include "in.h"
+
 void traj_foreach_frame(traj_info_t* traj_info);
+
+
+#endif

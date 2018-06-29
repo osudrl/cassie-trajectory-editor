@@ -40,6 +40,10 @@ mjpro150/bin/libglfw.so.3
 
 CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
 
+OBJS = bin/simulate.o bin/out.o bin/in.o
+
+HEADS = src/main.h src/out.h src/in.h
+
 all : $(MAIN) | mjkey.txt
 
 mjkey.txt : 
@@ -72,28 +76,28 @@ $(MJ) : | mjkey.txt
 	unzip temp/mjpro150_linux.zip
 	-rm -rf temp
 
-traj : bin/simulate.o bin/main-traj.o src/main.h | mjkey.txt $(CASSIE) $(MJ) 
+traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ) 
 	g++ \
 		$(FLAGS) \
-	    bin/simulate.o bin/main-traj.o \
+	    bin/main-traj.o $(OBJS) \
 	    $(LCOMMON) \
 	    -o traj
 
-jointtest : bin/simulate.o bin/main-joint.o src/main.h | mjkey.txt $(CASSIE) $(MJ)
+jointtest : bin/main-joint.o  $(OBJS) $(HEADS)  | mjkey.txt $(CASSIE) $(MJ)
 	g++ \
 		$(FLAGS) \
-		bin/simulate.o bin/main-joint.o \
+		bin/main-joint.o $(OBJS)\
 		$(LCOMMON) \
 		-o jointtest
 
-bin/simulate.o : src/main.h src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
+bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
 		$(FLAGS) \
 		src/simulate.c \
 		-o bin/simulate.o
 
-bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt $(MJ) $(CASSIE)
+bin/main-traj.o : $(HEADS) src/main-traj.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
 		$(FLAGS) \
@@ -101,13 +105,29 @@ bin/main-traj.o : src/main.h src/main-traj.c | mjkey.txt $(MJ) $(CASSIE)
 		src/main-traj.c \
 		-o bin/main-traj.o
 
-bin/main-joint.o : src/main.h src/main-joint.c | mjkey.txt $(MJ) $(CASSIE)
+bin/main-joint.o : $(HEADS) src/main-joint.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
 		$(FLAGS) \
 		$(CCOMMON) \
 		src/main-joint.c \
 		-o bin/main-joint.o
+
+bin/out.o : $(HEADS) src/out.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/out.c \
+		-o bin/out.o
+
+bin/in.o : $(HEADS) src/in.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/in.c \
+		-o bin/in.o
 
 clean :
 	-rm -rf bin 
