@@ -117,24 +117,23 @@ double xyz_plane_normal_vect[3] = {0,0,0};
 
 void traj_perform_initial_pert_caluclations(traj_info_t* traj_info)
 {
-    double* xyz_xpos_tarsus;
-    double* xyz_xpos_shin;
-    double* xyz_xpos_mouse;
-    double xyz_tarus_to_shin[3];
-    double xyz_mouse_to_tarsus[3];
+    double* t;
+    double* f;
+    double* fm;
+    double tf[3];
+    // double fm[3];
 
-    if (traj_info->pert->select == 9 ||
-        traj_info->pert->select == 21)  // is tarsus
+    if (traj_info->pert->select == 13 ||
+        traj_info->pert->select == 25)  // is foot
     {
-        xyz_xpos_tarsus = traj_info->d->xpos + traj_info->pert->select*3;
-        xyz_xpos_shin = traj_info->d->xpos + (traj_info->pert->select-1)*3;
-        xyz_xpos_mouse = traj_info->pert->refpos;
-        vector3_subtraction(xyz_tarus_to_shin, xyz_xpos_tarsus, xyz_xpos_shin);
-        vector3_subtraction(xyz_mouse_to_tarsus, xyz_xpos_mouse, xyz_xpos_tarsus);
-        mju_cross(xyz_plane_normal_vect, xyz_tarus_to_shin, xyz_mouse_to_tarsus);
-        mju_normalize(xyz_mouse_to_tarsus,3);
-        mju_normalize(xyz_tarus_to_shin,3);
-        printf("dot: %.5f\n",mju_acos(mju_dot(xyz_tarus_to_shin, xyz_mouse_to_tarsus,3))*(180/3.1415));
+        f = traj_info->d->xpos + traj_info->pert->select*3;
+        t = traj_info->d->xpos + (traj_info->pert->select-4)*3;
+        fm = traj_info->pert->localpos;
+        vector3_subtraction(tf, f, t);
+        // mju_add(fm, f, m, 3 );
+        double woo = mju_norm(tf,3);
+        mju_normalize(fm,3);
+        printf("\t\tdot: %.5f\n",mju_acos(mju_dot(tf, fm,3))*(180/(3.1415*woo)));
     }
 }
 
@@ -157,6 +156,9 @@ void traj_foreach_frame(traj_info_t* traj_info)
         better_body_optimizer(traj_info,
             xyz_xpos_target,
             traj_info->pert->select);
+
+    traj_info->d->qpos[20]+=0.001;
+    printf("foot %.5f\n", traj_info->d->qpos[20] );
 
     mj_forward(traj_info->m, traj_info->d);
 }
