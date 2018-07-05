@@ -142,28 +142,30 @@ int traj_foreach_frame_lastmod = 0;
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
-    // double xyz_xpos_target[3];
-    // int mod;
-    // mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
-    // if(mod && mod != traj_foreach_frame_lastmod)
-    // {
-    //     traj_foreach_frame_lastmod = mod;
-    //     traj_perform_initial_pert_caluclations(traj_info);
-    // }
-    // else if(!mod)
-    //     traj_foreach_frame_lastmod = mod;
+    double xyz_xpos_target[3];
+    int mod;
+    mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
+    if(mod && mod != traj_foreach_frame_lastmod)
+    {
+        traj_foreach_frame_lastmod = mod;
+        traj_perform_initial_pert_caluclations(traj_info);
+    }
+    else if(!mod)
+        traj_foreach_frame_lastmod = mod;
 
-    // for(int z = 0; mod && z < 20; z++)
-    // {
-    //     better_body_optimizer(traj_info,
-    //         xyz_xpos_target,
-    //         traj_info->pert->select);
-    // }
-    // out_my_qposes(traj_info);
-    // in_my_qposes(traj_info);
-    
+    for(int z = 0; mod && z < 20; z++)
+    {
+        better_body_optimizer(traj_info,
+            xyz_xpos_target,
+            traj_info->pert->select);
+    }
+    out_my_qposes(traj_info);    
+
     // printf("time %.5f\n",traj_info->timer);
-    interpolate_fill_qposes(traj_info);
+
+   
+    // traj_info->timer /= 5;
+    // interpolate_fill_qposes(traj_info);
 
     mj_forward(traj_info->m, traj_info->d);
 }

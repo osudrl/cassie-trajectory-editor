@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define CASSIE_QPOS_SIZE 34
 

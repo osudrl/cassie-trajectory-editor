@@ -12,31 +12,37 @@ void birth_child()
 {
     int result;
 
-    pid = fork();
+
 
     if (pipe(inpipe) != 0) 
         perror("Failed pipe");
     if (pipe(outpipe) != 0) 
         perror("Failed pipe");
 
+    pid = fork();
+
     if (pid == 0)
     {
-        // printf("CHILD\n");
+        // printf("inpipe %d %d\n" , inpipe[0], inpipe[1]);
         if(dup2(inpipe[0], 0)<0)
             perror("issue with dup2");
         if(dup2(outpipe[1], 1) < 0)
             perror("issue with dup2");
         close(inpipe[0]);
+        close(inpipe[1]);
         close(outpipe[1]);
-        close(inpipe[0]);
-        close(outpipe[1]);
-        execlp("cat", "cat", "-", NULL);
+        close(outpipe[0]);
+        execlp("python", "python","-u","z.py", NULL);
+        // execlp("cat", "cat", NULL);
         perror("exec failed");
         exit(-1);
     }
+    else if (pid < 0)
+    {
+        perror("fork failed");
+    }
 
-    printf("%d\n",inpipe[1]);
-    // close(inpipe[0]);
+    close(inpipe[0]);
     close(outpipe[1]);
     birth = 1;
 }
@@ -105,25 +111,12 @@ void interpolate_fill_qposes(double* result)
 }
 */
 
-/*
-FILE* in_c_infile = NULL;
 
-void in_other_qposes(double* arr)
+
+void interpolate_set_qposes(char* buf, double* arr)
 {
-    char buf[4000000];
     char* strs[CASSIE_QPOS_SIZE];
     int strs_index = 0;
-    char* annoy = 0;
-
-    if(!in_c_infile)
-    {
-        in_c_infile = fopen("out-traj.csv","r");
-        annoy = fgets(buf,4000000,in_c_infile);
-    }
-    annoy = fgets(buf,4000000,in_c_infile);
-
-    if(!annoy)
-        return;
     
     strs[strs_index] = strtok(buf,",");
     while(strs_index+1 < CASSIE_QPOS_SIZE && strs[strs_index] )
@@ -142,7 +135,7 @@ void in_other_qposes(double* arr)
     }
     // printf("strs_index %d \n", strs_index);
 }
-*/
+
 
 void interpolate_pipe_request_pose(double timer)
 {
@@ -150,41 +143,48 @@ void interpolate_pipe_request_pose(double timer)
     int result;
 
     result = sprintf(buf, "%.5f\n", timer);
-    buf[result] = '\0';
-    printf("inpipe[1] = %d\n", inpipe[1]);
+    // buf[result+1] = '\0';
+    // printf("inpipe[1] = %d\n", inpipe[1]);
 
     result = write(inpipe[1], buf, result);
-    printf("write result = %d\n", result);
+    // printf("write '%s' result = %d\n", buf,  result);
 }
 
-void interpolate_pipe_parese_pose()
+void interpolate_pipe_parese_pose(traj_info_t* traj_info)
 {
     char buf[400000];
     char* schrresult = NULL;
     int offset = 0;
     int status;
 
-    printf("childstate %d \n ", waitpid(pid, &status, WNOHANG));
-
+    // printf("childstate %d \n ", waitpid(pid, &status, WNOHANG));
+    // printf("fool\n");
 
     while(!schrresult)
     {
-        offset += read(outpipe[0], buf+offset, 128);
-        buf[offset] = '\0';
-        schrresult = strchr("buf", '\n');
+        // printf("bout to read\n");
+        offset += read(outpipe[0], buf+offset, 16);
+        // printf("read offset %d\n", offset);
+        buf[offset+1] = '\0';
+        schrresult = strchr(buf, '\n');
     }
 
-    printf("%s\n",buf);
+    interpolate_set_qposes(buf,traj_info->d->qpos);
+
+    // printf("%s\n",buf);
 }
 
 void interpolate_with_pipe(traj_info_t* traj_info)
 {
     if (!birth)
+    {
         birth_child();
+        // sleep(1);
+    }
 
     interpolate_pipe_request_pose(traj_info->timer);
-    printf("woo %.5f\n", traj_info->timer);
-    interpolate_pipe_parese_pose();
+    // printf("woo %.5f\n", traj_info->timer);
+    interpolate_pipe_parese_pose(traj_info);
 }
 
 void interpolate_fill_qposes(traj_info_t* traj_info)

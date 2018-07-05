@@ -72,6 +72,7 @@ for pose in poses:
 #     ax1.plot(x,y,color='b')
 
 # plt.show()
+# print("im a goon")
 
 while(True):
     string = raw_input();
