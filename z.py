@@ -1,57 +1,28 @@
 #!/usr/bin/python
 
+from __future__ import print_function
 import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 from scipy import interpolate
 
-def cubes (i):
-    return np.array([i**3,i**2,i**1,i**0]);
+data = np.genfromtxt('out-traj.csv', delimiter=',', skip_header=1, skip_footer=1)
 
+data = data.transpose()
 
-def oof_ouch_mybones(i, x, y):
-    matrix = np.array([
-        cubes(x[i]),
-        cubes(x[i+1]),
-        np.array([6 * x[i], 2,0,0]),
-        np.array([6 * x[i+1], 2,0,0])
-        ])
-    ans = np.array([
-        y[i+0],
-        y[i+1],
-        0,
-        0
-        ])
-    invmatrix = np.linalg.inv(matrix)
-    coes = np.dot(invmatrix,ans)
-    poly = np.poly1d(coes)
+# print(data[0])
 
-    xs = np.linspace(i, i+3, 100)
-    ys = poly(xs)
-    return (xs,ys)
+poses = np.arange(1,len(data),1)
+tcks = [None]* len(poses)
+for pose in poses:
+    tcks[pose-1] = interpolate.splrep(data[0], data[pose], s=0)
+# xnew = np.arange(data[0][0], data[0][-1],.0001)
+# ynew = interpolate.splev(xnew, tck, der=0)
 
+# print(tck)
 
-# data = np.genfromtxt('tens.csv', delimiter=',', skip_header=1,
-#                      skip_footer=1, names=['Frame', 'x', 'y', 'z'])
-data = np.genfromtxt('out-traj.csv', delimiter=',', skip_header=1,
-                     skip_footer=1, names=['Frame', 'x', 'y', 'z'])
-
-fig = plt.figure()
-
-ax1 = fig.add_subplot(111)
-
-
-ax1.set_title("Interpolation?")    
-ax1.set_xlabel('time')
-ax1.set_ylabel('Mains voltage')
-ax1.scatter(data['Frame'], data['z'], s=10, color='r', label='the data')
-
-tck = interpolate.splrep(data['Frame'], data['z'], s=0)
-xnew = np.arange(data['Frame'][0], data['Frame'][-1],.0001)
-ynew = interpolate.splev(xnew, tck, der=0)
-
-ax1.plot(xnew,ynew)
+# ax1.plot(xnew,ynew)
 
 # print(ynew)
 
@@ -91,14 +62,26 @@ ax1.plot(xnew,ynew)
 
 # ax1.plot(x,y, c='r', label='the data')
 
-leg = ax1.legend()
+# leg = ax1.legend()
 
-for i in range(len(data['Frame'])-1):
-    m = (data['z'][i+1] - data['z'][i]) / (data['Frame'][i+1] - data['Frame'][i])
-    b = data['z'][i] - m * data['Frame'][i]
-    x = np.arange(data['Frame'][i], data['Frame'][i+1], 0.0001)
-    y = m*x + b
-    ax1.plot(x,y,color='b')
+# for i in range(len(data['Frame'])-1):
+#     m = (data['z'][i+1] - data['z'][i]) / (data['Frame'][i+1] - data['Frame'][i])
+#     b = data['z'][i] - m * data['Frame'][i]
+#     x = np.arange(data['Frame'][i], data['Frame'][i+1], 0.0001)
+#     y = m*x + b
+#     ax1.plot(x,y,color='b')
 
-plt.show()
+# plt.show()
+
+while(True):
+    string = raw_input();
+    d = float(string)
+    print(("%.5f," % d) , end='')
+    for pose in poses:
+        print(("%.10f" % interpolate.splev(d, tcks[pose-1])) , end='')
+        if pose != poses[-1]:
+            print(",", end='')
+        else:
+            print()
+
 

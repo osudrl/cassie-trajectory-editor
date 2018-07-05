@@ -7,7 +7,7 @@
 #include "in.h"
 
 
-void interpolate_fill_qposes(double* result);
+void interpolate_fill_qposes(traj_info_t* traj_info);
 
 #endif
 

@@ -4,6 +4,9 @@
 #include "mujoco.h"
 #include "glfw3.h"
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define CASSIE_QPOS_SIZE 34
 
@@ -12,6 +15,7 @@ struct _traj_info_
 	mjModel* m;
 	mjData* d;
 	mjvPerturb* pert;
+	mjtNum timer;
 };
 typedef struct _traj_info_ traj_info_t;
 

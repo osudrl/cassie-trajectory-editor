@@ -161,7 +161,9 @@ void traj_foreach_frame(traj_info_t* traj_info)
     // }
     // out_my_qposes(traj_info);
     // in_my_qposes(traj_info);
-    interpolate_fill_qposes(traj_info->d->qpos);
+    
+    // printf("time %.5f\n",traj_info->timer);
+    interpolate_fill_qposes(traj_info);
 
     mj_forward(traj_info->m, traj_info->d);
 }

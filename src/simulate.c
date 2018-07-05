@@ -342,14 +342,14 @@ void profilerupdate(void)
 // show profiler
 void profilershow(mjrRect rect)
 {
-    mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
-    mjr_figure(viewport, &figtimer, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figsize, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figcost, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figconstraint, &con);
+    // mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
+    // mjr_figure(viewport, &figtimer, &con);
+    // viewport.bottom += rect.height/4;
+    // mjr_figure(viewport, &figsize, &con);
+    // viewport.bottom += rect.height/4;
+    // mjr_figure(viewport, &figcost, &con);
+    // viewport.bottom += rect.height/4;
+    // mjr_figure(viewport, &figconstraint, &con);
 }
 
 
@@ -990,6 +990,7 @@ void simulation(void)
     }
     else
     {
+        traj_info.timer = timer();
        traj_foreach_frame(&traj_info);
     }
     /*

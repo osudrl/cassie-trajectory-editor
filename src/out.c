@@ -12,13 +12,13 @@ void out_my_qposes(traj_info_t* traj_info)
     if(!out_c_outfile)
     {
         out_c_outfile = fopen("out-traj.csv","w");
-        offset += sprintf(buf+offset,"Frame");
+        offset += sprintf(buf+offset,"Timer Value");
         for (i = 0; i < CASSIE_QPOS_SIZE; i++)
             offset += sprintf(buf+offset,",qpos%i", i);
         fprintf(out_c_outfile,"%s\n",buf);
         offset = 0;
     }
-    offset += sprintf(buf+offset,"%d",(out_c_frame++));
+    offset += sprintf(buf+offset,"%.5f",traj_info->timer);
     for (i = 0; i < CASSIE_QPOS_SIZE; i++)
             offset += sprintf(buf+offset,",%.25f",traj_info->d->qpos[i]);
 
