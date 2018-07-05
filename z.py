@@ -4,7 +4,7 @@ import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
-import numpy as np
+from scipy import interpolate
 
 def cubes (i):
     return np.array([i**3,i**2,i**1,i**0]);
@@ -14,13 +14,14 @@ def oof_ouch_mybones(i, x, y):
     matrix = np.array([
         cubes(x[i]),
         cubes(x[i+1]),
-        cubes(x[i+2]),
-        cubes(x[i+3])])
+        np.array([6 * x[i], 2,0,0]),
+        np.array([6 * x[i+1], 2,0,0])
+        ])
     ans = np.array([
         y[i+0],
         y[i+1],
-        y[i+2],
-        y[i+3]
+        0,
+        0
         ])
     invmatrix = np.linalg.inv(matrix)
     coes = np.dot(invmatrix,ans)
@@ -33,8 +34,8 @@ def oof_ouch_mybones(i, x, y):
 
 # data = np.genfromtxt('tens.csv', delimiter=',', skip_header=1,
 #                      skip_footer=1, names=['Frame', 'x', 'y', 'z'])
-data = np.genfromtxt('points.csv', delimiter=',', skip_header=0,
-                     skip_footer=0, names=['Frame', 'x'])
+data = np.genfromtxt('out-traj.csv', delimiter=',', skip_header=1,
+                     skip_footer=1, names=['Frame', 'x', 'y', 'z'])
 
 fig = plt.figure()
 
@@ -44,11 +45,19 @@ ax1 = fig.add_subplot(111)
 ax1.set_title("Interpolation?")    
 ax1.set_xlabel('time')
 ax1.set_ylabel('Mains voltage')
-ax1.scatter(data['Frame'], data['x'], s=10, color='r', label='the data')
+ax1.scatter(data['Frame'], data['z'], s=10, color='r', label='the data')
 
-for i in range (1,3,1):
-    tup = oof_ouch_mybones(i, data['Frame'] , data['x'])
-    ax1.plot(tup[0],tup[1],color='g')
+tck = interpolate.splrep(data['Frame'], data['z'], s=0)
+xnew = np.arange(data['Frame'][0], data['Frame'][-1],.0001)
+ynew = interpolate.splev(xnew, tck, der=0)
+
+ax1.plot(xnew,ynew)
+
+# print(ynew)
+
+# for i in range (1,3,1):
+#     tup = oof_ouch_mybones(i, data['Frame'] , data['x'])
+#     ax1.plot(tup[0],tup[1],color='g')
 
 # mymatrix = np.array([
 #     [0,0,0,0,1],
@@ -85,8 +94,8 @@ for i in range (1,3,1):
 leg = ax1.legend()
 
 for i in range(len(data['Frame'])-1):
-    m = (data['x'][i+1] - data['x'][i]) / (data['Frame'][i+1] - data['Frame'][i])
-    b = data['x'][i] - m * data['Frame'][i]
+    m = (data['z'][i+1] - data['z'][i]) / (data['Frame'][i+1] - data['Frame'][i])
+    b = data['z'][i] - m * data['Frame'][i]
     x = np.arange(data['Frame'][i], data['Frame'][i+1], 0.0001)
     y = m*x + b
     ax1.plot(x,y,color='b')
