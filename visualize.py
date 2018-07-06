@@ -20,10 +20,11 @@ def maxx(xval, boxwidth, xdata, ydata):
     return np.max(narray)
 
 def closeToZero(yval):
-    if yval < 0.02:
-        return 0
-    else:
-        return 1
+    # if yval < 0.02:
+    #     return 0
+    # else:
+    #     return 1
+    return abs(yval) ** .5
 
 
 # allowed = [3,24,30,31]
@@ -45,7 +46,7 @@ for pose in allowed:
     sub.plot(xvals,yvals, label=("%d"%pose))
     sub.plot(data[0],data[pose], "ro",linewidth=0, ms=.5)
 
-boxwidth = 150
+boxwidth = 200
 
 xvals = np.arange(data[0][0],data[0][-1],boxwidth)
 minvals = [None] * len(xvals)
@@ -65,6 +66,10 @@ minvals = np.array(minvals)
 yvals = maxvals - minvals
 sub.plot(xvals,yvals, label="diff")
 
+func = np.vectorize(closeToZero)
+yvals = func(yvals)
+sub.plot(xvals,yvals, label="extreme DIFF")
+
 xvals = data[0][0:-1]
 yvals = [None] *( len(data[0])-1)
 
@@ -75,7 +80,7 @@ sub.plot(xvals,yvals, label="derv?")
 
 func = np.vectorize(closeToZero)
 yvals = func(yvals)
-sub.plot(xvals,yvals, label="extreme")
+# sub.plot(xvals,yvals, label="extreme")
 
 
 
