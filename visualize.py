@@ -62,12 +62,12 @@ for pose in allowed:
     yvals = func(yvals, 1 , 500)
     sub.plot(xvals,yvals,  label=("%d V" % pose))
     yvals = func(yvals, 3 , 1.25)
-    sub.plot(xvals,yvals,  label=("%d V Extreme" % pose))
+    # sub.plot(xvals,yvals,  label=("%d V Extreme" % pose))
     yvals = wowfunc(yvals)
-    sub.plot(xvals,yvals,  label=("%d V ANGRY" % pose))
+    # sub.plot(xvals,yvals,  label=("%d V ANGRY"       % pose))
     yvals = interpolate.splev(xvals, tcks[pose-1], der=2)
     yvals = func(yvals, .5, 10)    
-    sub.plot(xvals,yvals, label=("%d A" % pose))
+    # sub.plot(xvals,yvals, label=("%d A" % pose))
     sub.plot(data[0],data[pose], "ro",linewidth=0, ms=.5)
 
 # boxwidth = 200
