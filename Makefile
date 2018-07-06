@@ -40,7 +40,7 @@ mjpro150/bin/libglfw.so.3
 
 CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
 
-OBJS = bin/simulate.o bin/out.o bin/in.o bin/interpolate.o
+OBJS = bin/simulate.o bin/out.o bin/in.o
 
 HEADS = src/main.h src/out.h src/in.h
 
@@ -121,21 +121,13 @@ bin/out.o : $(HEADS) src/out.c | mjkey.txt $(MJ) $(CASSIE)
 		src/out.c \
 		-o bin/out.o
 
-bin/in.o : $(HEADS) src/in.c src/interpolate.h | mjkey.txt $(MJ) $(CASSIE)
+bin/in.o : $(HEADS) src/in.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
 		$(FLAGS) \
 		$(CCOMMON) \
 		src/in.c \
 		-o bin/in.o
-
-bin/interpolate.o : $(HEADS) src/interpolate.h src/in.h src/interpolate.c | mjkey.txt $(MJ) $(CASSIE)
-	-@mkdir -p bin
-	gcc -c \
-		$(FLAGS) \
-		$(CCOMMON) \
-		src/interpolate.c \
-		-o bin/interpolate.o
 
 clean :
 	-rm -rf bin 

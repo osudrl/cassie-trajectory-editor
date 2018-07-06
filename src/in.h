@@ -6,7 +6,6 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
-#include "interpolate.h"
 
 void in_other_qposes(double* arr);
 void in_my_qposes(traj_info_t* traj_info);
