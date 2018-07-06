@@ -19,13 +19,24 @@ def maxx(xval, boxwidth, xdata, ydata):
     narray = ydata[idxl:idxh]
     return np.max(narray)
 
-def closeToZero(yval):
+def closeToZero(yval, exp, scale):
     # if yval < 0.02:
     #     return 0
     # else:
     #     return 1
-    return abs(yval) ** .5
+    sign = np.sign(yval)
+    yval = abs(yval)
+    return (yval** exp) * scale * sign
 
+def wow(yval):
+    # if yval < 0.02:
+    #     return 0
+    # else:
+    #     return 1
+    if (abs(yval) < 0.1):
+        return 0
+    else:
+        return 2
 
 # allowed = [3,24,30,31]
 allowed = [31]
@@ -37,49 +48,61 @@ data = data.transpose()
 fig = plt.figure()
 sub = fig.add_subplot(111)
 
+func = np.vectorize(closeToZero)
+wowfunc = np.vectorize(wow)
+
 xvals = np.arange(data[0][0],data[0][-1],.1)
 poses = np.arange(1,len(data),1)
 tcks = [None]* len(poses)
 for pose in allowed:
     tcks[pose-1] = interpolate.splrep(data[0], data[pose], s=0)
     yvals = interpolate.splev(xvals, tcks[pose-1])
-    sub.plot(xvals,yvals, label=("%d"%pose))
+    sub.plot(xvals,yvals, label=("%d Q" % pose))
+    yvals = interpolate.splev(xvals, tcks[pose-1], der=1)
+    yvals = func(yvals, 1 , 500)
+    sub.plot(xvals,yvals,  label=("%d V" % pose))
+    yvals = func(yvals, 3 , 1.25)
+    sub.plot(xvals,yvals,  label=("%d V Extreme" % pose))
+    yvals = wowfunc(yvals)
+    sub.plot(xvals,yvals,  label=("%d V ANGRY" % pose))
+    yvals = interpolate.splev(xvals, tcks[pose-1], der=2)
+    yvals = func(yvals, .5, 10)    
+    sub.plot(xvals,yvals, label=("%d A" % pose))
     sub.plot(data[0],data[pose], "ro",linewidth=0, ms=.5)
 
-boxwidth = 200
+# boxwidth = 200
 
-xvals = np.arange(data[0][0],data[0][-1],boxwidth)
-minvals = [None] * len(xvals)
-for i in range(len(xvals)):
-    minvals[i] = minn(xvals[i],boxwidth,data[0],data[31])
-# sub.plot(xvals,minvals, label="mins")
+# xvals = np.arange(data[0][0],data[0][-1],boxwidth)
+# minvals = [None] * len(xvals)
+# for i in range(len(xvals)):
+#     minvals[i] = minn(xvals[i],boxwidth,data[0],data[31])
+# # sub.plot(xvals,minvals, label="mins")
 
-xvals = np.arange(data[0][0],data[0][-1],boxwidth)
-maxvals = [None] * len(xvals)
-for i in range(len(xvals)):
-    maxvals[i] = maxx(xvals[i],boxwidth,data[0],data[31])
+# xvals = np.arange(data[0][0],data[0][-1],boxwidth)
+# maxvals = [None] * len(xvals)
+# for i in range(len(xvals)):
+#     maxvals[i] = maxx(xvals[i],boxwidth,data[0],data[31])
 # sub.plot(xvals,maxvals, label="maxs")
 
-maxvals = np.array(maxvals)
-minvals = np.array(minvals)
+# maxvals = np.array(maxvals)
+# minvals = np.array(minvals)
 
-yvals = maxvals - minvals
-sub.plot(xvals,yvals, label="diff")
+# yvals = maxvals - minvals
+# sub.plot(xvals,yvals, label="diff")
 
-func = np.vectorize(closeToZero)
-yvals = func(yvals)
-sub.plot(xvals,yvals, label="extreme DIFF")
+# func = np.vectorize(closeToZero)
+# yvals = func(yvals)
+# sub.plot(xvals,yvals, label="extreme DIFF")
 
-xvals = data[0][0:-1]
-yvals = [None] *( len(data[0])-1)
+# xvals = data[0][0:-1]
+# yvals = [None] *( len(data[0])-1)
 
-for i in range(len(data[0])-1):
-    yvals[i] = data[31][i+1] - data[31][i]
+# for i in range(len(data[0])-1):
+#     yvals[i] = data[31][i+1] - data[31][i]
 
-sub.plot(xvals,yvals, label="derv?")
+# sub.plot(xvals,yvals, label="derv?")
 
-func = np.vectorize(closeToZero)
-yvals = func(yvals)
+
 # sub.plot(xvals,yvals, label="extreme")
 
 
