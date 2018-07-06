@@ -164,7 +164,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
     // printf("time %.5f\n",traj_info->timer);
 
    
-    // traj_info->timer /= 5;
+    // traj_info->timer /= 1.5;
     // interpolate_fill_qposes(traj_info);
 
     mj_forward(traj_info->m, traj_info->d);
