@@ -1,5 +1,12 @@
 #include "main.h"
 
+uint64_t traj_time_in_micros()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return 1000000 * tv.tv_sec + tv.tv_usec;
+}
+
 int countup = 0;
 
 int ksimcounter = 0;

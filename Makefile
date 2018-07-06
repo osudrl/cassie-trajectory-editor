@@ -40,9 +40,19 @@ mjpro150/bin/libglfw.so.3
 
 CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
 
-OBJS = bin/simulate.o bin/out.o bin/in.o
+OBJS =\
+	bin/simulate.o \
+	bin/out.o \
+	bin/in.o \
+	bin/vectors.o \
+	bin/ik.o
 
-HEADS = src/main.h src/out.h src/in.h
+HEADS =  \
+	src/main.h \
+	src/out.h \
+	src/in.h \
+	src/vectors.h \
+	src/ik.h
 
 all : $(MAIN) | mjkey.txt
 
@@ -128,6 +138,22 @@ bin/in.o : $(HEADS) src/in.c | mjkey.txt $(MJ) $(CASSIE)
 		$(CCOMMON) \
 		src/in.c \
 		-o bin/in.o
+
+bin/vectors.o : $(HEADS) src/vectors.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/vectors.c \
+		-o bin/vectors.o
+
+bin/ik.o : $(HEADS) src/ik.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/ik.c \
+		-o bin/ik.o
 
 clean :
 	-rm -rf bin 

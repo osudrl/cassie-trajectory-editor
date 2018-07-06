@@ -509,6 +509,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     traj_info.m = m;
     traj_info.d = d;
     traj_info.pert = &pert;
+    traj_info.timeline = NULL;
 }
 
 
