@@ -1,7 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx
 
-MAIN = traj jointtest
+MAIN = traj
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -93,13 +93,6 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    $(LCOMMON) \
 	    -o traj
 
-jointtest : bin/main-joint.o  $(OBJS) $(HEADS)  | mjkey.txt $(CASSIE) $(MJ)
-	g++ \
-		$(FLAGS) \
-		bin/main-joint.o $(OBJS)\
-		$(LCOMMON) \
-		-o jointtest
-
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
@@ -114,14 +107,6 @@ bin/main-traj.o : $(HEADS) src/main-traj.c | mjkey.txt $(MJ) $(CASSIE)
 		$(CCOMMON) \
 		src/main-traj.c \
 		-o bin/main-traj.o
-
-bin/main-joint.o : $(HEADS) src/main-joint.c | mjkey.txt $(MJ) $(CASSIE)
-	-@mkdir -p bin
-	gcc -c \
-		$(FLAGS) \
-		$(CCOMMON) \
-		src/main-joint.c \
-		-o bin/main-joint.o
 
 bin/out.o : $(HEADS) src/out.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

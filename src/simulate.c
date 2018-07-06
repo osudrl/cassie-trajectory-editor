@@ -22,6 +22,7 @@ mjData* d = 0;
 char lastfile[1000] = "";
 traj_info_t traj_info;
 
+
 // user state
 bool paused = false;
 bool showoption = false;
@@ -131,6 +132,15 @@ const char help_content[] =
 
 char opt_title[1000] = "";
 char opt_content[1000];
+
+void reset_traj_info()
+{
+    traj_info.m = m;
+    traj_info.d = d;
+    traj_info.pert = &pert;
+    traj_info.timeline.init = 0;
+    traj_info.start_time = traj_time_in_micros();
+}
 
 
 //-------------------------------- profiler and sensor ----------------------------------
@@ -506,10 +516,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
 
-    traj_info.m = m;
-    traj_info.d = d;
-    traj_info.pert = &pert;
-    traj_info.timeline = NULL;
+    reset_traj_info();
 }
 
 

@@ -30,6 +30,11 @@ uint64_t traj_time_in_micros()
     return 1000000 * tv.tv_sec + tv.tv_usec;
 }
 
+uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
+{
+    return traj_time_in_micros() - traj_info->start_time;
+}
+
 int traj_foreach_frame_lastmod = 0;
 
 void traj_foreach_frame(traj_info_t* traj_info)
@@ -55,6 +60,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
 
 
     // printf("%ld size div ints %.2f\n", sizeof(traj_pt_t), 17256.0/ sizeof(traj_pt_t ));
+    in_my_qposes(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }
 
