@@ -18,6 +18,10 @@ struct __attribute__ ((packed)) _full_traj_state_t_
 };
 typedef struct _full_traj_state_t_ full_traj_state_t;
 
+void in_init_timeline(traj_info_t* traj_info);
+void in_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired);
+void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame);
+int timeline_get_frame_from_time(traj_info_t* traj_info);
 void in_my_qposes(traj_info_t* traj_info);
 
 #endif

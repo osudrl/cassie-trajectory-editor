@@ -1,7 +1,65 @@
 #include "main.h"
 
+
+void traj_fill_single_body_xpos(traj_info_t* traj_info, double* body_xposes, int selectedbody, int currframe)
+{
+    timeline_set_qposes_to_pose_frame(traj_info, currframe);
+    mj_forward(traj_info->m, traj_info->d);
+    body_xposes[0] = traj_info->d->xpos[selectedbody * 3 + 0];
+    body_xposes[1] = traj_info->d->xpos[selectedbody * 3 + 1];
+    body_xposes[2] = traj_info->d->xpos[selectedbody * 3 + 2];
+}
+
+void traj_fill_body_xposes(traj_info_t* traj_info, double* body_xposes, int selectedbody)
+{
+    int i;
+    int startframe;
+    int currframe;
+
+    if(!traj_info->timeline.init)
+        in_init_timeline(traj_info);
+
+    startframe = timeline_get_frame_from_time(traj_info);
+
+    for (i = 0; i < NODECOUNT; i++)
+    {
+        currframe = (TIMELINE_SIZE / NODECOUNT) * i;
+        traj_fill_single_body_xpos(traj_info, body_xposes + (3 * i), selectedbody, currframe);
+    }
+
+    timeline_set_qposes_to_pose_frame(traj_info, startframe);
+    
+}
+
+void traj_position_nodes(traj_info_t* traj_info)
+{
+    double body_xposes[NODECOUNT * 3];
+    int i;
+
+    if(!traj_info->timeline.init)
+        in_init_timeline(traj_info);
+
+    traj_fill_body_xposes(traj_info, body_xposes, traj_info->pert->select);
+
+    for (i = 0; i < NODECOUNT; i++)
+    {
+        traj_info->d->qpos[35 + (i * 3) + 0] = body_xposes[i * 3 + 0];
+        traj_info->d->qpos[35 + (i * 3) + 1] = body_xposes[i * 3 + 1];
+        traj_info->d->qpos[35 + (i * 3) + 2] = body_xposes[i * 3 + 2];
+    }
+    mj_forward(traj_info->m, traj_info->d);
+}
+
+int traj_last_select_id = 0;
+
 int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
+    if (traj_info->pert->select != traj_last_select_id &&
+            traj_info->pert->select > 0)
+        traj_position_nodes(traj_info);
+
+    traj_last_select_id = traj_info->pert->select;
+
     if(traj_info->pert->active) 
     {
         // printf("selected: %d\n", traj_info->pert->select);
@@ -10,13 +68,6 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
             traj_info->d->qpos[0] = traj_info->pert->refpos[0];
             traj_info->d->qpos[1] = traj_info->pert->refpos[1];
             traj_info->d->qpos[2] = traj_info->pert->refpos[2];
-            return 0;
-        }
-        else if (traj_info->pert->select == 26)
-        {
-            traj_info->d->qpos[35] = traj_info->pert->refpos[0];
-            traj_info->d->qpos[36] = traj_info->pert->refpos[1];
-            traj_info->d->qpos[37] = traj_info->pert->refpos[2];
             return 0;
         }
         else

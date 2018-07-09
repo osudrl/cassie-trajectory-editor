@@ -3,5 +3,5 @@ mjkey.txt
 mjpro150/
 *.o
 traj
-jointtest
 out-traj.csv
+box

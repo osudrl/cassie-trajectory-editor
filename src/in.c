@@ -47,16 +47,29 @@ void in_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
     }
 }
 
+void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
+{
+    if(!traj_info->timeline.init)
+        in_init_timeline(traj_info);
+
+    in_set_mj_qpose(traj_info, traj_info->timeline.qposes + frame);
+}
+
+int timeline_get_frame_from_time(traj_info_t* traj_info)
+{
+    int frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 5));
+    frame = (frame % TIMELINE_SIZE);
+    return frame;
+}
+
 void in_my_qposes(traj_info_t* traj_info)
 {
     int frame;
-    qpos_t* desired;
 
     if(!traj_info->timeline.init)
         in_init_timeline(traj_info);
 
-    frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 5));
-    desired = traj_info->timeline.qposes + (frame % TIMELINE_SIZE);
-    in_set_mj_qpose(traj_info, desired);
+    frame = timeline_get_frame_from_time(traj_info);
+    timeline_set_qposes_to_pose_frame(traj_info, frame);
 }
 
