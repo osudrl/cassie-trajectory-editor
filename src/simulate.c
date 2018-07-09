@@ -149,7 +149,7 @@ void reset_traj_info()
 // init profiler
 void profilerinit(void)
 {
-    int i, n;
+   /* int i, n;
 
     // set figures to default
     mjv_defaultFigure(&figconstraint);
@@ -236,13 +236,13 @@ void profilerinit(void)
         {
             figtimer.linedata[n][2*i] = (float)-i;
             figsize.linedata[n][2*i] = (float)-i;
-        }
+        }*/
 }
 
 // show profiler
 void profilerupdate(void)
 {
-    int i, n;
+    /*int i, n;
 
     // update constraint figure
     figconstraint.linepnt[0] = mjMIN(mjMIN(d->solver_iter, mjNSOLVER), mjMAXLINEPNT);
@@ -346,6 +346,7 @@ void profilerupdate(void)
         figsize.linepnt[n] = pnt;
         figsize.linedata[n][1] = sdata[n];
     }
+    */
 } 
 
 
@@ -353,14 +354,14 @@ void profilerupdate(void)
 // show profiler
 void profilershow(mjrRect rect)
 {
-    mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
+    /*mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
     mjr_figure(viewport, &figtimer, &con);
     viewport.bottom += rect.height/4;
     mjr_figure(viewport, &figsize, &con);
     viewport.bottom += rect.height/4;
     mjr_figure(viewport, &figcost, &con);
     viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figconstraint, &con);
+    mjr_figure(viewport, &figconstraint, &con);*/
 }
 
 
@@ -368,7 +369,7 @@ void profilershow(mjrRect rect)
 // init sensor figure
 void sensorinit(void)
 {
-    // set figure to default
+    /*// set figure to default
     mjv_defaultFigure(&figsensor);
 
     // set flags
@@ -389,14 +390,14 @@ void sensorinit(void)
     figsensor.range[0][0] = 0;
     figsensor.range[0][1] = 0;
     figsensor.range[1][0] = -1;
-    figsensor.range[1][1] = 1;
+    figsensor.range[1][1] = 1;*/
 }
 
 
 // update sensor figure
 void sensorupdate(void)
 {
-    static const int maxline = 10;
+    /*static const int maxline = 10;
 
     // clear linepnt
     for( int i=0; i<maxline; i++ )
@@ -439,7 +440,7 @@ void sensorupdate(void)
         // update linepnt
         figsensor.linepnt[lineid] = mjMIN(mjMAXLINEPNT-1, 
                                           figsensor.linepnt[lineid]+2*dim);
-    }
+    }*/
 }
 
 
@@ -447,9 +448,9 @@ void sensorupdate(void)
 // show sensor figure
 void sensorshow(mjrRect rect)
 {
-    // render figure on the right
+    /*// render figure on the right
     mjrRect viewport = {rect.width - rect.width/4, rect.bottom, rect.width/4, rect.height/3};
-    mjr_figure(viewport, &figsensor, &con);
+    mjr_figure(viewport, &figsensor, &con);*/
 }
 
 
