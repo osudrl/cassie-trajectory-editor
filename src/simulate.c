@@ -139,7 +139,8 @@ void reset_traj_info()
     traj_info.d = d;
     traj_info.pert = &pert;
     traj_info.timeline.init = 0;
-    traj_info.start_time = traj_time_in_micros();
+    traj_info.time_start = traj_time_in_micros();
+    traj_info.paused = &paused;
 }
 
 
@@ -998,8 +999,8 @@ void simulation(void)
     }
     else
     {
-       traj_foreach_frame(&traj_info);
     }
+   traj_foreach_frame(&traj_info);
     /*
     // running
     else

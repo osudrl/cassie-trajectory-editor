@@ -5,6 +5,7 @@
 #include "glfw3.h"
 #include <stdio.h>
 #include <sys/time.h>
+#include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
 #define TIMELINE_SIZE 1682
@@ -28,7 +29,9 @@ struct _traj_info_
     mjData* d;
     mjvPerturb* pert;
     timeline_t timeline;
-    uint64_t start_time;
+    uint64_t time_start;
+    uint64_t time_frozen;
+    bool* paused;
 };
 typedef struct _traj_info_ traj_info_t;
 
