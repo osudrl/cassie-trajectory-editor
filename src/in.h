@@ -18,7 +18,6 @@ struct __attribute__ ((packed)) _full_traj_state_t_
 };
 typedef struct _full_traj_state_t_ full_traj_state_t;
 
-void in_other_qposes(double* arr);
 void in_my_qposes(traj_info_t* traj_info);
 
 #endif
