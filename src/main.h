@@ -7,7 +7,7 @@
 #include <sys/time.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define TIMELINE_SIZE 23
+#define TIMELINE_SIZE 1682
 
 struct _qpos_t_
 {

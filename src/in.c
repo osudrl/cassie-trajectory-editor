@@ -42,9 +42,9 @@ uint32_t in_fill_full_traj_state_array(full_traj_state_t* buf, int bufcount)
     FILE* fd_in;
     uint32_t result;
 
-    fd_in = fopen("step_in_place_trajectory", "r");
+    fd_in = fopen("stepdata.bin", "r");
     result = fread(buf, sizeof(full_traj_state_t), bufcount, fd_in);
-    printf("read %d bytes\n", result);
+    // printf("read %d bytes\n", result);
 
     fclose(fd_in);
     return result;
@@ -54,7 +54,7 @@ void in_copy_single_full_traj_state_to_qpos(qpos_t* qpos, full_traj_state_t* sta
 {
     int i;
 
-    printf("time = %.5f\n", state->time);
+    // printf("time = %.5f\n", state->time);
     for (i = 0; i < CASSIE_QPOS_SIZE; i++)
         qpos->q[i] = state->qpos[i];
 }
@@ -82,9 +82,9 @@ void in_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
     for(i = 0; i < CASSIE_QPOS_SIZE; i++)
     {
         traj_info->d->qpos[i] = desired->q[i];
-        printf("qpos%d=%.3f ", i, desired->q[i]);
+        // printf("qpos%d=%.3f ", i, desired->q[i]);
     }
-    printf("\n");
+    // printf("\n");
 }
 
 void in_my_qposes(traj_info_t* traj_info)
@@ -95,7 +95,7 @@ void in_my_qposes(traj_info_t* traj_info)
     if(!traj_info->timeline.init)
         in_init_timeline(traj_info);
 
-    frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 1000.0));
+    frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 ));
     desired = traj_info->timeline.qposes + (frame % TIMELINE_SIZE);
     in_set_mj_qpose(traj_info, desired);
 }

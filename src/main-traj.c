@@ -59,7 +59,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
 
 
 
-    // printf("%ld size div ints %.2f\n", sizeof(traj_pt_t), 17256.0/ sizeof(traj_pt_t ));
+    // printf("%ld size div ints %.2f\n", sizeof(full_traj_state_t), 1318688.0/ sizeof(full_traj_state_t ));
     in_my_qposes(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }
