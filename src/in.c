@@ -57,7 +57,7 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)
 {
-    int frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 5));
+    int frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
     frame = (frame % TIMELINE_SIZE);
     return frame;
 }

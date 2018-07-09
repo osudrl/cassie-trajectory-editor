@@ -39,7 +39,7 @@ void traj_fill_body_xposes(traj_info_t* traj_info, double* body_xposes, int sele
     
 }
 
-void traj_position_nodes(traj_info_t* traj_info)
+void traj_position_nodes(traj_info_t* traj_info, int selectedbody)
 {
     double body_xposes[NODECOUNT * 3];
     int i;
@@ -47,7 +47,7 @@ void traj_position_nodes(traj_info_t* traj_info)
     if(!traj_info->timeline.init)
         in_init_timeline(traj_info);
 
-    traj_fill_body_xposes(traj_info, body_xposes, traj_info->pert->select);
+    traj_fill_body_xposes(traj_info, body_xposes, selectedbody);
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -59,6 +59,14 @@ void traj_position_nodes(traj_info_t* traj_info)
 }
 
 int traj_last_select_id = 0;
+int traj_last_non_node_select_id = 0;
+int traj_last_activenum = 0;
+
+double traj_gauss(double r, double s)
+{
+    s *= 2;
+    return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
+}
 
 int node_body_index_to_joint_index(int bodyindex)
 {
@@ -75,17 +83,44 @@ void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index)
     traj_info->d->qpos[joint_start_index + 2] = traj_info->pert->refpos[2];
 }
 
+void node_dropped(traj_info_t* traj_info, int selected_node_body_id)
+{
+    int rootframe;
+    int frame_offset;
+    int timeline_index;
+    double filter;
+
+
+    rootframe = (TIMELINE_SIZE / NODECOUNT) * (selected_node_body_id - 27); // or maybe 28
+    printf("rootframe %d\n", rootframe);
+    timeline_index = (rootframe) % TIMELINE_SIZE;
+    traj_info->timeline.qposes[timeline_index].q[2] += traj_gauss(0, 1);
+    for(frame_offset = 1; (filter = traj_gauss(frame_offset/150.0, 1)) > 0.001; frame_offset++)
+    {
+        timeline_index = (frame_offset + rootframe) % TIMELINE_SIZE;
+        traj_info->timeline.qposes[timeline_index].q[2] += filter;
+        printf("filter %.5f\n", filter);
+
+        timeline_index = (rootframe + TIMELINE_SIZE - frame_offset) % TIMELINE_SIZE;
+        traj_info->timeline.qposes[timeline_index].q[2] += filter;
+    }
+}
+
 int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
     if (traj_info->pert->select != traj_last_select_id &&
             traj_info->pert->select > 0 &&
             traj_info->pert->select <= 25) //notanode
-        traj_position_nodes(traj_info);
-
-    traj_last_select_id = traj_info->pert->select;
+    {
+        traj_position_nodes(traj_info, traj_info->pert->select);
+        traj_last_non_node_select_id = traj_info->pert->select;        
+    }
 
     if(traj_info->pert->active) 
     {
+        traj_last_select_id = traj_info->pert->select;
+        traj_last_activenum = traj_info->pert->active;
+
         if(traj_info->pert->select == 1)
         {
             move_body_to_pert_refpos(traj_info, 0);
@@ -103,6 +138,13 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
             xyz_ref[2] = traj_info->pert->refpos[2];
             return 1;
         }
+    }
+    else if (traj_last_activenum == 1 && traj_last_select_id > 25)
+    {
+        node_dropped(traj_info, traj_last_select_id);
+
+        traj_last_select_id = traj_info->pert->select;
+        traj_last_activenum = traj_info->pert->active;
     }
     return 0;
 }
@@ -131,12 +173,6 @@ uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
 }
 
 int traj_foreach_frame_lastmod = 0;
-
-double traj_gauss(double r, double s)
-{
-    s *= 2;
-    return (mju_exp(-(r*r)/s))/(mjPI * s);
-}
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
