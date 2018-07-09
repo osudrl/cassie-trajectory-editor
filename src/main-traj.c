@@ -60,22 +60,40 @@ void traj_position_nodes(traj_info_t* traj_info)
 
 int traj_last_select_id = 0;
 
+int node_body_index_to_joint_index(int bodyindex)
+{
+    bodyindex -= 28;
+    bodyindex *= 3;
+    bodyindex += 41;
+    return bodyindex;
+}
+
+void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index)
+{
+    traj_info->d->qpos[joint_start_index + 0] = traj_info->pert->refpos[0];
+    traj_info->d->qpos[joint_start_index + 1] = traj_info->pert->refpos[1];
+    traj_info->d->qpos[joint_start_index + 2] = traj_info->pert->refpos[2];
+}
+
 int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
     if (traj_info->pert->select != traj_last_select_id &&
-            traj_info->pert->select > 0)
+            traj_info->pert->select > 0 &&
+            traj_info->pert->select <= 25) //notanode
         traj_position_nodes(traj_info);
 
     traj_last_select_id = traj_info->pert->select;
 
     if(traj_info->pert->active) 
     {
-        // printf("selected: %d\n", traj_info->pert->select);
         if(traj_info->pert->select == 1)
         {
-            traj_info->d->qpos[0] = traj_info->pert->refpos[0];
-            traj_info->d->qpos[1] = traj_info->pert->refpos[1];
-            traj_info->d->qpos[2] = traj_info->pert->refpos[2];
+            move_body_to_pert_refpos(traj_info, 0);
+            return 0;
+        }
+        else if (traj_info->pert->select > 25) //isanode
+        {
+            move_body_to_pert_refpos(traj_info, node_body_index_to_joint_index(traj_info->pert->select));
             return 0;
         }
         else
@@ -114,10 +132,17 @@ uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
 
 int traj_foreach_frame_lastmod = 0;
 
+double traj_gauss(double r, double s)
+{
+    s *= 2;
+    return (mju_exp(-(r*r)/s))/(mjPI * s);
+}
+
 void traj_foreach_frame(traj_info_t* traj_info)
 {
     double xyz_xpos_target[3];
     int mod;
+    double x = 0;
     mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
     if(mod && mod != traj_foreach_frame_lastmod)
     {
@@ -133,10 +158,6 @@ void traj_foreach_frame(traj_info_t* traj_info)
             traj_info->pert->select);
     }
 
-
-
-    // printf("%ld size div ints %.2f\n", sizeof(full_traj_state_t), 1318688.0/ sizeof(full_traj_state_t ));
-    
     in_my_qposes(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }
