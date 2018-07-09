@@ -9,7 +9,8 @@
 
 #define CASSIE_QPOS_SIZE 35
 #define TIMELINE_SIZE 1682
-#define NODECOUNT 10
+#define NODECOUNT 30
+#define NODE_OFFSET 1
 
 struct _qpos_t_
 {

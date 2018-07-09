@@ -1,6 +1,14 @@
 #include "main.h"
 
-
+/*void traj_fill_single_body_xpos(traj_info_t* traj_info, double* body_xposes, int selectedbody, int currframe)
+{
+    timeline_set_qposes_to_pose_frame(traj_info, currframe);
+    mj_forward(traj_info->m, traj_info->d);
+    body_xposes[0] = traj_info->d->xpos[selectedbody * 3 + 0] - traj_info->d->xpos[1* 3 + 0];
+    body_xposes[1] = traj_info->d->xpos[selectedbody * 3 + 1] - traj_info->d->xpos[1* 3 + 1];
+    body_xposes[2] = traj_info->d->xpos[selectedbody * 3 + 2] - traj_info->d->xpos[1* 3 + 2];
+}
+*/
 void traj_fill_single_body_xpos(traj_info_t* traj_info, double* body_xposes, int selectedbody, int currframe)
 {
     timeline_set_qposes_to_pose_frame(traj_info, currframe);
@@ -43,9 +51,9 @@ void traj_position_nodes(traj_info_t* traj_info)
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        traj_info->d->qpos[38 + (i * 3) + 0] = body_xposes[i * 3 + 0];
-        traj_info->d->qpos[38 + (i * 3) + 1] = body_xposes[i * 3 + 1];
-        traj_info->d->qpos[38 + (i * 3) + 2] = body_xposes[i * 3 + 2];
+        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 0] = body_xposes[i * 3 + 0];
+        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 1] = body_xposes[i * 3 + 1];
+        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 2] = body_xposes[i * 3 + 2];
     }
     mj_forward(traj_info->m, traj_info->d);
 }
