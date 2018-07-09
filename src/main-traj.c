@@ -43,9 +43,9 @@ void traj_position_nodes(traj_info_t* traj_info)
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        traj_info->d->qpos[35 + (i * 3) + 0] = body_xposes[i * 3 + 0];
-        traj_info->d->qpos[35 + (i * 3) + 1] = body_xposes[i * 3 + 1];
-        traj_info->d->qpos[35 + (i * 3) + 2] = body_xposes[i * 3 + 2];
+        traj_info->d->qpos[38 + (i * 3) + 0] = body_xposes[i * 3 + 0];
+        traj_info->d->qpos[38 + (i * 3) + 1] = body_xposes[i * 3 + 1];
+        traj_info->d->qpos[38 + (i * 3) + 2] = body_xposes[i * 3 + 2];
     }
     mj_forward(traj_info->m, traj_info->d);
 }
