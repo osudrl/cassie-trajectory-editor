@@ -1,7 +1,7 @@
 
-FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx
+FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g
 
-MAIN = traj
+MAIN = traj box
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -61,10 +61,7 @@ mjkey.txt :
 		Please provide a product key for MuJoCo and name it mjkey.txt)
 
 $(CASSIE) : | mjkey.txt
-	-rm -rf model
-	mkdir -p model
 	mkdir -p model/cassie-stl-meshes
-	wget -O model/cassie.xml "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie.xml" 
 	wget -O model/cassie-stl-meshes/achilles-rod.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/achilles-rod.stl" 
 	wget -O model/cassie-stl-meshes/foot-crank.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot-crank.stl" 
 	wget -O model/cassie-stl-meshes/foot.stl "https://raw.githubusercontent.com/osudrl/cassie-mujoco-sim/master/model/cassie-stl-meshes/foot.stl" 
@@ -92,6 +89,19 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    bin/main-traj.o $(OBJS) \
 	    $(LCOMMON) \
 	    -o traj
+
+box : box.o | mjkey.txt $(MJ) 
+	g++ \
+		$(FLAGS) \
+	    box.o \
+	    $(LCOMMON) \
+	    -o box
+
+box.o : box.c | mjkey.txt $(MJ)
+	gcc -c \
+		$(FLAGS) \
+		box.c \
+		-o box.o
 
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
@@ -147,12 +157,10 @@ clean :
 lpurge :
 	-rm -rf bin 
 	-rm -rf $(MAIN)
-	-rm -rf model
 	-rm -rf mjpro150
 
 purge :
 	-rm -rf bin 
 	-rm -rf $(MAIN)
-	-rm -rf model
 	-rm -rf mjpro150
 	-rm -f mjkey.txt	

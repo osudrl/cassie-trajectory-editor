@@ -12,6 +12,13 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
             traj_info->d->qpos[2] = traj_info->pert->refpos[2];
             return 0;
         }
+        else if (traj_info->pert->select == 26)
+        {
+            traj_info->d->qpos[35] = traj_info->pert->refpos[0];
+            traj_info->d->qpos[36] = traj_info->pert->refpos[1];
+            traj_info->d->qpos[37] = traj_info->pert->refpos[2];
+            return 0;
+        }
         else
         {
             xyz_ref[0] = traj_info->pert->refpos[0];
@@ -50,23 +57,22 @@ int traj_foreach_frame_lastmod = 0;
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
-    // double xyz_xpos_target[3];
-    // int mod;
-    // mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
-    // if(mod && mod != traj_foreach_frame_lastmod)
-    // {
-    //     traj_foreach_frame_lastmod = mod;
-    //     traj_perform_initial_pert_caluclations(traj_info);
-    // }
-    // else if(!mod)
-    //     traj_foreach_frame_lastmod = mod;
+    double xyz_xpos_target[3];
+    int mod;
+    mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
+    if(mod && mod != traj_foreach_frame_lastmod)
+    {
+        traj_foreach_frame_lastmod = mod;
+    }
+    else if(!mod)
+        traj_foreach_frame_lastmod = mod;
 
-    // for(int z = 0; mod && z < 20; z++)
-    // {
-    //     better_body_optimizer(traj_info,
-    //         xyz_xpos_target,
-    //         traj_info->pert->select);
-    // }
+    for(int z = 0; mod && z < 20; z++)
+    {
+        ik_better_body_optimizer(traj_info,
+            xyz_xpos_target,
+            traj_info->pert->select);
+    }
 
 
 
