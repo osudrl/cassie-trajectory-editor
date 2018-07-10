@@ -43,14 +43,14 @@ CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
 OBJS =\
 	bin/simulate.o \
 	bin/out.o \
-	bin/in.o \
+	bin/timeline.o \
 	bin/vectors.o \
 	bin/ik.o
 
 HEADS =  \
 	src/main.h \
 	src/out.h \
-	src/in.h \
+	src/timeline.h \
 	src/vectors.h \
 	src/ik.h
 
@@ -113,13 +113,13 @@ bin/out.o : $(HEADS) src/out.c | mjkey.txt $(MJ) $(CASSIE)
 		src/out.c \
 		-o bin/out.o
 
-bin/in.o : $(HEADS) src/in.c | mjkey.txt $(MJ) $(CASSIE)
+bin/timeline.o : $(HEADS) src/timeline.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
 		$(FLAGS) \
 		$(CCOMMON) \
-		src/in.c \
-		-o bin/in.o
+		src/timeline.c \
+		-o bin/timeline.o
 
 bin/vectors.o : $(HEADS) src/vectors.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

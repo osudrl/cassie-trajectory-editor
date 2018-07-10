@@ -141,6 +141,7 @@ void reset_traj_info()
     traj_info.timeline.init = 0;
     traj_info.time_start = traj_time_in_micros();
     traj_info.paused = &paused;
+    traj_info.filename_step_data = FILENAME_STEP_DATA;
 }
 
 

@@ -11,6 +11,7 @@
 #define TIMELINE_SIZE 1682
 #define NODECOUNT 30
 #define NODE_OFFSET 1
+#define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 
 struct _qpos_t_
 {
@@ -34,11 +35,12 @@ struct _traj_info_
     uint64_t time_start;
     uint64_t time_frozen;
     bool* paused;
+    char* filename_step_data;
 };
 typedef struct _traj_info_ traj_info_t;
 
 #include "out.h"
-#include "in.h"
+#include "timeline.h"
 #include "vectors.h"
 #include "ik.h"
 

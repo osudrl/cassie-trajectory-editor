@@ -25,7 +25,7 @@ void traj_fill_body_xposes(traj_info_t* traj_info, double* body_xposes, int sele
     int currframe;
 
     if(!traj_info->timeline.init)
-        in_init_timeline(traj_info);
+        timeiline_init_from_input_file(traj_info);
 
     startframe = timeline_get_frame_from_time(traj_info);
 
@@ -45,7 +45,7 @@ void traj_position_nodes(traj_info_t* traj_info, int selectedbody)
     int i;
 
     if(!traj_info->timeline.init)
-        in_init_timeline(traj_info);
+        timeiline_init_from_input_file(traj_info);
 
     traj_fill_body_xposes(traj_info, body_xposes, selectedbody);
 
