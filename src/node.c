@@ -70,8 +70,8 @@ double gaussian_distrobution(double r, double s)
 
 void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
 {
-    timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 1000);
+    // timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 5000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -158,7 +158,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
-    iterations = 400;
+    iterations = 600;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {

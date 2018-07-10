@@ -16,10 +16,9 @@ void fill_joint_array(int* arr, int body_id_end)
 {
     int i= 0;
 
-    if(body_id_end != 25)
-        for(i = 0; i < CASSIE_QPOS_SIZE - 7; i++)
-            arr[i] = i+7;
-    else
+    
+    
+    if(body_id_end >= 14 && body_id_end <= 25)
     {
         arr[i++] = 30;
         arr[i++] = 29;
@@ -28,6 +27,19 @@ void fill_joint_array(int* arr, int body_id_end)
         arr[i++] = 22;
         arr[i++] = 21;
     }
+    else if (body_id_end >= 2 && body_id_end <= 13)
+    {
+        arr[i++] = 16;
+        arr[i++] = 15;
+        arr[i++] = 14;
+        arr[i++] = 9;
+        arr[i++] = 8;
+        arr[i++] = 7;
+    }
+    else
+        for(i = 0; i < CASSIE_QPOS_SIZE - 7; i++)
+            arr[i] = i+7;
+
     arr[i] = -1;
 }
 
@@ -48,7 +60,7 @@ double ik_better_body_optimizer(
 
     fill_joint_array(joint_array,body_id_end);
     best_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * .25 * best_diff + 0.00001;
+    dx = 1.93 * .35 * best_diff + 0.00001;
     for(i = 0; i < CASSIE_QPOS_SIZE && joint_array[i] >= 0; i++)
     {
         index = joint_array[i];
@@ -96,9 +108,13 @@ void ik_iterative_better_body_optimizer(
     int i;
 
     best_diff = 500; //bignumber
-    for (i = 0; i < count && best_diff > 0.002; i++)
+    for (i = 0; i < count && best_diff > 0.00175; i++)
     {
         best_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+    }
+    if(i == count)
+    {
+        printf("MAY BE IMPOSSIBLE\n");
     }
 }
 
