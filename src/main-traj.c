@@ -48,7 +48,9 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
     }
     else if (traj_last_activenum == 1 && traj_last_select_id > 25)
     {
-        node_dropped(traj_info, traj_last_non_node_select_id, traj_last_select_id);
+        node_dropped(traj_info, 
+            g(traj_last_non_node_select_id), 
+            node_get_body_id_from_real_body_id(traj_last_select_id));
 
         traj_last_select_id = traj_info->pert->select;
         traj_last_activenum = traj_info->pert->active;

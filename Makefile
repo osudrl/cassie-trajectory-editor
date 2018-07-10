@@ -1,5 +1,5 @@
 
-FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g
+FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
 MAIN = traj
 

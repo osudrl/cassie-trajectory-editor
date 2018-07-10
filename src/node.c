@@ -68,139 +68,106 @@ double gaussian_distrobution(double r, double s)
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
 }
 
-void nodeframe_ik_transform(traj_info_t* traj_info, int selected_cassie_body_id, int frame, double* target)
+void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
 {
     timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, selected_cassie_body_id, 25);
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 25);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
-}
-
-int safe_add_rootframe_to_frame_offset(int rootframe, int frame_offset)
-{
-    rootframe += TIMELINE_SIZE;
-    rootframe += frame_offset;
-    rootframe %= TIMELINE_SIZE;
-    return rootframe;
 }
 
 void scale_target_using_frame_offset(
     traj_info_t* traj_info,
-    double* ik_body_target, 
-    double* transform_vector,
+    v3_t ik_body_target_xpos, 
+    v3_t grabbed_node_transformation,
     int rootframe,
     int frame_offset,
-    int selected_cassie_body_id)
+    cassie_body_id_t body_id)
 {
     double filter;
-    double scaled_diff_only[3];
+    v3_t body_init_xpos;
 
-    filter = gaussian_distrobution(frame_offset/100.0, 1) *(1/0.318310);
-   
-    scaled_diff_only[0] = transform_vector[0] * filter;
-    scaled_diff_only[1] = transform_vector[1] * filter;
-    scaled_diff_only[2] = transform_vector[2] * filter;
-
-    timeline_set_qposes_to_pose_frame(traj_info, 
-        safe_add_rootframe_to_frame_offset(rootframe ,frame_offset));
-
-    mj_forward(traj_info->m,traj_info->d);
-
-    mju_add3(ik_body_target, traj_info->d->xpos + (selected_cassie_body_id*3), scaled_diff_only);
+    filter = gaussian_distrobution(frame_offset/200.0, 1) *(1/0.318310);
+    
+    body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe + frame_offset, body_id);
+    mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
 }
 
-int get_frame_from_node_body_id(int selected_node_body_id)
+int get_frame_from_node_body_id(node_body_id_t node_id)
 {
-    return (TIMELINE_SIZE / NODECOUNT) * (selected_node_body_id - 27); // or maybe 28
+    return (TIMELINE_SIZE / NODECOUNT) * (node_id.id - 27); // or maybe 28
 }
 
 void calculate_node_dropped_transformation_vector(
     traj_info_t* traj_info, 
-    double* transform_vector,
-    int selected_cassie_body_id, 
-    int selected_node_body_id)
+    v3_t grabbed_node_transformation,
+    cassie_body_id_t body_id, 
+    node_body_id_t node_id)
 {
     int rootframe;
-    double body_init_xpos[3];
-    double node_now_xpos[3];
+    v3_t body_init_xpos;
+    v3_t node_final_xpos;
 
-    rootframe = get_frame_from_node_body_id(selected_node_body_id);
-    timeline_set_qposes_to_pose_frame(traj_info, rootframe);
-    mj_forward(traj_info->m,traj_info->d);
+    rootframe = get_frame_from_node_body_id(node_id);
+    body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe, body_id);
+    node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
-    body_init_xpos[0] = traj_info->d->xpos[selected_cassie_body_id*3 + 0];
-    body_init_xpos[1] = traj_info->d->xpos[selected_cassie_body_id*3 + 1];
-    body_init_xpos[2] = traj_info->d->xpos[selected_cassie_body_id*3 + 2];
-
-    node_now_xpos[0] = traj_info->d->xpos[selected_node_body_id*3 + 0];
-    node_now_xpos[1] = traj_info->d->xpos[selected_node_body_id*3 + 1];
-    node_now_xpos[2] = traj_info->d->xpos[selected_node_body_id*3 + 2];
-
-
-    mju_sub3(transform_vector, node_now_xpos, body_init_xpos);
-
+    mju_sub3(grabbed_node_transformation, node_final_xpos, body_init_xpos);
 }
 
-void node_dropped(traj_info_t* traj_info, int selected_cassie_body_id, int selected_node_body_id)
+void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
 {
     int rootframe;
     int frame_offset;
-    double transform_vector[3];
-    double ik_body_target[3];
+    double grabbed_node_transformation[3];
+    double ik_body_target_xpos[3];
 
-    rootframe = get_frame_from_node_body_id(selected_node_body_id);
+    rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
         traj_info, 
-        transform_vector, 
-        selected_cassie_body_id, 
-        selected_node_body_id);
+        grabbed_node_transformation, 
+        body_id, 
+        node_id);
 
     scale_target_using_frame_offset(
         traj_info,
-        ik_body_target, 
-        transform_vector,
+        ik_body_target_xpos, 
+        grabbed_node_transformation,
         rootframe,
         0,
-        selected_cassie_body_id);
+        body_id);
 
-    nodeframe_ik_transform(traj_info, selected_cassie_body_id, rootframe, ik_body_target);
+    nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
     for(frame_offset = 1; frame_offset < 400; frame_offset++)
     {
-        if(frame_offset % 5 == 0)
+        if(frame_offset % 10 == 0)
         {
             printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 4);
         }
         scale_target_using_frame_offset(
             traj_info,
-            ik_body_target, 
-            transform_vector,
+            ik_body_target_xpos, 
+            grabbed_node_transformation,
             rootframe,
             frame_offset,
-            selected_cassie_body_id);
-        nodeframe_ik_transform(
+            body_id);
+        nodeframe_ik_transform( 
             traj_info, 
-            selected_cassie_body_id, 
-            safe_add_rootframe_to_frame_offset(rootframe ,frame_offset), 
-            ik_body_target);
+            body_id, 
+            rootframe + frame_offset, 
+            ik_body_target_xpos);
 
         scale_target_using_frame_offset(
             traj_info,
-            ik_body_target, 
-            transform_vector,
+            ik_body_target_xpos, 
+            grabbed_node_transformation,
             rootframe,
             -frame_offset,
-            selected_cassie_body_id);
+            body_id);
         nodeframe_ik_transform(
             traj_info, 
-            selected_cassie_body_id, 
-            safe_add_rootframe_to_frame_offset(rootframe ,-frame_offset), 
-            ik_body_target);
-
-        // timeline_index = (frame_offset + rootframe) % TIMELINE_SIZE;
-        // traj_info->timeline.qposes[timeline_index].q[2] += filter;
-        // printf("filter %.5f\n", filter);
-
-        // timeline_index = (rootframe + TIMELINE_SIZE - frame_offset) % TIMELINE_SIZE;
-        // traj_info->timeline.qposes[timeline_index].q[2] += filter;
+            body_id, 
+            rootframe - frame_offset, 
+            ik_body_target_xpos);
     }
 }
