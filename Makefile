@@ -45,13 +45,15 @@ OBJS =\
 	bin/out.o \
 	bin/timeline.o \
 	bin/vectors.o \
-	bin/ik.o
+	bin/ik.o \
+	bin/node.o
 
 HEADS =  \
 	src/main.h \
 	src/out.h \
 	src/timeline.h \
 	src/vectors.h \
+	src/node.h \
 	src/ik.h
 
 all : $(MAIN) | mjkey.txt
@@ -136,6 +138,14 @@ bin/ik.o : $(HEADS) src/ik.c | mjkey.txt $(MJ) $(CASSIE)
 		$(CCOMMON) \
 		src/ik.c \
 		-o bin/ik.o
+
+bin/node.o : $(HEADS) src/node.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/node.c \
+		-o bin/node.o
 
 clean :
 	-rm -rf bin 
