@@ -86,9 +86,16 @@ void scale_target_using_frame_offset(
     double filter;
     v3_t body_init_xpos;
 
-    filter = gaussian_distrobution(frame_offset/200.0, 1) *(1/0.318310);
-    
+    filter = node_calculate_filter_from_frame_offset(frame_offset);
+
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe + frame_offset, body_id);
+    
+    /*
+    mju_addScl3
+    void mju_addScl3(mjtNum res[3], const mjtNum vec1[3], const mjtNum vec2[3], mjtNum scl);
+    Set res = vec1 + vec2*scl.
+    */
+
     mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
 }
 
@@ -171,3 +178,45 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             ik_body_target_xpos);
     }
 }
+
+void node_position_scale_visually(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+{
+    double grabbed_node_transformation[3];
+    double filter;
+    int rootframe;
+    int frame_offset;
+    int currframe;
+    int i;
+    v3_t node_qpos;
+    v3_t body_xpos;
+
+    calculate_node_dropped_transformation_vector(
+        traj_info, 
+        grabbed_node_transformation,
+        body_id,
+        node_id);
+
+    rootframe = get_frame_from_node_body_id(node_id);
+
+    for (i = 0; i < NODECOUNT; i++)
+    {
+        if(node_get_body_id_from_node_index(i).id == node_id.id)
+            continue;
+
+        currframe = (TIMELINE_SIZE / NODECOUNT) * i;
+        frame_offset = currframe - rootframe;
+        filter = node_calculate_filter_from_frame_offset(frame_offset);
+        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
+        body_xpos = node_get_body_xpos_by_frame(traj_info, currframe, body_id);
+        mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
+    }
+}
+
+double node_calculate_filter_from_frame_offset(double frame_offset)
+{
+    return gaussian_distrobution(frame_offset/125.0, 1) *(1/0.318310);
+}
+

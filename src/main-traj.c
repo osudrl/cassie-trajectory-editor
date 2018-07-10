@@ -36,6 +36,9 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
             v3_t dqpos = node_get_qpos_by_node_id(traj_info, 
                 node_get_body_id_from_real_body_id(traj_info->pert->select));
             mju_copy3(dqpos,traj_info->pert->refpos);
+            node_position_scale_visually(traj_info, 
+                g(traj_last_non_node_select_id), 
+                node_get_body_id_from_real_body_id(traj_info->pert->select));
             return 0;
         }
         else
