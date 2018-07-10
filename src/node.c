@@ -128,7 +128,7 @@ double normalCFD(double value)
 
 double percent(int frame_offset, int iterations)
 {
-    double sigma = 125.0;
+    double sigma = 110.0;
 
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
@@ -162,7 +162,9 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
-        if(frame_offset % 25 == 0)
+        if((frame_offset < iterations / 2 && frame_offset % (iterations / 50) == 0)
+            ||
+            (frame_offset > iterations /2 && frame_offset % (iterations / 2) == 0))
         {
             printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
         }
@@ -234,6 +236,6 @@ void node_position_scale_visually(
 
 double node_calculate_filter_from_frame_offset(double frame_offset)
 {
-    return gaussian_distrobution(frame_offset/125.0, 1) *(1/0.318310);
+    return gaussian_distrobution(frame_offset/110.0, 1) *(1/0.318310);
 }
 

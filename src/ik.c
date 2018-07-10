@@ -26,7 +26,7 @@ double ik_better_body_optimizer(
     double observed_diff;
 
     best_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * .5 * best_diff + 0.0001;
+    dx = 1.93 * .25 * best_diff + 0.0001;
     for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
     {
         pos_val_before_dx = traj_info->d->qpos[i];

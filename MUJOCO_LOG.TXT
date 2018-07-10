@@ -1,3 +1,0 @@
-Tue Jul 10 15:35:33 2018
-ERROR: Shadow framebuffer is not complete, error 0x8cdd
-
