@@ -49,10 +49,20 @@ void in_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
     }
 }
 
-void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
+int timeline_make_frame_safe(int frame)
 {
+    while(frame < 0)
+        frame += TIMELINE_SIZE;
+    frame %= TIMELINE_SIZE;
+    return frame;
+}
+
+void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
+{   
     if(!traj_info->timeline.init)
         timeiline_init_from_input_file(traj_info);
+
+    frame = timeline_make_frame_safe(frame);
 
     in_set_mj_qpose(traj_info, traj_info->timeline.qposes + frame);
 }
@@ -63,7 +73,9 @@ void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
 
     if(!traj_info->timeline.init)
         timeiline_init_from_input_file(traj_info);
-   
+    
+    frame = timeline_make_frame_safe(frame);
+
     for (i = 0; i < CASSIE_QPOS_SIZE; i++)
         traj_info->timeline.qposes[frame].q[i] = traj_info->d->qpos[i];
 
@@ -71,12 +83,10 @@ void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)
 {
-    int frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
-    frame = (frame % TIMELINE_SIZE);
-    return frame;
+    return mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
 }
 
-void in_my_qposes(traj_info_t* traj_info)
+void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)
 {
     int frame;
 

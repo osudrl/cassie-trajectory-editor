@@ -36,7 +36,6 @@ void traj_fill_body_xposes(traj_info_t* traj_info, double* body_xposes, int sele
     }
 
     timeline_set_qposes_to_pose_frame(traj_info, startframe);
-    
 }
 
 void traj_position_nodes(traj_info_t* traj_info, int selectedbody)
@@ -292,7 +291,6 @@ void traj_foreach_frame(traj_info_t* traj_info)
 {
     double xyz_xpos_target[3];
     int mod;
-    double x = 0;
     mod = allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
     if(mod && mod != traj_foreach_frame_lastmod)
     {
@@ -308,7 +306,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
             traj_info->pert->select);
     }
 
-    in_my_qposes(traj_info);
+    timeline_update_mj_poses_from_realtime(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }
 
