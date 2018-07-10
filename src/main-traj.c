@@ -83,26 +83,140 @@ void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index)
     traj_info->d->qpos[joint_start_index + 2] = traj_info->pert->refpos[2];
 }
 
-void node_dropped(traj_info_t* traj_info, int selected_node_body_id)
+void nodeframe_ik_transform(traj_info_t* traj_info, int selected_cassie_body_id, int frame, double* target)
+{
+    timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
+    ik_iterative_better_body_optimizer(traj_info, target, selected_cassie_body_id, 100);
+    timeline_overwrite_frame_using_curr_pose(traj_info, frame);
+}
+
+int safe_add_rootframe_to_frame_offset(int rootframe, int frame_offset)
+{
+    rootframe += TIMELINE_SIZE;
+    rootframe += frame_offset;
+    rootframe %= TIMELINE_SIZE;
+    return rootframe;
+}
+
+void scale_target_using_frame_offset(
+    traj_info_t* traj_info,
+    double* ik_body_target, 
+    double* transform_vector,
+    int rootframe,
+    int frame_offset,
+    int selected_cassie_body_id)
+{
+    double filter;
+    double scaled_diff_only[3];
+
+    filter = traj_gauss(frame_offset/50.0, 1) *(1/0.318310);
+   
+    scaled_diff_only[0] = transform_vector[0] * filter;
+    scaled_diff_only[1] = transform_vector[1] * filter;
+    scaled_diff_only[2] = transform_vector[2] * filter;
+
+    timeline_set_qposes_to_pose_frame(traj_info, 
+        safe_add_rootframe_to_frame_offset(rootframe ,frame_offset));
+
+    mj_forward(traj_info->m,traj_info->d);
+
+    mju_add3(ik_body_target, traj_info->d->xpos + (selected_cassie_body_id*3), scaled_diff_only);
+}
+
+int get_frame_from_node_body_id(int selected_node_body_id)
+{
+    return (TIMELINE_SIZE / NODECOUNT) * (selected_node_body_id - 27); // or maybe 28
+}
+
+void calculate_node_dropped_transformation_vector(
+    traj_info_t* traj_info, 
+    double* transform_vector,
+    int selected_cassie_body_id, 
+    int selected_node_body_id)
+{
+    int rootframe;
+    double body_init_xpos[3];
+    double node_now_xpos[3];
+
+    rootframe = get_frame_from_node_body_id(selected_node_body_id);
+    timeline_set_qposes_to_pose_frame(traj_info, rootframe);
+    mj_forward(traj_info->m,traj_info->d);
+
+    body_init_xpos[0] = traj_info->d->xpos[selected_cassie_body_id*3 + 0];
+    body_init_xpos[1] = traj_info->d->xpos[selected_cassie_body_id*3 + 1];
+    body_init_xpos[2] = traj_info->d->xpos[selected_cassie_body_id*3 + 2];
+
+    node_now_xpos[0] = traj_info->d->xpos[selected_node_body_id*3 + 0];
+    node_now_xpos[1] = traj_info->d->xpos[selected_node_body_id*3 + 1];
+    node_now_xpos[2] = traj_info->d->xpos[selected_node_body_id*3 + 2];
+
+
+    mju_sub3(transform_vector, node_now_xpos, body_init_xpos);
+
+}
+
+void node_dropped(traj_info_t* traj_info, int selected_cassie_body_id, int selected_node_body_id)
 {
     int rootframe;
     int frame_offset;
-    int timeline_index;
-    double filter;
+    double transform_vector[3];
+    double ik_body_target[3];
 
+    rootframe = get_frame_from_node_body_id(selected_node_body_id);
+    calculate_node_dropped_transformation_vector(
+        traj_info, 
+        transform_vector, 
+        selected_cassie_body_id, 
+        selected_node_body_id);
 
-    rootframe = (TIMELINE_SIZE / NODECOUNT) * (selected_node_body_id - 27); // or maybe 28
-    printf("rootframe %d\n", rootframe);
-    timeline_index = (rootframe) % TIMELINE_SIZE;
-    traj_info->timeline.qposes[timeline_index].q[2] += traj_gauss(0, 1);
-    for(frame_offset = 1; (filter = traj_gauss(frame_offset/150.0, 1)) > 0.001; frame_offset++)
+    scale_target_using_frame_offset(
+        traj_info,
+        ik_body_target, 
+        transform_vector,
+        rootframe,
+        0,
+        selected_cassie_body_id);
+
+    nodeframe_ik_transform(traj_info, selected_cassie_body_id, rootframe, ik_body_target);
+
+    for(frame_offset = 1; frame_offset < 200; frame_offset++)
     {
-        timeline_index = (frame_offset + rootframe) % TIMELINE_SIZE;
-        traj_info->timeline.qposes[timeline_index].q[2] += filter;
-        printf("filter %.5f\n", filter);
+        if(frame_offset % 5 == 0)
+        {
+            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 200);
+        }
+        scale_target_using_frame_offset(
+            traj_info,
+            ik_body_target, 
+            transform_vector,
+            rootframe,
+            frame_offset,
+            selected_cassie_body_id);
+        nodeframe_ik_transform(
+            traj_info, 
+            selected_cassie_body_id, 
+            safe_add_rootframe_to_frame_offset(rootframe ,frame_offset), 
+            ik_body_target);
 
-        timeline_index = (rootframe + TIMELINE_SIZE - frame_offset) % TIMELINE_SIZE;
-        traj_info->timeline.qposes[timeline_index].q[2] += filter;
+        scale_target_using_frame_offset(
+            traj_info,
+            ik_body_target, 
+            transform_vector,
+            rootframe,
+            -frame_offset,
+            selected_cassie_body_id);
+        nodeframe_ik_transform(
+            traj_info, 
+            selected_cassie_body_id, 
+            safe_add_rootframe_to_frame_offset(rootframe ,-frame_offset), 
+            ik_body_target);
+
+        // timeline_index = (frame_offset + rootframe) % TIMELINE_SIZE;
+        // traj_info->timeline.qposes[timeline_index].q[2] += filter;
+        // printf("filter %.5f\n", filter);
+
+        // timeline_index = (rootframe + TIMELINE_SIZE - frame_offset) % TIMELINE_SIZE;
+        // traj_info->timeline.qposes[timeline_index].q[2] += filter;
     }
 }
 
@@ -141,7 +255,7 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
     }
     else if (traj_last_activenum == 1 && traj_last_select_id > 25)
     {
-        node_dropped(traj_info, traj_last_select_id);
+        node_dropped(traj_info, traj_last_non_node_select_id, traj_last_select_id);
 
         traj_last_select_id = traj_info->pert->select;
         traj_last_activenum = traj_info->pert->active;

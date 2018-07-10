@@ -61,3 +61,17 @@ void ik_better_body_optimizer(
     
 }
 
+void ik_iterative_better_body_optimizer(
+    traj_info_t* traj_info,
+    double* xyz_xpos_target, 
+    int body_id_end,
+    int count)
+{
+    int i;
+
+    for (i = 0; i < count; i++)
+    {
+        ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+    }    
+}
+

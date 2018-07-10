@@ -55,6 +55,18 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
     in_set_mj_qpose(traj_info, traj_info->timeline.qposes + frame);
 }
 
+void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
+{
+    int i;
+
+    if(!traj_info->timeline.init)
+        in_init_timeline(traj_info);
+   
+    for (i = 0; i < CASSIE_QPOS_SIZE; i++)
+        traj_info->timeline.qposes[frame].q[i] = traj_info->d->qpos[i];
+
+}
+
 int timeline_get_frame_from_time(traj_info_t* traj_info)
 {
     int frame = mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
