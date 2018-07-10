@@ -71,7 +71,7 @@ double gaussian_distrobution(double r, double s)
 void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
 {
     timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 25);
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 100);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -121,12 +121,25 @@ void calculate_node_dropped_transformation_vector(
     mju_sub3(grabbed_node_transformation, node_final_xpos, body_init_xpos);
 }
 
+double normalCFD(double value)
+{
+   return 0.5 * erfc(-value * M_SQRT1_2);
+}
+
+double percent(int frame_offset, int iterations)
+{
+    double sigma = 125.0;
+
+    return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
+}
+
 void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
 {
     int rootframe;
     int frame_offset;
     double grabbed_node_transformation[3];
     double ik_body_target_xpos[3];
+    int iterations;
 
     rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
@@ -145,11 +158,13 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
-    for(frame_offset = 1; frame_offset < 400; frame_offset++)
+    iterations = TIMELINE_SIZE/2;
+
+    for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
-        if(frame_offset % 10 == 0)
+        if(frame_offset % 25 == 0)
         {
-            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 4);
+            printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
         }
         scale_target_using_frame_offset(
             traj_info,
@@ -178,6 +193,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             ik_body_target_xpos);
     }
 }
+
+
 
 void node_position_scale_visually(
     traj_info_t* traj_info,

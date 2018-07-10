@@ -12,7 +12,7 @@ double ik_fwd_kinematics_score(
     return vectors_norm_of_vector3_subtraction(xyz_xpos_curr_end, xyz_xpos_target);
 }
 
-void ik_better_body_optimizer(
+double ik_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
     int body_id_end)
@@ -26,7 +26,7 @@ void ik_better_body_optimizer(
     double observed_diff;
 
     best_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * 0.1 * best_diff + 0.001;
+    dx = 1.93 * .5 * best_diff + 0.0001;
     for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
     {
         pos_val_before_dx = traj_info->d->qpos[i];
@@ -59,6 +59,7 @@ void ik_better_body_optimizer(
     if(best_qpos_index > 2)
         traj_info->d->qpos[best_qpos_index] += dx;
     
+    return observed_diff;
 }
 
 void ik_iterative_better_body_optimizer(
@@ -67,11 +68,13 @@ void ik_iterative_better_body_optimizer(
     int body_id_end,
     int count)
 {
+    double observed_diff;
     int i;
 
-    for (i = 0; i < count; i++)
+    observed_diff = 500; //bignumber
+    for (i = 0; i < count && observed_diff > 0.0015; i++)
     {
-        ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+        observed_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
     }    
 }
 
