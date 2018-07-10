@@ -39,7 +39,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline.init = 1;
 }
 
-void in_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
+void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
 {
     int i;
 
@@ -64,7 +64,7 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
 
     frame = timeline_make_frame_safe(frame);
 
-    in_set_mj_qpose(traj_info, traj_info->timeline.qposes + frame);
+    timeline_set_mj_qpose(traj_info, traj_info->timeline.qposes + frame);
 }
 
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
