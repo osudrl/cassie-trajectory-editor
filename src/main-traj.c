@@ -109,7 +109,7 @@ void scale_target_using_frame_offset(
     double filter;
     double scaled_diff_only[3];
 
-    filter = traj_gauss(frame_offset/50.0, 1) *(1/0.318310);
+    filter = traj_gauss(frame_offset/100.0, 1) *(1/0.318310);
    
     scaled_diff_only[0] = transform_vector[0] * filter;
     scaled_diff_only[1] = transform_vector[1] * filter;
@@ -179,11 +179,11 @@ void node_dropped(traj_info_t* traj_info, int selected_cassie_body_id, int selec
 
     nodeframe_ik_transform(traj_info, selected_cassie_body_id, rootframe, ik_body_target);
 
-    for(frame_offset = 1; frame_offset < 200; frame_offset++)
+    for(frame_offset = 1; frame_offset < 400; frame_offset++)
     {
         if(frame_offset % 5 == 0)
         {
-            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 200);
+            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 400);
         }
         scale_target_using_frame_offset(
             traj_info,
