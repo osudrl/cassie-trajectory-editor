@@ -27,14 +27,15 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
         traj_last_select_id = traj_info->pert->select;
         traj_last_activenum = traj_info->pert->active;
 
-        if(traj_info->pert->select == 1)
+        if(traj_info->pert->select == 1 )
         {
-            move_body_to_pert_refpos(traj_info, 0);
-            return 0;
+            mju_copy3(traj_info->d->qpos,traj_info->pert->refpos);
         }
-        else if (traj_info->pert->select > 25) //isanode
+        else if( traj_info->pert->select > 25)
         {
-            move_body_to_pert_refpos(traj_info, node_body_index_to_joint_index(traj_info->pert->select));
+            v3_t dqpos = node_get_qpos_by_node_id(traj_info, 
+                node_get_body_id_from_real_body_id(traj_info->pert->select));
+            mju_copy3(dqpos,traj_info->pert->refpos);
             return 0;
         }
         else

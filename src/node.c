@@ -5,12 +5,24 @@ node_body_id_t node_get_body_id_from_node_index(int index)
 {
     node_body_id_t id;
     id.id = index + 27;
+
+    return id;
+}
+
+node_body_id_t node_get_body_id_from_real_body_id(int real)
+{
+    node_body_id_t id;
+    id.id = real;
+    
     return id;
 }
 
 v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
 {
-    return traj_info->d->qpos + CASSIE_QPOS_SIZE + (NON_NODE_COUNT * 3) + ((id.id - 27) * 3);
+    if(id.id < 27)
+        return 0;
+    else
+        return traj_info->d->qpos + CASSIE_QPOS_SIZE + (NON_NODE_COUNT * 3) + ((id.id - 27) * 3);
 }
 
 v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
@@ -54,21 +66,6 @@ double gaussian_distrobution(double r, double s)
 {
     s *= 2;
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
-}
-
-int node_body_index_to_joint_index(int bodyindex)
-{
-    bodyindex -= 28;
-    bodyindex *= 3;
-    bodyindex += 41;
-    return bodyindex;
-}
-
-void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index)
-{
-    traj_info->d->qpos[joint_start_index + 0] = traj_info->pert->refpos[0];
-    traj_info->d->qpos[joint_start_index + 1] = traj_info->pert->refpos[1];
-    traj_info->d->qpos[joint_start_index + 2] = traj_info->pert->refpos[2];
 }
 
 void nodeframe_ik_transform(traj_info_t* traj_info, int selected_cassie_body_id, int frame, double* target)

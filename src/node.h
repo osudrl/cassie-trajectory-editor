@@ -23,7 +23,9 @@ typedef mjtNum* v3_t;
 void node_dropped(traj_info_t* traj_info, int selected_cassie_body_id, int selected_node_body_id);
 void node_position_initial_using_cassie_body(traj_info_t* traj_info,  cassie_body_id_t body_id);
 void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index);
-int node_body_index_to_joint_index(int bodyindex);
+node_body_id_t node_get_body_id_from_node_index(int index);
+node_body_id_t node_get_body_id_from_real_body_id(int real);
+v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id);
 
 #endif
 
