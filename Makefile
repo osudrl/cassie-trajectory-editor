@@ -1,7 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g
 
-MAIN = traj box
+MAIN = traj
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -90,19 +90,6 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    $(LCOMMON) \
 	    -o traj
 
-box : box.o | mjkey.txt $(MJ) 
-	g++ \
-		$(FLAGS) \
-	    box.o \
-	    $(LCOMMON) \
-	    -o box
-
-box.o : box.c | mjkey.txt $(MJ)
-	gcc -c \
-		$(FLAGS) \
-		box.c \
-		-o box.o
-
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
@@ -158,9 +145,11 @@ lpurge :
 	-rm -rf bin 
 	-rm -rf $(MAIN)
 	-rm -rf mjpro150
+	-rm -rf model/cassie-stl-meshes
 
 purge :
 	-rm -rf bin 
 	-rm -rf $(MAIN)
 	-rm -rf mjpro150
-	-rm -f mjkey.txt	
+	-rm -f mjkey.txt
+	-rm -rf model/cassie-stl-meshes
