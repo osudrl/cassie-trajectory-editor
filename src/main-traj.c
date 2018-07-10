@@ -86,7 +86,7 @@ void move_body_to_pert_refpos(traj_info_t* traj_info, int joint_start_index)
 void nodeframe_ik_transform(traj_info_t* traj_info, int selected_cassie_body_id, int frame, double* target)
 {
     timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, selected_cassie_body_id, 100);
+    ik_iterative_better_body_optimizer(traj_info, target, selected_cassie_body_id, 25);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -183,7 +183,7 @@ void node_dropped(traj_info_t* traj_info, int selected_cassie_body_id, int selec
     {
         if(frame_offset % 5 == 0)
         {
-            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 400);
+            printf("Solving inverse kinematics... %.2f percent \n",(frame_offset+0.0) / 4);
         }
         scale_target_using_frame_offset(
             traj_info,
