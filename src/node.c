@@ -71,7 +71,7 @@ double gaussian_distrobution(double r, double s)
 void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
 {
     timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 100);
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 1000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -128,7 +128,7 @@ double normalCFD(double value)
 
 double percent(int frame_offset, int iterations)
 {
-    double sigma = 110.0;
+    double sigma = 130.0;
 
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
@@ -158,13 +158,13 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
-    iterations = TIMELINE_SIZE/2;
+    iterations = 400;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
-        if((frame_offset < iterations / 2 && frame_offset % (iterations / 50) == 0)
+        if((frame_offset < iterations / 2 && frame_offset % (iterations / 40) == 0)
             ||
-            (frame_offset > iterations /2 && frame_offset % (iterations / 2) == 0))
+            (frame_offset > iterations /2 && frame_offset % (iterations / 5) == 0))
         {
             printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
         }
@@ -236,6 +236,6 @@ void node_position_scale_visually(
 
 double node_calculate_filter_from_frame_offset(double frame_offset)
 {
-    return gaussian_distrobution(frame_offset/110.0, 1) *(1/0.318310);
+    return gaussian_distrobution(frame_offset/130.0, 1) *(1/0.318310);
 }
 

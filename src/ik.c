@@ -12,6 +12,25 @@ double ik_fwd_kinematics_score(
     return vectors_norm_of_vector3_subtraction(xyz_xpos_curr_end, xyz_xpos_target);
 }
 
+void fill_joint_array(int* arr, int body_id_end)
+{
+    int i= 0;
+
+    if(body_id_end != 25)
+        for(i = 0; i < CASSIE_QPOS_SIZE - 7; i++)
+            arr[i] = i+7;
+    else
+    {
+        arr[i++] = 30;
+        arr[i++] = 29;
+        arr[i++] = 28;
+        arr[i++] = 23;
+        arr[i++] = 22;
+        arr[i++] = 21;
+    }
+    arr[i] = -1;
+}
+
 double ik_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -23,43 +42,48 @@ double ik_better_body_optimizer(
     int best_qpos_index = -1;
     int positive_axis = 0;
     double dx;
-    double observed_diff;
+    double observed_diff = 1;
+    int joint_array[CASSIE_QPOS_SIZE];
+    int index;
 
+    fill_joint_array(joint_array,body_id_end);
     best_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * .25 * best_diff + 0.0001;
-    for(i = 7 ; i < CASSIE_QPOS_SIZE; i++)
+    dx = 1.93 * .25 * best_diff + 0.00001;
+    for(i = 0; i < CASSIE_QPOS_SIZE && joint_array[i] >= 0; i++)
     {
-        pos_val_before_dx = traj_info->d->qpos[i];
+        index = joint_array[i];
 
-        traj_info->d->qpos[i] = pos_val_before_dx + dx;
+        pos_val_before_dx = traj_info->d->qpos[index];
+
+        traj_info->d->qpos[index] = pos_val_before_dx + dx;
 
         observed_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
         if(observed_diff < best_diff) 
         {
             best_diff = observed_diff;
-            best_qpos_index = i;
+            best_qpos_index = index;
             positive_axis = 1;
         }
 
-        traj_info->d->qpos[i] = pos_val_before_dx - dx;
+        traj_info->d->qpos[index] = pos_val_before_dx - dx;
 
         observed_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
         if(observed_diff < best_diff) 
         {
             best_diff = observed_diff;
-            best_qpos_index = i;
+            best_qpos_index = index;
             positive_axis = 0;
         }
 
-        traj_info->d->qpos[i] = pos_val_before_dx;
+        traj_info->d->qpos[index] = pos_val_before_dx;
     }
 
     if(!positive_axis)
         dx = -dx;
-    if(best_qpos_index > 2)
+    if(best_qpos_index >= 0)
         traj_info->d->qpos[best_qpos_index] += dx;
     
-    return observed_diff;
+    return best_diff;
 }
 
 void ik_iterative_better_body_optimizer(
@@ -68,13 +92,13 @@ void ik_iterative_better_body_optimizer(
     int body_id_end,
     int count)
 {
-    double observed_diff;
+    double best_diff;
     int i;
 
-    observed_diff = 500; //bignumber
-    for (i = 0; i < count && observed_diff > 0.0015; i++)
+    best_diff = 500; //bignumber
+    for (i = 0; i < count && best_diff > 0.002; i++)
     {
-        observed_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
-    }    
+        best_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+    }
 }
 
