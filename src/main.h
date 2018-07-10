@@ -10,7 +10,7 @@
 #define CASSIE_QPOS_SIZE 35
 #define TIMELINE_SIZE 1682
 #define NODECOUNT 30
-#define NODE_OFFSET 1
+#define NON_NODE_COUNT 1
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 
 struct _qpos_t_

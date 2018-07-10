@@ -5,6 +5,12 @@ int traj_last_non_node_select_id = 0;
 int traj_last_activenum = 0;
 int traj_foreach_frame_lastmod = 0;
 
+cassie_body_id_t g(int i)
+{
+    cassie_body_id_t id;
+    id.id = i;
+    return id;
+}
 
 int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
@@ -12,7 +18,7 @@ int allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref
             traj_info->pert->select > 0 &&
             traj_info->pert->select <= 25) //notanode
     {
-        traj_position_nodes(traj_info, traj_info->pert->select);
+        node_position_initial_using_cassie_body(traj_info, g(traj_info->pert->select));
         traj_last_non_node_select_id = traj_info->pert->select;        
     }
 

@@ -1,64 +1,56 @@
 
 #include "node.h"
 
-/*void traj_fill_single_body_xpos(traj_info_t* traj_info, double* body_xposes, int selectedbody, int currframe)
+node_body_id_t node_get_body_id_from_node_index(int index)
 {
-    timeline_set_qposes_to_pose_frame(traj_info, currframe);
-    mj_forward(traj_info->m, traj_info->d);
-    body_xposes[0] = traj_info->d->xpos[selectedbody * 3 + 0] - traj_info->d->xpos[1* 3 + 0];
-    body_xposes[1] = traj_info->d->xpos[selectedbody * 3 + 1] - traj_info->d->xpos[1* 3 + 1];
-    body_xposes[2] = traj_info->d->xpos[selectedbody * 3 + 2] - traj_info->d->xpos[1* 3 + 2];
-}
-*/
-void traj_fill_single_body_xpos(traj_info_t* traj_info, double* body_xposes, int selectedbody, int currframe)
-{
-    timeline_set_qposes_to_pose_frame(traj_info, currframe);
-    mj_forward(traj_info->m, traj_info->d);
-    body_xposes[0] = traj_info->d->xpos[selectedbody * 3 + 0];
-    body_xposes[1] = traj_info->d->xpos[selectedbody * 3 + 1];
-    body_xposes[2] = traj_info->d->xpos[selectedbody * 3 + 2];
+    node_body_id_t id;
+    id.id = index + 27;
+    return id;
 }
 
-void traj_fill_body_xposes(traj_info_t* traj_info, double* body_xposes, int selectedbody)
+v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
+{
+    return traj_info->d->qpos + CASSIE_QPOS_SIZE + (NON_NODE_COUNT * 3) + ((id.id - 27) * 3);
+}
+
+v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
+{
+    return traj_info->d->xpos + (id.id * 3);
+}
+
+v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
+{
+    return traj_info->d->xpos + (id.id * 3);
+}
+
+v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, int frame, cassie_body_id_t id)
+{
+    timeline_set_qposes_to_pose_frame(traj_info, frame);
+    mj_forward(traj_info->m, traj_info->d);
+    return node_get_body_xpos_curr(traj_info, id);
+}
+
+void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
 {
     int i;
-    int startframe;
-    int currframe;
+    int frame;
+    v3_t node_qpos;
+    v3_t body_xpos;
 
     if(!traj_info->timeline.init)
         timeiline_init_from_input_file(traj_info);
-
-    startframe = timeline_get_frame_from_time(traj_info);
-
+    
     for (i = 0; i < NODECOUNT; i++)
     {
-        currframe = (TIMELINE_SIZE / NODECOUNT) * i;
-        traj_fill_single_body_xpos(traj_info, body_xposes + (3 * i), selectedbody, currframe);
-    }
-
-    timeline_set_qposes_to_pose_frame(traj_info, startframe);
-}
-
-void traj_position_nodes(traj_info_t* traj_info, int selectedbody)
-{
-    double body_xposes[NODECOUNT * 3];
-    int i;
-
-    if(!traj_info->timeline.init)
-        timeiline_init_from_input_file(traj_info);
-
-    traj_fill_body_xposes(traj_info, body_xposes, selectedbody);
-
-    for (i = 0; i < NODECOUNT; i++)
-    {
-        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 0] = body_xposes[i * 3 + 0];
-        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 1] = body_xposes[i * 3 + 1];
-        traj_info->d->qpos[CASSIE_QPOS_SIZE + (NODE_OFFSET * 3) + (i * 3) + 2] = body_xposes[i * 3 + 2];
+        frame = (TIMELINE_SIZE / NODECOUNT) * i;
+        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
+        body_xpos = node_get_body_xpos_by_frame(traj_info, frame, body_id);
+        mju_copy3(node_qpos, body_xpos);
     }
     mj_forward(traj_info->m, traj_info->d);
 }
 
-double traj_gauss(double r, double s)
+double gaussian_distrobution(double r, double s)
 {
     s *= 2;
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
@@ -105,7 +97,7 @@ void scale_target_using_frame_offset(
     double filter;
     double scaled_diff_only[3];
 
-    filter = traj_gauss(frame_offset/100.0, 1) *(1/0.318310);
+    filter = gaussian_distrobution(frame_offset/100.0, 1) *(1/0.318310);
    
     scaled_diff_only[0] = transform_vector[0] * filter;
     scaled_diff_only[1] = transform_vector[1] * filter;
