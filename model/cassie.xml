@@ -30,7 +30,7 @@
       </default>
     </default>
     <default class='obstacle'>
-      <geom material='obstacle' />
+      <geom material='obstacle'/>
     </default>
   </default>
 
@@ -212,15 +212,11 @@
       </body>
     </body>
 
-
     <!-- Add any other moving bodies after the Cassie definition -->
-    <!-- <body name='c0' pos='0 0 0'> 
-       <joint name='c0x' type='slide' axis='1 0 0' limited='false'/>
-       <joint name='c0y' type='slide' axis='0 1 0' limited='false'/>
-       <joint name='c0z' type='slide' axis='0 0 1' limited='false'/>
-     <geom type='sphere' size='0.02 0.02 0.02' class='obstacle'/> 
-    </body>  -->
-
+    <!-- <body name='box' pos='2 0 0.2'> -->
+    <!--   <freejoint/> -->
+    <!--   <geom type='box' size='0.1 0.1 0.1' mass='3' class='obstacle'/> -->
+    <!-- </body> -->
     <body name='noderoot' pos='0 0 0'>
       <geom type='sphere' size='0.02 0.02 0.02' rgba='1 0 0 .5'/>
       <joint name='rootx' type='slide' axis='1 0 0' limited='false'/>
@@ -433,9 +429,53 @@
          <joint type='slide' axis='0 0 1' limited='false'/>
        <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
       </body> 
-      
-    </body>
-
+    </body> 
   </worldbody>
+
+  <equality>
+    <connect body1='left-plantar-rod'  body2='left-foot'        anchor='0.35012 0 0'/>
+    <connect body1='left-achilles-rod' body2='left-heel-spring' anchor='0.5012 0 0'/>
+    <connect body1='right-plantar-rod'  body2='right-foot'        anchor='0.35012 0 0'/>
+    <connect body1='right-achilles-rod' body2='right-heel-spring' anchor='0.5012 0 0'/>
+  </equality>
+
+  <actuator>
+    <!-- User parameter is the maximum no-load motor RPM -->
+    <motor name='left-hip-roll'  joint='left-hip-roll'  gear='25' ctrllimited='true' ctrlrange='-4.5 4.5'   user='2900'/>
+    <motor name='left-hip-yaw'   joint='left-hip-yaw'   gear='25' ctrllimited='true' ctrlrange='-4.5 4.5'   user='2900'/>
+    <motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.2 12.2' user='1300'/>
+    <motor name='left-knee'      joint='left-knee'      gear='16' ctrllimited='true' ctrlrange='-12.2 12.2' user='1300'/>
+    <motor name='left-foot'      joint='left-foot'      gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'   user='5500'/>
+    <motor name='right-hip-roll'  joint='right-hip-roll'  gear='25' ctrllimited='true' ctrlrange='-4.5 4.5'   user='2900'/>
+    <motor name='right-hip-yaw'   joint='right-hip-yaw'   gear='25' ctrllimited='true' ctrlrange='-4.5 4.5'   user='2900'/>
+    <motor name='right-hip-pitch' joint='right-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.2 12.2' user='1300'/>
+    <motor name='right-knee'      joint='right-knee'      gear='16' ctrllimited='true' ctrlrange='-12.2 12.2' user='1300'/>
+    <motor name='right-foot'      joint='right-foot'      gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'   user='5500'/>
+  </actuator>
+
+  <sensor>
+    <!-- User parameter is the number of absolute encoder bits -->
+    <actuatorpos name='left-hip-roll-input'  actuator='left-hip-roll'  user='13'/>
+    <actuatorpos name='left-hip-yaw-input'   actuator='left-hip-yaw'   user='13'/>
+    <actuatorpos name='left-hip-pitch-input' actuator='left-hip-pitch' user='13'/>
+    <actuatorpos name='left-knee-input'      actuator='left-knee'      user='13'/>
+    <actuatorpos name='left-foot-input'      actuator='left-foot'      user='18'/>
+    <jointpos    name='left-shin-output'     joint='left-shin'         user='18' noise='2e-4'/>
+    <jointpos    name='left-tarsus-output'   joint='left-tarsus'       user='18' noise='2e-4'/>
+    <jointpos    name='left-foot-output'     joint='left-foot'         user='13'/>
+    <actuatorpos name='right-hip-roll-input'  actuator='right-hip-roll'   user='13'/>
+    <actuatorpos name='right-hip-yaw-input'   actuator='right-hip-yaw'    user='13'/>
+    <actuatorpos name='right-hip-pitch-input' actuator='right-hip-pitch'  user='13'/>
+    <actuatorpos name='right-knee-input'      actuator='right-knee'       user='13'/>
+    <actuatorpos name='right-foot-input'      actuator='right-foot'       user='18'/>
+    <jointpos    name='right-shin-output'     joint='right-shin'          user='18' noise='2e-4'/>
+    <jointpos    name='right-tarsus-output'   joint='right-tarsus'        user='18' noise='2e-4'/>
+    <jointpos    name='right-foot-output'     joint='right-foot'          user='13'/>
+
+    <framequat     name='pelvis-orientation' objtype='site' objname='imu'/>
+    <gyro          name='pelvis-angular-velocity'    site='imu' noise='5e-4' cutoff='34.9'/>
+    <accelerometer name='pelvis-linear-acceleration' site='imu' noise='1e-2' cutoff='157'/>
+    <magnetometer  name='pelvis-magnetometer'        site='imu'/>
+  </sensor>
 
 </mujoco>

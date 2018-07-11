@@ -1,7 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
-MAIN = traj
+MAIN = simik traj
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -91,6 +91,20 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    bin/main-traj.o $(OBJS) \
 	    $(LCOMMON) \
 	    -o traj
+
+simik : bin/phys.o | mjkey.txt $(CASSIE) $(MJ) 
+	g++ \
+		$(FLAGS) \
+	    bin/phys.o\
+	    $(LCOMMON) \
+	    -o simik
+
+bin/phys.o : src/phys.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		src/phys.c \
+		-o bin/phys.o
 
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

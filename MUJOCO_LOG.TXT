@@ -1,0 +1,2721 @@
+Wed Jul 11 14:54:14 2018
+ERROR: Shadow framebuffer is not complete, error 0x8cdd
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 4.8445.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Nan, Inf or huge value in QPOS at DOF 0. The simulation is unstable. Time = 4.8440.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0015.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0005.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:46 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0535.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 15:05:47 2018
+WARNING: Inertia matrix is too close to singular at DOF 27. Check model. Time = 0.0000.
+
+Wed Jul 11 16:08:19 2018
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Wed Jul 11 16:08:27 2018
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Wed Jul 11 16:10:17 2018
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Wed Jul 11 16:12:05 2018
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
+Wed Jul 11 16:19:56 2018
+WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
+
