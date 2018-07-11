@@ -2719,3 +2719,27 @@ WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time 
 Wed Jul 11 16:19:56 2018
 WARNING: Pre-allocated contact buffer is full. Increase nconmax above 100. Time = 0.0000.
 
+Wed Jul 11 16:34:30 2018
+ERROR: Shadow framebuffer is not complete, error 0x8cdd
+
+Wed Jul 11 16:42:44 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 15. The simulation is unstable. Time = 0.0705.
+
+Wed Jul 11 16:45:22 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 16. The simulation is unstable. Time = 2.8715.
+
+Wed Jul 11 16:46:13 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 16. The simulation is unstable. Time = 4.3960.
+
+Wed Jul 11 16:48:34 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 26. The simulation is unstable. Time = 5.6475.
+
+Wed Jul 11 16:51:23 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 21. The simulation is unstable. Time = 0.0145.
+
+Wed Jul 11 16:51:36 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 29. The simulation is unstable. Time = 0.0425.
+
+Wed Jul 11 16:53:14 2018
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 1.4320.
+

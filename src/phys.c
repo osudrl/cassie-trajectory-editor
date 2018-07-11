@@ -58,6 +58,9 @@ double lastx = 0;
 double lasty = 0;
 double window2buffer = 1;           // framebuffersize / windowsize (for scaled video modes)
 
+mjtNum initqposes[35];
+mjtNum grabvector[3];
+
 // help strings
 const char help_title[] = 
 "Help\n"
@@ -483,6 +486,17 @@ void loadmodel(GLFWwindow* window, const char* filename)
     // m->opt.disableflags |= 0x02ff;
     // m->opt.disableflags |= mjDSBL_GRAVITY;
     mj_forward(m, d);
+
+    FILE* infile = fopen("dropdata.bin","r");
+
+    fread(initqposes, sizeof(mjtNum), 35, infile);
+    fread(grabvector, sizeof(mjtNum), 3, infile);
+    fclose(infile);
+
+    for(int i = 0; i < 35; i++)
+    {
+        d->qpos[i] = initqposes[i];
+    }
 
     // save filename for reload
     strcpy(lastfile, filename);
@@ -1220,9 +1234,19 @@ void control(const mjModel* m, mjData* d)
 
     for(int i = 0; i < 7; i++)
     {
-        d->qpos[i] = 0;
+        d->qpos[i] = initqposes[i];
     }
-    d->qpos[2] = 2;
+
+    double fool[3];
+    fool[0] = grabvector[0] - d->xpos[25*3 + 0];
+    fool[1] = grabvector[1] - d->xpos[25*3 + 1];
+    fool[2] = grabvector[2] - d->xpos[25*3 + 2];
+    printf("close %.5f\n", mju_norm(fool,3));
+
+    d->xfrc_applied[25*6 + 0] = 120*(grabvector[0] - d->xpos[25*3 + 0])  + 8 *(0-d->cvel[25*6 + 3]);
+    d->xfrc_applied[25*6 + 1] = 120*(grabvector[1] - d->xpos[25*3 + 1])  + 8 *(0-d->cvel[25*6 + 4]);
+    d->xfrc_applied[25*6 + 2] = 120*(grabvector[2] - d->xpos[25*3 + 2])  + 8 *(0-d->cvel[25*6 + 5]);
+   
 }
 
 

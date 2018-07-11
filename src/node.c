@@ -159,6 +159,12 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         0,
         body_id);
 
+    FILE* outfile = fopen("dropdata.bin","w");
+
+    timeline_set_qposes_to_pose_frame(traj_info, rootframe);
+    fwrite(traj_info->d->qpos, sizeof(mjtNum), CASSIE_QPOS_SIZE, outfile);
+    fwrite(ik_body_target_xpos, sizeof(mjtNum), 3, outfile);
+    fclose(outfile);
     nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
     iterations = 600;
