@@ -83,7 +83,7 @@ void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)
 {
-    return mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
+    return mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 3));
 }
 
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)

@@ -140,6 +140,9 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     double grabbed_node_transformation[3];
     double ik_body_target_xpos[3];
     int iterations;
+    uint64_t init_time;
+
+    init_time = traj_calculate_runtime_micros(traj_info);
 
     rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
@@ -164,7 +167,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     {
         if((frame_offset < iterations / 2 && frame_offset % (iterations / 40) == 0)
             ||
-            (frame_offset > iterations /2 && frame_offset % (iterations / 5) == 0))
+            (frame_offset > iterations /2 && frame_offset % (iterations / 10) == 0))
         {
             printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
         }
@@ -194,6 +197,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             rootframe - frame_offset, 
             ik_body_target_xpos);
     }
+
+    traj_info->time_start += traj_calculate_runtime_micros(traj_info) - init_time;
 }
 
 
