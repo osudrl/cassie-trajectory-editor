@@ -20,7 +20,6 @@
 mjModel* m = 0;
 mjData* d = 0;
 char lastfile[1000] = "";
-traj_info_t traj_info;
 
 
 // user state
@@ -132,6 +131,9 @@ const char help_content[] =
 
 char opt_title[1000] = "";
 char opt_content[1000];
+
+traj_info_t traj_info;
+
 
 void reset_traj_info()
 {

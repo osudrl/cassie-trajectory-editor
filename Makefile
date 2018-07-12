@@ -92,10 +92,10 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    $(LCOMMON) \
 	    -o traj
 
-simik : bin/phys.o | mjkey.txt $(CASSIE) $(MJ) 
+simik : bin/phys.o bin/pdik.o | mjkey.txt $(CASSIE) $(MJ) 
 	g++ \
 		$(FLAGS) \
-	    bin/phys.o\
+	    bin/phys.o bin/pdik.o\
 	    $(LCOMMON) \
 	    -o simik
 
@@ -105,6 +105,15 @@ bin/phys.o : src/phys.c | mjkey.txt $(MJ) $(CASSIE)
 		$(FLAGS) \
 		src/phys.c \
 		-o bin/phys.o
+
+bin/pdik.o : src/pdik.h src/main.h src/pdik.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/pdik.c \
+		-o bin/pdik.o
+
 
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
