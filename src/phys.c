@@ -1265,7 +1265,7 @@ double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double*
     mju_sub3(xdelta, xtarget, xcurr);
     norm =  mju_norm(xdelta,3);
     mju_sub3(vdelta, vtarget, vcurr);
-    mju_scl3(xdelta,xdelta,4);
+    mju_scl3(xdelta,xdelta,100);
     mju_scl3(vdelta,vdelta,.5);
     mju_add3(forces, xdelta, vdelta);
 
