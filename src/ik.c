@@ -98,6 +98,24 @@ double ik_better_body_optimizer(
     return best_diff;
 }
 
+double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double* xtarget)
+{
+    double xdelta[3];
+    double vdelta[3];
+    double vtarget[3];
+    double norm;
+
+    mju_zero3(vtarget);
+    mju_sub3(xdelta, xtarget, xcurr);
+    norm =  mju_norm(xdelta,3);
+    mju_sub3(vdelta, vtarget, vcurr);
+    mju_scl3(xdelta,xdelta,4);
+    mju_scl3(vdelta,vdelta,.5);
+    mju_add3(forces, xdelta, vdelta);
+
+    return norm;
+}
+
 void ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -118,30 +136,18 @@ void ik_iterative_better_body_optimizer(
     best_diff = 500; //bignumber
     for (i = 0; i < count && best_diff > .1; i++)
     {
-        for(int x = 0; x < 7; x++)
-        {
-            traj_info->d->qpos[x] = initqposes[x];
-        }
+        // for(int x = 0; x < 7; x++)
+        // {
+        //     traj_info->d->qpos[x] = initqposes[x];
+        // }
 
-        double fool[3];
-        fool[0] = xyz_xpos_target[0] - traj_info->d->xpos[25*3 + 0];
-        fool[1] = xyz_xpos_target[1] - traj_info->d->xpos[25*3 + 1];
-        fool[2] = xyz_xpos_target[2] - traj_info->d->xpos[25*3 + 2];
-        curr_diff = mju_norm(fool,3);
-        if(curr_diff < best_diff)
-        {
-            for(int x = 0; x < CASSIE_QPOS_SIZE; x++)
-            {
-                bestqposes[x] = traj_info->d->qpos[x];
-            }
-            best_diff = curr_diff;
-        }
-        // printf("close %.5f\n", mju_norm(fool,3));
+        // best_diff = apply_pd_controller(
+        //         traj_info->d->xfrc_applied + 25*6,
+        //         traj_info->d->xpos + 25*3,
+        //         traj_info->d->cvel+ 25*6 + 3,
+        //         xyz_xpos_target);
 
-        traj_info->d->xfrc_applied[25*6 + 0] = 190*(xyz_xpos_target[0] - traj_info->d->xpos[25*3 + 0])  + 5 *(0-traj_info->d->cvel[25*6 + 3]);
-    traj_info->d->xfrc_applied[25*6 + 1] = 190*(xyz_xpos_target[1] - traj_info->d->xpos[25*3 + 1])  + 5 *(0-traj_info->d->cvel[25*6 + 4]);
-    traj_info->d->xfrc_applied[25*6 + 2] = 190*(xyz_xpos_target[2] - traj_info->d->xpos[25*3 + 2])  + 5 *(0-traj_info->d->cvel[25*6 + 5]);
-    // ik_better_body_optimizer(traj_info, xyz_xpos_target,body_id_end);
+        
         
         mj_step(traj_info->m, traj_info->d);
     }

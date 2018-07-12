@@ -14,6 +14,8 @@
 
 //-------------------------------- global variables -------------------------------------
 
+double initxposes[25*3];
+
 // model
 mjModel* m = 0;
 mjData* d = 0;
@@ -483,9 +485,10 @@ void loadmodel(GLFWwindow* window, const char* filename)
     m = mnew;
     d = mj_makeData(m);
     m->opt.disableflags |= 0xddc;
+    // m->opt.disableflags &= ~(mjDSBL_CONTACT);
     // m->opt.disableflags |= 0x02ff;
     // m->opt.disableflags |= mjDSBL_GRAVITY;
-    mj_forward(m, d);
+    
 
     FILE* infile = fopen("dropdata.bin","r");
 
@@ -497,6 +500,13 @@ void loadmodel(GLFWwindow* window, const char* filename)
     {
         d->qpos[i] = initqposes[i];
     }
+
+    mj_forward(m, d);
+
+    for(int i = 0; i < 25*3; i++)
+    {
+        initxposes[i] = d->xpos[i];
+    } 
 
     // save filename for reload
     strcpy(lastfile, filename);
@@ -517,6 +527,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
 }
+
 
 
 // timer in milliseconds
@@ -974,6 +985,8 @@ void makeoptionstring(const char* name, char key, char* buf)
     buf[cnt+3] = ')';
     buf[cnt+4] = 0;
 }
+int num = 0;
+double bestqposes[35];
 
 
 // advance simulation
@@ -986,6 +999,8 @@ void simulation(void)
     // clear timers
     cleartimers(d);
 
+    if(num < 10000)
+    {
     // paused
     if( paused )
     {
@@ -1021,6 +1036,23 @@ void simulation(void)
             if( d->time<startsimtm )
                 break;
         }
+    }
+    }
+    else
+    {
+        for(int i = 0; i < 21; i++)
+        {
+            d->qpos[i] = initqposes[i];
+        }
+        for(int i = 21; i < 35; i++)
+        {
+            d->qpos[i] = bestqposes[i];
+        }
+        for(int i = 32; i < 35; i++)
+        {
+            d->qpos[i] = initqposes[i];
+        }
+        mj_forward(m,d);
     }
 }
 
@@ -1220,6 +1252,27 @@ void render(GLFWwindow* window)
     glfwSwapBuffers(window);
 }
 
+double bestclosenorm = 10000;
+
+double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double* xtarget)
+{
+    double xdelta[3];
+    double vdelta[3];
+    double vtarget[3];
+    double norm;
+
+    mju_zero3(vtarget);
+    mju_sub3(xdelta, xtarget, xcurr);
+    norm =  mju_norm(xdelta,3);
+    mju_sub3(vdelta, vtarget, vcurr);
+    mju_scl3(xdelta,xdelta,4);
+    mju_scl3(vdelta,vdelta,.5);
+    mju_add3(forces, xdelta, vdelta);
+
+    return norm;
+}
+
+
 void control(const mjModel* m, mjData* d)
 {
     // d->xfrc_applied[6+0] += 1000*(0-d->xpos[6+0]);
@@ -1232,21 +1285,40 @@ void control(const mjModel* m, mjData* d)
     // d->xfrc_applied[6+1] += 10*(2-d->xpos[6+1]) + 100 * (0-d->cvel[6+4]);
     // d->xfrc_applied[6+2] += 10*(2-d->xpos[6+2]) + 100 * (0-d->cvel[6+5]);
 
+    if (num < 10000)
+    {
     for(int i = 0; i < 7; i++)
     {
         d->qpos[i] = initqposes[i];
     }
 
-    double fool[3];
-    fool[0] = grabvector[0] - d->xpos[25*3 + 0];
-    fool[1] = grabvector[1] - d->xpos[25*3 + 1];
-    fool[2] = grabvector[2] - d->xpos[25*3 + 2];
-    printf("close %.5f\n", mju_norm(fool,3));
+    double closenorm = apply_pd_controller(
+        d->xfrc_applied + 25*6,
+        d->xpos + 25*3,
+        d->cvel+ 25*6 + 3,
+        grabvector);
 
-    d->xfrc_applied[25*6 + 0] = 250*(grabvector[0] - d->xpos[25*3 + 0])  + 5 *(0-d->cvel[25*6 + 3]);
-    d->xfrc_applied[25*6 + 1] = 250*(grabvector[1] - d->xpos[25*3 + 1])  + 5 *(0-d->cvel[25*6 + 4]);
-    d->xfrc_applied[25*6 + 2] = 250*(grabvector[2] - d->xpos[25*3 + 2])  + 5 *(0-d->cvel[25*6 + 5]);
-   
+    printf("close %.5f\n", closenorm);
+
+    if(closenorm < bestclosenorm)
+    {
+        for(int i = 0; i < 35; i++)
+            bestqposes[i] = d->qpos[i];
+    }
+
+    for(int i = 13; i <= 13; i++)
+    {
+        double closenorm = apply_pd_controller(
+            d->xfrc_applied + i*6,
+            d->xpos + i*3,
+            d->cvel+ i*6 + 3,
+            initxposes +i*3 );
+    // d->xfrc_applied[i*6 + 0] = 5*(initxposes[i*3 + 0] - d->xpos[i*3 + 0])  + 1 *(0-d->cvel[i*6 + 3]);
+    // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
+    // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
+    }
+    num++;
+    }
 }
 
 
