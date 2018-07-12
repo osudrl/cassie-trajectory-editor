@@ -98,24 +98,6 @@ double ik_better_body_optimizer(
     return best_diff;
 }
 
-double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double* xtarget)
-{
-    double xdelta[3];
-    double vdelta[3];
-    double vtarget[3];
-    double norm;
-
-    mju_zero3(vtarget);
-    mju_sub3(xdelta, xtarget, xcurr);
-    norm =  mju_norm(xdelta,3);
-    mju_sub3(vdelta, vtarget, vcurr);
-    mju_scl3(xdelta,xdelta,4);
-    mju_scl3(vdelta,vdelta,.5);
-    mju_add3(forces, xdelta, vdelta);
-
-    return norm;
-}
-
 void ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -123,41 +105,16 @@ void ik_iterative_better_body_optimizer(
     int count)
 {
     double best_diff;
-    double curr_diff;
     int i;
-    double initqposes[CASSIE_QPOS_SIZE];
-    double bestqposes[CASSIE_QPOS_SIZE];
-
-    for(int x = 0; x < CASSIE_QPOS_SIZE; x++)
-    {
-        initqposes[x] = traj_info->d->qpos[x];
-    }
 
     best_diff = 500; //bignumber
-    for (i = 0; i < count && best_diff > .1; i++)
+    for (i = 0; i < count && best_diff > 0.00175; i++)
     {
-        // for(int x = 0; x < 7; x++)
-        // {
-        //     traj_info->d->qpos[x] = initqposes[x];
-        // }
-
-        // best_diff = apply_pd_controller(
-        //         traj_info->d->xfrc_applied + 25*6,
-        //         traj_info->d->xpos + 25*3,
-        //         traj_info->d->cvel+ 25*6 + 3,
-        //         xyz_xpos_target);
-
-        
-        
-        mj_step(traj_info->m, traj_info->d);
+        best_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
     }
     if(i == count)
     {
         printf("MAY BE IMPOSSIBLE\n");
-    }
-    for(int x = 0; x < CASSIE_QPOS_SIZE; x++)
-    {
-        traj_info->d->qpos[x] = bestqposes[x];
     }
 }
 
