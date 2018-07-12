@@ -25,7 +25,7 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
 }
 
-double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double* xtarget)
+double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget)
 {
     double xdelta[3];
     double vdelta[3];
@@ -36,8 +36,8 @@ double apply_pd_controller(double* forces, double* xcurr, double* vcurr, double*
     mju_sub3(xdelta, xtarget, xcurr);
     norm =  mju_norm(xdelta,3);
     mju_sub3(vdelta, vtarget, vcurr);
-    mju_scl3(xdelta,xdelta,100);
-    mju_scl3(vdelta,vdelta,.5);
+    mju_scl3(xdelta,xdelta,k1);
+    mju_scl3(vdelta,vdelta,k2);
     mju_add3(forces, xdelta, vdelta);
 
     return norm;
@@ -58,12 +58,17 @@ void pdik_per_step_control(pdikdata_t* ik)
 
     if (ik->doik > 0)
     {
-        for(int i = 0; i < 7; i++)
-        {
-            ik->d->qpos[i] = ik->initqposes[i];
-        }
+        apply_pd_controller(
+                1000,
+                20,
+                ik->d->qfrc_applied,
+                ik->d->xpos + 3,
+                ik->d->cvel+ 6 + 3,
+                ik->target_pelvis );
 
         closenorm = apply_pd_controller(
+            100,
+            1,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -81,6 +86,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         for(int i = 13; i <= 13; i++)
         {
             apply_pd_controller(
+                5,
+                1,
                 ik->d->xfrc_applied + i*6,
                 ik->d->xpos + i*3,
                 ik->d->cvel+ i*6 + 3,
