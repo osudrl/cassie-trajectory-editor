@@ -1243,9 +1243,9 @@ void control(const mjModel* m, mjData* d)
     fool[2] = grabvector[2] - d->xpos[25*3 + 2];
     printf("close %.5f\n", mju_norm(fool,3));
 
-    d->xfrc_applied[25*6 + 0] = 120*(grabvector[0] - d->xpos[25*3 + 0])  + 8 *(0-d->cvel[25*6 + 3]);
-    d->xfrc_applied[25*6 + 1] = 120*(grabvector[1] - d->xpos[25*3 + 1])  + 8 *(0-d->cvel[25*6 + 4]);
-    d->xfrc_applied[25*6 + 2] = 120*(grabvector[2] - d->xpos[25*3 + 2])  + 8 *(0-d->cvel[25*6 + 5]);
+    d->xfrc_applied[25*6 + 0] = 250*(grabvector[0] - d->xpos[25*3 + 0])  + 5 *(0-d->cvel[25*6 + 3]);
+    d->xfrc_applied[25*6 + 1] = 250*(grabvector[1] - d->xpos[25*3 + 1])  + 5 *(0-d->cvel[25*6 + 4]);
+    d->xfrc_applied[25*6 + 2] = 250*(grabvector[2] - d->xpos[25*3 + 2])  + 5 *(0-d->cvel[25*6 + 5]);
    
 }
 

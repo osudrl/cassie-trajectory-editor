@@ -71,7 +71,7 @@ double gaussian_distrobution(double r, double s)
 void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
 {
     // timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 5000);
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 1000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -128,7 +128,7 @@ double normalCFD(double value)
 
 double percent(int frame_offset, int iterations)
 {
-    double sigma = 130.0;
+    double sigma = 50.0;
 
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
@@ -167,7 +167,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     fclose(outfile);
     nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
 
-    iterations = 600;
+    iterations = 150;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
@@ -205,6 +205,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     }
 
     traj_info->time_start += traj_calculate_runtime_micros(traj_info) - init_time;
+    node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
 
@@ -247,6 +248,6 @@ void node_position_scale_visually(
 
 double node_calculate_filter_from_frame_offset(double frame_offset)
 {
-    return gaussian_distrobution(frame_offset/130.0, 1) *(1/0.318310);
+    return gaussian_distrobution(frame_offset/50.0, 1) *(1/0.318310);
 }
 
