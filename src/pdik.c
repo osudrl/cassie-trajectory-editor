@@ -1,6 +1,6 @@
 #include "pdik.h"
 
-void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
+void QuatToEuler( double *quat, double* euler)
 {
     double ysqr = quat[2] * quat[2];
     double t0 = -2.0f * (ysqr + quat[3] * quat[3]) + 1.0f;
@@ -12,9 +12,9 @@ void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
     t2 = t2 > 1.0f ? 1.0f : t2;
     t2 = t2 < -1.0f ? -1.0f : t2;
 
-    *roty = mju_asin(t2);
-    *rotx = mju_atan2(t3, t4);
-    *rotz = mju_atan2(t1, t0);
+    euler[1] = mju_asin(t2);
+    euler[0] = mju_atan2(t3, t4);
+    euler[2] = mju_atan2(t1, t0);
 }
 
 
@@ -91,15 +91,16 @@ void pdik_per_step_control(pdikdata_t* ik)
 
     if (ik->doik > 0)
     {
-        od.iter = IK_ITER - ik->doik;
+        od.frame = ik->frame;
+        od.iter = ik->maxiter - ik->doik;
         od.off_pelvis = apply_pd_controller(
-                5000,
-                1000,
+                10000,
+                50,
                 ik->d->qfrc_applied,
                 ik->d->xpos + 3,
                 ik->d->cvel+ 6 + 3,
                 ik->target_pelvis );
-        QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
+        QuatToEuler(ik->d->xquat+4, res);
         // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
         od.off_orientation = apply_pd_controller(
                 -500,
@@ -127,7 +128,7 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         closenorm = apply_pd_controller(
             1000,
-            80,
+            10,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -149,8 +150,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         for(int i = 13; i <= 13; i++)
         {
             od.off_lfoot = apply_pd_controller(
-                500,
-                30,
+                1000,
+                10,
                 ik->d->xfrc_applied + i*6,
                 ik->d->xpos + i*3,
                 ik->d->cvel+ i*6 + 3,
@@ -159,7 +160,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
-        mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
+        // mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
         if (ik->outfile)
             fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
         ik->doik--;

@@ -5,8 +5,6 @@
 #define CASSIE_QPOS_SIZE 35
 #endif
 
-#define IK_ITER 100000
-
 #include "mujoco.h"
 #include <stdio.h>
 #include "ikoutdata.h"
@@ -16,6 +14,7 @@ struct _pdikdata_t_
 {
 	mjModel* m;
     mjData* d;
+    int32_t maxiter;
     int32_t doik;
     double lowscore;
     double bestqposes[CASSIE_QPOS_SIZE];

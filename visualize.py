@@ -22,14 +22,17 @@ sub = fig.add_subplot(111)
 
 sub.set_xlabel('Simulation Steps')
 sub.set_ylabel('Target Offet (m)')
-sub.set_ylim([-0.00005,0.001])
+sub.set_ylim([-0.00005, 0.1])
+
+b = ((abs(data[0]) <  100) & (data[0] % 10 == 0))
+data = data[:,b]
 
 # sub2.plot(data[0], data[1],"o", ms=1, lw=0)
-sub.plot(data[1], data[2],"-", lw=1, label='pelvis')
-sub.plot(data[1], data[3],"-", lw=1, label='orientation')
-sub.plot(data[1], data[4],"-", lw=1, label='rfoot')
-sub.plot(data[1], data[5],"-", lw=1, label='lfoot')
-sub.plot(data[1], data[6],"-", lw=1, label='best')
+sub.plot(data[1], data[2],"o", ms=.1, label='pelvis')
+sub.plot(data[1], data[3],"o", ms=.1, label='orientation')
+sub.plot(data[1], data[4],"o", ms=.1, label='rfoot')
+sub.plot(data[1], data[5],"o", ms=.1, label='lfoot')
+# sub.plot(data[1], data[6],"o", ms=1, label='best')
 plt.axhline(0,  lw=1, color='black')
 plt.axhline(0.00005,  lw=1, color='black')
 

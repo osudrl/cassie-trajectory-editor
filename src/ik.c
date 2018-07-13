@@ -102,19 +102,32 @@ void ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
     int body_id_end,
+    int frame,
     int count)
 {
-    double best_diff;
-    int i;
+    traj_info->ik.maxiter = count;
+    traj_info->ik.doik = count;
+    traj_info->ik.lowscore = 500000;
 
-    best_diff = 500; //bignumber
-    for (i = 0; i < count && best_diff > 0.00175; i++)
+    mj_forward(traj_info->m, traj_info->d); //should be unnessesary
+    mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
+    mju_copy3(traj_info->ik.target_pelvis, traj_info->d->xpos + (3*1));
+    QuatToEuler(traj_info->d->xquat+4, traj_info->ik.target_pelvis_euler);
+    mju_copy3(traj_info->ik.target_other, traj_info->d->xpos + (3*13));
+
+    traj_info->ik.frame = frame;
+
+    while(traj_info->ik.doik > 0 )// && traj_info->ik.lowscore > .001)
     {
-        best_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+        mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
+        mj_step(traj_info->m,traj_info->d);
     }
-    if(i == count)
-    {
-        printf("MAY BE IMPOSSIBLE\n");
-    }
+
+    // if(traj_info->ik.doik == 0)
+    // {
+    //     printf("MAY BE IMPOSSIBLE\n");
+    // }
+
+    traj_info->ik.doik = 0;
 }
 

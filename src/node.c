@@ -68,10 +68,10 @@ double gaussian_distrobution(double r, double s)
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
 }
 
-void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, v3_t target)
+void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, int frameoffset, v3_t target)
 {
     // timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, 1000);
+    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, frameoffset, 1000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -165,7 +165,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     fwrite(traj_info->d->qpos, sizeof(mjtNum), CASSIE_QPOS_SIZE, outfile);
     fwrite(ik_body_target_xpos, sizeof(mjtNum), 3, outfile);
     fclose(outfile);
-    nodeframe_ik_transform(traj_info, body_id, rootframe, ik_body_target_xpos);
+    nodeframe_ik_transform(traj_info, body_id, rootframe,0,ik_body_target_xpos);
 
     iterations = 150;
 
@@ -187,7 +187,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         nodeframe_ik_transform( 
             traj_info, 
             body_id, 
-            rootframe + frame_offset, 
+            rootframe + frame_offset,
+            frame_offset,
             ik_body_target_xpos);
 
         scale_target_using_frame_offset(
@@ -201,6 +202,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             traj_info, 
             body_id, 
             rootframe - frame_offset, 
+            -frame_offset,
             ik_body_target_xpos);
     }
 
