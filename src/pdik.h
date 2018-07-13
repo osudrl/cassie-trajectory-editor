@@ -5,6 +5,8 @@
 #define CASSIE_QPOS_SIZE 35
 #endif
 
+#define IK_ITER 100000
+
 #include "mujoco.h"
 #include <stdio.h>
 
@@ -19,6 +21,7 @@ struct _pdikdata_t_
     double initqposes[CASSIE_QPOS_SIZE];
     double target_body[3];
     double target_pelvis[3];
+    double target_pelvis_euler[3];
     double target_other[3];
 };
 typedef struct _pdikdata_t_ pdikdata_t;

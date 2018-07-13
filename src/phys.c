@@ -1002,7 +1002,7 @@ void simulation(void)
 
         // advance effective simulation time by 1/refreshrate
         mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/refreshrate )
+        while( (d->time-startsimtm)*factor<1.0/10 )
         {
             // clear old perturbations, apply new
             mju_zero(d->xfrc_applied, 6*m->nbody);

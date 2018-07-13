@@ -7,7 +7,7 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     
     ik->m = m;
     ik->d = d;
-    ik->doik = 10000;
+    ik->doik = IK_ITER;
     ik->lowscore = 1000000;
 
     fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
@@ -23,6 +23,8 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
 
     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
+
+
 }
 
 double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget)
@@ -43,9 +45,39 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
     return norm;
 }
 
+void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
+{
+    double sqw;
+    double sqx;
+    double sqy;
+    double sqz;
+    
+    double rotxrad;
+    double rotyrad;
+    double rotzrad;
+    
+    sqw = quat[0] * quat[0];
+    sqx = quat[1] * quat[1];
+    sqy = quat[2] * quat[2];
+    sqz = quat[2] * quat[2];
+    
+    rotxrad = (double)mju_atan2(2.0 * ( quat[2] * quat[2] + quat[1] * quat[0] ) , ( -sqx - sqy + sqz + sqw ));
+    rotyrad = (double)mju_asin(-2.0 * ( quat[1] * quat[2] - quat[2] * quat[0] ));
+    rotzrad = (double)mju_atan2(2.0 * ( quat[1] * quat[2] + quat[2] * quat[0] ) , (  sqx - sqy - sqz + sqw ));
+    
+    // *rotx = rad2deg(rotxrad);
+    // *roty = rad2deg(rotyrad);
+    // *rotz = rad2deg(rotzrad);
+    
+    return;
+}
+
 void pdik_per_step_control(pdikdata_t* ik)
 {
     double closenorm;
+    double res[3];
+    double ones[3];
+    double f[3];
     // d->xfrc_applied[6+0] += 1000*(0-d->xpos[6+0]);
     // d->xfrc_applied[6+1] += 1000*(0-d->xpos[6+1]);
     // double vel[6];
@@ -59,12 +91,36 @@ void pdik_per_step_control(pdikdata_t* ik)
     if (ik->doik > 0)
     {
         apply_pd_controller(
-                1000,
-                20,
+                10000,
+                100,
                 ik->d->qfrc_applied,
                 ik->d->xpos + 3,
                 ik->d->cvel+ 6 + 3,
                 ik->target_pelvis );
+
+        
+        ones[0] = 0;
+        ones[1] = 0;
+        ones[2] = 0;
+        QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
+        printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
+         apply_pd_controller(
+                100,
+                1,
+                f,
+                res,
+                ik->d->cvel+ 6 ,
+                ones);
+
+        printf("%.2f %.2f %.2f", f[0], f[1], f[2]);
+        // ik->d->qfrc_applied[3] = .1;
+        // ik->d->qfrc_applied[4] = .1;
+        // ik->d->qfrc_applied[5] = f[1];
+        // ik->d->qfrc_applied[4] = f[1];
+        // ik->d->qfrc_applied[5] = f[2];
+        // ik->d->qfrc_applied[4] = f[2];
+        // ik->d->qfrc_applied[4] = f[1];
+
 
         closenorm = apply_pd_controller(
             100,
