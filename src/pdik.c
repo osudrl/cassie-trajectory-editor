@@ -1,10 +1,28 @@
 #include "pdik.h"
 
+void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
+{
+    double ysqr = quat[2] * quat[2];
+    double t0 = -2.0f * (ysqr + quat[3] * quat[3]) + 1.0f;
+    double t1 = +2.0f * (quat[1] * quat[2] - quat[0] * quat[3]);
+    double t2 = -2.0f * (quat[1] * quat[3] + quat[0] * quat[2]);
+    double t3 = +2.0f * (quat[2] * quat[3] - quat[0] * quat[1]);
+    double t4 = -2.0f * (quat[1] * quat[1] + ysqr) + 1.0f;
+
+    t2 = t2 > 1.0f ? 1.0f : t2;
+    t2 = t2 < -1.0f ? -1.0f : t2;
+
+    *roty = mju_asin(t2);
+    *rotx = mju_atan2(t3, t4);
+    *rotz = mju_atan2(t1, t0);
+}
+
 
 void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
 {
     FILE* infile = fopen("dropdata.bin","r");
-    
+
+
     ik->m = m;
     ik->d = d;
     ik->doik = IK_ITER;
@@ -20,6 +38,8 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     }
 
     mj_forward(m, d);
+
+    QuatToEuler(ik->d->xquat+4, ik->target_pelvis_euler, ik->target_pelvis_euler+1, ik->target_pelvis_euler+2);
 
     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
@@ -45,22 +65,6 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
     return norm;
 }
 
-void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
-{
-    double ysqr = quat[2] * quat[2];
-    double t0 = -2.0f * (ysqr + quat[3] * quat[3]) + 1.0f;
-    double t1 = +2.0f * (quat[1] * quat[2] - quat[0] * quat[3]);
-    double t2 = -2.0f * (quat[1] * quat[3] + quat[0] * quat[2]);
-    double t3 = +2.0f * (quat[2] * quat[3] - quat[0] * quat[1]);
-    double t4 = -2.0f * (quat[1] * quat[1] + ysqr) + 1.0f;
-
-    t2 = t2 > 1.0f ? 1.0f : t2;
-    t2 = t2 < -1.0f ? -1.0f : t2;
-
-    *rotx = mju_asin(t2);
-    *roty = mju_atan2(t3, t4);
-    *rotz = mju_atan2(t1, t0);
-}
 
 void pdik_per_step_control(pdikdata_t* ik)
 {
@@ -81,30 +85,25 @@ void pdik_per_step_control(pdikdata_t* ik)
     if (ik->doik > 0)
     {
         apply_pd_controller(
-                10000,
-                100,
+                5000,
+                1000,
                 ik->d->qfrc_applied,
                 ik->d->xpos + 3,
                 ik->d->cvel+ 6 + 3,
                 ik->target_pelvis );
-
-        
-        ones[0] = 0;
-        ones[1] = 0;
-        ones[2] = 0;
         QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
-        printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
-         apply_pd_controller(
-                -10,
-                0,
+        // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
+        apply_pd_controller(
+                -100,
+                20,
                 f,
                 res,
                 ik->d->cvel+ 6 ,
-                ones);
+                ik->target_pelvis_euler);
 
-        printf("%.2f %.2f %.2f", f[0], f[1], f[2]);
-        ik->d->qfrc_applied[3] = f[1];
-        ik->d->qfrc_applied[4] = f[0];
+        // printf("%.2f %.2f %.2f", f[0], f[1], f[2]);
+        ik->d->qfrc_applied[3] = f[0];
+        ik->d->qfrc_applied[4] = f[1];
         ik->d->qfrc_applied[5] = f[2];
         // ik->d->qfrc_applied[4] = .1;
         // ik->d->qfrc_applied[3] = f[0];
@@ -120,13 +119,13 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         closenorm = apply_pd_controller(
             100,
-            1,
+            30,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
             ik->target_body);
 
-        printf("close %.5f\n", closenorm);
+        // printf("close %.5f\n", closenorm);
 
         if(closenorm < ik->lowscore)
         {
@@ -138,8 +137,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         for(int i = 13; i <= 13; i++)
         {
             apply_pd_controller(
-                5,
-                1,
+                200,
+                30,
                 ik->d->xfrc_applied + i*6,
                 ik->d->xpos + i*3,
                 ik->d->cvel+ i*6 + 3,
