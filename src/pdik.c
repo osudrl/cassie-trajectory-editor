@@ -102,8 +102,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
         // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
         od.off_orientation = apply_pd_controller(
-                -100,
-                20,
+                -500,
+                50,
                 f,
                 res,
                 ik->d->cvel+ 6 ,
@@ -126,8 +126,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            100,
-            30,
+            1000,
+            80,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -149,7 +149,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         for(int i = 13; i <= 13; i++)
         {
             od.off_lfoot = apply_pd_controller(
-                200,
+                500,
                 30,
                 ik->d->xfrc_applied + i*6,
                 ik->d->xpos + i*3,

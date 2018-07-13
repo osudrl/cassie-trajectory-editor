@@ -487,7 +487,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     m = mnew;
     d = mj_makeData(m);
     m->opt.disableflags |= 0xddc;
-    // m->opt.disableflags &= ~(mjDSBL_CONTACT);
+    // m->opt.disableflags &= ~(mjDSBL_CONTACT); // comment if segfaults
     // m->opt.disableflags |= 0x02ff;
     // m->opt.disableflags |= mjDSBL_GRAVITY;
     reset_pdikdata(&ik, m, d);

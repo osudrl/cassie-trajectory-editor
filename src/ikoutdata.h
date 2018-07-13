@@ -9,13 +9,13 @@
 
 struct _ikoutdata_t_
 {
-	int64_t frame;
-	int64_t iter;
-	double off_pelvis;
-	double off_orientation;
-	double off_rfoot;
-	double off_lfoot;
-	double best_rfoot_off;
+	int64_t frame; //0
+	int64_t iter; //1
+	double off_pelvis; //2
+	double off_orientation; //3
+	double off_rfoot; //4
+	double off_lfoot; //5
+	double best_rfoot_off; //6
 	double curr_qposes[CASSIE_QPOS_SIZE];
 };
 typedef struct _ikoutdata_t_ ikoutdata_t;
