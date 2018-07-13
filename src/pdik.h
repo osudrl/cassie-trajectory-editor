@@ -9,6 +9,7 @@
 
 #include "mujoco.h"
 #include <stdio.h>
+#include "ikoutdata.h"
 
 
 struct _pdikdata_t_
@@ -23,6 +24,8 @@ struct _pdikdata_t_
     double target_pelvis[3];
     double target_pelvis_euler[3];
     double target_other[3];
+    int frame;
+    FILE* outfile;
 };
 typedef struct _pdikdata_t_ pdikdata_t;
 

@@ -1,7 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
-MAIN = simik traj
+MAIN = simik traj csvik
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -98,6 +98,13 @@ simik : bin/phys.o bin/pdik.o | mjkey.txt $(CASSIE) $(MJ)
 	    bin/phys.o bin/pdik.o\
 	    $(LCOMMON) \
 	    -o simik
+
+csvik : bin/csvoutdata.o
+	gcc -o csvik bin/csvoutdata.o
+
+bin/csvoutdata.o: src/csvoutdata.c src/ikoutdata.h
+	-@mkdir -p bin
+	gcc -c src/csvoutdata.c -o bin/csvoutdata.o
 
 bin/phys.o : src/phys.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

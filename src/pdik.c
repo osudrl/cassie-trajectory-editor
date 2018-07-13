@@ -27,7 +27,7 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     ik->d = d;
     ik->doik = IK_ITER;
     ik->lowscore = 1000000;
-
+ 
     fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
     fread(ik->target_body, sizeof(mjtNum), 3, infile);
     fclose(infile);
@@ -44,7 +44,12 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
 
-
+    ik->frame = 777;
+    // if(ik->outfile)
+    //     fclose(ik->outfile);
+    ik->outfile = fopen("iksolvedata.bin", "w");
+    if (!ik->outfile)
+        printf("yo wat\n");
 }
 
 double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget)
@@ -72,6 +77,8 @@ void pdik_per_step_control(pdikdata_t* ik)
     double res[3];
     double ones[3];
     double f[3];
+    ikoutdata_t od;
+
     // d->xfrc_applied[6+0] += 1000*(0-d->xpos[6+0]);
     // d->xfrc_applied[6+1] += 1000*(0-d->xpos[6+1]);
     // double vel[6];
@@ -84,7 +91,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
     if (ik->doik > 0)
     {
-        apply_pd_controller(
+        od.iter = IK_ITER - ik->doik;
+        od.off_pelvis = apply_pd_controller(
                 5000,
                 1000,
                 ik->d->qfrc_applied,
@@ -93,7 +101,7 @@ void pdik_per_step_control(pdikdata_t* ik)
                 ik->target_pelvis );
         QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
         // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
-        apply_pd_controller(
+        od.off_orientation = apply_pd_controller(
                 -100,
                 20,
                 f,
@@ -125,6 +133,8 @@ void pdik_per_step_control(pdikdata_t* ik)
             ik->d->cvel+ 25*6 + 3,
             ik->target_body);
 
+        od.off_rfoot = closenorm;
+
         // printf("close %.5f\n", closenorm);
 
         if(closenorm < ik->lowscore)
@@ -134,9 +144,11 @@ void pdik_per_step_control(pdikdata_t* ik)
             ik->lowscore = closenorm;
         }
 
+        od.best_rfoot_off = ik->lowscore;
+
         for(int i = 13; i <= 13; i++)
         {
-            apply_pd_controller(
+            od.off_lfoot = apply_pd_controller(
                 200,
                 30,
                 ik->d->xfrc_applied + i*6,
@@ -147,6 +159,9 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
+        mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
+        if (ik->outfile)
+            fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
         ik->doik--;
     }
 }
