@@ -1,0 +1,6 @@
+make
+timeout 8 ./simik
+sleep 1 
+./visualize.py
+
+

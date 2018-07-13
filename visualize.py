@@ -16,13 +16,17 @@ data = np.genfromtxt('ik.csv', delimiter=',', skip_header=0, skip_footer=0)
 data = data.transpose()
 
 fig = plt.figure()
+fig2 = plt.figure()
 # fig2 = plt.figure()
 sub = fig.add_subplot(111)
+sub2 = fig2.add_subplot(111)
 # sub2 = fig2.add_subplot(111)
 
 sub.set_xlabel('Simulation Steps')
 sub.set_ylabel('Target Offet (m)')
 sub.set_ylim([-0.00005,0.001])
+sub2.set_xlabel('Simulation Steps')
+sub2.set_ylabel('Target Offet (m)')
 
 # sub2.plot(data[0], data[1],"o", ms=1, lw=0)
 sub.plot(data[1], data[2],"-", lw=1, label='pelvis')
@@ -30,8 +34,14 @@ sub.plot(data[1], data[3],"-", lw=1, label='orientation')
 sub.plot(data[1], data[4],"-", lw=1, label='rfoot')
 sub.plot(data[1], data[5],"-", lw=1, label='lfoot')
 sub.plot(data[1], data[6],"-", lw=1, label='best')
-plt.axhline(0,  lw=1, color='black')
-plt.axhline(0.00005,  lw=1, color='black')
+
+sub2.plot(data[1], data[2],"-", lw=1, label='pelvis')
+sub2.plot(data[1], data[3],"-", lw=1, label='orientation')
+sub2.plot(data[1], data[4],"-", lw=1, label='rfoot')
+sub2.plot(data[1], data[5],"-", lw=1, label='lfoot')
+sub2.plot(data[1], data[6],"-", lw=1, label='best')
+sub.axhline(0,  lw=1, color='black')
+sub.axhline(0.00005,  lw=1, color='black')
 
 # boxwidth = 200
 
