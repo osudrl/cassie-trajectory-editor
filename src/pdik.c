@@ -18,39 +18,39 @@ void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
 }
 
 
-void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
-{
-    FILE* infile = fopen("dropdata.bin","r");
+// void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
+// {
+//     FILE* infile = fopen("dropdata.bin","r");
 
 
-    ik->m = m;
-    ik->d = d;
-    ik->doik = IK_ITER;
-    ik->lowscore = 1000000;
+//     ik->m = m;
+//     ik->d = d;
+//     ik->doik = IK_ITER;
+//     ik->lowscore = 1000000;
  
-    fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
-    fread(ik->target_body, sizeof(mjtNum), 3, infile);
-    fclose(infile);
+//     fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
+//     fread(ik->target_body, sizeof(mjtNum), 3, infile);
+//     fclose(infile);
 
-    for(int i = 0; i < CASSIE_QPOS_SIZE; i++)
-    {
-        d->qpos[i] = ik->initqposes[i];
-    }
+//     for(int i = 0; i < CASSIE_QPOS_SIZE; i++)
+//     {
+//         d->qpos[i] = ik->initqposes[i];
+//     }
 
-    mj_forward(m, d);
+//     mj_forward(m, d);
 
-    QuatToEuler(ik->d->xquat+4, ik->target_pelvis_euler, ik->target_pelvis_euler+1, ik->target_pelvis_euler+2);
+//     QuatToEuler(ik->d->xquat+4, ik->target_pelvis_euler, ik->target_pelvis_euler+1, ik->target_pelvis_euler+2);
 
-    mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
-    mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
+//     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
+//     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
 
-    ik->frame = 777;
-    // if(ik->outfile)
-    //     fclose(ik->outfile);
-    ik->outfile = fopen("iksolvedata.bin", "w");
-    if (!ik->outfile)
-        printf("yo wat\n");
-}
+//     ik->frame = 777;
+//     // if(ik->outfile)
+//     //     fclose(ik->outfile);
+//     ik->outfile = fopen("iksolvedata.bin", "w");
+//     if (!ik->outfile)
+//         printf("yo wat\n");
+// }
 
 double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget)
 {

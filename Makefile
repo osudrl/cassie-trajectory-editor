@@ -1,7 +1,7 @@
 
 FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
-MAIN = simik traj csvik
+MAIN = traj csvik
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -46,6 +46,7 @@ OBJS =\
 	bin/timeline.o \
 	bin/vectors.o \
 	bin/ik.o \
+	bin/pdik.o \
 	bin/node.o
 
 HEADS =  \
@@ -54,6 +55,7 @@ HEADS =  \
 	src/timeline.h \
 	src/vectors.h \
 	src/node.h \
+	src/pdik.h \
 	src/ik.h
 
 all : $(MAIN) | mjkey.txt
@@ -92,13 +94,6 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    $(LCOMMON) \
 	    -o traj
 
-simik : bin/phys.o bin/pdik.o | mjkey.txt $(CASSIE) $(MJ) 
-	g++ \
-		$(FLAGS) \
-	    bin/phys.o bin/pdik.o\
-	    $(LCOMMON) \
-	    -o simik
-
 csvik : bin/csvoutdata.o
 	gcc -o csvik bin/csvoutdata.o
 
@@ -106,12 +101,6 @@ bin/csvoutdata.o: src/csvoutdata.c src/ikoutdata.h
 	-@mkdir -p bin
 	gcc -c src/csvoutdata.c -o bin/csvoutdata.o
 
-bin/phys.o : src/phys.c | mjkey.txt $(MJ) $(CASSIE)
-	-@mkdir -p bin
-	gcc -c \
-		$(FLAGS) \
-		src/phys.c \
-		-o bin/phys.o
 
 bin/pdik.o : src/pdik.h src/main.h src/pdik.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

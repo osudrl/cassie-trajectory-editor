@@ -143,7 +143,13 @@ void reset_traj_info()
     traj_info.timeline.init = 0;
     traj_info.time_start = traj_time_in_micros();
     traj_info.paused = &paused;
+    traj_info.ik.m = m;
+    traj_info.ik.d = d;
+    traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
+    if(traj_info.ik.outfile)
+        fclose(traj_info.ik.outfile);
+    traj_info.ik.outfile = fopen("iksolvedata.bin", "w");
 }
 
 
@@ -501,6 +507,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     d = mj_makeData(m);
         
     m->opt.disableflags |= 0xddc;
+    // m->opt.disableflags &= ~(mjDSBL_CONTACT); // comment if segfaults
 
     mj_forward(m, d);
 
@@ -1236,6 +1243,11 @@ void render(GLFWwindow* window)
 
 //-------------------------------- main function ----------------------------------------
 
+void control(const mjModel* m, mjData* d)
+{
+    pdik_per_step_control(&traj_info.ik);    
+}
+
 int main(int argc, const char** argv)
 {
     // print version, check compatibility
@@ -1293,6 +1305,8 @@ int main(int argc, const char** argv)
 
     // set MuJoCo time callback for profiling
     mjcb_time = timer;
+    mjcb_control = control;
+
 
     // load model if filename given as argument
     if( argc==2 )

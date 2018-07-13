@@ -26,6 +26,8 @@ struct _timeline_t_
 };
 typedef struct _timeline_t_ timeline_t;
 
+#include "pdik.h"
+
 struct _traj_info_
 {
     mjModel* m;
@@ -36,6 +38,7 @@ struct _traj_info_
     uint64_t time_frozen;
     bool* paused;
     char* filename_step_data;
+    pdikdata_t ik;
 };
 typedef struct _traj_info_ traj_info_t;
 

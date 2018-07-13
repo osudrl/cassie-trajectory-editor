@@ -29,7 +29,7 @@ struct _pdikdata_t_
 };
 typedef struct _pdikdata_t_ pdikdata_t;
 
-void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d);
+// void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d);
 double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget);
 void pdik_per_step_control(pdikdata_t* t);
 
