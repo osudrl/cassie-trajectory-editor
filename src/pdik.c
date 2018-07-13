@@ -47,29 +47,19 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
 
 void QuatToEuler( double *quat, double *rotx,  double *roty, double *rotz)
 {
-    double sqw;
-    double sqx;
-    double sqy;
-    double sqz;
-    
-    double rotxrad;
-    double rotyrad;
-    double rotzrad;
-    
-    sqw = quat[0] * quat[0];
-    sqx = quat[1] * quat[1];
-    sqy = quat[2] * quat[2];
-    sqz = quat[2] * quat[2];
-    
-    rotxrad = (double)mju_atan2(2.0 * ( quat[2] * quat[2] + quat[1] * quat[0] ) , ( -sqx - sqy + sqz + sqw ));
-    rotyrad = (double)mju_asin(-2.0 * ( quat[1] * quat[2] - quat[2] * quat[0] ));
-    rotzrad = (double)mju_atan2(2.0 * ( quat[1] * quat[2] + quat[2] * quat[0] ) , (  sqx - sqy - sqz + sqw ));
-    
-    // *rotx = rad2deg(rotxrad);
-    // *roty = rad2deg(rotyrad);
-    // *rotz = rad2deg(rotzrad);
-    
-    return;
+    double ysqr = quat[2] * quat[2];
+    double t0 = -2.0f * (ysqr + quat[3] * quat[3]) + 1.0f;
+    double t1 = +2.0f * (quat[1] * quat[2] - quat[0] * quat[3]);
+    double t2 = -2.0f * (quat[1] * quat[3] + quat[0] * quat[2]);
+    double t3 = +2.0f * (quat[2] * quat[3] - quat[0] * quat[1]);
+    double t4 = -2.0f * (quat[1] * quat[1] + ysqr) + 1.0f;
+
+    t2 = t2 > 1.0f ? 1.0f : t2;
+    t2 = t2 < -1.0f ? -1.0f : t2;
+
+    *rotx = mju_asin(t2);
+    *roty = mju_atan2(t3, t4);
+    *rotz = mju_atan2(t1, t0);
 }
 
 void pdik_per_step_control(pdikdata_t* ik)
@@ -105,16 +95,22 @@ void pdik_per_step_control(pdikdata_t* ik)
         QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
         printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
          apply_pd_controller(
-                100,
-                1,
+                -10,
+                0,
                 f,
                 res,
                 ik->d->cvel+ 6 ,
                 ones);
 
         printf("%.2f %.2f %.2f", f[0], f[1], f[2]);
-        // ik->d->qfrc_applied[3] = .1;
+        ik->d->qfrc_applied[3] = f[1];
+        ik->d->qfrc_applied[4] = f[0];
+        ik->d->qfrc_applied[5] = f[2];
         // ik->d->qfrc_applied[4] = .1;
+        // ik->d->qfrc_applied[3] = f[0];
+        // ik->d->qfrc_applied[4] = f[2];
+        // ik->d->qfrc_applied[5] = f[0];
+        // ik->d->qfrc_applied[4] = f[1];
         // ik->d->qfrc_applied[5] = f[1];
         // ik->d->qfrc_applied[4] = f[1];
         // ik->d->qfrc_applied[5] = f[2];
