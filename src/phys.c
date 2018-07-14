@@ -487,10 +487,20 @@ void loadmodel(GLFWwindow* window, const char* filename)
     m = mnew;
     d = mj_makeData(m);
     m->opt.disableflags |= 0xddc;
-    // m->opt.disableflags &= ~(mjDSBL_CONTACT); // comment if segfaults
+    m->opt.disableflags &= ~(mjDSBL_CONTACT); // comment if segfaults
     // m->opt.disableflags |= 0x02ff;
     // m->opt.disableflags |= mjDSBL_GRAVITY;
     reset_pdikdata(&ik, m, d);
+
+    for (int i = 0; i < 3; ++i) {
+        m->jnt_stiffness[i] = 1000000;
+        m->dof_damping[i] = 100000;
+        m->qpos_spring[i] = d->qpos[i];
+    }
+
+    // Set damping for body rotation joint
+    for (int i = 3; i < 7; ++i)
+        m->dof_damping[i] = 500;
 
     // save filename for reload
     strcpy(lastfile, filename);
@@ -1002,7 +1012,7 @@ void simulation(void)
 
         // advance effective simulation time by 1/refreshrate
         mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/5)
+        while( (d->time-startsimtm)*factor<1.0/8000)
         {
             // clear old perturbations, apply new
             mju_zero(d->xfrc_applied, 6*m->nbody);

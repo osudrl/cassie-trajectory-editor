@@ -29,7 +29,7 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     ik->lowscore = 1000000;
  
     fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
-    fread(ik->target_body, sizeof(mjtNum), 3, infile);
+    // fread(ik->target_body, sizeof(mjtNum), 3, infile);
     fclose(infile);
 
     for(int i = 0; i < CASSIE_QPOS_SIZE; i++)
@@ -41,8 +41,14 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
 
     QuatToEuler(ik->d->xquat+4, ik->target_pelvis_euler, ik->target_pelvis_euler+1, ik->target_pelvis_euler+2);
 
+    mju_copy(ik->target_body, ik->d->xpos + 25*3, 3);
     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
+
+    for(int i = 0 ; i < ik->m->nv; i++)
+    {
+        ik->d->qvel[i] = 0;
+    }
 
     ik->frame = 777;
     // if(ik->outfile)
@@ -73,7 +79,7 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
 
 void pdik_per_step_control(pdikdata_t* ik)
 {
-    double xscale = 200;
+    double xscale = 1000;
     double vscale = 50;
     double closenorm;
     double res[3];
@@ -91,29 +97,29 @@ void pdik_per_step_control(pdikdata_t* ik)
     // d->xfrc_applied[6+1] += 10*(2-d->xpos[6+1]) + 100 * (0-d->cvel[6+4]);
     // d->xfrc_applied[6+2] += 10*(2-d->xpos[6+2]) + 100 * (0-d->cvel[6+5]);
 
-    if (ik->doik > 0 && ik->doik < IK_ITER - 1000)
+    if (ik->doik > 0 && ik->doik < IK_ITER - 0)
     {
         od.iter = IK_ITER - ik->doik;
-        od.off_pelvis = apply_pd_controller(
-                2*xscale,
-                2*vscale,
-                ik->d->qfrc_applied,
-                ik->d->xpos + 3,
-                ik->d->cvel+ 6 + 3,
-                ik->target_pelvis );
-        QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
-        // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
-        od.off_orientation = apply_pd_controller(
-                -2*xscale,
-                vscale*2,
-                f,
-                res,
-                ik->d->cvel+ 6 ,
-                ik->target_pelvis_euler);
+        // od.off_pelvis = apply_pd_controller(
+        //         10*xscale,
+        //         10*vscale,
+        //         ik->d->qfrc_applied,
+        //         ik->d->xpos + 3,
+        //         ik->d->cvel+ 6 + 3,
+        //         ik->target_pelvis );
+        // QuatToEuler(ik->d->xquat+4, res, res+1, res+2);
+        // // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
+        // od.off_orientation = apply_pd_controller(
+        //         -2*xscale,
+        //         vscale*2,
+        //         f,
+        //         res,
+        //         ik->d->cvel+ 6 ,
+        //         ik->target_pelvis_euler);
 
-        ik->d->qfrc_applied[3] = f[0];
-        ik->d->qfrc_applied[4] = f[1];
-        ik->d->qfrc_applied[5] = f[2];
+        // ik->d->qfrc_applied[3] = f[0];
+        // ik->d->qfrc_applied[4] = f[1];
+        // ik->d->qfrc_applied[5] = f[2];
         // ik->d->qfrc_applied[4] = .1;
         // ik->d->qfrc_applied[3] = f[0];
         // ik->d->qfrc_applied[4] = f[2];
@@ -149,14 +155,14 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         for(int i = 13; i <= 13; i++)
         {
-            od.off_lfoot = apply_pd_controller(
-                0,0,
-                // IK_ITER - ik->doik > 200 ? 4*xscale : 0,
-                // IK_ITER - ik->doik > 300 ? 8*vscale : 0,
-                ik->d->xfrc_applied + i*6,
-                ik->d->xpos + i*3,
-                ik->d->cvel+ i*6 + 3,
-                ik->target_other );
+            // od.off_lfoot = apply_pd_controller(
+            //      0*.5*xscale,
+            //      0*1*vscale,
+            //     ik->d->xfrc_applied + i*6,
+            //     ik->d->xpos + i*3,
+            //     ik->d->cvel+ i*6 + 3,
+            //     ik->target_other );
+            // printf("%d\n",i);
         // d->xfrc_applied[i*6 + 0] = 5*(initxposes[i*3 + 0] - d->xpos[i*3 + 0])  + 1 *(0-d->cvel[i*6 + 3]);
         // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);

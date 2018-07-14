@@ -1,5 +1,5 @@
 make
-timeout 8 ./simik
+timeout 25 ./simik
 sleep 1 
 ./visualize.py
 
