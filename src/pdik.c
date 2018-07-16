@@ -46,6 +46,10 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
         m->qpos_spring[i] = d->qpos[i];
     }
 
+    m->jnt_stiffness[22] = 100000;
+    // m->dof_damping[22] = 1;
+    m->qpos_spring[22] = d->qpos[22];
+
     for (int i = 3; i < 7; ++i)
         m->dof_damping[i] = 500;
 
@@ -145,8 +149,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         
         closenorm = apply_pd_controller(
-            15000 * (1.0/ik->lowscore > 100 ? 100 : 1.0/ik->lowscore),
-            1.0/ik->lowscore > 1000 ? 20 : 1,
+            15000 * (1.0/ik->lowscore > 500 ? 500 : 1.0/ik->lowscore),
+            1.0/ik->lowscore > 1000 ? 100 : 1,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
