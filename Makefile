@@ -116,6 +116,8 @@ bin/phys.o : src/phys.c | mjkey.txt $(MJ) $(CASSIE)
 bin/pdik.o : src/pdik.h src/main.h src/pdik.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
+		-DKCX=$$(cat kcx.txt) \
+		-DKCV=$$(cat kcv.txt) \
 		$(FLAGS) \
 		$(CCOMMON) \
 		src/pdik.c \

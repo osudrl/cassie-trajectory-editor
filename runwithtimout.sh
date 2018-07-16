@@ -1,0 +1,1 @@
+timeout --preserve-status 10 ./simik &> /dev/null

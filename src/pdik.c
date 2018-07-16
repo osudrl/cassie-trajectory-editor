@@ -92,6 +92,13 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
     return norm;
 }
 
+#ifndef KCX
+#error
+#endif
+
+#ifndef KCV
+#error
+#endif
 
 void pdik_per_step_control(pdikdata_t* ik)
 {
@@ -157,8 +164,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         //     ik->target_body);
 
         closenorm = apply_pd_controller(
-            5,
-            1,
+            KCX,
+            KCV,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -194,7 +201,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
         mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        if (ik->outfile)
+        if (ik->outfile && ik->doik % 20 == 0)
             fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
     }
     ik->doik--;
