@@ -105,8 +105,8 @@ void ik_iterative_better_body_optimizer(
     int frame,
     int count)
 {
-    traj_info->ik.maxiter = 15000;
-    traj_info->ik.doik = 15000;
+    traj_info->ik.maxiter = 50000;
+    traj_info->ik.doik = 50000;
     traj_info->ik.lowscore = 500000;
 
     // mj_forward(traj_info->m, traj_info->d); //should be unnessesary
