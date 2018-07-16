@@ -132,8 +132,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            500000,
-            10,
+            5,
+            1,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -166,8 +166,8 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
         // mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        if (ik->outfile)
-            fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
+        // if (ik->outfile)
+        //     fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
         ik->doik--;
     }
 }
