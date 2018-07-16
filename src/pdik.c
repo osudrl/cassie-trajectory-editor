@@ -145,8 +145,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         
         closenorm = apply_pd_controller(
-            10000 * (1.0/ik->lowscore > 1000 ? 1000 : 1.0/ik->lowscore),
-            1.0/ik->lowscore > 1000 ? 100 : 1,
+            15000 * (1.0/ik->lowscore > 500 ? 500 : 1.0/ik->lowscore),
+            1.0/ik->lowscore > 1000 ? 300 : 1,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
