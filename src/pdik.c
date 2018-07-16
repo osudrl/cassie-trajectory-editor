@@ -29,7 +29,7 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
     ik->lowscore = 1000000;
  
     fread(ik->initqposes, sizeof(mjtNum), CASSIE_QPOS_SIZE, infile);
-    // fread(ik->target_body, sizeof(mjtNum), 3, infile);
+    fread(ik->target_body, sizeof(mjtNum), 3, infile);
     fclose(infile);
 
     for(int i = 0; i < CASSIE_QPOS_SIZE; i++)
@@ -39,9 +39,21 @@ void reset_pdikdata(pdikdata_t* ik, mjModel* m, mjData* d)
 
     mj_forward(m, d);
 
+    for (int i = 0; i < 3; ++i) 
+    {
+        m->jnt_stiffness[i] = 1000000;
+        m->dof_damping[i] = 100000;
+        m->qpos_spring[i] = d->qpos[i];
+    }
+
+    for (int i = 3; i < 7; ++i)
+        m->dof_damping[i] = 500;
+
     QuatToEuler(ik->d->xquat+4, ik->target_pelvis_euler, ik->target_pelvis_euler+1, ik->target_pelvis_euler+2);
 
-    mju_copy(ik->target_body, ik->d->xpos + 25*3, 3);
+    //set target to "itself?"
+    // mju_copy(ik->target_body, ik->d->xpos + 25*3, 3);
+
     mju_copy(ik->target_pelvis, ik->d->xpos + 3*1, 3);
     mju_copy(ik->target_other, ik->d->xpos + 13*3, 3);
 
@@ -131,14 +143,16 @@ void pdik_per_step_control(pdikdata_t* ik)
         // ik->d->qfrc_applied[4] = f[2];
         // ik->d->qfrc_applied[4] = f[1];
 
-
+        
         closenorm = apply_pd_controller(
-            .5*xscale,
-            2*vscale,
+            10000 * (1.0/ik->lowscore > 1000 ? 1000 : 1.0/ik->lowscore),
+            1.0/ik->lowscore > 1000 ? 100 : 1,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
             ik->target_body);
+
+        
 
         od.off_rfoot = closenorm;
 
@@ -168,7 +182,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
         mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        if (ik->outfile && ik->doik %5 == 0)
+        if (ik->outfile)
             fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
     }
     ik->doik--;
