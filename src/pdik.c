@@ -93,27 +93,32 @@ void pdik_per_step_control(pdikdata_t* ik)
     {
         od.frame = ik->frame;
         od.iter = ik->maxiter - ik->doik;
-        od.off_pelvis = apply_pd_controller(
-                10000,
-                50,
-                ik->d->qfrc_applied,
-                ik->d->xpos + 3,
-                ik->d->cvel+ 6 + 3,
-                ik->target_pelvis );
-        QuatToEuler(ik->d->xquat+4, res);
+
+        // od.off_pelvis = apply_pd_controller(
+        //         10000,
+        //         50,
+        //         ik->d->qfrc_applied,
+        //         ik->d->xpos + 3,
+        //         ik->d->cvel+ 6 + 3,
+        //         ik->target_pelvis );
+        // QuatToEuler(ik->d->xquat+4, res);
+
         // printf("%.2f %.2f %.2f    ", res[0], res[1], res[2]);
-        od.off_orientation = apply_pd_controller(
-                -500,
-                50,
-                f,
-                res,
-                ik->d->cvel+ 6 ,
-                ik->target_pelvis_euler);
+
+        // od.off_orientation = apply_pd_controller(
+        //         -500,
+        //         50,
+        //         f,
+        //         res,
+        //         ik->d->cvel+ 6 ,
+        //         ik->target_pelvis_euler);
 
         // printf("%.2f %.2f %.2f", f[0], f[1], f[2]);
-        ik->d->qfrc_applied[3] = f[0];
-        ik->d->qfrc_applied[4] = f[1];
-        ik->d->qfrc_applied[5] = f[2];
+
+        // ik->d->qfrc_applied[3] = f[0];
+        // ik->d->qfrc_applied[4] = f[1];
+        // ik->d->qfrc_applied[5] = f[2];
+
         // ik->d->qfrc_applied[4] = .1;
         // ik->d->qfrc_applied[3] = f[0];
         // ik->d->qfrc_applied[4] = f[2];
@@ -127,7 +132,7 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            1000,
+            500000,
             10,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
@@ -149,13 +154,13 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         for(int i = 13; i <= 13; i++)
         {
-            od.off_lfoot = apply_pd_controller(
-                1000,
-                10,
-                ik->d->xfrc_applied + i*6,
-                ik->d->xpos + i*3,
-                ik->d->cvel+ i*6 + 3,
-                ik->target_other );
+            // od.off_lfoot = apply_pd_controller(
+            //     1000,
+            //     10,
+            //     ik->d->xfrc_applied + i*6,
+            //     ik->d->xpos + i*3,
+            //     ik->d->cvel+ i*6 + 3,
+            //     ik->target_other );
         // d->xfrc_applied[i*6 + 0] = 5*(initxposes[i*3 + 0] - d->xpos[i*3 + 0])  + 1 *(0-d->cvel[i*6 + 3]);
         // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);

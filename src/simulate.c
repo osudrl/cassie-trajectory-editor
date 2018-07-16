@@ -150,6 +150,8 @@ void reset_traj_info()
     if(traj_info.ik.outfile)
         fclose(traj_info.ik.outfile);
     traj_info.ik.outfile = fopen("iksolvedata.bin", "w");
+
+    
 }
 
 

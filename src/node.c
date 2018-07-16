@@ -128,7 +128,7 @@ double normalCFD(double value)
 
 double percent(int frame_offset, int iterations)
 {
-    double sigma = 50.0;
+    double sigma = 100.0;
 
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
@@ -167,7 +167,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     fclose(outfile);
     nodeframe_ik_transform(traj_info, body_id, rootframe,0,ik_body_target_xpos);
 
-    iterations = 150;
+    iterations = 100;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
@@ -250,6 +250,6 @@ void node_position_scale_visually(
 
 double node_calculate_filter_from_frame_offset(double frame_offset)
 {
-    return gaussian_distrobution(frame_offset/50.0, 1) *(1/0.318310);
+    return gaussian_distrobution(frame_offset/100.0, 1) *(1/0.318310);
 }
 

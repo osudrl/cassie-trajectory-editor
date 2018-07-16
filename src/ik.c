@@ -105,11 +105,11 @@ void ik_iterative_better_body_optimizer(
     int frame,
     int count)
 {
-    traj_info->ik.maxiter = count;
-    traj_info->ik.doik = count;
+    traj_info->ik.maxiter = 1000;
+    traj_info->ik.doik = 1000;
     traj_info->ik.lowscore = 500000;
 
-    mj_forward(traj_info->m, traj_info->d); //should be unnessesary
+    // mj_forward(traj_info->m, traj_info->d); //should be unnessesary
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
     mju_copy3(traj_info->ik.target_pelvis, traj_info->d->xpos + (3*1));
     QuatToEuler(traj_info->d->xquat+4, traj_info->ik.target_pelvis_euler);
@@ -117,7 +117,19 @@ void ik_iterative_better_body_optimizer(
 
     traj_info->ik.frame = frame;
 
-    while(traj_info->ik.doik > 0 )// && traj_info->ik.lowscore > .001)
+
+    for (int i = 0; i < 3; ++i) 
+    {
+        traj_info->m->jnt_stiffness[i] = 1000000;
+        traj_info->m->dof_damping[i] = 100000;
+        traj_info->m->qpos_spring[i] = traj_info->d->qpos[i];
+    }
+
+    for (int i = 3; i < 7; ++i)
+        traj_info->m->dof_damping[i] = 500;
+
+
+    while(traj_info->ik.doik > 0 )//&& traj_info->ik.lowscore > .01)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);
