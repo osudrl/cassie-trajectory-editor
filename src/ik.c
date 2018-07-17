@@ -105,8 +105,8 @@ void ik_iterative_better_body_optimizer(
     int frame,
     int count)
 {
-    traj_info->ik.maxiter = 50000;
-    traj_info->ik.doik = 50000;
+    traj_info->ik.maxiter = 12000;
+    traj_info->ik.doik = 12000;
     traj_info->ik.lowscore = 500000;
 
     // mj_forward(traj_info->m, traj_info->d); //should be unnessesary
@@ -128,6 +128,8 @@ void ik_iterative_better_body_optimizer(
     for (int i = 3; i < 7; ++i)
         traj_info->m->dof_damping[i] = 500;
 
+    for (int i = 0; i < traj_info->m->nv; i++)
+        traj_info->d->qvel[i] = 0;
 
     while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .001)
     {

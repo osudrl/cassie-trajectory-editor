@@ -167,7 +167,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     fclose(outfile);
     nodeframe_ik_transform(traj_info, body_id, rootframe,0,ik_body_target_xpos);
 
-    iterations = 400;
+    iterations = 300;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {

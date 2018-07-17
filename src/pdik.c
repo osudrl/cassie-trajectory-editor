@@ -77,7 +77,7 @@ void pdik_per_step_control(pdikdata_t* ik)
     double res[3];
     double ones[3];
     double f[3];
-    ikoutdata_t od;
+    iklibe_t lib;
 
     // d->xfrc_applied[6+0] += 1000*(0-d->xpos[6+0]);
     // d->xfrc_applied[6+1] += 1000*(0-d->xpos[6+1]);
@@ -91,8 +91,6 @@ void pdik_per_step_control(pdikdata_t* ik)
 
     if (ik->doik > 0)
     {
-        od.frame = ik->frame;
-        od.iter = ik->maxiter - ik->doik;
 
         // od.off_pelvis = apply_pd_controller(
         //         10000,
@@ -132,14 +130,12 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            225,
-            7,
+            450,
+            50,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
             ik->target_body);
-
-        od.off_rfoot = closenorm;
 
         // printf("close %.5f\n", closenorm);
 
@@ -149,8 +145,6 @@ void pdik_per_step_control(pdikdata_t* ik)
                 ik->bestqposes[i] = ik->d->qpos[i];
             ik->lowscore = closenorm;
         }
-
-        od.best_rfoot_off = ik->lowscore;
 
         for(int i = 13; i <= 13; i++)
         {
@@ -165,9 +159,11 @@ void pdik_per_step_control(pdikdata_t* ik)
         // d->xfrc_applied[i*6 + 1] = 5*(initxposes[i*3 + 1] - d->xpos[i*3 + 1])  + 1 *(0-d->cvel[i*6 + 4]);
         // d->xfrc_applied[i*6 + 2] = 5*(initxposes[i*3 + 2] - d->xpos[i*3 + 2])  + 1 *(0-d->cvel[i*6 + 5]);
         }
-        // mju_copy(od.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        // if (ik->outfile)
-        //     fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
+        mju_sub3(lib.v_pelvis_to_foot,ik->d->xpos + 25*3,ik->d->xpos + 1*3);
+        lib.norm_pelvis_to_foot = mju_norm(res,3);
+        mju_copy(lib.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
+        if (ik->outfile)
+            fwrite(&lib, sizeof(iklibe_t), 1, ik->outfile);
         ik->doik--;
     }
 }
