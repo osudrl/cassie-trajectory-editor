@@ -129,10 +129,11 @@ const char help_content[] =
 ". /\n"
 "- =";
 
+traj_info_t traj_info;
+
 char opt_title[1000] = "";
 char opt_content[1000];
 
-traj_info_t traj_info;
 
 
 void reset_traj_info()
@@ -150,8 +151,6 @@ void reset_traj_info()
     if(traj_info.ik.outfile)
         fclose(traj_info.ik.outfile);
     traj_info.ik.outfile = fopen("iksolvedata.bin", "w");
-
-    
 }
 
 
@@ -1316,6 +1315,7 @@ int main(int argc, const char** argv)
     else
         loadmodel(window, "model/cassie.xml");
 
+    pkid_init_iklib(traj_info.ik.lib);
     // main loop
     while( !glfwWindowShouldClose(window) )
     {

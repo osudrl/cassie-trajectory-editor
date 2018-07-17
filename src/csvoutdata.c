@@ -3,24 +3,25 @@
 
 
 int main()
-{
-    ikoutdata_t od;
+{   
+    iklibe_t lib;
     FILE* infile = fopen("iksolvedata.bin", "r");
+    int i = 0;
 
-    while(fread(&od, sizeof(ikoutdata_t), 1, infile) > 0)
+    while(fread(&lib, sizeof(iklibe_t), 1, infile) > 0)
     {
-        printf("%ld,%ld",od.frame, od.iter);
-        printf(",%.5f",od.off_pelvis);
-        printf(",%.5f",od.off_orientation);
-        printf(",%.5f",od.off_rfoot);
-        printf(",%.5f",od.off_lfoot);
-        printf(",%.5f",od.best_rfoot_off);
+        i++;
+        printf("%.5f",lib.norm_pelvis_to_foot);
+        printf(",%.5f",lib.v_pelvis_to_foot[0]);
+        printf(",%.5f",lib.v_pelvis_to_foot[1]);
+        printf(",%.5f",lib.v_pelvis_to_foot[2]);
         for(int i = 0; i < CASSIE_QPOS_SIZE; i++)
         {
-            printf(",%.5f",od.curr_qposes[i]);
+            //printf(",%.5f",lib.curr_qposes[i]);
         }
         printf("\n");
     }
+    printf("%d\n",i);
 }
 
 

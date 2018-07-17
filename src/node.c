@@ -167,15 +167,18 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     fclose(outfile);
     nodeframe_ik_transform(traj_info, body_id, rootframe,0,ik_body_target_xpos);
 
-    iterations = 300;
+    iterations = 175;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
-    {
+    {   
+        if(iterations > 100)
+        {
         if((frame_offset < iterations / 2 && frame_offset % (iterations / 40) == 0)
             ||
             (frame_offset > iterations /2 && frame_offset % (iterations / 10) == 0))
         {
             printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
+        }
         }
         scale_target_using_frame_offset(
             traj_info,

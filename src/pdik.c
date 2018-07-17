@@ -52,6 +52,20 @@ void QuatToEuler( double *quat, double* euler)
 //         printf("yo wat\n");
 // }
 
+void pkid_init_iklib (iklibe_t* lib)
+{
+    FILE* infile = fopen("lib.bin", "r");
+    int i = 0;
+
+    while(i < 47995 && fread(lib + i, sizeof(iklibe_t), 1, infile) > 0)
+    {
+        // printf("i = %d\n",i);
+        i++;
+    }
+
+    fclose(infile);
+}
+
 double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, double* vcurr, double* xtarget)
 {
     double xdelta[3];
@@ -130,8 +144,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            450,
-            50,
+            2500000,
+            80,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
@@ -162,7 +176,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         mju_sub3(lib.v_pelvis_to_foot,ik->d->xpos + 25*3,ik->d->xpos + 1*3);
         lib.norm_pelvis_to_foot = mju_norm(res,3);
         mju_copy(lib.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        if (ik->outfile)
+        if (ik->outfile && ik->lowscore < 0.01)
             fwrite(&lib, sizeof(iklibe_t), 1, ik->outfile);
         ik->doik--;
     }
