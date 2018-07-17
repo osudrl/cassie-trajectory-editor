@@ -57,7 +57,7 @@ void pkid_init_iklib (iklibe_t* lib)
     FILE* infile = fopen("lib.bin", "r");
     int i = 0;
 
-    while(i < 47995 && fread(lib + i, sizeof(iklibe_t), 1, infile) > 0)
+    while(i < 1067900 && fread(lib + i, sizeof(iklibe_t), 1, infile) > 0)
     {
         // printf("i = %d\n",i);
         i++;
@@ -144,7 +144,7 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            2500000,
+            1000000,
             80,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
@@ -176,7 +176,7 @@ void pdik_per_step_control(pdikdata_t* ik)
         mju_sub3(lib.v_pelvis_to_foot,ik->d->xpos + 25*3,ik->d->xpos + 1*3);
         lib.norm_pelvis_to_foot = mju_norm(res,3);
         mju_copy(lib.curr_qposes, ik->d->qpos, CASSIE_QPOS_SIZE);
-        if (ik->outfile && ik->lowscore < 0.01)
+        if (ik->outfile && ik->lowscore < 0.1)
             fwrite(&lib, sizeof(iklibe_t), 1, ik->outfile);
         ik->doik--;
     }

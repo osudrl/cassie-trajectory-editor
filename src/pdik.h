@@ -25,7 +25,7 @@ struct _pdikdata_t_
     double target_other[3];
     int frame;
     FILE* outfile;
-    iklibe_t lib[47995];
+    iklibe_t lib[1067900];
 };
 typedef struct _pdikdata_t_ pdikdata_t;
 

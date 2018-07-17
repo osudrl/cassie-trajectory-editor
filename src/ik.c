@@ -110,7 +110,7 @@ void cheat(pdikdata_t* ik)
 
     my_pelvis = ik->target_pelvis;
     my_foot = ik->target_body;
-    for (int i = 0; i < 47995; i++)
+    for (int i = 0; i < 1067900; i++)
     {
         mju_add3(reffoot, my_pelvis, ik->lib[i].v_pelvis_to_foot);
         mju_sub3(footdiff, my_foot, reffoot);
@@ -159,7 +159,7 @@ void ik_iterative_better_body_optimizer(
     for (int i = 0; i < traj_info->m->nv; i++)
         traj_info->d->qvel[i] = 0;
 
-    while(traj_info->ik.doik > 0 )//&& traj_info->ik.lowscore > .0005)
+    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .001)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);
