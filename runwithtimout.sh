@@ -1,1 +1,1 @@
-timeout --preserve-status 10 ./simik &> /dev/null
+timeout --preserve-status 2 ./simik &> /dev/null
