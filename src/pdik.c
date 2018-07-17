@@ -57,7 +57,7 @@ void pkid_init_iklib (iklibe_t* lib)
     FILE* infile = fopen("lib.bin", "r");
     int i = 0;
 
-    while(i < 1067900 && fread(lib + i, sizeof(iklibe_t), 1, infile) > 0)
+    while(i < 5000000 && fread(lib + i, sizeof(iklibe_t), 1, infile) > 0)
     {
         // printf("i = %d\n",i);
         i++;
@@ -144,8 +144,8 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            1000000,
-            80,
+            100000,
+            5,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
             ik->d->cvel+ 25*6 + 3,
