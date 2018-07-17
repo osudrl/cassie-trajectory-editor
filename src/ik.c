@@ -105,8 +105,8 @@ void ik_iterative_better_body_optimizer(
     int frame,
     int count)
 {
-    traj_info->ik.maxiter = 50000;
-    traj_info->ik.doik = 50000;
+    traj_info->ik.maxiter = 100000;
+    traj_info->ik.doik = 100000;
     traj_info->ik.lowscore = 500000;
 
     // mj_forward(traj_info->m, traj_info->d); //should be unnessesary
@@ -132,7 +132,7 @@ void ik_iterative_better_body_optimizer(
          traj_info->d->qvel[i] = 0;
 
 
-    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .0005)
+    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .00025)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);

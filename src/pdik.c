@@ -132,7 +132,7 @@ void pdik_per_step_control(pdikdata_t* ik)
 
 
         closenorm = apply_pd_controller(
-            350,
+            400,
             30,
             ik->d->xfrc_applied + 25*6,
             ik->d->xpos + 25*3,
