@@ -11,16 +11,17 @@
 #include "string.h"
 #include "stdbool.h"
 
-#include "main.h"
+#include "pdik.h"
+
  
 
 //-------------------------------- global variables -------------------------------------
+
 
 // model
 mjModel* m = 0;
 mjData* d = 0;
 char lastfile[1000] = "";
-
 
 // user state
 bool paused = false;
@@ -60,6 +61,7 @@ bool button_right =  false;
 double lastx = 0;
 double lasty = 0;
 double window2buffer = 1;           // framebuffersize / windowsize (for scaled video modes)
+
 
 // help strings
 const char help_title[] = 
@@ -132,35 +134,15 @@ const char help_content[] =
 char opt_title[1000] = "";
 char opt_content[1000];
 
-traj_info_t traj_info;
-
-
-void reset_traj_info()
-{
-    traj_info.m = m;
-    traj_info.d = d;
-    traj_info.pert = &pert;
-    traj_info.timeline.init = 0;
-    traj_info.time_start = traj_time_in_micros();
-    traj_info.paused = &paused;
-    traj_info.ik.m = m;
-    traj_info.ik.d = d;
-    traj_info.ik.doik = 0;
-    traj_info.filename_step_data = FILENAME_STEP_DATA;
-    if(traj_info.ik.outfile)
-        fclose(traj_info.ik.outfile);
-    traj_info.ik.outfile = fopen("iksolvedata.bin", "w");
-
-    
-}
-
 
 //-------------------------------- profiler and sensor ----------------------------------
+
+pdikdata_t ik;
 
 // init profiler
 void profilerinit(void)
 {
-   /* int i, n;
+    int i, n;
 
     // set figures to default
     mjv_defaultFigure(&figconstraint);
@@ -247,13 +229,14 @@ void profilerinit(void)
         {
             figtimer.linedata[n][2*i] = (float)-i;
             figsize.linedata[n][2*i] = (float)-i;
-        }*/
+        }
 }
+
 
 // show profiler
 void profilerupdate(void)
 {
-    /*int i, n;
+    int i, n;
 
     // update constraint figure
     figconstraint.linepnt[0] = mjMIN(mjMIN(d->solver_iter, mjNSOLVER), mjMAXLINEPNT);
@@ -282,7 +265,6 @@ void profilerupdate(void)
         figconstraint.linedata[3][2*i+1] = (float)d->solver[i].neval;
         figconstraint.linedata[4][2*i+1] = (float)d->solver[i].nupdate;
     }
-    
 
     // update cost figure
     figcost.linepnt[0] = mjMIN(mjMIN(d->solver_iter, mjNSOLVER), mjMAXLINEPNT);
@@ -306,8 +288,6 @@ void profilerupdate(void)
         figcost.linedata[1][2*i+1] = (float)mju_log10(mju_max(mjMINVAL, d->solver[i].gradient));
         figcost.linedata[2][2*i+1] = (float)mju_log10(mju_max(mjMINVAL, d->solver[i].lineslope));
     }
-    
-
 
     // get timers: total, collision, prepare, solve, other
     int itotal = (d->timer[mjTIMER_STEP].duration > d->timer[mjTIMER_FORWARD].duration ?
@@ -344,7 +324,7 @@ void profilerupdate(void)
         (float)d->ncon,
         (float)d->solver_iter
     };
-    
+
     // update figsize
     pnt = mjMIN(201, figsize.linepnt[0]+1);
     for( n=0; n<6; n++ )
@@ -357,22 +337,21 @@ void profilerupdate(void)
         figsize.linepnt[n] = pnt;
         figsize.linedata[n][1] = sdata[n];
     }
-    */
-} 
+}
 
 
 
 // show profiler
 void profilershow(mjrRect rect)
 {
-    /*mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
+    mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
     mjr_figure(viewport, &figtimer, &con);
     viewport.bottom += rect.height/4;
     mjr_figure(viewport, &figsize, &con);
     viewport.bottom += rect.height/4;
     mjr_figure(viewport, &figcost, &con);
     viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figconstraint, &con);*/
+    mjr_figure(viewport, &figconstraint, &con);
 }
 
 
@@ -380,7 +359,7 @@ void profilershow(mjrRect rect)
 // init sensor figure
 void sensorinit(void)
 {
-    /*// set figure to default
+    // set figure to default
     mjv_defaultFigure(&figsensor);
 
     // set flags
@@ -401,14 +380,14 @@ void sensorinit(void)
     figsensor.range[0][0] = 0;
     figsensor.range[0][1] = 0;
     figsensor.range[1][0] = -1;
-    figsensor.range[1][1] = 1;*/
+    figsensor.range[1][1] = 1;
 }
 
 
 // update sensor figure
 void sensorupdate(void)
 {
-    /*static const int maxline = 10;
+    static const int maxline = 10;
 
     // clear linepnt
     for( int i=0; i<maxline; i++ )
@@ -451,7 +430,7 @@ void sensorupdate(void)
         // update linepnt
         figsensor.linepnt[lineid] = mjMIN(mjMAXLINEPNT-1, 
                                           figsensor.linepnt[lineid]+2*dim);
-    }*/
+    }
 }
 
 
@@ -459,9 +438,9 @@ void sensorupdate(void)
 // show sensor figure
 void sensorshow(mjrRect rect)
 {
-    /*// render figure on the right
+    // render figure on the right
     mjrRect viewport = {rect.width - rect.width/4, rect.bottom, rect.width/4, rect.height/3};
-    mjr_figure(viewport, &figsensor, &con);*/
+    mjr_figure(viewport, &figsensor, &con);
 }
 
 
@@ -507,11 +486,11 @@ void loadmodel(GLFWwindow* window, const char* filename)
     mj_deleteModel(m);
     m = mnew;
     d = mj_makeData(m);
-        
     m->opt.disableflags |= 0xddc;
     // m->opt.disableflags &= ~(mjDSBL_CONTACT); // comment if segfaults
-
-    mj_forward(m, d);
+    // m->opt.disableflags |= 0x02ff;
+    // m->opt.disableflags |= mjDSBL_GRAVITY;
+    reset_pdikdata(&ik, m, d);
 
     // save filename for reload
     strcpy(lastfile, filename);
@@ -531,9 +510,8 @@ void loadmodel(GLFWwindow* window, const char* filename)
     // set window title to mode name
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
-
-    reset_traj_info();
 }
+
 
 
 // timer in milliseconds
@@ -992,6 +970,7 @@ void makeoptionstring(const char* name, char key, char* buf)
     buf[cnt+4] = 0;
 }
 
+
 // advance simulation
 void simulation(void)
 {
@@ -1002,6 +981,8 @@ void simulation(void)
     // clear timers
     cleartimers(d);
 
+    if(ik.doik > 0)
+    {
     // paused
     if( paused )
     {
@@ -1012,11 +993,7 @@ void simulation(void)
             mj_forward(m, d);
         }
     }
-    else
-    {
-    }
-   traj_foreach_frame(&traj_info);
-    /*
+
     // running
     else
     {
@@ -1025,7 +1002,7 @@ void simulation(void)
 
         // advance effective simulation time by 1/refreshrate
         mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/refreshrate )
+        while( (d->time-startsimtm)*factor<1.0/10 )
         {
             // clear old perturbations, apply new
             mju_zero(d->xfrc_applied, 6*m->nbody);
@@ -1035,7 +1012,6 @@ void simulation(void)
                 mjv_applyPerturbForce(m, d, &pert);
             }
 
-            // run mj_step and count
             mj_step(m, d);
 
             // break on reset
@@ -1043,7 +1019,23 @@ void simulation(void)
                 break;
         }
     }
-    */
+    }
+    else
+    {
+        for(int i = 0; i < 21; i++)
+        {
+            d->qpos[i] = ik.initqposes[i];
+        }
+        for(int i = 21; i < 35; i++)
+        {
+            d->qpos[i] = ik.bestqposes[i];
+        }
+        for(int i = 32; i < 35; i++)
+        {
+            d->qpos[i] = ik.initqposes[i];
+        }
+        mj_forward(m,d);
+    }
 }
 
 
@@ -1242,13 +1234,16 @@ void render(GLFWwindow* window)
     glfwSwapBuffers(window);
 }
 
+double bestclosenorm = 10000;
 
-//-------------------------------- main function ----------------------------------------
 
 void control(const mjModel* m, mjData* d)
 {
-    pdik_per_step_control(&traj_info.ik);    
+    pdik_per_step_control(&ik);    
 }
+
+
+//-------------------------------- main function ----------------------------------------
 
 int main(int argc, const char** argv)
 {
@@ -1309,12 +1304,12 @@ int main(int argc, const char** argv)
     mjcb_time = timer;
     mjcb_control = control;
 
-
     // load model if filename given as argument
     if( argc==2 )
         loadmodel(window, argv[1]);
     else
         loadmodel(window, "model/cassie.xml");
+
 
     // main loop
     while( !glfwWindowShouldClose(window) )
@@ -1337,5 +1332,3 @@ int main(int argc, const char** argv)
     mj_deactivate();
     return 0;
 }
-
-

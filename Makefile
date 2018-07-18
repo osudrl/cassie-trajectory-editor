@@ -1,5 +1,5 @@
 
-FLAGS = -O2 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
+FLAGS = -O3 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
 MAIN = traj
 
@@ -46,6 +46,7 @@ OBJS =\
 	bin/timeline.o \
 	bin/vectors.o \
 	bin/ik.o \
+	bin/pdik.o \
 	bin/node.o
 
 HEADS =  \
@@ -54,6 +55,7 @@ HEADS =  \
 	src/timeline.h \
 	src/vectors.h \
 	src/node.h \
+	src/pdik.h \
 	src/ik.h
 
 all : $(MAIN) | mjkey.txt
@@ -91,6 +93,15 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    bin/main-traj.o $(OBJS) \
 	    $(LCOMMON) \
 	    -o traj
+	    
+bin/pdik.o : src/pdik.h src/main.h src/pdik.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/pdik.c \
+		-o bin/pdik.o
+
 
 bin/simulate.o : $(HEADS) src/simulate.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

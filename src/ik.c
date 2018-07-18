@@ -1,120 +1,73 @@
 #include "ik.h"
 
-double ik_fwd_kinematics_score(
-    traj_info_t* traj_info,
-    double* xyz_xpos_target, 
-    int body_id_end)
+void ik_reset_collateral_qpos_damage(traj_info_t* traj_info, double* initqpos, int body_id)
 {
-    double* xyz_xpos_curr_end;
-
-    mj_kinematics(traj_info->m,traj_info->d);   
-    xyz_xpos_curr_end = traj_info->d->xpos + body_id_end*3;
-    return vectors_norm_of_vector3_subtraction(xyz_xpos_curr_end, xyz_xpos_target);
+    if(body_id >= 14 && body_id <= 25)
+        for (int i = 7; i <= 20; i++)
+            traj_info->d->qpos[i] = initqpos[i];
+    if(body_id >= 2 && body_id <= 13)
+        for (int i = 20; i <= 34; i++)
+            traj_info->d->qpos[i] = initqpos[i];
 }
 
-void fill_joint_array(int* arr, int body_id_end)
+void ik_set_pelvis_springs(traj_info_t* traj_info)
 {
-    int i= 0;
-
-    
-    
-    if(body_id_end >= 14 && body_id_end <= 25)
+    for (int i = 0; i < 3; ++i) 
     {
-        arr[i++] = 30;
-        arr[i++] = 29;
-        arr[i++] = 28;
-        arr[i++] = 23;
-        arr[i++] = 22;
-        arr[i++] = 21;
+        traj_info->m->jnt_stiffness[i] = 1000000;
+        traj_info->m->dof_damping[i] = 100000;
+        traj_info->m->qpos_spring[i] = traj_info->d->qpos[i];
     }
-    else if (body_id_end >= 2 && body_id_end <= 13)
-    {
-        arr[i++] = 16;
-        arr[i++] = 15;
-        arr[i++] = 14;
-        arr[i++] = 9;
-        arr[i++] = 8;
-        arr[i++] = 7;
-    }
-    else
-        for(i = 0; i < CASSIE_QPOS_SIZE - 7; i++)
-            arr[i] = i+7;
 
-    arr[i] = -1;
+    for (int i = 3; i < 7; ++i)
+        traj_info->m->dof_damping[i] = 500;
 }
 
-double ik_better_body_optimizer(
-    traj_info_t* traj_info,
-    double* xyz_xpos_target, 
-    int body_id_end)
+void ik_zero_velocities(traj_info_t* traj_info)
 {
-    int i;
-    double best_diff;
-    double pos_val_before_dx;
-    int best_qpos_index = -1;
-    int positive_axis = 0;
-    double dx;
-    double observed_diff = 1;
-    int joint_array[CASSIE_QPOS_SIZE];
-    int index;
-
-    fill_joint_array(joint_array,body_id_end);
-    best_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-    dx = 1.93 * .35 * best_diff + 0.00001;
-    for(i = 0; i < CASSIE_QPOS_SIZE && joint_array[i] >= 0; i++)
-    {
-        index = joint_array[i];
-
-        pos_val_before_dx = traj_info->d->qpos[index];
-
-        traj_info->d->qpos[index] = pos_val_before_dx + dx;
-
-        observed_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-        if(observed_diff < best_diff) 
-        {
-            best_diff = observed_diff;
-            best_qpos_index = index;
-            positive_axis = 1;
-        }
-
-        traj_info->d->qpos[index] = pos_val_before_dx - dx;
-
-        observed_diff = ik_fwd_kinematics_score(traj_info,xyz_xpos_target,body_id_end);
-        if(observed_diff < best_diff) 
-        {
-            best_diff = observed_diff;
-            best_qpos_index = index;
-            positive_axis = 0;
-        }
-
-        traj_info->d->qpos[index] = pos_val_before_dx;
-    }
-
-    if(!positive_axis)
-        dx = -dx;
-    if(best_qpos_index >= 0)
-        traj_info->d->qpos[best_qpos_index] += dx;
-    
-    return best_diff;
+    for (int i = 0; i < traj_info->m->nv; i++)
+         traj_info->d->qvel[i] = 0;
 }
 
-void ik_iterative_better_body_optimizer(
+int ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
     int body_id_end,
+    int frameoffset,
     int count)
 {
-    double best_diff;
-    int i;
+    double initqpos[CASSIE_QPOS_SIZE];
+    int returnvalue;
 
-    best_diff = 500; //bignumber
-    for (i = 0; i < count && best_diff > 0.00175; i++)
+    mju_copy(initqpos, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+    traj_info->ik.max_doik = count;
+    traj_info->ik.doik = count;
+    traj_info->ik.lowscore = 500000; // just a big number
+
+    traj_info->ik.frame = frameoffset;
+
+    traj_info->ik.body_id = body_id_end;
+    mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
+
+    ik_set_pelvis_springs(traj_info);
+    ik_zero_velocities(traj_info);    
+
+    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .001)
     {
-        best_diff = ik_better_body_optimizer(traj_info, xyz_xpos_target, body_id_end);
+        mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
+        mj_step(traj_info->m,traj_info->d);
     }
-    if(i == count)
+
+    if(traj_info->ik.doik == 0)
     {
-        printf("MAY BE IMPOSSIBLE\n");
+        printf("Relative frame %d maxed out %d iterations!\n", frameoffset, traj_info->ik.max_doik);
     }
+
+    returnvalue = traj_info->ik.max_doik - traj_info->ik.doik;
+    traj_info->ik.doik = 0;
+
+    ik_reset_collateral_qpos_damage(traj_info, initqpos, body_id_end);
+
+    return returnvalue;
 }
 
