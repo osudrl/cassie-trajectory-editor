@@ -146,12 +146,7 @@ void reset_traj_info()
     traj_info.ik.m = m;
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
-    traj_info.filename_step_data = FILENAME_STEP_DATA;
-    if(traj_info.ik.outfile)
-        fclose(traj_info.ik.outfile);
-    traj_info.ik.outfile = fopen("iksolvedata.bin", "w");
-
-    
+    traj_info.filename_step_data = FILENAME_STEP_DATA;    
 }
 
 

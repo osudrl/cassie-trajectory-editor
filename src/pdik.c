@@ -38,12 +38,9 @@ double apply_pd_controller(double k1, double k2, double* forces, double* xcurr, 
 void pdik_per_step_control(pdikdata_t* ik)
 {
     double closenorm;
-    ikoutdata_t od;
 
     if (ik->doik > 0)
     {
-        od.frame = ik->frame;
-        od.iter = ik->max_doik - ik->doik;
         closenorm = apply_pd_controller(
             400,
             30,
@@ -52,15 +49,9 @@ void pdik_per_step_control(pdikdata_t* ik)
             ik->d->cvel+ ik->body_id*6 + 3,
             ik->target_body);
 
-        od.off_rfoot = closenorm;
-
         if(closenorm < ik->lowscore)
             ik->lowscore = closenorm;
 
-        od.best_rfoot_off = ik->lowscore;
-
-        // if (ik->outfile)
-        //     fwrite(&od, sizeof(ikoutdata_t), 1, ik->outfile);
         ik->doik--;
     }
 }

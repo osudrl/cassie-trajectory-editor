@@ -20,7 +20,6 @@ struct _pdikdata_t_
     int body_id;
     double target_body[3];
     int frame;
-    FILE* outfile;
 };
 typedef struct _pdikdata_t_ pdikdata_t;
 
