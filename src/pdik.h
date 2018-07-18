@@ -7,7 +7,6 @@
 
 #include "mujoco.h"
 #include <stdio.h>
-#include "ikoutdata.h"
 
 
 struct _pdikdata_t_
