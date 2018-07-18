@@ -42,18 +42,14 @@ CCOMMON = -std=gnu99 -pedantic -Wdeclaration-after-statement
 
 OBJS =\
 	bin/simulate.o \
-	bin/out.o \
 	bin/timeline.o \
-	bin/vectors.o \
 	bin/ik.o \
 	bin/pdik.o \
 	bin/node.o
 
 HEADS =  \
 	src/main.h \
-	src/out.h \
 	src/timeline.h \
-	src/vectors.h \
 	src/node.h \
 	src/pdik.h \
 	src/ik.h
@@ -118,14 +114,6 @@ bin/main-traj.o : $(HEADS) src/main-traj.c | mjkey.txt $(MJ) $(CASSIE)
 		src/main-traj.c \
 		-o bin/main-traj.o
 
-bin/out.o : $(HEADS) src/out.c | mjkey.txt $(MJ) $(CASSIE)
-	-@mkdir -p bin
-	gcc -c \
-		$(FLAGS) \
-		$(CCOMMON) \
-		src/out.c \
-		-o bin/out.o
-
 bin/timeline.o : $(HEADS) src/timeline.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
@@ -133,14 +121,6 @@ bin/timeline.o : $(HEADS) src/timeline.c | mjkey.txt $(MJ) $(CASSIE)
 		$(CCOMMON) \
 		src/timeline.c \
 		-o bin/timeline.o
-
-bin/vectors.o : $(HEADS) src/vectors.c | mjkey.txt $(MJ) $(CASSIE)
-	-@mkdir -p bin
-	gcc -c \
-		$(FLAGS) \
-		$(CCOMMON) \
-		src/vectors.c \
-		-o bin/vectors.o
 
 bin/ik.o : $(HEADS) src/ik.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin

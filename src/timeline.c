@@ -12,20 +12,6 @@ uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, full_traj_s
     return result;
 }
 
-void timeline_copy_a_full_traj_state_to_qpos(qpos_t* qpos, full_traj_state_t* state)
-{
-    int i;
-    
-    /* 
-    Uncomment for walk in place
-    qpos->q[0] = 0;
-    qpos->q[1] = 0; 
-    */
-
-    for (i = 0; i < CASSIE_QPOS_SIZE; i++)
-        qpos->q[i] = state->qpos[i];
-}
-
 void timeiline_init_from_input_file(traj_info_t* traj_info)
 {
     int i;
@@ -34,19 +20,14 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     timeline_fill_full_traj_state_array(traj_info, buf, TIMELINE_SIZE);
 
     for(i = 0; i < TIMELINE_SIZE; i++)
-        timeline_copy_a_full_traj_state_to_qpos(traj_info->timeline.qposes+i, buf+i); //pointer arithmatic
+        mju_copy(traj_info->timeline.qposes[i].q, buf[i].qpos, CASSIE_QPOS_SIZE);
 
     traj_info->timeline.init = 1;
 }
 
 void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
 {
-    int i;
-
-    for(i = 0; i < CASSIE_QPOS_SIZE; i++)
-    {
-        traj_info->d->qpos[i] = desired->q[i];
-    }
+    mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);
 }
 
 int timeline_make_frame_safe(int frame)
@@ -69,16 +50,12 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame)
 
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame)
 {
-    int i;
-
     if(!traj_info->timeline.init)
         timeiline_init_from_input_file(traj_info);
     
     frame = timeline_make_frame_safe(frame);
 
-    for (i = 0; i < CASSIE_QPOS_SIZE; i++)
-        traj_info->timeline.qposes[frame].q[i] = traj_info->d->qpos[i];
-
+    mju_copy(traj_info->timeline.qposes[frame].q, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 }
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)

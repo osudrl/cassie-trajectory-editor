@@ -42,9 +42,7 @@ struct _traj_info_
 };
 typedef struct _traj_info_ traj_info_t;
 
-#include "out.h"
 #include "timeline.h"
-#include "vectors.h"
 #include "ik.h"
 #include "node.h"
 
