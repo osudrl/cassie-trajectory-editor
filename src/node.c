@@ -151,6 +151,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     int iterations;
     uint64_t init_time;
     double ik_iter_total = 0;
+    long iktimedelta;
+    int outcount = 0;
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
@@ -183,17 +185,18 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         ik_body_target_xpos,
         &ik_iter_total);
 
-    iterations = 400;
+    iterations = 300;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
-        if((frame_offset < iterations / 2 && frame_offset % (iterations / 40) == 0)
-            ||
-            (frame_offset > iterations /2 && frame_offset % (iterations / 10) == 0))
+        if( ((int) (.2 * percent(frame_offset, iterations))) > outcount)
         {
-            printf("Solving IK (%4.1f%%) @ %4.0f cyles per frame...\n",
+            outcount++;
+            iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
+            printf("Solving IK (%4.1f%%,%3ds) @ %5d cyles per frame...\n",
                 percent(frame_offset, iterations),
-                (ik_iter_total/(1+frame_offset*2)));
+                (int) (iktimedelta/1000000.0),
+                (int) (ik_iter_total/(1+frame_offset*2)));
         }
         scale_target_using_frame_offset(
             traj_info,
@@ -226,7 +229,13 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             &ik_iter_total);
     }
 
-    traj_info->time_start += traj_calculate_runtime_micros(traj_info) - init_time;
+    iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
+
+    printf("Finished solving IK for %d poses in %.1f seconds\n", 
+        1+iterations*2, 
+        (iktimedelta/1000000.0));
+
+    traj_info->time_start += iktimedelta;
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
