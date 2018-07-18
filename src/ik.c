@@ -15,7 +15,7 @@ int ik_iterative_better_body_optimizer(
 
     traj_info->ik.frame = frameoffset;
 
-    traj_info->ik.body_id = 25;
+    traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
     for (int i = 0; i < 3; ++i) 
