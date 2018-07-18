@@ -2,10 +2,12 @@
 
 void ik_reset_collateral_qpos_damage(traj_info_t* traj_info, double* initqpos, int body_id)
 {
-    if(body_id != 25)
-        return;
-    for (int i = 7; i <= 20; i++)
-        traj_info->d->qpos[i] = initqpos[i];
+    if(body_id >= 14 && body_id <= 25)
+        for (int i = 7; i <= 20; i++)
+            traj_info->d->qpos[i] = initqpos[i];
+    if(body_id >= 2 && body_id <= 13)
+        for (int i = 20; i <= 34; i++)
+            traj_info->d->qpos[i] = initqpos[i];
 }
 
 void ik_set_pelvis_springs(traj_info_t* traj_info)
