@@ -84,6 +84,22 @@ uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
     }
 }
 
+void printxposes(traj_info_t* traj_info)
+{
+	for(int i = 0; i <= 25; i++)
+	{
+		int frame =	timeline_get_frame_from_time(traj_info);
+
+		printf("body%c,%d,%.3f,%.3f,%.3f\n",
+			'A'+i,
+			frame,
+			traj_info->d->xpos[i*3 + 0],
+			traj_info->d->xpos[i*3 + 1],
+			traj_info->d->xpos[i*3 + 2]
+			);
+	}	
+}
+
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
@@ -105,6 +121,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
     }
 
     timeline_update_mj_poses_from_realtime(traj_info);
+    printxposes(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }
 
