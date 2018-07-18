@@ -14,15 +14,11 @@ struct _pdikdata_t_
 {
 	mjModel* m;
     mjData* d;
-    int32_t maxiter;
+    int32_t max_doik;
     int32_t doik;
     double lowscore;
-    double bestqposes[CASSIE_QPOS_SIZE];
-    double initqposes[CASSIE_QPOS_SIZE];
+    int body_id;
     double target_body[3];
-    double target_pelvis[3];
-    double target_pelvis_euler[3];
-    double target_other[3];
     int frame;
     FILE* outfile;
 };

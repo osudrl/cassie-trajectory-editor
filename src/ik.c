@@ -105,15 +105,15 @@ void ik_iterative_better_body_optimizer(
     int frame,
     int count)
 {
-    traj_info->ik.maxiter = 100000;
+    traj_info->ik.max_doik = 100000;
     traj_info->ik.doik = 100000;
     traj_info->ik.lowscore = 500000;
 
     // mj_forward(traj_info->m, traj_info->d); //should be unnessesary
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
-    mju_copy3(traj_info->ik.target_pelvis, traj_info->d->xpos + (3*1));
-    QuatToEuler(traj_info->d->xquat+4, traj_info->ik.target_pelvis_euler);
-    mju_copy3(traj_info->ik.target_other, traj_info->d->xpos + (3*13));
+    // mju_copy3(traj_info->ik.target_pelvis, traj_info->d->xpos + (3*1));
+    // QuatToEuler(traj_info->d->xquat+4, traj_info->ik.target_pelvis_euler);
+    // mju_copy3(traj_info->ik.target_other, traj_info->d->xpos + (3*13));
 
     traj_info->ik.frame = frame;
 

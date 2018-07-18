@@ -92,7 +92,7 @@ void pdik_per_step_control(pdikdata_t* ik)
     if (ik->doik > 0)
     {
         od.frame = ik->frame;
-        od.iter = ik->maxiter - ik->doik;
+        od.iter = ik->max_doik - ik->doik;
 
         // od.off_pelvis = apply_pd_controller(
         //         10000,
@@ -145,8 +145,6 @@ void pdik_per_step_control(pdikdata_t* ik)
 
         if(closenorm < ik->lowscore)
         {
-            for(int i = 0; i < 35; i++)
-                ik->bestqposes[i] = ik->d->qpos[i];
             ik->lowscore = closenorm;
         }
 
