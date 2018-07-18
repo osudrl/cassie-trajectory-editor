@@ -1,7 +1,7 @@
 
 FLAGS = -O3 -I mjpro150/include -Lmjpro150/bin -Wall -mavx -g # -Wconversion -Wextra -Wpedantic
 
-MAIN = traj csvik
+MAIN = traj
 
 MJ = \
 mjpro150/bin/libglewegl.so \
@@ -93,15 +93,7 @@ traj : bin/main-traj.o $(OBJS) $(HEADS) | mjkey.txt $(CASSIE) $(MJ)
 	    bin/main-traj.o $(OBJS) \
 	    $(LCOMMON) \
 	    -o traj
-
-csvik : bin/csvoutdata.o
-	gcc -o csvik bin/csvoutdata.o
-
-bin/csvoutdata.o: src/csvoutdata.c src/ikoutdata.h
-	-@mkdir -p bin
-	gcc -c src/csvoutdata.c -o bin/csvoutdata.o
-
-
+	    
 bin/pdik.o : src/pdik.h src/main.h src/pdik.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
