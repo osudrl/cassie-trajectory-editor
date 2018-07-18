@@ -97,13 +97,6 @@ void traj_foreach_frame(traj_info_t* traj_info)
     else if(!mod)
         traj_foreach_frame_lastmod = mod;
 
-    for(int z = 0; mod && z < 20; z++)
-    {
-        ik_better_body_optimizer(traj_info,
-            xyz_xpos_target,
-            traj_info->pert->select);
-    }
-
     timeline_update_mj_poses_from_realtime(traj_info);
     mj_forward(traj_info->m, traj_info->d);
 }

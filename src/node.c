@@ -68,10 +68,19 @@ double gaussian_distrobution(double r, double s)
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
 }
 
-void nodeframe_ik_transform(traj_info_t* traj_info, cassie_body_id_t body_id, int frame, int frameoffset, v3_t target)
+void nodeframe_ik_transform(traj_info_t* traj_info, 
+    cassie_body_id_t body_id, 
+    int frame, 
+    int frameoffset, 
+    v3_t target,
+    double* ik_iter_total)
 {
-    // timeline_set_qposes_to_pose_frame(traj_info, frame); // should be repetitive
-    ik_iterative_better_body_optimizer(traj_info, target, body_id.id, frameoffset, 1000);
+    *ik_iter_total += ik_iterative_better_body_optimizer(
+        traj_info, 
+        target, 
+        body_id.id, 
+        frameoffset, 
+        15000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -141,6 +150,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     double ik_body_target_xpos[3];
     int iterations;
     uint64_t init_time;
+    double ik_iter_total = 0;
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
@@ -159,13 +169,19 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         0,
         body_id);
 
-    FILE* outfile = fopen("dropdata.bin","w");
-
     timeline_set_qposes_to_pose_frame(traj_info, rootframe);
+
+    FILE* outfile = fopen("dropdata.bin","w");
     fwrite(traj_info->d->qpos, sizeof(mjtNum), CASSIE_QPOS_SIZE, outfile);
     fwrite(ik_body_target_xpos, sizeof(mjtNum), 3, outfile);
     fclose(outfile);
-    nodeframe_ik_transform(traj_info, body_id, rootframe,0,ik_body_target_xpos);
+
+    nodeframe_ik_transform(traj_info, 
+        body_id, 
+        rootframe, 
+        0, 
+        ik_body_target_xpos,
+        &ik_iter_total);
 
     iterations = 400;
 
@@ -175,7 +191,9 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             ||
             (frame_offset > iterations /2 && frame_offset % (iterations / 10) == 0))
         {
-            printf("Solving inverse kinematics... %.2f percent \n",percent(frame_offset, iterations));
+            printf("Solving IK (%4.1f%%) @ %4.0f cyles per frame...\n",
+                percent(frame_offset, iterations),
+                (ik_iter_total/(1+frame_offset*2)));
         }
         scale_target_using_frame_offset(
             traj_info,
@@ -189,7 +207,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             body_id, 
             rootframe + frame_offset,
             frame_offset,
-            ik_body_target_xpos);
+            ik_body_target_xpos,
+            &ik_iter_total);
 
         scale_target_using_frame_offset(
             traj_info,
@@ -203,7 +222,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
             body_id, 
             rootframe - frame_offset, 
             -frame_offset,
-            ik_body_target_xpos);
+            ik_body_target_xpos,
+            &ik_iter_total);
     }
 
     traj_info->time_start += traj_calculate_runtime_micros(traj_info) - init_time;
