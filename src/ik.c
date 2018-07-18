@@ -1,23 +1,15 @@
 #include "ik.h"
 
-int ik_iterative_better_body_optimizer(
-    traj_info_t* traj_info,
-    double* xyz_xpos_target, 
-    int body_id_end,
-    int frameoffset,
-    int count)
+void ik_reset_collateral_qpos_damage(traj_info_t* traj_info, double* initqpos, int body_id)
 {
-    int returnvalue;
+    if(body_id != 25)
+        return;
+    for (int i = 7; i <= 20; i++)
+        traj_info->d->qpos[i] = initqpos[i];
+}
 
-    traj_info->ik.max_doik = count;
-    traj_info->ik.doik = count;
-    traj_info->ik.lowscore = 500000; // just a big number
-
-    traj_info->ik.frame = frameoffset;
-
-    traj_info->ik.body_id = body_id_end;
-    mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
-
+void ik_set_pelvis_springs(traj_info_t* traj_info)
+{
     for (int i = 0; i < 3; ++i) 
     {
         traj_info->m->jnt_stiffness[i] = 1000000;
@@ -27,9 +19,36 @@ int ik_iterative_better_body_optimizer(
 
     for (int i = 3; i < 7; ++i)
         traj_info->m->dof_damping[i] = 500;
+}
 
+void ik_zero_velocities(traj_info_t* traj_info)
+{
     for (int i = 0; i < traj_info->m->nv; i++)
          traj_info->d->qvel[i] = 0;
+}
+
+int ik_iterative_better_body_optimizer(
+    traj_info_t* traj_info,
+    double* xyz_xpos_target, 
+    int body_id_end,
+    int frameoffset,
+    int count)
+{
+    double initqpos[CASSIE_QPOS_SIZE];
+    int returnvalue;
+
+    mju_copy(initqpos, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+    traj_info->ik.max_doik = count;
+    traj_info->ik.doik = count;
+    traj_info->ik.lowscore = 500000; // just a big number
+
+    traj_info->ik.frame = frameoffset;
+
+    traj_info->ik.body_id = body_id_end;
+    mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
+
+    ik_set_pelvis_springs(traj_info);
+    ik_zero_velocities(traj_info);    
 
     while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .001)
     {
@@ -43,8 +62,9 @@ int ik_iterative_better_body_optimizer(
     }
 
     returnvalue = traj_info->ik.max_doik - traj_info->ik.doik;
-
     traj_info->ik.doik = 0;
+
+    ik_reset_collateral_qpos_damage(traj_info, initqpos, body_id_end);
 
     return returnvalue;
 }
