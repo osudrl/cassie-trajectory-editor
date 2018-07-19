@@ -147,6 +147,14 @@ double percent(int frame_offset, int iterations, double sigma)
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
 
+// double inv_norm(double t)
+// {
+//     const double c[] = {2.515517, 0.802853, 0.010328};
+//     const double d[] = {1.432788, 0.189269, 0.001308};
+//     return t - ((c[2]*t + c[1])*t + c[0]) /
+//            (((d[2]*t + d[1])*t + d[0])*t + 1.0);
+// }
+
 void node_perform_pert(traj_info_t* traj_info,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
@@ -179,7 +187,12 @@ void node_perform_pert(traj_info_t* traj_info,
         ik_body_target_xpos,
         &ik_iter_total);
 
+    //this is toomuch
     iterations = 4.091 * traj_info->nodesigma;
+
+
+    // printf("math= %.3f\n", 
+    //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {

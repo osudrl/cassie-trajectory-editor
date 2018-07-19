@@ -10,7 +10,7 @@ import sys, os
 
 n = 1 + 1 + 35 + 35
 
-count = (466944/8) - ((466944/8)%n)
+count = (516096/8) - ((516096/8)%n)
 data = np.fromfile("fool.bin", dtype=np.double, count=count)
 data = data.reshape((-1,n))
 
