@@ -29,13 +29,24 @@ void ik_zero_velocities(traj_info_t* traj_info)
          traj_info->d->qvel[i] = 0;
 }
 
+double ik_positive_keyed_qposes[CASSIE_QPOS_SIZE];
+double ik_negative_keyed_qposes[CASSIE_QPOS_SIZE];
+
 void ik_basic_setup(traj_info_t* traj_info)
 { 
     traj_info->ik.pd_k = 480;
-    traj_info->ik.pd_b = 30;
+    traj_info->ik.pd_b = 30;   
+}
 
-    ik_set_pelvis_springs(traj_info);
-    ik_zero_velocities(traj_info);
+void ik_cheater_setup(traj_info_t* traj_info, int frameoffset)
+{
+    if (frameoffset > 0)
+        mju_copy(traj_info->d->qpos+21, ik_positive_keyed_qposes+21, CASSIE_QPOS_SIZE-21);
+    if (frameoffset < 0)
+        mju_copy(traj_info->d->qpos+21, ik_negative_keyed_qposes+21, CASSIE_QPOS_SIZE-21);
+
+    traj_info->ik.pd_k = 50000;
+    traj_info->ik.pd_b = 10;
 }
 
 int ik_iterative_better_body_optimizer(
@@ -56,7 +67,13 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
-    ik_basic_setup(traj_info);
+    if((frameoffset + 900 )% 90 == 0)
+        ik_basic_setup(traj_info);
+    else
+        ik_cheater_setup(traj_info, frameoffset);
+
+    ik_set_pelvis_springs(traj_info);
+    ik_zero_velocities(traj_info);
 
     while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .0005)
     {
@@ -73,6 +90,11 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.doik = 0;
 
     ik_reset_collateral_qpos_damage(traj_info, initqpos, body_id_end);
+
+    if(frameoffset >= 0)
+        mju_copy(ik_positive_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+    if(frameoffset <= 0)
+        mju_copy(ik_negative_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 
     return returnvalue;
 }
