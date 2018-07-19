@@ -140,11 +140,12 @@ double percent(int frame_offset, int iterations, double sigma)
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
 
-void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
+void node_perform_pert(traj_info_t* traj_info,
+    v3_t grabbed_node_transformation,
+    cassie_body_id_t body_id,
+    int rootframe )
 {
-    int rootframe;
     int frame_offset;
-    double grabbed_node_transformation[3];
     double ik_body_target_xpos[3];
     int iterations;
     uint64_t init_time;
@@ -153,25 +154,6 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     int outcount = 0;
 
     init_time = traj_calculate_runtime_micros(traj_info);
-
-    rootframe = get_frame_from_node_body_id(node_id);
-    calculate_node_dropped_transformation_vector(
-        traj_info, 
-        grabbed_node_transformation, 
-        body_id, 
-        node_id);
-
-    FILE* pfile = fopen("last.pert", "w");
-    fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
-     body_id.id,
-     rootframe,
-     traj_info->nodesigma,
-     grabbed_node_transformation[0],
-     grabbed_node_transformation[1],
-     grabbed_node_transformation[2]
-     );
-    fclose(pfile);
-
 
     scale_target_using_frame_offset(
         traj_info,
@@ -242,6 +224,36 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     traj_info->time_start += iktimedelta;
     node_position_initial_using_cassie_body(traj_info,  body_id);
+}
+
+void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
+{
+    FILE* pfile;
+    int rootframe;
+    double grabbed_node_transformation[3];
+
+    rootframe = get_frame_from_node_body_id(node_id);
+    calculate_node_dropped_transformation_vector(
+        traj_info, 
+        grabbed_node_transformation, 
+        body_id, 
+        node_id);
+
+    node_perform_pert(traj_info, grabbed_node_transformation, body_id, rootframe);
+
+    pfile = fopen("last.pert", "w");
+    if(pfile)
+    {
+        fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
+         body_id.id,
+         rootframe,
+         traj_info->nodesigma,
+         grabbed_node_transformation[0],
+         grabbed_node_transformation[1],
+         grabbed_node_transformation[2]
+         );
+        fclose(pfile);
+    }
 }
 
 
