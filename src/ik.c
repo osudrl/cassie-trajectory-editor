@@ -1,13 +1,33 @@
 #include "ik.h"
 
-void ik_reset_collateral_qpos_damage(traj_info_t* traj_info, double* initqpos, int body_id)
+void ik_set_left_leg(traj_info_t* traj_info, double* ref)
+{
+    for (int i = 7; i <= 20; i++)
+        traj_info->d->qpos[i] = ref[i];
+}
+
+void ik_set_right_leg(traj_info_t* traj_info, double* ref)
+{
+    for (int i = 20; i <= 34; i++)
+        traj_info->d->qpos[i] = ref[i];
+}
+
+void ik_set_opposite_leg(traj_info_t* traj_info, double* ref, int body_id)
 {
     if(body_id >= 14 && body_id <= 25)
-        for (int i = 7; i <= 20; i++)
-            traj_info->d->qpos[i] = initqpos[i];
+        ik_set_left_leg(traj_info, ref);
+        
     if(body_id >= 2 && body_id <= 13)
-        for (int i = 20; i <= 34; i++)
-            traj_info->d->qpos[i] = initqpos[i];
+        ik_set_right_leg(traj_info, ref);
+}
+
+void ik_set_selected_leg(traj_info_t* traj_info, double* ref, int body_id)
+{
+    if(body_id >= 14 && body_id <= 25)
+        ik_set_right_leg(traj_info, ref);
+        
+    if(body_id >= 2 && body_id <= 13)
+        ik_set_left_leg(traj_info, ref);
 }
 
 void ik_set_pelvis_springs(traj_info_t* traj_info)
@@ -38,12 +58,12 @@ void ik_basic_setup(traj_info_t* traj_info)
     traj_info->ik.pd_b = 30;   
 }
 
-void ik_cheater_setup(traj_info_t* traj_info, int frameoffset)
+void ik_cheater_setup(traj_info_t* traj_info, int frameoffset, int body_id)
 {
     if (frameoffset > 0)
-        mju_copy(traj_info->d->qpos+21, ik_positive_keyed_qposes+21, CASSIE_QPOS_SIZE-21);
+        ik_set_selected_leg(traj_info, ik_positive_keyed_qposes, body_id);
     if (frameoffset < 0)
-        mju_copy(traj_info->d->qpos+21, ik_negative_keyed_qposes+21, CASSIE_QPOS_SIZE-21);
+        ik_set_selected_leg(traj_info, ik_negative_keyed_qposes, body_id);
 
     traj_info->ik.pd_k = 50000;
     traj_info->ik.pd_b = 10;
@@ -70,7 +90,7 @@ int ik_iterative_better_body_optimizer(
     if((frameoffset + 900 )% 90 == 0)
         ik_basic_setup(traj_info);
     else
-        ik_cheater_setup(traj_info, frameoffset);
+        ik_cheater_setup(traj_info, frameoffset, body_id_end);
 
     ik_set_pelvis_springs(traj_info);
     ik_zero_velocities(traj_info);
@@ -89,7 +109,7 @@ int ik_iterative_better_body_optimizer(
     returnvalue = traj_info->ik.max_doik - traj_info->ik.doik;
     traj_info->ik.doik = 0;
 
-    ik_reset_collateral_qpos_damage(traj_info, initqpos, body_id_end);
+    ik_set_opposite_leg(traj_info, initqpos, body_id_end);
 
     if(frameoffset >= 0)
         mju_copy(ik_positive_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
