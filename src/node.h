@@ -52,7 +52,7 @@ void node_position_scale_visually(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id);
-double node_calculate_filter_from_frame_offset(double frame_offset);
+double node_calculate_filter_from_frame_offset(double frame_offset, double sigma);
 
 
 #endif

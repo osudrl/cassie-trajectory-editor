@@ -95,7 +95,7 @@ void scale_target_using_frame_offset(
     double filter;
     v3_t body_init_xpos;
 
-    filter = node_calculate_filter_from_frame_offset(frame_offset);
+    filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
 
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe + frame_offset, body_id);
     
@@ -135,10 +135,8 @@ double normalCFD(double value)
    return 0.5 * erfc(-value * M_SQRT1_2);
 }
 
-double percent(int frame_offset, int iterations)
+double percent(int frame_offset, int iterations, double sigma)
 {
-    double sigma = 100.0;
-
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
 
@@ -180,16 +178,16 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         ik_body_target_xpos,
         &ik_iter_total);
 
-    iterations = 350;
+    iterations = 4.091 * traj_info->nodesigma;
 
     for(frame_offset = 1; frame_offset < iterations; frame_offset++)
     {
-        if( ((int) (.2 * percent(frame_offset, iterations))) > outcount)
+        if( ((int) (.2 * percent(frame_offset, iterations, traj_info->nodesigma))) > outcount)
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
             printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per frame...\n",
-                percent(frame_offset, iterations),
+                percent(frame_offset, iterations, traj_info->nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
@@ -265,15 +263,15 @@ void node_position_scale_visually(
 
         currframe = (TIMELINE_SIZE / NODECOUNT) * i;
         frame_offset = currframe - rootframe;
-        filter = node_calculate_filter_from_frame_offset(frame_offset);
+        filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
         body_xpos = node_get_body_xpos_by_frame(traj_info, currframe, body_id);
         mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
     }
 }
 
-double node_calculate_filter_from_frame_offset(double frame_offset)
+double node_calculate_filter_from_frame_offset(double frame_offset, double sigma)
 {
-    return gaussian_distrobution(frame_offset/100.0, 1) *(1/0.318310);
+    return gaussian_distrobution(frame_offset/sigma, 1) *(1/0.318310);
 }
 

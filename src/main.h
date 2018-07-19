@@ -39,6 +39,10 @@ struct _traj_info_
     bool* paused;
     char* filename_step_data;
     pdikdata_t ik;
+    int id_last_body_select;
+    int id_last_non_node_select;
+    int id_last_pert_activenum;
+    double nodesigma;
 };
 typedef struct _traj_info_ traj_info_t;
 

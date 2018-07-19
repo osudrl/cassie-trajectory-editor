@@ -146,7 +146,8 @@ void reset_traj_info()
     traj_info.ik.m = m;
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
-    traj_info.filename_step_data = FILENAME_STEP_DATA;    
+    traj_info.filename_step_data = FILENAME_STEP_DATA;
+    traj_info.nodesigma = 100;
 }
 
 
@@ -645,45 +646,51 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
     case GLFW_KEY_RIGHT:                // step forward
         if( paused )
         {
-            mj_step(m, d);
-            profilerupdate();
-            sensorupdate();
+            // mj_step(m, d);
+            // profilerupdate();
+            // sensorupdate();
+            traj_info.time_frozen += 50000;
+
         }
         break;
 
     case GLFW_KEY_LEFT:                 // step back
         if( paused )
         {
-            m->opt.timestep = -m->opt.timestep;
-            cleartimers(d);
-            mj_step(m, d);
-            m->opt.timestep = -m->opt.timestep;
-            profilerupdate();
-            sensorupdate();
+            // m->opt.timestep = -m->opt.timestep;
+            // cleartimers(d);
+            // mj_step(m, d);
+            // m->opt.timestep = -m->opt.timestep;
+            // profilerupdate();
+            // sensorupdate();
+            traj_info.time_frozen -= 50000;
         }
         break;
 
     case GLFW_KEY_DOWN:                 // step forward 100
         if( paused )
         {
-            cleartimers(d);
-            for( n=0; n<100; n++ )
-                mj_step(m,d);
-            profilerupdate();
-            sensorupdate();
+            // cleartimers(d);
+            // for( n=0; n<100; n++ )
+            //     mj_step(m,d);
+            // profilerupdate();
+            // sensorupdate();
+            traj_info.time_frozen -= 500000;
         }
         break;
 
     case GLFW_KEY_UP:                   // step back 100
         if( paused )
         {
-            m->opt.timestep = -m->opt.timestep;
-            cleartimers(d);
-            for( n=0; n<100; n++ )
-                mj_step(m,d);
-            m->opt.timestep = -m->opt.timestep;
-            profilerupdate();
-            sensorupdate();
+            // m->opt.timestep = -m->opt.timestep;
+            // cleartimers(d);
+            // for( n=0; n<100; n++ )
+            //     mj_step(m,d);
+            // m->opt.timestep = -m->opt.timestep;
+            // profilerupdate();
+            // sensorupdate();
+            traj_info.time_frozen += 500000;
+
         }
         break;
 
@@ -750,33 +757,42 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         // control keys
         if( mods & GLFW_MOD_CONTROL )
         {
+            // if( key==GLFW_KEY_A )
+            //     autoscale(window);
+            //  else if( key==GLFW_KEY_L && lastfile[0] )
+                // loadmodel(window, lastfile);
+
+            // break;
             if( key==GLFW_KEY_A )
-                autoscale(window);
+                traj_info.nodesigma *= .95;
+            else if( key==GLFW_KEY_D)
+                traj_info.nodesigma *= 1.05;
             else if( key==GLFW_KEY_L && lastfile[0] )
                 loadmodel(window, lastfile);
 
             break;
+
         }
 
-        // toggle visualization flag
-        for( int i=0; i<mjNVISFLAG; i++ )
-            if( key==mjVISSTRING[i][2][0] )
-                vopt.flags[i] = !vopt.flags[i];
+        // // toggle visualization flag
+        // for( int i=0; i<mjNVISFLAG; i++ )
+        //     if( key==mjVISSTRING[i][2][0] )
+        //         vopt.flags[i] = !vopt.flags[i];
 
-        // toggle rendering flag
-        for( int i=0; i<mjNRNDFLAG; i++ )
-            if( key==mjRNDSTRING[i][2][0] )
-                scn.flags[i] = !scn.flags[i];
+        // // toggle rendering flag
+        // for( int i=0; i<mjNRNDFLAG; i++ )
+        //     if( key==mjRNDSTRING[i][2][0] )
+        //         scn.flags[i] = !scn.flags[i];
 
-        // toggle geom/site group
-        for( int i=0; i<mjNGROUP; i++ )
-            if( key==i+'0')
-            {
-                if( mods & GLFW_MOD_SHIFT )
-                    vopt.sitegroup[i] = !vopt.sitegroup[i];
-                else
-                    vopt.geomgroup[i] = !vopt.geomgroup[i];
-            }
+        // // toggle geom/site group
+        // for( int i=0; i<mjNGROUP; i++ )
+        //     if( key==i+'0')
+        //     {
+        //         if( mods & GLFW_MOD_SHIFT )
+        //             vopt.sitegroup[i] = !vopt.sitegroup[i];
+        //         else
+        //             vopt.geomgroup[i] = !vopt.geomgroup[i];
+        //     }
     }
 }
 
@@ -950,7 +966,18 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
         return;
 
     // scroll: emulate vertical mouse motion = 5% of window height
-    mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, &scn, &cam);
+
+    bool mod_ctrl = (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL)==GLFW_PRESS ||
+                      glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)==GLFW_PRESS);
+
+    if (mod_ctrl)
+    {
+        double mult = yoffset/25.0;
+        mult += 1;
+        traj_info.nodesigma *= mult;
+    }
+    else
+        mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, &scn, &cam);
 }
 
 
