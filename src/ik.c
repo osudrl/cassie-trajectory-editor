@@ -52,7 +52,7 @@ int ik_iterative_better_body_optimizer(
     ik_set_pelvis_springs(traj_info);
     ik_zero_velocities(traj_info);    
 
-    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .001)
+    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .0005)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);

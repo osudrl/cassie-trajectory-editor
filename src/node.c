@@ -80,7 +80,7 @@ void nodeframe_ik_transform(traj_info_t* traj_info,
         target, 
         body_id.id, 
         frameoffset, 
-        15000);
+        150000);
     timeline_overwrite_frame_using_curr_pose(traj_info, frame);
 }
 
@@ -188,7 +188,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
-            printf("Solving IK (%4.1f%%,%3ds) @ %5d cyles per frame...\n",
+            printf("Solving IK (%2.0f%%,%3ds) @ %5d cyles per frame...\n",
                 percent(frame_offset, iterations),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
