@@ -1,20 +1,14 @@
 #include "main.h"
 
 
-cassie_body_id_t g(int i)
-{
-    cassie_body_id_t id;
-    id.id = i;
-    return id;
-}
-
 void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
 {
     if (traj_info->pert->select != traj_info->id_last_body_select &&  //made a new selection
             traj_info->pert->select > 0 && //body is on cassie not a node
             traj_info->pert->select <= 25)
     {
-        node_position_initial_using_cassie_body(traj_info, g(traj_info->pert->select));
+        node_position_initial_using_cassie_body(traj_info, 
+        	node_get_cassie_id_from_index(traj_info->pert->select));
         traj_info->id_last_non_node_select = traj_info->pert->select;        
     }
 
@@ -34,7 +28,7 @@ void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_re
     else if (traj_info->id_last_pert_activenum == 1 && traj_info->id_last_body_select > 25)
     {
         node_dropped(traj_info, 
-            g(traj_info->id_last_non_node_select), 
+            node_get_cassie_id_from_index(traj_info->id_last_non_node_select), 
             node_get_body_id_from_real_body_id(traj_info->id_last_body_select));
 
         traj_info->id_last_body_select = traj_info->pert->select;
@@ -43,7 +37,7 @@ void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_re
     if(traj_info->pert->select > 25)
     {
     	node_position_scale_visually(traj_info, 
-                g(traj_info->id_last_non_node_select), 
+                node_get_cassie_id_from_index(traj_info->id_last_non_node_select), 
                 node_get_body_id_from_real_body_id(traj_info->pert->select)); 
     }
 }

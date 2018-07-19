@@ -17,6 +17,13 @@ node_body_id_t node_get_body_id_from_real_body_id(int real)
     return id;
 }
 
+cassie_body_id_t node_get_cassie_id_from_index(int i)
+{
+    cassie_body_id_t id;
+    id.id = i;
+    return id;
+}
+
 v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
 {
     if(id.id < 27)
@@ -255,8 +262,6 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         fclose(pfile);
     }
 }
-
-
 
 void node_position_scale_visually(
     traj_info_t* traj_info,

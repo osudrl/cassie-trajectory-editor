@@ -150,6 +150,54 @@ void reset_traj_info()
     traj_info.nodesigma = 100;
 }
 
+void load_pert()
+{
+    int body_id;
+    int rootframe;
+    double grabbed_node_transform[3];
+    FILE* pfile = fopen("last.pert", "r");
+    char buf[2048];
+    char* result;
+
+    if(pfile)
+    {
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        body_id = strtol(buf, NULL, 10);
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        rootframe = strtol(buf, NULL, 10);
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        traj_info.nodesigma = strtod(buf, NULL);
+
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        grabbed_node_transform[0] = strtod(buf, NULL);
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        grabbed_node_transform[1] = strtod(buf, NULL);
+        result = fgets(buf,2048,pfile);
+        if(!result)
+            return;
+        grabbed_node_transform[2] = strtod(buf, NULL);
+
+        fclose(pfile);
+
+        node_perform_pert(
+            &traj_info,
+            grabbed_node_transform,
+            node_get_cassie_id_from_index(body_id),
+            rootframe
+            );
+    }
+}
+
 
 //-------------------------------- profiler and sensor ----------------------------------
 
@@ -562,7 +610,7 @@ void cleartimers(mjData* d)
 // keyboard
 void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 {
-    int n;
+    // int n;
 
     // require model
     if( !m )
@@ -769,6 +817,8 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
                 traj_info.nodesigma *= 1.05;
             else if( key==GLFW_KEY_L && lastfile[0] )
                 loadmodel(window, lastfile);
+            else if( key==GLFW_KEY_P)
+                load_pert();
 
             break;
 
