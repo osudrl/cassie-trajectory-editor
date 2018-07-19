@@ -69,6 +69,25 @@ void ik_cheater_setup(traj_info_t* traj_info, int frameoffset, int body_id)
     traj_info->ik.pd_b = 10;
 }
 
+FILE* ikoutfile = NULL;
+
+void outit(traj_info_t* traj_info, int frameoffset, double* initqpos, int returnvalue)
+{
+    double d_frameoffset;
+    double d_returnvalue;
+
+    if(!ikoutfile)
+        ikoutfile = fopen("fool.bin", "w");
+
+    d_frameoffset = frameoffset * 1.0;
+    d_returnvalue = returnvalue * 1.0;
+
+    fwrite(&d_frameoffset, sizeof(double), 1, ikoutfile);
+    fwrite(&d_returnvalue, sizeof(double), 1, ikoutfile);
+    fwrite(initqpos, sizeof(double) * CASSIE_QPOS_SIZE, 1, ikoutfile);
+    fwrite(traj_info->d->qpos, sizeof(double) * CASSIE_QPOS_SIZE, 1, ikoutfile);
+}
+
 int ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -87,7 +106,7 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
-    if((frameoffset + 900 )% 90 == 0)
+    if((frameoffset + 3000 )% 150 == 0)
         ik_basic_setup(traj_info);
     else
         ik_cheater_setup(traj_info, frameoffset, body_id_end);
@@ -95,7 +114,7 @@ int ik_iterative_better_body_optimizer(
     ik_set_pelvis_springs(traj_info);
     ik_zero_velocities(traj_info);
 
-    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .0005)
+    while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .00005)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);
@@ -115,6 +134,8 @@ int ik_iterative_better_body_optimizer(
         mju_copy(ik_positive_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
     if(frameoffset <= 0)
         mju_copy(ik_negative_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+
+    outit(traj_info, frameoffset, initqpos, returnvalue);
 
     return returnvalue;
 }

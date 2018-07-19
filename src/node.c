@@ -161,6 +161,18 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         body_id, 
         node_id);
 
+    FILE* pfile = fopen("last.pert", "w");
+    fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
+     body_id.id,
+     rootframe,
+     traj_info->nodesigma,
+     grabbed_node_transformation[0],
+     grabbed_node_transformation[1],
+     grabbed_node_transformation[2]
+     );
+    fclose(pfile);
+
+
     scale_target_using_frame_offset(
         traj_info,
         ik_body_target_xpos, 
@@ -186,7 +198,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
-            printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per frame...\n",
+            printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per pose ...\n", 
                 percent(frame_offset, iterations, traj_info->nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
