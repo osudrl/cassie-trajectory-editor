@@ -25,8 +25,8 @@ void pdik_per_step_control(pdikdata_t* ik)
     if (ik->doik > 0)
     {
         closenorm = apply_pd_controller(
-            480,
-            30,
+            ik->pd_k,
+            ik->pd_b,
             ik->d->xfrc_applied + ik->body_id*6,
             ik->d->xpos + ik->body_id*3,
             ik->d->cvel+ ik->body_id*6 + 3,

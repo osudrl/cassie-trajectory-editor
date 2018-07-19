@@ -188,7 +188,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
-            printf("Solving IK (%2.0f%%,%3ds) @ %5d cyles per frame...\n",
+            printf("Solving IK (%2.0f%%,%3ds) @ %5d simulation steps per frame...\n",
                 percent(frame_offset, iterations),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));

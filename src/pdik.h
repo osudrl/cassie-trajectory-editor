@@ -17,6 +17,8 @@ struct _pdikdata_t_
     double lowscore;
     int body_id;
     double target_body[3];
+    double pd_k;
+    double pd_b;
     int frame;
 };
 typedef struct _pdikdata_t_ pdikdata_t;

@@ -29,6 +29,15 @@ void ik_zero_velocities(traj_info_t* traj_info)
          traj_info->d->qvel[i] = 0;
 }
 
+void ik_basic_setup(traj_info_t* traj_info)
+{ 
+    traj_info->ik.pd_k = 480;
+    traj_info->ik.pd_b = 30;
+
+    ik_set_pelvis_springs(traj_info);
+    ik_zero_velocities(traj_info);
+}
+
 int ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
     double* xyz_xpos_target, 
@@ -43,14 +52,11 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.max_doik = count;
     traj_info->ik.doik = count;
     traj_info->ik.lowscore = 500000; // just a big number
-
     traj_info->ik.frame = frameoffset;
-
     traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
-    ik_set_pelvis_springs(traj_info);
-    ik_zero_velocities(traj_info);    
+    ik_basic_setup(traj_info);
 
     while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > .0005)
     {
