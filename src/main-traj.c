@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_ref)
+void allow_node_transformations(traj_info_t* traj_info)
 {
     if (traj_info->pert->select != traj_info->id_last_body_select &&  //made a new selection
             traj_info->pert->select > 0 && //body is on cassie not a node
@@ -22,6 +22,9 @@ void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_re
             v3_t dqpos = node_get_qpos_by_node_id(traj_info, 
                 node_get_body_id_from_real_body_id(traj_info->pert->select));
             mju_copy3(dqpos,traj_info->pert->refpos);
+            node_position_scale_visually(traj_info, 
+                node_get_cassie_id_from_index(traj_info->id_last_non_node_select), 
+                node_get_body_id_from_real_body_id(traj_info->pert->select)); 
             
         }
     }
@@ -33,12 +36,6 @@ void allow_pelvis_to_be_grabbed_and_moved(traj_info_t* traj_info, double* xyz_re
 
         traj_info->id_last_body_select = traj_info->pert->select;
         traj_info->id_last_pert_activenum = traj_info->pert->active;
-    }
-    if(traj_info->pert->select > 25)
-    {
-    	node_position_scale_visually(traj_info, 
-                node_get_cassie_id_from_index(traj_info->id_last_non_node_select), 
-                node_get_body_id_from_real_body_id(traj_info->pert->select)); 
     }
 }
 
@@ -68,9 +65,7 @@ uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
-    double xyz_xpos_target[3];
-
-    allow_pelvis_to_be_grabbed_and_moved(traj_info,xyz_xpos_target);
+    allow_node_transformations(traj_info);
     
     timeline_update_mj_poses_from_realtime(traj_info);
     mj_forward(traj_info->m, traj_info->d);

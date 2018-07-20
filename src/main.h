@@ -21,7 +21,7 @@ typedef struct _qpos_t_ qpos_t;
 
 struct _timeline_t_
 {
-    uint8_t init;
+    bool init;
     qpos_t qposes[TIMELINE_SIZE]; // this may want to be dynamically allocated
 };
 typedef struct _timeline_t_ timeline_t;

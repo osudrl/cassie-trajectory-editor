@@ -66,7 +66,9 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
         body_xpos = node_get_body_xpos_by_frame(traj_info, frame, body_id);
         mju_copy3(node_qpos, body_xpos);
     }
-    mj_forward(traj_info->m, traj_info->d);
+
+    //if issues uncomment
+    // mj_forward(traj_info->m, traj_info->d);
 }
 
 double gaussian_distrobution(double r, double s)
@@ -190,7 +192,6 @@ void node_perform_pert(traj_info_t* traj_info,
     //this is toomuch
     iterations = 4.091 * traj_info->nodesigma;
 
-
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
 
@@ -300,6 +301,7 @@ void node_position_scale_visually(
 
     for (i = 0; i < NODECOUNT; i++)
     {
+        //skips the node currently being dragged
         if(node_get_body_id_from_node_index(i).id == node_id.id)
             continue;
 
