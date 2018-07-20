@@ -8,9 +8,13 @@ import matplotlib.cbook as cbook
 from scipy import interpolate
 import sys, os
 
-n = 1 + 1 + 35 + 35
+import subprocess
+p = subprocess.Popen(['bash', 'statfool.sh'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+out, err = p.communicate()
+nbytes = int(out)
 
-count = (516096/8) - ((516096/8)%n)
+n = 1 + 1 + 35 + 35
+count = (nbytes/8) - ((nbytes/8)%n)
 data = np.fromfile("fool.bin", dtype=np.double, count=count)
 data = data.reshape((-1,n))
 
@@ -22,8 +26,8 @@ ikq = data[:, 2+35:2+35+35].transpose()
 fig = plt.figure()
 sub = fig.add_subplot(111)
 
-sub.set_xlabel('Simulation Steps')
-sub.set_ylabel('Target Offet (m)')
+sub.set_xlabel('Frame Offset')
+sub.set_ylabel('Qpos Value')
 # sub.set_ylim([-0.00005,0.001])
 
 

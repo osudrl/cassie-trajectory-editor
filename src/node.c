@@ -190,7 +190,7 @@ void node_perform_pert(traj_info_t* traj_info,
         &ik_iter_total);
 
     //this is toomuch
-    iterations = 4.091 * traj_info->nodesigma;
+    iterations = 3.491 * traj_info->nodesigma;
 
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
