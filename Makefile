@@ -125,6 +125,7 @@ bin/timeline.o : $(HEADS) src/timeline.c | mjkey.txt $(MJ) $(CASSIE)
 bin/ik.o : $(HEADS) src/ik.c | mjkey.txt $(MJ) $(CASSIE)
 	-@mkdir -p bin
 	gcc -c \
+		-DIK_KEYSKIP=$$(cat keyskip.txt)\
 		$(FLAGS) \
 		$(CCOMMON) \
 		src/ik.c \

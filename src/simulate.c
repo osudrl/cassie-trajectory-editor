@@ -195,6 +195,8 @@ void load_pert()
             node_get_cassie_id_from_index(body_id),
             rootframe
             );
+
+        exit(0);
     }
 }
 
@@ -1087,7 +1089,11 @@ void simulation(void)
     else
     {
     }
-   traj_foreach_frame(&traj_info);
+
+    if(traj_calculate_runtime_micros(&traj_info) > 200000)
+        load_pert();
+
+       traj_foreach_frame(&traj_info);
     /*
     // running
     else

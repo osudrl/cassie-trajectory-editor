@@ -7,11 +7,23 @@ import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 from scipy import interpolate
 import sys, os
-
 import subprocess
+
 p = subprocess.Popen(['bash', 'statfool.sh'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 out, err = p.communicate()
 nbytes = int(out)
+
+p = subprocess.Popen(['cat', 'keyskip.txt'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+out, err = p.communicate()
+
+ks = int(out)
+
+p = subprocess.Popen(['cat', 'secs.txt'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+out, err = p.communicate()
+
+secs = float(out)
+
+title = "Qposes for Keyskip=%s, %.1f seconds" % (ks, secs)
 
 n = 1 + 1 + 35 + 35
 count = (nbytes/8) - ((nbytes/8)%n)
@@ -23,15 +35,13 @@ steps = data[:, 1]
 initq = data[:, 2:2+35].transpose()
 ikq = data[:, 2+35:2+35+35].transpose()
 
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 6), dpi=300)
 sub = fig.add_subplot(111)
 
 sub.set_xlabel('Frame Offset')
 sub.set_ylabel('Qpos Value')
+sub.set_title(title)
 # sub.set_ylim([-0.00005,0.001])
-
-
-
 
 # # sub.plot(frames, initq[21],"o", ms=1, label='old_r_roll')
 # sub.plot(frames, initq[22],"o", ms=1, label='old_r_pitch')
@@ -55,5 +65,9 @@ sub.plot(frames, ikq[30],"o", ms=1, label='both_r_tarsus')
 sub.plot(frames, ikq[34],"o", ms=1, label='both_r_foot34')
 
 sub.legend()
-plt.show()
+
+fig.savefig("%d.png" % ks)
+
+print("%d -> %.1f" %(ks, secs))
+# plt.show()
 
