@@ -48,8 +48,6 @@ void calculate_node_dropped_transformation_vector(
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id, 
     node_body_id_t node_id);
-double normalCFD(double value);
-double percent(int frame_offset, int iterations, double sigma);
 void node_perform_pert(traj_info_t* traj_info,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
