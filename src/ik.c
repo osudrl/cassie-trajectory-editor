@@ -8,8 +8,13 @@ void ik_set_left_leg(traj_info_t* traj_info, double* ref)
 
 void ik_set_right_leg(traj_info_t* traj_info, double* ref)
 {
+    double diff;
     for (int i = 20; i <= 34; i++)
-        traj_info->d->qpos[i] = ref[i];
+    {
+        diff = ref[i] - traj_info->d->qpos[i];
+        diff *= .95;
+        traj_info->d->qpos[i] += diff;
+    }
 }
 
 void ik_set_opposite_leg(traj_info_t* traj_info, double* ref, int body_id)
@@ -65,7 +70,7 @@ void ik_cheater_setup(traj_info_t* traj_info, int frameoffset, int body_id)
     if (frameoffset < 0)
         ik_set_selected_leg(traj_info, ik_negative_keyed_qposes, body_id);
 
-    traj_info->ik.pd_k = 50000;
+    traj_info->ik.pd_k = 5000;
     traj_info->ik.pd_b = 10;
 }
 
@@ -106,7 +111,7 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
-    if((frameoffset + 3000 )% 50 == 0)
+    if((frameoffset + 30000 )% 1000 == 0 || mju_abs(frameoffset) < 5)
         ik_basic_setup(traj_info);
     else
         ik_cheater_setup(traj_info, frameoffset, body_id_end);
