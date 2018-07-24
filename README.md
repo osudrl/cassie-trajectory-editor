@@ -84,7 +84,7 @@ Nearly ever function of the tool takes a traj_info reference because it allows a
 Type / Name | Description | Initial State | Used In
 --- | --- | --- | ---
 [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) m | Contains the information about the simulated Cassie model | Initialized in `reset_traj_info()` with the value set by `load_model()` | When making calls to MuJoCo functions such as `mj_foward()` and `mj_step()` 
-[mjData\*]((http://www.mujoco.org/book/reference.html#mjData) d | Contains runtime physics data, such as joint positions, forces, and velocities | Same as above | Same as above
+[mjData\*](http://www.mujoco.org/book/reference.html#mjData) d | Contains runtime physics data, such as joint positions, forces, and velocities | Same as above | Same as above
 [mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies with Ctrl+RightMouse (not anymore) / nodes | Initialized in `reset_traj_info()`: always points to the same structure allocated in globals | `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
 timeline_t timeline | A struct listing each discrete pose throughout the step duration | Initialized in [timeline.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/timeline.c#L15:L26) but will **eventually be dynamically allocated** | Most of the timeline.c functions use this field for setting / overwriting poses
 
