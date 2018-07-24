@@ -166,7 +166,7 @@ int ik_iterative_better_body_optimizer(
     if(frameoffset <= 0)
         mju_copy(ik_negative_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 
-    outit(traj_info, frameoffset, initqpos, returnvalue);
+    // outit(traj_info, frameoffset, initqpos, returnvalue);
 
     return returnvalue;
 }

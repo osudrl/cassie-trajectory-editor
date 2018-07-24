@@ -150,19 +150,18 @@ void reset_traj_info()
     traj_info.nodesigma = 100;
 }
 
-ik_solver_params_t* params = NULL;
-double* xpos_target = NULL;
-int body_id;
-int rootframe;
-
-void load_xpos_target()
+void load_pert()
 {
+    int body_id;
+    int rootframe;
     double grabbed_node_transform[3];
+    FILE* pfile = fopen("last.pert", "r");
     char buf[2048];
     char* result;
-    FILE* pfile = NULL;
+    ik_solver_params_t params;
 
-    pfile = fopen("last.pert", "r");
+    ik_default_fill_solver_params(&params);
+
     if(pfile)
     {
         result = fgets(buf,2048,pfile);
@@ -193,46 +192,14 @@ void load_xpos_target()
 
         fclose(pfile);
 
-
-        xpos_target = malloc(sizeof(double) * 3);
-        mju_add3(
-            xpos_target,
-            node_get_body_xpos_by_frame(&traj_info, rootframe, node_get_cassie_id_from_index(body_id)),
-            grabbed_node_transform);
+        node_perform_pert(
+            &traj_info,
+            &params,
+            grabbed_node_transform,
+            node_get_cassie_id_from_index(body_id),
+            rootframe
+            );
     }
-}
-
-void load_pert()
-{
-    double grabbed_node_transform[3];
-    if(!params)
-    {
-        params = malloc(sizeof(ik_solver_params_t));
-        ik_default_fill_solver_params(params);
-        params->ik_accuracy_cutoff = 0.01;
-    }
-    else
-    {
-        params->ik_accuracy_cutoff /= 5;
-        params->seedoption = IK_NEVER_SEED_LASTSOLN;
-    }
-
-    if(!xpos_target)
-    {
-        load_xpos_target();
-    }
-
-    mju_sub3(
-        grabbed_node_transform, 
-        xpos_target,
-        node_get_body_xpos_by_frame(&traj_info, rootframe, node_get_cassie_id_from_index(body_id)));
-
-    node_perform_pert(
-        &traj_info,
-        params,
-        grabbed_node_transform,
-        node_get_cassie_id_from_index(body_id),
-        rootframe);
 }
 
 

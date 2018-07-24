@@ -165,7 +165,7 @@ void node_perform_pert(
     ik_solver_params_t* params,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
-    int rootframe )
+    int rootframe)
 {
     int frame_offset;
     double ik_body_target_xpos[3];
