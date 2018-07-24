@@ -102,7 +102,7 @@ void outit(traj_info_t* traj_info, int frameoffset, double* initqpos, int return
 
 void ik_default_fill_solver_params(ik_solver_params_t* params)
 {
-    params->ik_accuracy_cutoff = .01;
+    params->ik_accuracy_cutoff = .001;
     params->pd_k_regular = 480;
     params->pd_b_regular = 30;
     params->pd_k_lastsoln = 5000;

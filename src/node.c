@@ -159,25 +159,32 @@ void node_refine_pert(
     int rootframe)
 {
     int i;
+    int frame;
     uint64_t init_time;
     uint64_t iktimedelta;
     double ik_iter_total = 0;
+    int outcount = 0;
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
     for(i = 0; i < traj_info->target_list_size; i++)
     {
+        frame = rootframe + traj_info->target_list[i].frame_offset;
         timeline_set_qposes_to_pose_frame(
-            traj_info,
-            rootframe + traj_info->target_list[i].frame_offset);
+            traj_info, frame );
         nodeframe_ik_transform(
             traj_info,
             params, 
             body_id, 
-            rootframe, 
+            frame, 
             traj_info->target_list[i].frame_offset,
             traj_info->target_list[i].target,
             &ik_iter_total);
+        if(((int) (20.0*i)/traj_info->target_list_size) > outcount)
+        {
+            printf("Refining... %.1f%%\n", (100.0*i)/traj_info->target_list_size);
+            outcount++;
+        }
     }
 
     iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
@@ -185,6 +192,8 @@ void node_refine_pert(
     // printf("Finished solving IK for %d poses in %.1f seconds\n", 
     //     1+iterations*2, 
     //     (iktimedelta/1000000.0));
+
+    printf("Refined: accurate to %.5fmm\n", 1000.0*params->ik_accuracy_cutoff);
 
     traj_info->time_start += iktimedelta;
 }
@@ -245,7 +254,7 @@ void node_perform_pert(
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
 
-    for(frame_offset = 1; frame_offset < iterations; frame_offset++)
+    for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
         if( ((int) (.2 * percent(frame_offset, iterations, traj_info->nodesigma))) > outcount)
         {
@@ -305,9 +314,10 @@ void node_perform_pert(
 
     iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
 
-    printf("Finished solving IK for %d poses in %.1f seconds\n", 
+    printf("Finished solving IK for %d poses in %.1f seconds, accurate to %.5fmm\n", 
         1+iterations*2, 
-        (iktimedelta/1000000.0));
+        (iktimedelta/1000000.0),
+        1000.0*params->ik_accuracy_cutoff);
 
     traj_info->time_start += iktimedelta;
     node_position_initial_using_cassie_body(traj_info,  body_id);
@@ -331,7 +341,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     node_perform_pert(
         traj_info, 
-        &params,
+        &params ,
          grabbed_node_transformation, 
          body_id,
          rootframe);

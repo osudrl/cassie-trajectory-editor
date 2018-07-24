@@ -44,6 +44,11 @@ void calculate_node_dropped_transformation_vector(
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id, 
     node_body_id_t node_id);
+void node_refine_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
+    cassie_body_id_t body_id,
+    int rootframe);
 void node_perform_pert(
     traj_info_t* traj_info,
     ik_solver_params_t* params,

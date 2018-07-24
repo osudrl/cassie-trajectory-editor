@@ -211,6 +211,28 @@ void load_pert()
     }
 }
 
+ik_solver_params_t* globparams = NULL;
+
+void refine_pert()
+{
+    if(!globparams)
+    {
+        globparams = malloc(sizeof (ik_solver_params_t));
+        ik_default_fill_solver_params(globparams);
+    }
+    
+    globparams->ik_accuracy_cutoff /= 5;
+    globparams->seedoption = IK_NEVER_SEED_LASTSOLN;
+    globparams->pd_k_regular = 5000;
+    globparams->pd_b_regular = 10;
+
+    node_refine_pert(
+        &traj_info,
+        globparams,
+        node_get_cassie_id_from_index(25),
+        1008);
+}
+
 
 //-------------------------------- profiler and sensor ----------------------------------
 
@@ -832,6 +854,8 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
                 loadmodel(window, lastfile);
             else if( key==GLFW_KEY_P)
                 load_pert();
+            else if( key==GLFW_KEY_R)
+                refine_pert();
 
             break;
 
