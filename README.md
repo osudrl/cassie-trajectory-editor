@@ -58,7 +58,7 @@ Each major data structure is explained below
 
 Sub-Heading | Information
 --- | ----
-Location(s) in Memory | Where in memory does this data actually live? Stackframe, globals, heap, etc.
+Memory Location | Where in memory does this data actually live? Stackframe, globals, heap, etc.
 Setup | How and where is structue initially set up
 Usages | Relevant times the structure is used in functions
 Fields | List of contained fields, ordered from most to least relevant and likely to persist in future revisions
@@ -67,7 +67,7 @@ Fields | List of contained fields, ordered from most to least relevant and likel
 
 The traj_info struct initally was defined just to encapsulate the [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) / [mjData\*]((http://www.mujoco.org/book/reference.html#mjData) references such that method calls had the ability to modify the robot's qpos values. Now, however, the struct has expanded to hold all the current runtime information about the tool, including the pose timeline and other common structures used by MuJoCo method calls.
 
-##### Location(s) in Memory
+##### Memory Location
 
 The traj_info struct is allocated as a global towards the top of simulate.c ([link @ v0.1](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/simulate.c#L135:L152)), and is passed to all functions as a pointer to this definition.
 
@@ -88,6 +88,6 @@ Type / Name | Description | Initial State | Used In
 [mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies with Ctrl+RightMouse (not anymore) / nodes | Initialized in `reset_traj_info()`: always points to the same structure allocated in globals | `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
 timeline_t timeline | A struct listing each discrete pose throughout the step duration | Initialized in `timeline.c` ([link @ v0.1](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/timeline.c#L15:L26)) but will **eventually be dynamically allocated** | Most of the timeline.c functions use this field for setting / overwriting poses
 
- 
+
 
 
