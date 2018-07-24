@@ -28,6 +28,28 @@ typedef struct _timeline_t_ timeline_t;
 
 #include "pdik.h"
 
+
+enum ik_seed_option_e
+{
+    IK_NEVER_SEED_LASTSOLN,
+    IK_ALWAYS_SEED_LASTSOLN,
+    IK_MOSTLY_SEED_LASTSOLN
+};
+
+struct _ik_solver_params_t_
+{
+    double ik_accuracy_cutoff;
+    double pd_k_regular;
+    double pd_b_regular;
+    double pd_k_lastsoln;
+    double pd_b_lastsoln;
+    double lastsoln_merge_scale;
+    enum ik_seed_option_e seedoption;
+    uint32_t frame_mostly_seed_frequency;
+    uint32_t width_frame_noseed_around_rootframe;
+};
+typedef struct _ik_solver_params_t_ ik_solver_params_t;
+
 struct _traj_info_
 {
     mjModel* m;

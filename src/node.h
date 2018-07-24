@@ -29,12 +29,6 @@ v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id);
 v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, int frame, cassie_body_id_t id);
 void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id);
 double gaussian_distrobution(double r, double s);
-void nodeframe_ik_transform(traj_info_t* traj_info, 
-    cassie_body_id_t body_id, 
-    int frame, 
-    int frameoffset, 
-    v3_t target,
-    double* ik_iter_total);
 void scale_target_using_frame_offset(
     traj_info_t* traj_info,
     v3_t ik_body_target_xpos, 
@@ -48,7 +42,9 @@ void calculate_node_dropped_transformation_vector(
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id, 
     node_body_id_t node_id);
-void node_perform_pert(traj_info_t* traj_info,
+void node_perform_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
     int rootframe );

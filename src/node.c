@@ -77,7 +77,9 @@ double gaussian_distrobution(double r, double s)
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
 }
 
-void nodeframe_ik_transform(traj_info_t* traj_info, 
+void nodeframe_ik_transform(
+    traj_info_t* traj_info, 
+    ik_solver_params_t* params,
     cassie_body_id_t body_id, 
     int frame, 
     int frameoffset, 
@@ -86,6 +88,7 @@ void nodeframe_ik_transform(traj_info_t* traj_info,
 {
     *ik_iter_total += ik_iterative_better_body_optimizer(
         traj_info, 
+        params,
         target, 
         body_id.id, 
         frameoffset, 
@@ -157,7 +160,9 @@ double percent(int frame_offset, int iterations, double sigma)
 //            (((d[2]*t + d[1])*t + d[0])*t + 1.0);
 // }
 
-void node_perform_pert(traj_info_t* traj_info,
+void node_perform_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
     int rootframe )
@@ -182,7 +187,8 @@ void node_perform_pert(traj_info_t* traj_info,
 
     timeline_set_qposes_to_pose_frame(traj_info, rootframe);
 
-    nodeframe_ik_transform(traj_info, 
+    nodeframe_ik_transform(traj_info,
+        params, 
         body_id, 
         rootframe, 
         0, 
@@ -214,7 +220,8 @@ void node_perform_pert(traj_info_t* traj_info,
             frame_offset,
             body_id);
         nodeframe_ik_transform( 
-            traj_info, 
+            traj_info,
+            params, 
             body_id, 
             rootframe + frame_offset,
             frame_offset,
@@ -230,6 +237,7 @@ void node_perform_pert(traj_info_t* traj_info,
             body_id);
         nodeframe_ik_transform(
             traj_info, 
+            params, 
             body_id, 
             rootframe - frame_offset, 
             -frame_offset,
@@ -252,6 +260,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     FILE* pfile;
     int rootframe;
     double grabbed_node_transformation[3];
+    ik_solver_params_t params;
 
     rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
@@ -260,7 +269,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         body_id, 
         node_id);
 
-    node_perform_pert(traj_info, grabbed_node_transformation, body_id, rootframe);
+    ik_default_fill_solver_params(&params);
+    node_perform_pert(traj_info, &params, grabbed_node_transformation, body_id, rootframe);
 
     pfile = fopen("last.pert", "w");
     if(pfile)
