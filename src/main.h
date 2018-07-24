@@ -50,21 +50,33 @@ struct _ik_solver_params_t_
 };
 typedef struct _ik_solver_params_t_ ik_solver_params_t;
 
+struct _target_t_
+{
+    int frame_offset;
+    double target[3];
+};
+typedef struct _target_t_ target_t;
+
 struct _traj_info_
 {
     mjModel* m;
     mjData* d;
     mjvPerturb* pert;
+    target_t* target_list;
+
+    pdikdata_t ik;
     timeline_t timeline;
+    ik_solver_params_t params;
+    
     uint64_t time_start;
     uint64_t time_frozen;
     bool* paused;
     char* filename_step_data;
-    pdikdata_t ik;
     int id_last_body_select;
     int id_last_non_node_select;
     int id_last_pert_activenum;
     double nodesigma;
+    int target_list_size;
 };
 typedef struct _traj_info_ traj_info_t;
 

@@ -152,13 +152,42 @@ double percent(int frame_offset, int iterations, double sigma)
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
 
-// double inv_norm(double t)
-// {
-//     const double c[] = {2.515517, 0.802853, 0.010328};
-//     const double d[] = {1.432788, 0.189269, 0.001308};
-//     return t - ((c[2]*t + c[1])*t + c[0]) /
-//            (((d[2]*t + d[1])*t + d[0])*t + 1.0);
-// }
+void node_refine_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
+    cassie_body_id_t body_id,
+    int rootframe)
+{
+    int i;
+    uint64_t init_time;
+    uint64_t iktimedelta;
+    double ik_iter_total = 0;
+
+    init_time = traj_calculate_runtime_micros(traj_info);
+
+    for(i = 0; i < traj_info->target_list_size; i++)
+    {
+        timeline_set_qposes_to_pose_frame(
+            traj_info,
+            rootframe + traj_info->target_list[i].frame_offset);
+        nodeframe_ik_transform(
+            traj_info,
+            params, 
+            body_id, 
+            rootframe, 
+            traj_info->target_list[i].frame_offset,
+            traj_info->target_list[i].target,
+            &ik_iter_total);
+    }
+
+    iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
+
+    // printf("Finished solving IK for %d poses in %.1f seconds\n", 
+    //     1+iterations*2, 
+    //     (iktimedelta/1000000.0));
+
+    traj_info->time_start += iktimedelta;
+}
 
 void node_perform_pert(
     traj_info_t* traj_info,
@@ -174,6 +203,7 @@ void node_perform_pert(
     double ik_iter_total = 0;
     long iktimedelta;
     int outcount = 0;
+    int target_list_index = 0;
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
@@ -198,6 +228,20 @@ void node_perform_pert(
     //this is toomuch
     iterations = 3.491 * traj_info->nodesigma;
 
+    if(traj_info->target_list)
+    {
+        free(traj_info->target_list);
+        traj_info->target_list = NULL;
+    }
+
+    if(!traj_info->target_list)
+    {
+        traj_info->target_list_size = (iterations*2 + 1);
+        traj_info->target_list = malloc(sizeof(target_t) * traj_info->target_list_size);
+        traj_info->target_list[target_list_index].frame_offset = 0;
+        mju_copy3(traj_info->target_list[target_list_index++].target, ik_body_target_xpos);
+    }
+
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
 
@@ -219,6 +263,13 @@ void node_perform_pert(
             rootframe,
             frame_offset,
             body_id);
+
+        if(traj_info->target_list)
+        {
+            traj_info->target_list[target_list_index].frame_offset = frame_offset;
+            mju_copy3(traj_info->target_list[target_list_index++].target, ik_body_target_xpos);
+        }
+
         nodeframe_ik_transform( 
             traj_info,
             params, 
@@ -226,7 +277,7 @@ void node_perform_pert(
             rootframe + frame_offset,
             frame_offset,
             ik_body_target_xpos,
-            &ik_iter_total);
+            &ik_iter_total);        
 
         scale_target_using_frame_offset(
             traj_info,
@@ -235,6 +286,13 @@ void node_perform_pert(
             rootframe,
             -frame_offset,
             body_id);
+
+        if(traj_info->target_list)
+        {
+            traj_info->target_list[target_list_index].frame_offset = -frame_offset;
+            mju_copy3(traj_info->target_list[target_list_index++].target, ik_body_target_xpos);
+        }
+
         nodeframe_ik_transform(
             traj_info, 
             params, 
@@ -260,7 +318,6 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     FILE* pfile;
     int rootframe;
     double grabbed_node_transformation[3];
-    ik_solver_params_t params;
 
     rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
@@ -269,8 +326,12 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         body_id, 
         node_id);
 
-    ik_default_fill_solver_params(&params);
-    node_perform_pert(traj_info, &params, grabbed_node_transformation, body_id, rootframe);
+    node_perform_pert(
+        traj_info, 
+        &(traj_info->params),
+         grabbed_node_transformation, 
+         body_id,
+         rootframe);
 
     pfile = fopen("last.pert", "w");
     if(pfile)

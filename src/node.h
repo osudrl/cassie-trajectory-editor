@@ -18,6 +18,8 @@ struct _node_body_id_t_
 };
 typedef struct _node_body_id_t_ node_body_id_t;
 
+
+
 typedef mjtNum* v3_t;
 
 node_body_id_t node_get_body_id_from_node_index(int index);
@@ -47,7 +49,7 @@ void node_perform_pert(
     ik_solver_params_t* params,
     v3_t grabbed_node_transformation,
     cassie_body_id_t body_id,
-    int rootframe );
+    int rootframe);
 void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id);
 void node_position_scale_visually(
     traj_info_t* traj_info,
