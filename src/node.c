@@ -318,6 +318,9 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     FILE* pfile;
     int rootframe;
     double grabbed_node_transformation[3];
+    ik_solver_params_t params;
+
+    ik_default_fill_solver_params(&params);
 
     rootframe = get_frame_from_node_body_id(node_id);
     calculate_node_dropped_transformation_vector(
@@ -328,7 +331,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     node_perform_pert(
         traj_info, 
-        &(traj_info->params),
+        &params,
          grabbed_node_transformation, 
          body_id,
          rootframe);

@@ -148,7 +148,7 @@ void reset_traj_info()
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
     traj_info.nodesigma = 100;
-    ik_default_fill_solver_params(&(traj_info.params));
+    // ik_default_fill_solver_params(&(traj_info.params));
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
         free(traj_info.target_list);
@@ -167,6 +167,9 @@ void load_pert()
     FILE* pfile = fopen("last.pert", "r");
     char buf[2048];
     char* result;
+    ik_solver_params_t params;
+
+    ik_default_fill_solver_params(&params);
 
     if(pfile)
     {
@@ -200,7 +203,7 @@ void load_pert()
 
         node_perform_pert(
             &traj_info,
-            &(traj_info.params),
+            &params,
             grabbed_node_transform,
             node_get_cassie_id_from_index(body_id),
             rootframe

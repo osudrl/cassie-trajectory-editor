@@ -66,7 +66,7 @@ struct _traj_info_
 
     pdikdata_t ik;
     timeline_t timeline;
-    ik_solver_params_t params;
+    // ik_solver_params_t params;
     
     uint64_t time_start;
     uint64_t time_frozen;
