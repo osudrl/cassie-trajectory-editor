@@ -389,6 +389,8 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     }
 }
 
+int wackk = 0;
+
 void node_position_scale_visually(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
@@ -403,12 +405,15 @@ void node_position_scale_visually(
     v3_t node_qpos;
     v3_t body_xpos;
 
+   
+
     calculate_node_dropped_transformation_vector(
         traj_info, 
         traj_info->timeline,
         grabbed_node_transformation,
         body_id,
         node_id);
+
 
     rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
 
@@ -424,7 +429,10 @@ void node_position_scale_visually(
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
         body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, currframe, body_id);
         mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
+
+        wackk++;
     }
+
 }
 
 double node_calculate_filter_from_frame_offset(double frame_offset, double sigma)

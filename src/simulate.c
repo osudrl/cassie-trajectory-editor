@@ -208,6 +208,8 @@ void load_pert()
             node_get_cassie_id_from_index(body_id),
             rootframe
             );
+
+        traj_info.id_last_non_node_select = body_id;
     }
 }
 
