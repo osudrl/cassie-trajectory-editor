@@ -75,6 +75,12 @@ timeline_t* timeline_deep_copy(timeline_t* ref)
     return dest;
 }
 
+void timeline_free(timeline_t* ref)
+{
+    free(ref->qposes);
+    free(ref);
+}
+
 void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
 {
     mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);

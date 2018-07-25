@@ -119,7 +119,7 @@ void scale_target_using_frame_offset(
     mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
 }
 
-int get_frame_from_node_body_id(traj_info_t* traj_info, node_body_id_t node_id)
+int get_frame_from_node_body_id(traj_info_t* traj_info, timeline_t* timeline, node_body_id_t node_id)
 {
     return (traj_info->timeline->numposes / NODECOUNT) * (node_id.id - 27); // or maybe 28
 }
@@ -135,7 +135,7 @@ void calculate_node_dropped_transformation_vector(
     v3_t body_init_xpos;
     v3_t node_final_xpos;
 
-    rootframe = get_frame_from_node_body_id(traj_info, node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, timeline, node_id);
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
     node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
@@ -152,11 +152,9 @@ double percent(int frame_offset, int iterations, double sigma)
     return 200 *((normalCFD(frame_offset/sigma) - normalCFD(0) ) / normalCFD((iterations+1) / sigma));
 }
 
-/*void node_refine_pert(
+void node_refine_pert(
     traj_info_t* traj_info,
-    ik_solver_params_t* params,
-    cassie_body_id_t body_id,
-    int rootframe)
+    ik_solver_params_t* params)
 {
     int i;
     int frame;
@@ -164,6 +162,15 @@ double percent(int frame_offset, int iterations, double sigma)
     uint64_t iktimedelta;
     double ik_iter_total = 0;
     int outcount = 0;
+    timeline_t* timeline_old;
+    timeline_t* timeline_new;
+    cassie_body_id_t body_id;
+    int rootframe;
+
+    rootframe = traj_info->refine_rootframe;
+    body_id = node_get_cassie_id_from_index(traj_info->refine_body);
+    timeline_old = traj_info->timeline;
+    timeline_new = timeline_deep_copy(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
@@ -171,9 +178,10 @@ double percent(int frame_offset, int iterations, double sigma)
     {
         frame = rootframe + traj_info->target_list[i].frame_offset;
         timeline_set_qposes_to_pose_frame(
-            traj_info, traj_info->timeline, frame );
+            traj_info, timeline_old, frame );
         nodeframe_ik_transform(
             traj_info,
+            timeline_new,
             params, 
             body_id, 
             frame, 
@@ -195,9 +203,11 @@ double percent(int frame_offset, int iterations, double sigma)
 
     printf("Refined: accurate to %.5fmm\n", 1000.0*params->ik_accuracy_cutoff);
 
+    timeline_new->next = timeline_old;
+    traj_info->timeline = timeline_new;
     traj_info->time_start += iktimedelta;
 }
-*/
+
 void node_perform_pert(
     traj_info_t* traj_info,
     ik_solver_params_t* params,
@@ -334,6 +344,8 @@ void node_perform_pert(
     timeline_new->next = timeline_old;
     traj_info->timeline = timeline_new;
 
+    traj_info->refine_rootframe = rootframe;
+    traj_info->refine_body = body_id.id;
     traj_info->time_start += iktimedelta;
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
@@ -347,7 +359,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     ik_default_fill_solver_params(&params);
 
-    rootframe = get_frame_from_node_body_id(traj_info, node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
     calculate_node_dropped_transformation_vector(
         traj_info, 
         traj_info->timeline,
@@ -398,7 +410,7 @@ void node_position_scale_visually(
         body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(traj_info, node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
 
     for (i = 0; i < NODECOUNT; i++)
     {

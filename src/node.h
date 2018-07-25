@@ -33,9 +33,7 @@ double gaussian_distrobution(double r, double s);
 
 void node_refine_pert(
     traj_info_t* traj_info,
-    ik_solver_params_t* params,
-    cassie_body_id_t body_id,
-    int rootframe);
+    ik_solver_params_t* params);
 void node_perform_pert(
     traj_info_t* traj_info,
     ik_solver_params_t* params,

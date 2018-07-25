@@ -226,11 +226,9 @@ void refine_pert()
     globparams->pd_k_regular = 5000;
     globparams->pd_b_regular = 10;
 
-    // node_refine_pert(
-    //     &traj_info,
-    //     globparams,
-    //     node_get_cassie_id_from_index(25),
-    //     1008);
+    node_refine_pert(
+        &traj_info,
+        globparams);
 }
 
 

@@ -63,6 +63,8 @@ struct _traj_info_
     mjData* d;
     mjvPerturb* pert;
     target_t* target_list;
+    int refine_body;
+    int refine_rootframe;
 
     pdikdata_t ik;
     timeline_t* timeline;
