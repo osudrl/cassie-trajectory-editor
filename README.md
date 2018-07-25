@@ -76,7 +76,7 @@ Setup | How and where is structure is initially set up
 Usages | Relevant times the structure is used in functions
 Fields | List of contained fields, ordered from most to least relevant (may not be perfectly accurate in future revisions)
 
-### traj_info_t(https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main.h#L53:L69)
+### [traj_info_t](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main.h#L53:L69)
 
 The traj_info struct initally was defined just to encapsulate the [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) / [mjData\*](http://www.mujoco.org/book/reference.html#mjData) references such that method calls had the ability to modify the robot's qpos values. Now, however, the struct has expanded to hold all the current runtime information about the tool, including the pose timeline and other common structures used by MuJoCo method calls.
 
@@ -103,7 +103,7 @@ bool* paused | A reference to the paused variable in simulate.c's globals | Same
 double nodesigma | The relative standard deviation of the gaussian filter used to smooth translations | Same as above | Used in the node.c module to apply smoothed translations and determine the "cutoff" for the gaussian filter
 timeline_t timeline | A struct listing each discrete pose throughout the step duration | Initialized in [timeline.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/timeline.c#L15:L26) but will **eventually be dynamically allocated** | Most of the timeline.c functions use this field for setting / overwriting poses
 
-### pdikdata_t(https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.h#L11:L24)
+### [pdikdata_t](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.h#L11:L24)
 
 
 #### Memory Location
