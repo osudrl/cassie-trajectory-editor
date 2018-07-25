@@ -24,11 +24,24 @@ Error | Solution
 --- | ---
 "MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
 
+# Controls
+
+
+## Introduction
+
+
+## Startup
+
+
+## Keybinds
+
+
 
 # Tool Source Documentation
 
 
 The following sections discuss the codebase of the tool.
+
 
 ## Big Picture: Roadmap Diagram
 
@@ -85,9 +98,43 @@ Type / Name | Description | Initial State | Used In
 --- | --- | --- | ---
 [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) m | Contains the information about the simulated Cassie model | Initialized in `reset_traj_info()` with the value set by `load_model()` | When making calls to MuJoCo functions such as `mj_foward()` and `mj_step()` 
 [mjData\*](http://www.mujoco.org/book/reference.html#mjData) d | Contains runtime physics data, such as joint positions, forces, and velocities | Same as above | Same as above
-[mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies with Ctrl+RightMouse (not anymore) / nodes | Initialized in `reset_traj_info()`: always points to the same structure allocated in globals | `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
+[mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies with Ctrl+RightMouse (not anymore) / nodes | Initialized in `reset_traj_info()`. Always points to the same structure allocated in globals | By `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
+bool* paused | A reference to the paused variable in simulate.c's globals | Same as above | Used in [main_traj.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main-traj.c#L49:L63) to calculate the runtime of the visualization
+double nodesigma | The relative standard deviation of the gaussian filter used to smooth translations | Same as above | Used in the node.c module to apply smoothed translations and determine the "cutoff" for the gaussian filter
 timeline_t timeline | A struct listing each discrete pose throughout the step duration | Initialized in [timeline.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/timeline.c#L15:L26) but will **eventually be dynamically allocated** | Most of the timeline.c functions use this field for setting / overwriting poses
 
+### pdikdata_t(https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.h#L11:L24)
 
 
+#### Memory Location
+
+
+
+#### Setup
+
+
+
+#### Usages
+
+
+#### Fields
+
+
+
+## Algorithms: Inverse Kinematics Solver
+
+
+### Preferred Solution
+
+
+### Dead Ends
+
+
+#### Random Joint Movement
+
+
+#### The Pose Library
+
+
+#### Complete Last Solution Seeding
 
