@@ -42,9 +42,9 @@ v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
     return traj_info->d->xpos + (id.id * 3);
 }
 
-v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, int frame, cassie_body_id_t id)
+v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, timeline_t* timeline, int frame, cassie_body_id_t id)
 {
-    timeline_set_qposes_to_pose_frame(traj_info, frame);
+    timeline_set_qposes_to_pose_frame(traj_info, timeline, frame);
     mj_forward(traj_info->m, traj_info->d);
     return node_get_body_xpos_curr(traj_info, id);
 }
@@ -55,15 +55,12 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
     int frame;
     v3_t node_qpos;
     v3_t body_xpos;
-
-    if(!traj_info->timeline->init)
-        timeiline_init_from_input_file(traj_info);
     
     for (i = 0; i < NODECOUNT; i++)
     {
         frame = (traj_info->timeline->numposes / NODECOUNT) * i;
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
-        body_xpos = node_get_body_xpos_by_frame(traj_info, frame, body_id);
+        body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, frame, body_id);
         mju_copy3(node_qpos, body_xpos);
     }
 
@@ -93,7 +90,7 @@ void nodeframe_ik_transform(
         body_id.id, 
         frameoffset, 
         150000);
-    timeline_overwrite_frame_using_curr_pose(traj_info, frame);
+    timeline_overwrite_frame_using_curr_pose(traj_info, traj_info->timeline, frame);
 }
 
 void scale_target_using_frame_offset(
@@ -109,7 +106,7 @@ void scale_target_using_frame_offset(
 
     filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
 
-    body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe + frame_offset, body_id);
+    body_init_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, rootframe + frame_offset, body_id);
     
     /*
     mju_addScl3
@@ -136,7 +133,7 @@ void calculate_node_dropped_transformation_vector(
     v3_t node_final_xpos;
 
     rootframe = get_frame_from_node_body_id(traj_info, node_id);
-    body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe, body_id);
+    body_init_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, rootframe, body_id);
     node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
     mju_sub3(grabbed_node_transformation, node_final_xpos, body_init_xpos);
@@ -171,7 +168,7 @@ void node_refine_pert(
     {
         frame = rootframe + traj_info->target_list[i].frame_offset;
         timeline_set_qposes_to_pose_frame(
-            traj_info, frame );
+            traj_info, traj_info->timeline, frame );
         nodeframe_ik_transform(
             traj_info,
             params, 
@@ -224,7 +221,7 @@ void node_perform_pert(
         0,
         body_id);
 
-    timeline_set_qposes_to_pose_frame(traj_info, rootframe);
+    timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, rootframe);
 
     nodeframe_ik_transform(traj_info,
         params, 
@@ -393,7 +390,7 @@ void node_position_scale_visually(
         frame_offset = currframe - rootframe;
         filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
-        body_xpos = node_get_body_xpos_by_frame(traj_info, currframe, body_id);
+        body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, currframe, body_id);
         mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
     }
 }

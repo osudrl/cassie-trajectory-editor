@@ -19,10 +19,8 @@ struct __attribute__ ((packed)) _full_traj_state_t_
 typedef struct _full_traj_state_t_ full_traj_state_t;
 
 
-void timeiline_init_from_input_file(traj_info_t* traj_info);
-void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, int frame);
-void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, int frame);
-int timeline_get_frame_from_time(traj_info_t* traj_info);
+void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame);
+void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame);
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info);
 
 #endif

@@ -28,7 +28,6 @@ cassie_body_id_t node_get_cassie_id_from_index(int i);
 v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id);
 v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id);
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id);
-v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, int frame, cassie_body_id_t id);
 void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id);
 double gaussian_distrobution(double r, double s);
 void scale_target_using_frame_offset(
