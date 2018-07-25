@@ -8,7 +8,6 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define TIMELINE_SIZE 1682
 #define NODECOUNT 30
 #define NON_NODE_COUNT 1
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
@@ -22,12 +21,12 @@ typedef struct _qpos_t_ qpos_t;
 struct _timeline_t_
 {
     bool init;
-    qpos_t qposes[TIMELINE_SIZE]; // this may want to be dynamically allocated
+    int numposes;
+    qpos_t* qposes;
 };
 typedef struct _timeline_t_ timeline_t;
 
 #include "pdik.h"
-
 
 enum ik_seed_option_e
 {
@@ -65,8 +64,7 @@ struct _traj_info_
     target_t* target_list;
 
     pdikdata_t ik;
-    timeline_t timeline;
-    // ik_solver_params_t params;
+    timeline_t* timeline;
     
     uint64_t time_start;
     uint64_t time_frozen;

@@ -56,12 +56,12 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
     v3_t node_qpos;
     v3_t body_xpos;
 
-    if(!traj_info->timeline.init)
+    if(!traj_info->timeline->init)
         timeiline_init_from_input_file(traj_info);
     
     for (i = 0; i < NODECOUNT; i++)
     {
-        frame = (TIMELINE_SIZE / NODECOUNT) * i;
+        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
         body_xpos = node_get_body_xpos_by_frame(traj_info, frame, body_id);
         mju_copy3(node_qpos, body_xpos);
@@ -120,9 +120,9 @@ void scale_target_using_frame_offset(
     mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
 }
 
-int get_frame_from_node_body_id(node_body_id_t node_id)
+int get_frame_from_node_body_id(traj_info_t* traj_info, node_body_id_t node_id)
 {
-    return (TIMELINE_SIZE / NODECOUNT) * (node_id.id - 27); // or maybe 28
+    return (traj_info->timeline->numposes / NODECOUNT) * (node_id.id - 27); // or maybe 28
 }
 
 void calculate_node_dropped_transformation_vector(
@@ -135,7 +135,7 @@ void calculate_node_dropped_transformation_vector(
     v3_t body_init_xpos;
     v3_t node_final_xpos;
 
-    rootframe = get_frame_from_node_body_id(node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, node_id);
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, rootframe, body_id);
     node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
@@ -332,7 +332,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
 
     ik_default_fill_solver_params(&params);
 
-    rootframe = get_frame_from_node_body_id(node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, node_id);
     calculate_node_dropped_transformation_vector(
         traj_info, 
         grabbed_node_transformation, 
@@ -381,7 +381,7 @@ void node_position_scale_visually(
         body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(node_id);
+    rootframe = get_frame_from_node_body_id(traj_info, node_id);
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -389,7 +389,7 @@ void node_position_scale_visually(
         if(node_get_body_id_from_node_index(i).id == node_id.id)
             continue;
 
-        currframe = (TIMELINE_SIZE / NODECOUNT) * i;
+        currframe = (traj_info->timeline->numposes / NODECOUNT) * i;
         frame_offset = currframe - rootframe;
         filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );

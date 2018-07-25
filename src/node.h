@@ -38,7 +38,6 @@ void scale_target_using_frame_offset(
     int rootframe,
     int frame_offset,
     cassie_body_id_t body_id);
-int get_frame_from_node_body_id(node_body_id_t node_id);
 void calculate_node_dropped_transformation_vector(
     traj_info_t* traj_info, 
     v3_t grabbed_node_transformation,
