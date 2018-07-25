@@ -204,6 +204,7 @@ void node_refine_pert(
     printf("Refined: accurate to %.5fmm\n", 1000.0*params->ik_accuracy_cutoff);
 
     timeline_new->next = timeline_old;
+    timeline_old->prev = timeline_new;
     traj_info->timeline = timeline_new;
     traj_info->time_start += iktimedelta;
 }
@@ -342,6 +343,7 @@ void node_perform_pert(
         1000.0*params->ik_accuracy_cutoff);
 
     timeline_new->next = timeline_old;
+    timeline_old->prev = timeline_new;
     traj_info->timeline = timeline_new;
 
     traj_info->refine_rootframe = rootframe;

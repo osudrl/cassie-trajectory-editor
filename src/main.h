@@ -23,6 +23,7 @@ struct _timeline_t_
     bool init;
     int numposes;
     qpos_t* qposes;
+    struct _timeline_t_* prev;
     struct _timeline_t_* next;
 };
 typedef struct _timeline_t_ timeline_t;

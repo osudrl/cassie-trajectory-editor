@@ -233,6 +233,34 @@ void refine_pert()
         globparams);
 }
 
+void undo_pert()
+{
+    timeline_t* old;
+
+    if(!traj_info.timeline->next)
+        return;
+
+    old = traj_info.timeline;
+    traj_info.timeline = traj_info.timeline->next;
+
+    if(traj_info.id_last_non_node_select > 0 && traj_info.id_last_non_node_select <= 25)
+        node_position_initial_using_cassie_body(&traj_info,  node_get_cassie_id_from_index(traj_info.id_last_non_node_select));
+}
+
+void redo_pert()
+{
+    timeline_t* new;
+
+    if(!traj_info.timeline->prev)
+        return;
+
+    new = traj_info.timeline;
+    traj_info.timeline = traj_info.timeline->prev;
+
+    if(traj_info.id_last_non_node_select > 0 && traj_info.id_last_non_node_select <= 25)
+        node_position_initial_using_cassie_body(&traj_info,  node_get_cassie_id_from_index(traj_info.id_last_non_node_select));
+}
+
 
 //-------------------------------- profiler and sensor ----------------------------------
 
@@ -856,6 +884,11 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
                 load_pert();
             else if( key==GLFW_KEY_R)
                 refine_pert();
+            else if( key==GLFW_KEY_Z &&  !(mods & GLFW_MOD_SHIFT) )
+                undo_pert();
+            else if( key==GLFW_KEY_Y || (
+                key==GLFW_KEY_Z &&  (mods & GLFW_MOD_SHIFT)  ))
+                redo_pert();
 
             break;
 

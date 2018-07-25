@@ -55,6 +55,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->numposes = bytecount;
     traj_info->timeline->init = 1;
     traj_info->timeline->next = NULL;
+    traj_info->timeline->prev = NULL;
 }
 
 timeline_t* timeline_deep_copy(timeline_t* ref)
@@ -70,6 +71,7 @@ timeline_t* timeline_deep_copy(timeline_t* ref)
     memcpy(dest->qposes, ref->qposes, qposbytecount);
     dest->init = 1;
     dest->next = NULL;
+    dest->prev = NULL;
     dest->numposes = ref->numposes;
 
     return dest;
