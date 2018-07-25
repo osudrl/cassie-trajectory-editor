@@ -57,6 +57,24 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->next = NULL;
 }
 
+timeline_t* timeline_deep_copy(timeline_t* ref)
+{
+    timeline_t* dest;
+    int qposbytecount;
+
+    qposbytecount = sizeof(qpos_t) * ref->numposes;
+
+    dest = malloc(sizeof(timeline_t));
+    dest->qposes = malloc(qposbytecount);
+
+    memcpy(dest->qposes, ref->qposes, qposbytecount);
+    dest->init = 1;
+    dest->next = NULL;
+    dest->numposes = ref->numposes;
+
+    return dest;
+}
+
 void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
 {
     mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);
