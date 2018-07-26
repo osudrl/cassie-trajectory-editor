@@ -223,9 +223,9 @@ void refine_pert()
         ik_default_fill_solver_params(globparams);
     }
     
-    globparams->ik_accuracy_cutoff /= 5;
+    globparams->ik_accuracy_cutoff /= 2;
     globparams->seedoption = IK_NEVER_SEED_LASTSOLN;
-    globparams->pd_k_regular = 5000;
+    globparams->pd_k_regular = 10000;
     globparams->pd_b_regular = 10;
 
     node_refine_pert(
@@ -1466,6 +1466,86 @@ int main(int argc, const char** argv)
 
         // handle events (this calls all callbacks)
         glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+        glfwPollEvents();
+
     }
 
     // delete everything we allocated

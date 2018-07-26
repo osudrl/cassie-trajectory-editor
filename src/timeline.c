@@ -58,6 +58,11 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->prev = NULL;
 }
 
+timeline_t timeline_init_with_single_pose(qpos_t* qpos)
+{
+    
+}
+
 timeline_t* timeline_deep_copy(timeline_t* ref)
 {
     timeline_t* dest;

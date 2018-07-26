@@ -6,3 +6,5 @@ traj
 out-traj.csv
 simik
 csvik
+last.pert
+MUJOCO_LOG.TXT
