@@ -58,6 +58,12 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
+enum pert_type_e
+{
+    PERT_TRANSLATION,
+    PERT_TARGET
+};
+
 struct _traj_info_
 {
     mjModel* m;
@@ -77,7 +83,11 @@ struct _traj_info_
     int id_last_body_select;
     int id_last_non_node_select;
     int id_last_pert_activenum;
+
     double nodesigma;
+    double nodeheight;
+    enum pert_type_e pert_type;
+
     int target_list_size;
 };
 typedef struct _traj_info_ traj_info_t;

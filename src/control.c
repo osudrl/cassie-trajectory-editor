@@ -109,6 +109,7 @@ void control_expand_pose(traj_info_t* traj_info)
     expanded = timeline_init_with_single_pose(qpos, traj_info->timeline);
 
     expanded->next = traj_info->timeline;
+    traj_info->timeline->prev = expanded;
     traj_info->timeline = expanded;
 }
 
@@ -131,6 +132,10 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->nodesigma *= .95;
         else if( key==GLFW_KEY_D)
             traj_info->nodesigma *= 1.05;
+        else if( key==GLFW_KEY_S )
+            traj_info->nodeheight *= .95;
+        else if( key==GLFW_KEY_W)
+            traj_info->nodeheight *= 1.05;
         else if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)

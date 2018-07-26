@@ -149,6 +149,7 @@ void reset_traj_info()
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
     traj_info.nodesigma = 100;
+    traj_info.nodeheight = 1;
     // ik_default_fill_solver_params(&(traj_info.params));
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
@@ -801,9 +802,18 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
     {
         // right: translate;  left: rotate
         if( button_right )
+        {
             newperturb = mjPERT_TRANSLATE;
+            traj_info.pert_type = PERT_TRANSLATION;
+        }
         else if( button_left )
             newperturb = mjPERT_ROTATE;
+        // else if( button_left )
+        // {
+        //     newperturb = mjPERT_TRANSLATE;
+        //     traj_info.pert_type = PERT_TRANSLATION;
+        //     traj_info.nodeheight = 1;
+        // }
 
         // perturbation onset: reset reference
         if( newperturb && !pert.active )
@@ -907,7 +917,18 @@ void mouse_move(GLFWwindow* window, double xpos, double ypos)
     bool mod_shift = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS ||
                       glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT)==GLFW_PRESS);
 
+    bool mod_ctrl = (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL)==GLFW_PRESS ||
+                      glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)==GLFW_PRESS);
+
     // determine action based on mouse button
+
+    // if(mod_ctrl && pert.active && button_left)
+    // {
+    //     button_left = 0;
+    //     button_right = 1;
+    // }
+
+
     mjtMouse action;
     if( button_right )
         action = mod_shift ? mjMOUSE_MOVE_H : mjMOUSE_MOVE_V;
@@ -933,14 +954,26 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
 
     // scroll: emulate vertical mouse motion = 5% of window height
 
+    bool mod_shift = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS ||
+                      glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT)==GLFW_PRESS);
     bool mod_ctrl = (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL)==GLFW_PRESS ||
                       glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)==GLFW_PRESS);
 
-    if (mod_ctrl)
+    if (mod_ctrl && pert.active)
     {
         double mult = yoffset/25.0;
         mult += 1;
-        traj_info.nodesigma *= mult;
+        if(!mod_shift)
+            traj_info.nodesigma *= mult;
+        else
+            traj_info.nodeheight *= mult;
+
+
+    }
+    else if (mod_ctrl)
+    {
+        traj_info.time_frozen += yoffset*200000;
+        traj_info.time_start -= yoffset*200000;
     }
     else
         mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, &scn, &cam);

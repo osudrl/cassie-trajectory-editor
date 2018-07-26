@@ -90,7 +90,7 @@ void nodeframe_ik_transform(
         target, 
         body_id.id, 
         frameoffset, 
-        150000);
+        150);
     timeline_overwrite_frame_using_curr_pose(traj_info, overwrite, frame);
 }
 
@@ -107,13 +107,19 @@ void scale_target_using_frame_offset(
     double filter;
     v3_t body_init_xpos;
 
-    filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
+    filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma, traj_info->nodeheight);
 
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe + frame_offset, body_id);
     
-    mju_sub3(dragvect, grabbed_node_transformation, body_init_xpos);
-
-    mju_addScl3(ik_body_target_xpos, body_init_xpos, dragvect, filter);
+    if (traj_info->pert_type == PERT_TARGET)
+    {
+        mju_sub3(dragvect, grabbed_node_transformation, body_init_xpos);
+        mju_addScl3(ik_body_target_xpos, body_init_xpos, dragvect, filter);
+    }
+    else if (traj_info->pert_type == PERT_TRANSLATION)
+    {
+        mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
+    }
 }
 
 int get_frame_from_node_body_id(traj_info_t* traj_info, timeline_t* timeline, node_body_id_t node_id)
@@ -136,7 +142,14 @@ void calculate_node_dropped_transformation_vector(
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
     node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
-    mju_copy3(grabbed_node_transformation, node_final_xpos);
+    if (traj_info->pert_type == PERT_TARGET)
+    {
+        mju_copy3(grabbed_node_transformation, node_final_xpos);
+    }
+    else if (traj_info->pert_type == PERT_TRANSLATION)
+    {
+        mju_sub3(grabbed_node_transformation, node_final_xpos, body_init_xpos);
+    }
 }
 
 double normalCFD(double value)
@@ -432,7 +445,7 @@ void node_position_scale_visually(
             rootframe,
             frame_offset,
             body_id);
-        
+
         // filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
         // body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, currframe, body_id);
         // mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
@@ -440,8 +453,8 @@ void node_position_scale_visually(
 
 }
 
-double node_calculate_filter_from_frame_offset(double frame_offset, double sigma)
+double node_calculate_filter_from_frame_offset(double frame_offset, double sigma, double nodeheight)
 {
-    return gaussian_distrobution(frame_offset/sigma, 1) *(1/0.318310);
+    return mju_min(mju_max(nodeheight,1) * gaussian_distrobution(frame_offset/sigma, 1) *(1/0.318310),1);
 }
 
