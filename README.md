@@ -30,7 +30,7 @@ Error | Solution
   * [ ] Allow different trajectories to be loaded in
   * [ ] Add control over loop number
   * [ ] Allow for initialization with a single pose
-* [ ] Export trajectories in the same format as the imput file
+* [ ] Export trajectories in the same format as the input file
 * [ ] Allow movement of the pelvis
 * [ ] Fix undos/redos/overwrites so it doesn't leak memory
 * [ ] Document the current controls
