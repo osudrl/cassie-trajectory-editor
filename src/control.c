@@ -100,7 +100,16 @@ void redo_pert(traj_info_t* traj_info)
 
 void control_expand_pose(traj_info_t* traj_info)
 {
+    timeline_t* expanded;
+    qpos_t* qpos;
+    int frame;
 
+    frame = timeline_get_frame_from_time(traj_info);
+    qpos = timeline_get_qposes_from_frame(traj_info->timeline, frame);
+    expanded = timeline_init_with_single_pose(qpos, traj_info->timeline);
+
+    expanded->next = traj_info->timeline;
+    traj_info->timeline = expanded;
 }
 
 void control_key_event(traj_info_t* traj_info, int key, int mods)
@@ -126,6 +135,8 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)
             refine_pert(traj_info);
+        else if( key==GLFW_KEY_E)
+            control_expand_pose(traj_info);
         else if( key==GLFW_KEY_Z &&  !(mods & GLFW_MOD_SHIFT) )
             undo_pert(traj_info);
         else if( key==GLFW_KEY_Y || (

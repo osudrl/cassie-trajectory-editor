@@ -31,6 +31,14 @@ uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, uint8_t** b
     return readsofar;
 }
 
+int timeline_make_frame_safe(int frame, int numposes)
+{
+    while(frame < 0)
+        frame += numposes;
+    frame %= numposes;
+    return frame;
+}
+
 void timeiline_init_from_input_file(traj_info_t* traj_info)
 {
     int i;
@@ -76,12 +84,29 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->prev = NULL;
 }
 
-timeline_t timeline_init_with_single_pose(qpos_t* qpos)
+timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
 {
+    timeline_t* dest;
+    int i;
 
+    dest = malloc(sizeof(timeline_t));
+    dest->qposes = malloc(sizeof(qpos_t) * xcopy->numposes);
+
+    for(i = 0; i < xcopy->numposes; i++)
+    {
+        mju_copy(dest->qposes[i].q, qpos->q, CASSIE_QPOS_SIZE);
+        mju_copy(dest->qposes[i].q, xcopy->qposes[i].q, 1);    
+    }
+
+    dest->init = 1;
+    dest->next = NULL;
+    dest->prev = NULL;
+    dest->numposes = xcopy->numposes;
+
+    return dest;
 }
 
-timeline_t* timeline_deep_copy(timeline_t* ref)
+timeline_t* timeline_duplicate(timeline_t* ref)
 {
     timeline_t* dest;
     int qposbytecount;
@@ -106,18 +131,19 @@ void timeline_free(timeline_t* ref)
     free(ref);
 }
 
+qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, int frame)
+{
+    frame = timeline_make_frame_safe(frame, timeline->numposes);
+
+    return timeline->qposes + frame ;
+}
+
 void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
 {
     mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);
 }
 
-int timeline_make_frame_safe(int frame, int numposes)
-{
-    while(frame < 0)
-        frame += numposes;
-    frame %= numposes;
-    return frame;
-}
+
 
 void panic()
 {
@@ -137,12 +163,14 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timel
 
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame)
 {
+    qpos_t* qposes;
+
     if(!timeline || !timeline->init)
        panic();
     
-    frame = timeline_make_frame_safe(frame, timeline->numposes);
+    qposes = timeline_get_qposes_from_frame(timeline, frame);
 
-    mju_copy(timeline->qposes[frame].q, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+    mju_copy(qposes->q, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 }
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)

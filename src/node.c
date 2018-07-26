@@ -170,7 +170,7 @@ void node_refine_pert(
     rootframe = traj_info->refine_rootframe;
     body_id = node_get_cassie_id_from_index(traj_info->refine_body);
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_deep_copy(timeline_old);
+    timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
 
@@ -228,7 +228,7 @@ void node_perform_pert(
     timeline_t* timeline_new;
 
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_deep_copy(timeline_old);
+    timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
 

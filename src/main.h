@@ -70,8 +70,8 @@ struct _traj_info_
     pdikdata_t ik;
     timeline_t* timeline;
     
-    uint64_t time_start;
-    uint64_t time_frozen;
+    int64_t time_start;
+    int64_t time_frozen;
     bool* paused;
     char* filename_step_data;
     int id_last_body_select;
@@ -88,6 +88,6 @@ typedef struct _traj_info_ traj_info_t;
 
 uint64_t traj_time_in_micros();
 void traj_foreach_frame(traj_info_t* traj_info);
-uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info);
+int64_t traj_calculate_runtime_micros(traj_info_t* traj_info);
 
 #endif

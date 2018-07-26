@@ -46,9 +46,9 @@ uint64_t traj_time_in_micros()
     return 1000000 * tv.tv_sec + tv.tv_usec;
 }
 
-uint64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
+int64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
 {
-    uint64_t val;
+    int64_t val;
     if (!(*traj_info->paused))
     {
         val = traj_time_in_micros() - traj_info->time_start;
