@@ -154,8 +154,18 @@ void reset_traj_info()
     if (firsttrajinforeset > 0 && traj_info.target_list)
         free(traj_info.target_list);
 
+    traj_info.timeline = NULL;
+
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
+    showinfo = paused;
+
+    for( int i=0; i<mjNRNDFLAG; i++ )
+        if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
+        {
+            scn.flags[i] = 0;
+        }
+
 
     firsttrajinforeset++;
 }
@@ -630,6 +640,8 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
     case GLFW_KEY_SPACE:                // pause
         paused = !paused;
+        showinfo = paused;
+
         break;
 
     case GLFW_KEY_PAGE_UP:              // previous keyreset
@@ -719,24 +731,24 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         // control keys
         if( mods & GLFW_MOD_CONTROL )
         {
-            if( key==GLFW_KEY_A )
-                autoscale(window);
-            else if( key==GLFW_KEY_L && lastfile[0] )
+            // if( key==GLFW_KEY_A )
+            //     autoscale(window);
+            if( key==GLFW_KEY_L && lastfile[0] )
                 loadmodel(window, lastfile);          
 
             break;
 
         }
 
-        // // toggle visualization flag
-        // for( int i=0; i<mjNVISFLAG; i++ )
-        //     if( key==mjVISSTRING[i][2][0] )
-        //         vopt.flags[i] = !vopt.flags[i];
+        // toggle visualization flag
+        for( int i=0; i<mjNVISFLAG; i++ )
+            if( key==mjVISSTRING[i][2][0] )
+                vopt.flags[i] = !vopt.flags[i];
 
-        // // toggle rendering flag
-        // for( int i=0; i<mjNRNDFLAG; i++ )
-        //     if( key==mjRNDSTRING[i][2][0] )
-        //         scn.flags[i] = !scn.flags[i];
+        // toggle rendering flag
+        for( int i=0; i<mjNRNDFLAG; i++ )
+            if( key==mjRNDSTRING[i][2][0] )
+                scn.flags[i] = !scn.flags[i];
 
         // // toggle geom/site group
         // for( int i=0; i<mjNGROUP; i++ )
@@ -1300,86 +1312,6 @@ int main(int argc, const char** argv)
 
         // handle events (this calls all callbacks)
         glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-        glfwPollEvents();
-
     }
 
     // delete everything we allocated

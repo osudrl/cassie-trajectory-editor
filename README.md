@@ -8,7 +8,6 @@ The generated walking trajectories can act as the reference motion in [reinforce
 
 This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the mentorship of [Patrick Clary](https://github.com/pclary) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University.
 
-
 # Getting Started 
 
 ## Getting Started: Compilation / Dependencies
@@ -23,6 +22,19 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 Error | Solution
 --- | ---
 "MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
+
+
+# Development: ToDo's
+
+* [ ] Add user controls with respect to initialization
+  * [ ] Allow different trajectories to be loaded in
+  * [ ] Add control over loop number
+  * [ ] Allow for initialization with a single pose
+* [ ] Export trajectories in the same format as the imput file
+* [ ] Allow movement of the pelvis
+* [ ] Fix undos/redos/overwrites so it doesn't leak memory
+* [ ] Document the current controls
+* [ ] PD Controller to 7 & 22 DOF
 
 # Controls
 

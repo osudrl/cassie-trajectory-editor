@@ -36,23 +36,41 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     int i;
     int bytecount;
     full_traj_state_t* fulls;
+    int big;
+    int start;
 
     bytecount = timeline_fill_full_traj_state_array(traj_info, (uint8_t**) &fulls);
     bytecount /= sizeof(full_traj_state_t);
 
-    printf("Read %d poses \n", bytecount);
+    // printf("Read %d poses \n", bytecount);
 
     if(!traj_info->timeline)
         traj_info->timeline = malloc(sizeof(timeline_t));
 
-    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount);
+    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount * 5);
 
-    for(i = 0; i < bytecount; i++)
-        mju_copy(traj_info->timeline->qposes[i].q, fulls[i].qpos, CASSIE_QPOS_SIZE);
+    for(i = 0; i < bytecount * 5; i++)
+    {
+        mju_copy(traj_info->timeline->qposes[i].q,
+            fulls[i % bytecount].qpos,
+            CASSIE_QPOS_SIZE);
+    }
+
+    for(big = 1; big <= 4; big++)
+    {
+        start = bytecount * big;
+        for(i = start; i < start + bytecount; i++)
+        {
+            mju_add(traj_info->timeline->qposes[i].q,
+                traj_info->timeline->qposes[i].q,
+                traj_info->timeline->qposes[start-1].q,
+                1);
+        }
+    }
 
     free(fulls);
 
-    traj_info->timeline->numposes = bytecount;
+    traj_info->timeline->numposes = bytecount * 5;
     traj_info->timeline->init = 1;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
@@ -60,7 +78,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
 
 timeline_t timeline_init_with_single_pose(qpos_t* qpos)
 {
-    
+
 }
 
 timeline_t* timeline_deep_copy(timeline_t* ref)
@@ -129,7 +147,7 @@ void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t
 
 int timeline_get_frame_from_time(traj_info_t* traj_info)
 {
-    return mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 10));
+    return mju_round( traj_calculate_runtime_micros(traj_info) / (1000 * 3));
 }
 
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)

@@ -98,14 +98,19 @@ void redo_pert(traj_info_t* traj_info)
         node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->id_last_non_node_select));
 }
 
+void control_expand_pose(traj_info_t* traj_info)
+{
+
+}
+
 void control_key_event(traj_info_t* traj_info, int key, int mods)
 {
     if (*(traj_info->paused))
     {
         if(key == GLFW_KEY_RIGHT)
-            traj_info->time_frozen += 50000;
-        if(key == GLFW_KEY_LEFT)
             traj_info->time_frozen -= 50000;
+        if(key == GLFW_KEY_LEFT)
+            traj_info->time_frozen += 50000;
         if(key == GLFW_KEY_DOWN)
             traj_info->time_frozen -= 500000;
         if (key == GLFW_KEY_UP)
