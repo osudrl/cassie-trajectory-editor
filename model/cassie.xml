@@ -227,636 +227,636 @@
          <joint name='c1x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c1y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c1z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c2' pos='0 0 0'> 
          <joint name='c2x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c2y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c2z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c3' pos='0 0 0'> 
          <joint name='c3x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c3y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c3z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c4' pos='0 0 0'> 
          <joint name='c4x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c4y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c4z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c5' pos='0 0 0'> 
          <joint name='c5x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c5y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c5z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c6' pos='0 0 0'> 
          <joint name='c6x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c6y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c6z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c7' pos='0 0 0'> 
          <joint name='c7x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c7y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c7z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c8' pos='0 0 0'> 
          <joint name='c8x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c8y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c8z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c9' pos='0 0 0'> 
          <joint name='c9x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c9y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c9z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body name='c10' pos='0 0 0'> 
          <joint name='c10x' type='slide' axis='1 0 0' limited='false'/>
          <joint name='c10y' type='slide' axis='0 1 0' limited='false'/>
          <joint name='c10z' type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body>
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
-      </body> 
-
-      <body pos='0 0 0'> 
-         <joint type='slide' axis='1 0 0' limited='false'/>
-         <joint type='slide' axis='0 1 0' limited='false'/>
-         <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
 
       <body pos='0 0 0'> 
          <joint type='slide' axis='1 0 0' limited='false'/>
          <joint type='slide' axis='0 1 0' limited='false'/>
          <joint type='slide' axis='0 0 1' limited='false'/>
-       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle'/> 
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
+      </body> 
+
+      <body pos='0 0 0'> 
+         <joint type='slide' axis='1 0 0' limited='false'/>
+         <joint type='slide' axis='0 1 0' limited='false'/>
+         <joint type='slide' axis='0 0 1' limited='false'/>
+       <geom type='sphere' size='0.010 0.010 0.010' class='obstacle'/> 
       </body> 
       
     </body> 

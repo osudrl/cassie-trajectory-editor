@@ -805,9 +805,17 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
         {
             newperturb = mjPERT_TRANSLATE;
             traj_info.pert_type = PERT_TRANSLATION;
+            traj_info.nodeheight = 1;
+
         }
-        else if( button_left )
-            newperturb = mjPERT_ROTATE;
+        else if (button_left)
+        {
+            newperturb = mjPERT_TRANSLATE;
+            traj_info.pert_type = PERT_TARGET;
+            traj_info.nodeheight = 1;
+        }
+        // else if( button_left )
+        //     newperturb = mjPERT_ROTATE;
         // else if( button_left )
         // {
         //     newperturb = mjPERT_TRANSLATE;
@@ -920,13 +928,12 @@ void mouse_move(GLFWwindow* window, double xpos, double ypos)
     bool mod_ctrl = (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL)==GLFW_PRESS ||
                       glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)==GLFW_PRESS);
 
-    // determine action based on mouse button
 
-    // if(mod_ctrl && pert.active && button_left)
-    // {
-    //     button_left = 0;
-    //     button_right = 1;
-    // }
+    if(mod_ctrl && pert.active && button_left)
+    {
+        button_left = 0;
+        button_right = 1;
+    }
 
 
     mjtMouse action;

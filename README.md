@@ -31,6 +31,7 @@ Error | Solution
   * [ ] Add control over loop number
   * [ ] Allow for initialization with a single pose
 * [ ] Export trajectories in the same format as the input file
+* [ ] Allow for "clipping" of larger trajecotry
 * [ ] Allow movement of the pelvis
 * [ ] Fix undos/redos/overwrites so it doesn't leak memory
 * [ ] Document the current controls

@@ -90,7 +90,7 @@ void nodeframe_ik_transform(
         target, 
         body_id.id, 
         frameoffset, 
-        150);
+        1500);
     timeline_overwrite_frame_using_curr_pose(traj_info, overwrite, frame);
 }
 
