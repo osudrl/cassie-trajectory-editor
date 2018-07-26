@@ -12,6 +12,7 @@
 #include "stdbool.h"
 
 #include "main.h"
+#include "control.h"
  
 
 //-------------------------------- global variables -------------------------------------
@@ -157,108 +158,6 @@ void reset_traj_info()
     traj_info.target_list_size = -1;
 
     firsttrajinforeset++;
-}
-
-void load_pert()
-{
-    int body_id;
-    int rootframe;
-    double grabbed_node_transform[3];
-    FILE* pfile = fopen("last.pert", "r");
-    char buf[2048];
-    char* result;
-    ik_solver_params_t params;
-
-    ik_default_fill_solver_params(&params);
-
-    if(pfile)
-    {
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        body_id = strtol(buf, NULL, 10);
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        rootframe = strtol(buf, NULL, 10);
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        traj_info.nodesigma = strtod(buf, NULL);
-
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        grabbed_node_transform[0] = strtod(buf, NULL);
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        grabbed_node_transform[1] = strtod(buf, NULL);
-        result = fgets(buf,2048,pfile);
-        if(!result)
-            return;
-        grabbed_node_transform[2] = strtod(buf, NULL);
-
-        fclose(pfile);
-
-        node_perform_pert(
-            &traj_info,
-            &params,
-            grabbed_node_transform,
-            node_get_cassie_id_from_index(body_id),
-            rootframe
-            );
-
-        traj_info.id_last_non_node_select = body_id;
-    }
-}
-
-ik_solver_params_t* globparams = NULL;
-
-void refine_pert()
-{
-    if(!globparams)
-    {
-        globparams = malloc(sizeof (ik_solver_params_t));
-        ik_default_fill_solver_params(globparams);
-    }
-    
-    globparams->ik_accuracy_cutoff /= 2;
-    globparams->seedoption = IK_NEVER_SEED_LASTSOLN;
-    globparams->pd_k_regular = 10000;
-    globparams->pd_b_regular = 10;
-
-    node_refine_pert(
-        &traj_info,
-        globparams);
-}
-
-void undo_pert()
-{
-    timeline_t* old;
-
-    if(!traj_info.timeline->next)
-        return;
-
-    old = traj_info.timeline;
-    traj_info.timeline = traj_info.timeline->next;
-
-    if(traj_info.id_last_non_node_select > 0 && traj_info.id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(&traj_info,  node_get_cassie_id_from_index(traj_info.id_last_non_node_select));
-}
-
-void redo_pert()
-{
-    timeline_t* new;
-
-    if(!traj_info.timeline->prev)
-        return;
-
-    new = traj_info.timeline;
-    traj_info.timeline = traj_info.timeline->prev;
-
-    if(traj_info.id_last_non_node_select > 0 && traj_info.id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(&traj_info,  node_get_cassie_id_from_index(traj_info.id_last_non_node_select));
 }
 
 
@@ -683,6 +582,8 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
     if( act==GLFW_RELEASE )
         return;
 
+    control_key_event(&traj_info, key, mods);
+
     switch( key )
     {
     case GLFW_KEY_F1:                   // help
@@ -754,57 +655,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         sensorupdate();
         break;
 
-    case GLFW_KEY_RIGHT:                // step forward
-        if( paused )
-        {
-            // mj_step(m, d);
-            // profilerupdate();
-            // sensorupdate();
-            traj_info.time_frozen += 50000;
-
-        }
-        break;
-
-    case GLFW_KEY_LEFT:                 // step back
-        if( paused )
-        {
-            // m->opt.timestep = -m->opt.timestep;
-            // cleartimers(d);
-            // mj_step(m, d);
-            // m->opt.timestep = -m->opt.timestep;
-            // profilerupdate();
-            // sensorupdate();
-            traj_info.time_frozen -= 50000;
-        }
-        break;
-
-    case GLFW_KEY_DOWN:                 // step forward 100
-        if( paused )
-        {
-            // cleartimers(d);
-            // for( n=0; n<100; n++ )
-            //     mj_step(m,d);
-            // profilerupdate();
-            // sensorupdate();
-            traj_info.time_frozen -= 500000;
-        }
-        break;
-
-    case GLFW_KEY_UP:                   // step back 100
-        if( paused )
-        {
-            // m->opt.timestep = -m->opt.timestep;
-            // cleartimers(d);
-            // for( n=0; n<100; n++ )
-            //     mj_step(m,d);
-            // m->opt.timestep = -m->opt.timestep;
-            // profilerupdate();
-            // sensorupdate();
-            traj_info.time_frozen += 500000;
-
-        }
-        break;
-
+   
     case GLFW_KEY_ESCAPE:               // free camera
         cam.type = mjCAMERA_FREE;
         break;
@@ -868,27 +719,10 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         // control keys
         if( mods & GLFW_MOD_CONTROL )
         {
-            // if( key==GLFW_KEY_A )
-            //     autoscale(window);
-            //  else if( key==GLFW_KEY_L && lastfile[0] )
-                // loadmodel(window, lastfile);
-
-            // break;
             if( key==GLFW_KEY_A )
-                traj_info.nodesigma *= .95;
-            else if( key==GLFW_KEY_D)
-                traj_info.nodesigma *= 1.05;
+                autoscale(window);
             else if( key==GLFW_KEY_L && lastfile[0] )
-                loadmodel(window, lastfile);
-            else if( key==GLFW_KEY_P)
-                load_pert();
-            else if( key==GLFW_KEY_R)
-                refine_pert();
-            else if( key==GLFW_KEY_Z &&  !(mods & GLFW_MOD_SHIFT) )
-                undo_pert();
-            else if( key==GLFW_KEY_Y || (
-                key==GLFW_KEY_Z &&  (mods & GLFW_MOD_SHIFT)  ))
-                redo_pert();
+                loadmodel(window, lastfile);          
 
             break;
 
