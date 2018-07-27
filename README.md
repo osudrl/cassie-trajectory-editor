@@ -57,7 +57,7 @@ Input Command | Context | Effect
 Ctrl+Z | Any | Undo a trajectory modifiction. Will reset the timeline to its complete previous state. An 'Undo' can be redone with 'Redo'
 Ctrl+Y or Ctrl+Shift+Z | Any | Redo a trajectory modification
 Ctrl+P | Any | Load a perturbation from the config file at last.pert; In the current implementation, any perturbation with the mouse overwrites this file
-Ctrl+R | See below table* | Refines a completed modification. Uses the list of frame/xpos target pairs saved after every call to `node_perform_pert()`, and will re-run IK on each target with a smaller error cutoff. Can be undone with the Undo command
+Ctrl+R | See note below* | Refines a completed modification. Uses the list of frame/xpos target pairs saved after every call to `node_perform_pert()`, and will re-run IK on each target with a smaller error cutoff. Can be undone with the Undo command
 Ctrl+E | Any | 'Expands' the current pose. The resulting timeline (undo-able) will have the same length and number of poses as the previous timeline, but will be filled with the current pose (except xpos[0], which is copied over)
 Space | Any | Toggles pause for trajectory playback. When paused the camera may still be moved, bodies can be selected, nodes can be perturbed, IK will still be solved, Undo/Redo/LoadPert/Refine/Expand will all still work
 Right Arrow | Any | Will step the trajectory time forward by some arbitrary step size. This step is in relation to visualization time, not number of frames although this may change in the future
@@ -69,7 +69,9 @@ Ctrl+Scroll | Dragging a node | Scales the standard deviation of the trajectory 
 Ctrl+Shift+Scroll | Dragging a node | Scales the 'height' of the gaussian distrobtion that is used to smooth perturbations. Height defaults at 1 and will not go lower than 1, but an increased height will cause nearby nodes to be transformed as much as the root node of ther perturbation. Often used in combination with a 'target' perturbation command to hold the body in the same place for a number of frames
 
 
-\*Refine-Command Context Note: Every time  calls the IK solver, it saves a list of frame/xpos targets for the refiner function to use. Any time IK is solved this target list is overwr
+\*Refine-Command Context Note: Every time  calls the IK solver, it saves a list of frame/xpos targets for the refiner function to use. Any time IK is solved, this target list is overwritten, however, this target list is not with respect to the timeline, just the last time IK was run. This may be improved in the future, but at the moment, all refine commands must directly follow a previous refine command or a node-drag-perturbation.
+
+
 
 
 
