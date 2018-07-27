@@ -12,6 +12,7 @@
 #include "stdbool.h"
 
 #include "main.h"
+#include <sys/time.h>
  
 
 //-------------------------------- global variables -------------------------------------
@@ -670,6 +671,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
     case GLFW_KEY_ESCAPE:               // free camera
         cam.type = mjCAMERA_FREE;
+
         break;
 
     case '=':                           // bigger font
@@ -761,6 +763,57 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
     }
 }
 
+uint64_t traj_time_in_micros()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return 1000000 * tv.tv_sec + tv.tv_usec;
+}
+
+void single_sphere(double rad, double height)
+{
+    mjvGeom* sphere = scn.geoms + scn.ngeom++;
+    
+
+    // printf("loopgeoms %d \n" , scn.ngeom);
+
+
+    float wheee = (mju_sin(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
+    float wheee2 = (mju_cos(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
+
+    mjtNum g_size[3] = {.03-wheee/100,.03-wheee/100,.03-wheee/100};
+    wheee /=2;
+
+    mjtNum g_pos[3] = {
+        mju_sin(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee/20)-.1,
+        mju_cos(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee2/20),
+        height + wheee/7
+    };
+
+    mju_add3(g_pos, g_pos, d->xpos + 3);
+
+
+    // printf("alpha %.3f\n", alpha);
+    float g_rgba[4] = {.2,.45,.9, 1};
+
+
+    mjv_initGeom(sphere,2,g_size,g_pos,NULL,g_rgba);
+
+    // render
+    // sphere->dataid = -1;
+    // sphere->objtype = mjOBJ_GEOM;
+    // sphere->objid = -1;
+    // sphere->texid = mjTEXTURE_CUBE;
+}
+
+void do_sphere_things()
+{
+    for(int i = 0; i < 600; i++)
+    {
+        single_sphere(3.141 * 2 * .01 * (i%100), (i-500) / 500.0);
+    }    
+}
+
 
 // mouse button
 void mouse_button(GLFWwindow* window, int button, int act, int mods)
@@ -833,7 +886,15 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
                                  (mjtNum)lastx/(mjtNum)width, 
                                  (mjtNum)(height-lasty)/(mjtNum)height, 
                                  &scn, selpnt);
+        
+        
+
+
         int selbody = (selgeom>=0 ? m->geom_bodyid[selgeom] : 0);
+        printf("mousegeoms %d \n" , scn.ngeom);
+
+        // selbody = 26;
+         printf("geom %d body %d \n",selgeom,selbody);
 
         // set lookat point, start tracking is requested
         if( selmode==2 || selmode==3 )
@@ -1105,9 +1166,11 @@ void render(GLFWwindow* window)
     lastrendertm = glfwGetTime();
 
     // update scene
+    // mjv_addGeoms(m, d, &vopt, &pert, mjCAT_ALL, &scn);
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
 
-    // render
+    do_sphere_things();
+
     mjr_render(rect, &scn, &con);
 
     // show depth map

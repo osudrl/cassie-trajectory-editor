@@ -158,7 +158,7 @@ void traj_foreach_frame(traj_info_t* traj_info)
             traj_info->pert->select);
 
     traj_info->d->qpos[20]+=0.001;
-    printf("foot %.5f\n", traj_info->d->qpos[20] );
+    // printf("foot %.5f\n", traj_info-a>d->qpos[20] );
 
     mj_forward(traj_info->m, traj_info->d);
 }
