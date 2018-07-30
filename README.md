@@ -185,20 +185,3 @@ double nodesigma | The relative standard deviation of the gaussian filter used t
 #### Fields
 
 
-## Algorithms: Inverse Kinematics Solver
-
-
-### Preferred Solution
-
-
-### Dead Ends
-
-
-#### Random Joint Movement
-
-
-#### The Pose Library
-
-
-#### Complete Last Solution Seeding
-
