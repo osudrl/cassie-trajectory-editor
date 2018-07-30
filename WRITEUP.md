@@ -38,7 +38,7 @@
 
 #### Tuning
 
-
+https://imgur.com/a/CnxWmec
 
 ### Dead End Solutions
 
