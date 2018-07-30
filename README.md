@@ -26,18 +26,26 @@ Error | Solution
 
 # Development: ToDo's
 
+1. [ ] select change single joint
+2. [ ] one-sided scaling transformation
+3. [ ] Variable node count
+
+
 * [ ] Add user controls with respect to initialization
   * [ ] Allow different trajectories to be loaded in
   * [ ] Add control over loop number
   * [ ] Allow for initialization with a single pose
 * [ ] Export trajectories in the same format as the input file
 * [ ] Allow for "clipping" of larger trajecotry
-* [ ] Allow movement of the pelvis
 * [ ] Fix undos/redos/overwrites so it doesn't leak memory
 * [ ] Document the current controls
 * [ ] PD Controller to 7 & 22 DOF
 * [ ] Make ctrl p respect the different pert types
 * [ ] Look into drag files into mujoco window
+* [ ] Expand the timeline
+
+
+
 
 # Controls
 
