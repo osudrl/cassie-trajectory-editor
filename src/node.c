@@ -29,12 +29,12 @@ v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
     if(id.id < 27)
         return 0;
     else
-        return traj_info->d->qpos + CASSIE_QPOS_SIZE + (NON_NODE_COUNT * 3) + ((id.id - 27) * 3);
+        return traj_info->d->mocap_pos + ((id.id - 27) * 3);
 }
 
 v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
 {
-    return traj_info->d->xpos + (id.id * 3);
+    return traj_info->d->mocap_pos + ((id.id-27) * 3);
 }
 
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
