@@ -183,9 +183,9 @@ int32_t max_doik | Controls the maximum number of steps for the IK solver before
 int32_t doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
 double lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating to solve IK
 int body_id | The body id on cassie which is being manipulated | Set in ik.c using the function argument passed through by `nodeframe_ik_transform` in node.c | Used in pdik.c, defining to which body the pdik controller is applied
-double target_body[3] | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pdik_controller()` in pdik.c as the target for the PD controller
-double pd_k | The 'spring constant', which is the coefficinet for the P (positional) term for the pd controller | Set in ik.c
-double pd_b
+double target_body[3] | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pd_controller()` in pdik.c as the target for the PD controller
+double pd_k | The 'spring constant', which is the coefficinet for the P (positional) term for the pd controller | Set in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/5d9722b7fdfb91c40a43e6a97ea7320624ed869f/src/ik.c#L67:L82) | Used in `apply_pd_controller()` to scale the positional term
+double pd_b | The 'damping constant', which is the coefficinet for the D (derivative) term for the pd controller | Same as above | Used in `apply_pd_controller()` to scale the derivative term
 
 
 ### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/v0.1/src/main.h#L16:L27))
