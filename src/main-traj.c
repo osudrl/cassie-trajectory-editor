@@ -68,6 +68,17 @@ void traj_foreach_frame(traj_info_t* traj_info)
     allow_node_transformations(traj_info);
     
     timeline_update_mj_poses_from_realtime(traj_info);
+
+
+    if(traj_info->pert->select > 0)
+    {
+        printf("%.3f %.3f %.3f \n",
+            traj_info->pert->localpos[0],
+            traj_info->pert->localpos[1],
+            traj_info->pert->localpos[2]
+            );
+    }
+
     mj_forward(traj_info->m, traj_info->d);
 }
 

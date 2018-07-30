@@ -1077,6 +1077,50 @@ void simulation(void)
     */
 }
 
+void single_sphere(double rad, double height)
+{
+    mjvGeom* sphere = scn.geoms + scn.ngeom++;
+    
+
+    // printf("loopgeoms %d \n" , scn.ngeom);
+
+
+    float wheee = (mju_sin(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
+    float wheee2 = (mju_cos(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
+
+    mjtNum g_size[3] = {.03-wheee/100,.03-wheee/100,.03-wheee/100};
+    wheee /=2;
+
+    mjtNum g_pos[3] = {
+        mju_sin(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee/20)-.1,
+        mju_cos(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee2/20),
+        height + wheee/7
+    };
+
+    mju_add3(g_pos, g_pos, d->xpos + 3);
+
+
+    // printf("alpha %.3f\n", alpha);
+    float g_rgba[4] = {.2,.45,.9, 1};
+
+
+    mjv_initGeom(sphere,2,g_size,g_pos,NULL,g_rgba);
+
+    // render
+    // sphere->dataid = -1;
+    // sphere->objtype = mjOBJ_GEOM;
+    // sphere->objid = -1;
+    // sphere->texid = mjTEXTURE_CUBE;
+}
+
+void do_sphere_things()
+{
+    for(int i = 0; i < 600; i++)
+    {
+        single_sphere(3.141 * 2 * .01 * (i%100), (i-500) / 500.0);
+    }    
+}
+
 
 // render
 void render(GLFWwindow* window)
@@ -1161,6 +1205,8 @@ void render(GLFWwindow* window)
 
     // update scene
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
+
+    do_sphere_things();
 
     // render
     mjr_render(rect, &scn, &con);
