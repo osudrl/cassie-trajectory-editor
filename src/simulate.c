@@ -159,6 +159,11 @@ void reset_traj_info()
 
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
+    traj_info.jointnum = 34;
+    traj_info.displayqspheres = 0;
+    traj_info.spherestage = 0;
+    traj_info.spherediff = 0.05;
+
     showinfo = paused;
 
     for( int i=0; i<mjNRNDFLAG; i++ )
@@ -638,9 +643,9 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         showprofiler = !showprofiler;
         break;
 
-    case GLFW_KEY_ENTER:                // slow motion
-        slowmotion = !slowmotion;
-        break;
+    // case GLFW_KEY_ENTER:                // slow motion
+    //     slowmotion = !slowmotion;
+    //     break;
 
     case GLFW_KEY_SPACE:                // pause
         paused = !paused;
@@ -648,12 +653,12 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
         break;
 
-    case GLFW_KEY_PAGE_UP:              // previous keyreset
-    case GLFW_KEY_PAGE_DOWN:            // next keyreset
-        if( key==GLFW_KEY_PAGE_UP )
-            keyreset = mjMAX(-1, keyreset-1);
-        else
-            keyreset = mjMIN(m->nkey-1, keyreset+1);
+    // case GLFW_KEY_PAGE_UP:              // previous keyreset
+    // case GLFW_KEY_PAGE_DOWN:            // next keyreset
+    //     if( key==GLFW_KEY_PAGE_UP )
+    //         keyreset = mjMAX(-1, keyreset-1);
+    //     else
+    //         keyreset = mjMIN(m->nkey-1, keyreset+1);
 
         // continue with reset
 
@@ -676,21 +681,21 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         cam.type = mjCAMERA_FREE;
         break;
 
-    case '=':                           // bigger font
-        if( fontscale<200 )
-        {
-            fontscale += 50;
-            mjr_makeContext(m, &con, fontscale);
-        }
-        break;
+    // case '=':                           // bigger font
+    //     if( fontscale<200 )
+    //     {
+    //         fontscale += 50;
+    //         mjr_makeContext(m, &con, fontscale);
+    //     }
+    //     break;
 
-    case '-':                           // smaller font
-        if( fontscale>100 )
-        {
-            fontscale -= 50;
-            mjr_makeContext(m, &con, fontscale);
-        }
-        break;
+    // case '-':                           // smaller font
+    //     if( fontscale>100 )
+    //     {
+    //         fontscale -= 50;
+    //         mjr_makeContext(m, &con, fontscale);
+    //     }
+    //     break;
 
     case '[':                           // previous fixed camera or free
         if( m->ncam && cam.type==mjCAMERA_FIXED )
@@ -1080,16 +1085,26 @@ void simulation(void)
 void local_sphere(int i)
 {
     mjvGeom* sphere = NULL;
-    mjtNum g_size[3] = {.01,.01,.01};
+    mjtNum g_size[3] = {.0075,.0075,.0075};
     double rad = 0;
     float g_rgba[4] = {.2,.25,.9, 1};
 
 
-    if(pert.select > 0)
+    if(traj_info.displayqspheres)
     {
         sphere = scn.geoms + scn.ngeom++;
-        // mj_local2Global(d, g_pos, NULL, pert.localpos, d->xquat+(4*pert.select), pert.select);
-        mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
+        if(i < 19)
+            mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
+        else if (i == 19)
+        {
+            g_rgba[0] = .85;
+            g_rgba[1] = .85;
+            g_rgba[2] = 1;
+            g_size[0] = .012;
+            g_size[1] = .012;
+            g_size[2] = .012;
+            mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
+        }
     }
 }
 
@@ -1131,8 +1146,6 @@ void local_sphere(int i)
 
 void do_sphere_things()
 {
-    traj_info.jointnum = 34;
-    
     for(int i = 0; i < 20; i++)
     {
        local_sphere(i);

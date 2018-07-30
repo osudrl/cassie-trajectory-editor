@@ -49,31 +49,6 @@ v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, timeline_t* timeline, i
     return node_get_body_xpos_curr(traj_info, id);
 }
 
-void do_the_sphere_thing(traj_info_t* traj_info)
-{
-    int i;
-    double diff;
-    double init;
-
-    init = traj_info->d->qpos[traj_info->jointnum];
-    for(i = 0; i < 20; i++)
-    {
-        diff = (i - (20/2)) * .2;
-        traj_info->d->qpos[traj_info->jointnum] = init + diff;
-        mj_forward(traj_info->m, traj_info->d);
-        mj_local2Global(
-            traj_info->d,
-            traj_info->sphere_poses + (i*3),
-            NULL,
-            traj_info->pert->localpos,
-            traj_info->d->xquat+(4*traj_info->pert->select),
-            traj_info->pert->select);
-    }
-
-    traj_info->d->qpos[traj_info->jointnum] = init;
-    mj_forward(traj_info->m, traj_info->d);
-}
-
 
 void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
 {
@@ -82,7 +57,8 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
     v3_t node_qpos;
     v3_t body_xpos;
     
-    do_the_sphere_thing(traj_info);
+
+    
 
 
     for (i = 0; i < NODECOUNT; i++)

@@ -92,6 +92,8 @@ struct _traj_info_
 
     int jointnum;
     mjtNum sphere_poses[20 * 3];
+    int displayqspheres;
+    int spherestage;
 };
 typedef struct _traj_info_ traj_info_t;
 

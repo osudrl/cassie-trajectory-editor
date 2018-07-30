@@ -113,6 +113,22 @@ void control_expand_pose(traj_info_t* traj_info)
     traj_info->timeline = expanded;
 }
 
+void transform_qpos(traj_info_t* traj_info, double sign)
+{
+    timeline_t* modified;
+    int i;
+
+    modified = timeline_duplicate(traj_info->timeline);
+    for(i = 0; i < modified->numposes; i++)
+    {
+        modified->qposes[i].q[traj_info->jointnum] += .05 * sign;
+    }
+
+    modified->next = traj_info->timeline;
+    traj_info->timeline->prev = modified;
+    traj_info->timeline = modified;
+}
+
 void control_key_event(traj_info_t* traj_info, int key, int mods)
 {
     if (*(traj_info->paused))
@@ -126,6 +142,18 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         if (key == GLFW_KEY_UP)
             traj_info->time_frozen += 500000;
     }
+
+    if( key==GLFW_KEY_PAGE_UP)
+            traj_info->jointnum = (traj_info->jointnum + 1) % CASSIE_QPOS_SIZE;
+    else if( key==GLFW_KEY_PAGE_DOWN)
+            traj_info->jointnum = (traj_info->jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+    else if(key == GLFW_KEY_EQUAL)
+        traj_info->spherediff += 0.025;
+    else if(key == GLFW_KEY_MINUS)
+        traj_info->spherediff -= 0.025;
+    else if(key == GLFW_KEY_ENTER)
+        traj_info->spherestage++;
+
      if( mods & GLFW_MOD_CONTROL )
      {
         if( key==GLFW_KEY_A )
@@ -148,6 +176,7 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             key==GLFW_KEY_Z &&  (mods & GLFW_MOD_SHIFT)  ))
             redo_pert(traj_info);
     }
+
 }
 
 
