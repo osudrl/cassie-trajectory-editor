@@ -528,7 +528,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     m->opt.disableflags |= 0xddc;
 
     m->opt.disableflags &= ~(mjDSBL_LIMIT); // comment if segfaults
-    // m->opt.disableflags &= ~(mjDSBL_CONTANCT); //  comment if segfaults
+    m->opt.disableflags &= ~(mjDSBL_CONTACT); //  comment if segfaults
 
 
     mj_forward(m, d);

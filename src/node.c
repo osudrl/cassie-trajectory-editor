@@ -4,7 +4,7 @@
 node_body_id_t node_get_body_id_from_node_index(int index)
 {
     node_body_id_t id;
-    id.id = index + 27;
+    id.id = index + 26;
 
     return id;
 }
@@ -26,15 +26,15 @@ cassie_body_id_t node_get_cassie_id_from_index(int i)
 
 v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
 {
-    if(id.id < 27)
+    if(id.id < 26)
         return 0;
     else
-        return traj_info->d->mocap_pos + ((id.id - 27) * 3);
+        return traj_info->d->mocap_pos + ((id.id - 26) * 3);
 }
 
 v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
 {
-    return traj_info->d->mocap_pos + ((id.id-27) * 3);
+    return traj_info->d->mocap_pos + ((id.id-26) * 3);
 }
 
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
@@ -124,7 +124,7 @@ void scale_target_using_frame_offset(
 
 int get_frame_from_node_body_id(traj_info_t* traj_info, timeline_t* timeline, node_body_id_t node_id)
 {
-    return (traj_info->timeline->numposes / NODECOUNT) * (node_id.id - 27); // or maybe 28
+    return (traj_info->timeline->numposes / NODECOUNT) * (node_id.id - 26); // or maybe 28
 }
 
 void calculate_node_dropped_transformation_vector(
