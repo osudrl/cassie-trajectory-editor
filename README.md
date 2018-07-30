@@ -122,7 +122,7 @@ Sub-Heading | Information
 Memory Location | Where in memory does this data actually live? Stackframe, globals, heap, etc.
 Setup | How and where is structure is initially set up
 Usages | Relevant times the structure is used in functions
-Fields | List of contained fields, ordered from most to least relevant (may not be perfectly accurate in future revisions)
+Fields | List of contained fields, ordered from most to least relevant
 
 ### traj_info_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main.h#L53:L69))
 
@@ -149,7 +149,9 @@ Type / Name | Description | Initial State | Used In
 bool* paused | A reference to the paused variable in simulate.c's globals | Same as above | Used in [main_traj.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main-traj.c#L49:L63) to calculate the runtime of the visualization
 [mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies (not anymore) with Ctrl+RightMouse  / nodes | Initialized in `reset_traj_info()`. Always points to the same structure allocated in globals | By `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
 double nodesigma | The relative standard deviation of the gaussian filter used to smooth translations | Same as above | Used in the node.c module to apply smoothed translations and determine the "cutoff" for the gaussian filter
-[timeline_t](https://github.com/osudrl/cassie-trajectory-editor#timeline_t-definition) timeline | A struct listing each discrete pose throughout the step duration | Initialized in [timeline.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/timeline.c#L15:L26) but will **eventually be dynamically allocated** | Most of the timeline.c functions use this field for setting / overwriting poses
+[timeline_t\*](https://github.com/osudrl/cassie-trajectory-editor#timeline_t-definition) timeline | A struct listing each discrete pose throughout the step duration | Initialized in timeline.c | Most of the timeline.c functions use this field for setting / overwriting poses
+pdikdata_t ik | A struct containing the parameters for solving IK using the [MuJoCo control function callback](http://www.mujoco.org/book/reference.html#mjcb_control) | In [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128:L133) | Used to control the pdik solver in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.c#L21:L40)
+
 
 ### pdikdata_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.h#L11:L24))
 
@@ -157,15 +159,33 @@ double nodesigma | The relative standard deviation of the gaussian filter used t
 #### Memory Location
 
 
+Stored within the traj_info struct.
+
 
 #### Setup
 
+
+Set up mostly in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128:L133) and a bit in [simulate.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/simulate.c#L146:L147)
 
 
 #### Usages
 
 
+Used in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.c#L21:L40) to perform PD-based IK through the [MuJoCo control function callback](http://www.mujoco.org/book/reference.html#mjcb_control).
+
+
 #### Fields
+
+
+Type / Name | Description | Initial State | Used In
+--- | --- | --- | ---
+int32_t max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the `nodeframe_ik_transform()` function in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
+int32_t doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
+double lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating to solve IK
+int body_id | The body id on cassie which is being manipulated | Set in ik.c using the function argument passed through by `nodeframe_ik_transform` in node.c | Used in pdik.c, defining to which body the pdik controller is applied
+double target_body[3] | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pdik_controller()` in pdik.c as the target for the PD controller
+double pd_k | The 'spring constant', which is the coefficinet for the P (positional) term for the pd controller | Set in ik.c
+double pd_b
 
 
 ### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/v0.1/src/main.h#L16:L27))

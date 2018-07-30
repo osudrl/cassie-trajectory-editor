@@ -64,21 +64,21 @@ void ik_zero_velocities(traj_info_t* traj_info)
 double ik_positive_keyed_qposes[CASSIE_QPOS_SIZE];
 double ik_negative_keyed_qposes[CASSIE_QPOS_SIZE];
 
-void ik_basic_setup(traj_info_t* traj_info)
+void ik_basic_setup(traj_info_t* traj_info, ik_solver_params_t* params)
 { 
-    traj_info->ik.pd_k = 480;
-    traj_info->ik.pd_b = 30;   
+    traj_info->ik.pd_k = params->pd_k_regular;
+    traj_info->ik.pd_b = params->pd_b_regular;   
 }
 
-void ik_lastsoln_setup(traj_info_t* traj_info, int frameoffset, double scale, int body_id)
+void ik_lastsoln_setup(traj_info_t* traj_info, ik_solver_params_t* params, int frameoffset, double scale, int body_id)
 {
     if (frameoffset > 0)
         ik_set_selected_leg(traj_info, ik_positive_keyed_qposes, scale, body_id);
     if (frameoffset < 0)
         ik_set_selected_leg(traj_info, ik_negative_keyed_qposes, scale, body_id);
 
-    traj_info->ik.pd_k = 5000;
-    traj_info->ik.pd_b = 10;
+    traj_info->ik.pd_k = params->pd_k_lastsoln;
+    traj_info->ik.pd_b = params->pd_b_lastsoln;
 }
 
 FILE* ikoutfile = NULL;
@@ -138,9 +138,9 @@ int ik_iterative_better_body_optimizer(
         (params->seedoption == IK_MOSTLY_SEED_LASTSOLN &&
             ((int) mju_round(mju_abs(frameoffset))) % params->frame_mostly_seed_frequency == 0) ||
         frameoffset == 0)
-        ik_basic_setup(traj_info);
+        ik_basic_setup(traj_info,params);
     else
-        ik_lastsoln_setup(traj_info, frameoffset, params->lastsoln_merge_scale, body_id_end);
+        ik_lastsoln_setup(traj_info, params, frameoffset, params->lastsoln_merge_scale, body_id_end);
 
     ik_set_pelvis_springs(traj_info);
     ik_zero_velocities(traj_info);

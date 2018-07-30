@@ -16,7 +16,7 @@ mjpro150/include/mjmodel.h \
 mjpro150/include/mjrender.h \
 mjpro150/include/mjvisualize.h \
 mjpro150/include/mjxmacro.h \
-mjpro150/include/mujoco.h \
+mjpro150/include/mujoco.h 
 
 CASSIE = \
 model/cassie-stl-meshes/achilles-rod.stl \
