@@ -89,6 +89,9 @@ struct _traj_info_
     enum pert_type_e pert_type;
 
     int target_list_size;
+
+    int jointnum;
+    mjtNum sphere_poses[20 * 3];
 };
 typedef struct _traj_info_ traj_info_t;
 

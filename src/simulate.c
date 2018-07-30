@@ -1077,7 +1077,23 @@ void simulation(void)
     */
 }
 
-void single_sphere(double rad, double height)
+void local_sphere(int i)
+{
+    mjvGeom* sphere = NULL;
+    mjtNum g_size[3] = {.01,.01,.01};
+    double rad = 0;
+    float g_rgba[4] = {.2,.25,.9, 1};
+
+
+    if(pert.select > 0)
+    {
+        sphere = scn.geoms + scn.ngeom++;
+        // mj_local2Global(d, g_pos, NULL, pert.localpos, d->xquat+(4*pert.select), pert.select);
+        mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
+    }
+}
+
+/*void single_sphere(double rad, double height)
 {
     mjvGeom* sphere = scn.geoms + scn.ngeom++;
     
@@ -1111,13 +1127,15 @@ void single_sphere(double rad, double height)
     // sphere->objtype = mjOBJ_GEOM;
     // sphere->objid = -1;
     // sphere->texid = mjTEXTURE_CUBE;
-}
+}*/
 
 void do_sphere_things()
 {
-    for(int i = 0; i < 600; i++)
+    traj_info.jointnum = 34;
+    
+    for(int i = 0; i < 20; i++)
     {
-        single_sphere(3.141 * 2 * .01 * (i%100), (i-500) / 500.0);
+       local_sphere(i);
     }    
 }
 
