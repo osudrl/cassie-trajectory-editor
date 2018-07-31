@@ -27,7 +27,7 @@ void load_pert(traj_info_t* traj_info)
         result = fgets(buf,2048,pfile);
         if(!result)
             return;
-        traj_info->nodesigma = strtod(buf, NULL);
+        traj_info->selection.nodesigma = strtod(buf, NULL);
 
         result = fgets(buf,2048,pfile);
         if(!result)
@@ -52,7 +52,7 @@ void load_pert(traj_info_t* traj_info)
             rootframe
             );
 
-        traj_info->id_last_non_node_select = body_id;
+        traj_info->selection.id_last_non_node_select = body_id;
     }
 }
 
@@ -83,8 +83,8 @@ void undo_pert(traj_info_t* traj_info)
 
     traj_info->timeline = traj_info->timeline->next;
 
-    if(traj_info->id_last_non_node_select > 0 && traj_info->id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->id_last_non_node_select));
+    if(traj_info->selection.id_last_non_node_select > 0 && traj_info->selection.id_last_non_node_select <= 25)
+        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select));
 }
 
 void redo_pert(traj_info_t* traj_info)
@@ -94,8 +94,8 @@ void redo_pert(traj_info_t* traj_info)
 
     traj_info->timeline = traj_info->timeline->prev;
 
-    if(traj_info->id_last_non_node_select > 0 && traj_info->id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->id_last_non_node_select));
+    if(traj_info->selection.id_last_non_node_select > 0 && traj_info->selection.id_last_non_node_select <= 25)
+        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select));
 }
 
 void control_expand_pose(traj_info_t* traj_info)
@@ -113,21 +113,21 @@ void control_expand_pose(traj_info_t* traj_info)
     traj_info->timeline = expanded;
 }
 
-void transform_qpos(traj_info_t* traj_info, double sign)
-{
-    timeline_t* modified;
-    int i;
+// void transform_qpos(traj_info_t* traj_info, double sign)
+// {
+//     timeline_t* modified;
+//     int i;
 
-    modified = timeline_duplicate(traj_info->timeline);
-    for(i = 0; i < modified->numposes; i++)
-    {
-        modified->qposes[i].q[traj_info->jointnum] += .05 * sign;
-    }
+//     modified = timeline_duplicate(traj_info->timeline);
+//     for(i = 0; i < modified->numposes; i++)
+//     {
+//         modified->qposes[i].q[traj_info->jointnum] += .05 * sign;
+//     }
 
-    modified->next = traj_info->timeline;
-    traj_info->timeline->prev = modified;
-    traj_info->timeline = modified;
-}
+//     modified->next = traj_info->timeline;
+//     traj_info->timeline->prev = modified;
+//     traj_info->timeline = modified;
+// }
 
 void control_key_event(traj_info_t* traj_info, int key, int mods)
 {
@@ -143,27 +143,16 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->time_frozen += 500000;
     }
 
-    if( key==GLFW_KEY_PAGE_UP)
-            traj_info->jointnum = (traj_info->jointnum + 1) % CASSIE_QPOS_SIZE;
-    else if( key==GLFW_KEY_PAGE_DOWN)
-            traj_info->jointnum = (traj_info->jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
-    else if(key == GLFW_KEY_EQUAL)
-        traj_info->spherediff += 0.025;
-    else if(key == GLFW_KEY_MINUS)
-        traj_info->spherediff -= 0.025;
-    else if(key == GLFW_KEY_ENTER)
-        traj_info->spherestage++;
-
      if( mods & GLFW_MOD_CONTROL )
      {
         if( key==GLFW_KEY_A )
-            traj_info->nodesigma *= .95;
+            traj_info->selection.nodesigma *= .95;
         else if( key==GLFW_KEY_D)
-            traj_info->nodesigma *= 1.05;
+            traj_info->selection.nodesigma *= 1.05;
         else if( key==GLFW_KEY_S )
-            traj_info->nodeheight *= .95;
+            traj_info->selection.nodeheight *= .95;
         else if( key==GLFW_KEY_W)
-            traj_info->nodeheight *= 1.05;
+            traj_info->selection.nodeheight *= 1.05;
         else if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)

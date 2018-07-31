@@ -114,16 +114,16 @@ void scale_target_using_frame_offset(
     double filter;
     v3_t body_init_xpos;
 
-    filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma, traj_info->nodeheight);
+    filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->selection.nodesigma, traj_info->selection.nodeheight);
 
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe + frame_offset, body_id);
     
-    if (traj_info->pert_type == PERT_TARGET)
+    if (traj_info->selection.pert_type == PERT_TARGET)
     {
         mju_sub3(dragvect, grabbed_node_transformation, body_init_xpos);
         mju_addScl3(ik_body_target_xpos, body_init_xpos, dragvect, filter);
     }
-    else if (traj_info->pert_type == PERT_TRANSLATION)
+    else if (traj_info->selection.pert_type == PERT_TRANSLATION)
     {
         mju_addScl3(ik_body_target_xpos, body_init_xpos, grabbed_node_transformation, filter);
     }
@@ -149,11 +149,11 @@ void calculate_node_dropped_transformation_vector(
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
     node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
 
-    if (traj_info->pert_type == PERT_TARGET)
+    if (traj_info->selection.pert_type == PERT_TARGET)
     {
         mju_copy3(grabbed_node_transformation, node_final_xpos);
     }
-    else if (traj_info->pert_type == PERT_TRANSLATION)
+    else if (traj_info->selection.pert_type == PERT_TRANSLATION)
     {
         mju_sub3(grabbed_node_transformation, node_final_xpos, body_init_xpos);
     }
@@ -271,7 +271,7 @@ void node_perform_pert(
         &ik_iter_total);
 
     //this is toomuch
-    iterations = 3.491 * traj_info->nodesigma;
+    iterations = 3.491 * traj_info->selection.nodesigma;
 
     if(traj_info->target_list)
     {
@@ -292,12 +292,12 @@ void node_perform_pert(
 
     for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
-        if( ((int) (.2 * percent(frame_offset, iterations, traj_info->nodesigma))) > outcount)
+        if( ((int) (.2 * percent(frame_offset, iterations, traj_info->selection.nodesigma))) > outcount)
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
             printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per pose ...\n", 
-                percent(frame_offset, iterations, traj_info->nodesigma),
+                percent(frame_offset, iterations, traj_info->selection.nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
@@ -399,7 +399,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
          body_id.id,
          rootframe,
-         traj_info->nodesigma,
+         traj_info->selection.nodesigma,
          grabbed_node_transformation[0],
          grabbed_node_transformation[1],
          grabbed_node_transformation[2]

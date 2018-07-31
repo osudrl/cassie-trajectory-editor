@@ -148,8 +148,9 @@ void reset_traj_info()
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
-    traj_info.nodesigma = 100;
-    traj_info.nodeheight = 1;
+    traj_info.selection.nodesigma = 100;
+    traj_info.selection.nodeheight = 1;
+    traj_info.selection.node_type = NODES_POSITIONAL;
     // ik_default_fill_solver_params(&(traj_info.params));
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
@@ -159,10 +160,6 @@ void reset_traj_info()
 
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
-    traj_info.jointnum = 34;
-    traj_info.displayqspheres = 0;
-    traj_info.spherestage = 0;
-    traj_info.spherediff = 0.05;
 
     showinfo = paused;
 
@@ -812,15 +809,15 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
         if( button_right )
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.pert_type = PERT_TRANSLATION;
-            traj_info.nodeheight = 1;
+            traj_info.selection.pert_type = PERT_TRANSLATION;
+            traj_info.selection.nodeheight = 1;
 
         }
         else if (button_left)
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.pert_type = PERT_TARGET;
-            traj_info.nodeheight = 1;
+            traj_info.selection.pert_type = PERT_TARGET;
+            traj_info.selection.nodeheight = 1;
         }
         // else if( button_left )
         //     newperturb = mjPERT_ROTATE;
@@ -979,9 +976,9 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
         double mult = yoffset/25.0;
         mult += 1;
         if(!mod_shift)
-            traj_info.nodesigma *= mult;
+            traj_info.selection.nodesigma *= mult;
         else
-            traj_info.nodeheight *= mult;
+            traj_info.selection.nodeheight *= mult;
 
 
     }
@@ -1082,77 +1079,6 @@ void simulation(void)
     */
 }
 
-void local_sphere(int i)
-{
-    mjvGeom* sphere = NULL;
-    mjtNum g_size[3] = {.0075,.0075,.0075};
-    double rad = 0;
-    float g_rgba[4] = {.2,.25,.9, 1};
-
-
-    if(traj_info.displayqspheres)
-    {
-        sphere = scn.geoms + scn.ngeom++;
-        if(i < 19)
-            mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
-        else if (i == 19)
-        {
-            g_rgba[0] = .85;
-            g_rgba[1] = .85;
-            g_rgba[2] = 1;
-            g_size[0] = .012;
-            g_size[1] = .012;
-            g_size[2] = .012;
-            mjv_initGeom(sphere,2,g_size,traj_info.sphere_poses + (i*3),NULL,g_rgba);
-        }
-    }
-}
-
-/*void single_sphere(double rad, double height)
-{
-    mjvGeom* sphere = scn.geoms + scn.ngeom++;
-    
-
-    // printf("loopgeoms %d \n" , scn.ngeom);
-
-
-    float wheee = (mju_sin(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
-    float wheee2 = (mju_cos(rad + traj_time_in_micros() / 10000000.0)/2) + .5;
-
-    mjtNum g_size[3] = {.03-wheee/100,.03-wheee/100,.03-wheee/100};
-    wheee /=2;
-
-    mjtNum g_pos[3] = {
-        mju_sin(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee/20)-.1,
-        mju_cos(rad + traj_time_in_micros()/ 200000.0)/(2.25 - wheee2/20),
-        height + wheee/7
-    };
-
-    mju_add3(g_pos, g_pos, d->xpos + 3);
-
-
-    // printf("alpha %.3f\n", alpha);
-    float g_rgba[4] = {.2,.45,.9, 1};
-
-
-    mjv_initGeom(sphere,2,g_size,g_pos,NULL,g_rgba);
-
-    // render
-    // sphere->dataid = -1;
-    // sphere->objtype = mjOBJ_GEOM;
-    // sphere->objid = -1;
-    // sphere->texid = mjTEXTURE_CUBE;
-}*/
-
-void do_sphere_things()
-{
-    for(int i = 0; i < 20; i++)
-    {
-       local_sphere(i);
-    }    
-}
-
-
 // render
 void render(GLFWwindow* window)
 {
@@ -1236,8 +1162,6 @@ void render(GLFWwindow* window)
 
     // update scene
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
-
-    do_sphere_things();
 
     // render
     mjr_render(rect, &scn, &con);
