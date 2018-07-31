@@ -396,7 +396,6 @@ void node_position_scale_visually(
     int i;
     v3_t node_qpos;
     v3_t body_xpos;
-
    
 
     calculate_node_dropped_transformation_vector(
@@ -437,9 +436,11 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
     v3_t node_qpos;
     v3_t body_xpos;
     double init;
+    double diff;
     double qpos_cache[CASSIE_QPOS_SIZE];
 
     mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+    init = traj_info->d->qpos[traj_info->selection.jointnum];
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -455,6 +456,21 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
             frame = (traj_info->timeline->numposes / NODECOUNT) * i;
             node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
             timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
+            mj_forward(traj_info->m, traj_info->d);
+            mj_local2Global(
+                traj_info->d,
+                node_qpos,
+                NULL,
+                traj_info->pert->localpos,
+                traj_info->d->xquat + (4*body_id.id),
+                body_id.id
+                );
+        }
+        else if (traj_info->selection.node_type == NODES_JOINTID)
+        {
+            node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
+            diff = (i - NODECOUNT/2) * 1.0/(NODECOUNT/2);
+            traj_info->d->qpos[traj_info->selection.jointnum] = init + diff;
             mj_forward(traj_info->m, traj_info->d);
             mj_local2Global(
                 traj_info->d,

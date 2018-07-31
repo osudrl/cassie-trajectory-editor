@@ -183,34 +183,33 @@ rgb hsv2rgb(hsv in)
 
 void nodes_recolor(traj_info_t* traj_info)
 {
-    int inx;
-    int64_t micros;
-    hsv h;
-    rgb r;
+    int i;
 
-    micros = traj_calculate_runtime_micros(traj_info);
+    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type == NODES_POSITIONAL; i++)
+    {
+        traj_info->m->geom_rgba[i*4 + 0] = .2;
+        traj_info->m->geom_rgba[i*4 + 1] = .6;
+        traj_info->m->geom_rgba[i*4 + 2] = .2;
+        traj_info->m->geom_size[i*3 + 0] = .015;
+        traj_info->m->geom_size[i*3 + 1] = .015;
+        traj_info->m->geom_size[i*3 + 2] = .015;
+    }
 
-    inx = micros/40000;
-    h.h = micros/5000 % 360;
-    h.s = 1;
-    h.v = 1;
-
-    r = hsv2rgb(h);
-
-    inx %= traj_info->m->ngeom - 35;
-    inx += 35;
-    traj_info->m->geom_rgba[inx*4 + 0] = r.r;
-    traj_info->m->geom_rgba[inx*4 + 1] = r.g;
-    traj_info->m->geom_rgba[inx*4 + 2] = r.b;
-
-    printf("indx %d \n", inx);
+    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type != NODES_POSITIONAL; i++)
+    {
+        traj_info->m->geom_rgba[i*4 + 0] = .1;
+        traj_info->m->geom_rgba[i*4 + 1] = .1;
+        traj_info->m->geom_rgba[i*4 + 2] = .8;
+        traj_info->m->geom_size[i*3 + 0] = .010;
+        traj_info->m->geom_size[i*3 + 1] = .010;
+        traj_info->m->geom_size[i*3 + 2] = .010;
+    }
 }
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
     nodes_recolor(traj_info);
-
-
+    
     allow_node_transformations(traj_info);
     
     timeline_update_mj_poses_from_realtime(traj_info);

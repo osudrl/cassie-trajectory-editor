@@ -143,8 +143,6 @@ void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
     mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);
 }
 
-
-
 void panic()
 {
     fprintf(stderr, "PANIC!\n");
