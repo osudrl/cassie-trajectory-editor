@@ -50,31 +50,6 @@ v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, timeline_t* timeline, i
 }
 
 
-void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
-{
-    int i;
-    int frame;
-    v3_t node_qpos;
-    v3_t body_xpos;
-    
-
-    
-
-
-    for (i = 0; i < NODECOUNT; i++)
-    {
-        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
-        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
-        body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, frame, body_id);
-        mju_copy3(node_qpos, body_xpos);
-    }
-
-
-
-    //if issues uncomment
-    // mj_forward(traj_info->m, traj_info->d);
-}
-
 double gaussian_distrobution(double r, double s)
 {
     s *= 2;
@@ -279,13 +254,12 @@ void node_perform_pert(
         traj_info->target_list = NULL;
     }
 
-    if(!traj_info->target_list)
-    {
-        traj_info->target_list_size = (iterations*2 + 1);
-        traj_info->target_list = malloc(sizeof(target_t) * traj_info->target_list_size);
-        traj_info->target_list[target_list_index].frame_offset = 0;
-        mju_copy3(traj_info->target_list[target_list_index++].target, ik_body_target_xpos);
-    }
+    
+    traj_info->target_list_size = (iterations*2 + 1);
+    traj_info->target_list = malloc(sizeof(target_t) * traj_info->target_list_size);
+    traj_info->target_list[target_list_index].frame_offset = 0;
+    mju_copy3(traj_info->target_list[target_list_index++].target, ik_body_target_xpos);
+    
 
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(grabbed_node_transformation, 3)) * traj_info->nodesigma);
@@ -452,16 +426,57 @@ void node_position_scale_visually(
             rootframe,
             frame_offset,
             body_id);
-
-        // filter = node_calculate_filter_from_frame_offset(frame_offset, traj_info->nodesigma);
-        // body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, currframe, body_id);
-        // mju_addScl3(node_qpos, body_xpos, grabbed_node_transformation, filter);
     }
 
 }
 
+void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
+{
+    int i;
+    int frame;
+    v3_t node_qpos;
+    v3_t body_xpos;
+    double init;
+    double qpos_cache[CASSIE_QPOS_SIZE];
+
+    mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+
+    for (i = 0; i < NODECOUNT; i++)
+    {
+        if (traj_info->selection.node_type == NODES_POSITIONAL)
+        {
+            frame = (traj_info->timeline->numposes / NODECOUNT) * i;
+            node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
+            body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, frame, body_id);
+            mju_copy3(node_qpos, body_xpos);
+        }
+        else if (traj_info->selection.node_type == NODES_JOINTMOVE)
+        {
+            frame = (traj_info->timeline->numposes / NODECOUNT) * i;
+            node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
+            timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
+            mj_forward(traj_info->m, traj_info->d);
+            mj_local2Global(
+                traj_info->d,
+                node_qpos,
+                NULL,
+                traj_info->pert->localpos,
+                traj_info->d->xquat + (4*body_id.id),
+                body_id.id
+                );
+        }
+    }
+
+    mju_copy(traj_info->d->qpos, qpos_cache, CASSIE_QPOS_SIZE);
+    mj_forward(traj_info->m, traj_info->d);
+}
+
 double node_calculate_filter_from_frame_offset(double frame_offset, double sigma, double nodeheight)
 {
-    return mju_min(mju_max(nodeheight,1) * gaussian_distrobution(frame_offset/sigma, 1) *(1/0.318310),1);
+    return mju_min(
+        mju_max(nodeheight,1) * 
+        gaussian_distrobution(frame_offset/sigma, 1)
+        *(1/0.318310)
+        ,1);
 }
 

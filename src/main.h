@@ -62,7 +62,7 @@ enum node_type_e
 {
     NODES_POSITIONAL,
     NODES_JOINTID,
-    NODES_JOINTTRANSFORM
+    NODES_JOINTMOVE
 };
 
 enum pert_type_e
@@ -81,6 +81,7 @@ struct _selection_t_
     enum pert_type_e pert_type;
     double nodesigma;
     double nodeheight;
+    double jointdiff;
     int jointnum;
 };
 typedef struct _selection_t_ selection_t;
