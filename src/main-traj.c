@@ -2,9 +2,12 @@
 
 void allow_node_transformations(traj_info_t* traj_info)
 {
-    if (traj_info->pert->select != traj_info->selection.id_last_body_select &&  //made a new selection
-            traj_info->pert->select > 0 && //body is on cassie not a node
-            traj_info->pert->select <= 25)
+    if (traj_info->pert->select > 0 && 
+        traj_info->pert->select <= 25 &&
+        (
+            traj_info->pert->select != traj_info->selection.id_last_body_select ||
+            traj_info->selection.node_type != NODE_POSITIONAL
+        ))
     {
         node_position_initial_using_cassie_body(traj_info, 
         	node_get_cassie_id_from_index(traj_info->pert->select));
@@ -29,7 +32,9 @@ void allow_node_transformations(traj_info_t* traj_info)
             
         }
     }
-    else if (traj_info->selection.id_last_pert_activenum == 1 && traj_info->selection.id_last_body_select > 25)
+    else if (traj_info->selection.id_last_pert_activenum == 1 && 
+        traj_info->selection.id_last_body_select > 25 &&
+        traj_info->selection.node_type == NODE_POSITIONAL)
     {
         node_dropped(traj_info, 
             node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select), 
