@@ -36,10 +36,13 @@ The tool *will allow* the user to either [initialize](https://github.com/osudrl/
 https://medium.com/unity3danimation/overview-of-inverse-kinematics-9769a43ba956
 
 
+
 [Imgur](https://i.imgur.com/2nrSmNf.png)
 
 ### Preferred Solution
 
+
+http://robotic-controls.com/learn/programming/pd-feedback-control-introduction
 
 
 #### Tuning
