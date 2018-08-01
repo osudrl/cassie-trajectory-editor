@@ -444,14 +444,14 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        if (traj_info->selection.node_type == NODES_POSITIONAL)
+        if (traj_info->selection.node_type == NODE_POSITIONAL)
         {
             frame = (traj_info->timeline->numposes / NODECOUNT) * i;
             node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
             body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, frame, body_id);
             mju_copy3(node_qpos, body_xpos);
         }
-        else if (traj_info->selection.node_type == NODES_JOINTMOVE)
+        else if (traj_info->selection.node_type == NODE_JOINTMOVE)
         {
             frame = (traj_info->timeline->numposes / NODECOUNT) * i;
             node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
@@ -466,7 +466,7 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
                 body_id.id
                 );
         }
-        else if (traj_info->selection.node_type == NODES_JOINTID)
+        else if (traj_info->selection.node_type == NODE_JOINTID)
         {
             node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
             diff = (i - NODECOUNT/2) * 1.0/(NODECOUNT/2);

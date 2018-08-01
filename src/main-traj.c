@@ -66,7 +66,7 @@ void nodes_recolor(traj_info_t* traj_info)
 {
     int i;
 
-    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type == NODES_POSITIONAL; i++)
+    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type == NODE_POSITIONAL; i++)
     {
         traj_info->m->geom_rgba[i*4 + 0] = .2;
         traj_info->m->geom_rgba[i*4 + 1] = .6;
@@ -76,7 +76,7 @@ void nodes_recolor(traj_info_t* traj_info)
         traj_info->m->geom_size[i*3 + 2] = .015;
     }
 
-    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type != NODES_POSITIONAL; i++)
+    for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type != NODE_POSITIONAL; i++)
     {
         traj_info->m->geom_rgba[i*4 + 0] = .1;
         traj_info->m->geom_rgba[i*4 + 1] = .1;

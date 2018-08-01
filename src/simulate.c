@@ -150,7 +150,7 @@ void reset_traj_info()
     traj_info.filename_step_data = FILENAME_STEP_DATA;
     traj_info.selection.nodesigma = 100;
     traj_info.selection.nodeheight = 1;
-    traj_info.selection.node_type = NODES_JOINTID;
+    traj_info.selection.node_type = NODE_POSITIONAL;
     traj_info.selection.jointnum =  34;
     
     // ik_default_fill_solver_params(&(traj_info.params));

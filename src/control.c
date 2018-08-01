@@ -143,6 +143,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->time_frozen += 500000;
     }
 
+    if( key==GLFW_KEY_PAGE_UP)
+            traj_info->selection.jointnum = (traj_info->selection.jointnum + 1) % CASSIE_QPOS_SIZE;
+    else if( key==GLFW_KEY_PAGE_DOWN)
+            traj_info->selection.jointnum = (traj_info->selection.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+    else if(key == GLFW_KEY_ENTER)
+        traj_info->selection.node_type = (traj_info->selection.node_type + 1) % NODE_TYPE_E_COUNT;
+
      if( mods & GLFW_MOD_CONTROL )
      {
         if( key==GLFW_KEY_A )
