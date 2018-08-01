@@ -6,7 +6,8 @@
 The Cassie Trajectory Editor aids in designing and exporting reference walking trajectories, specifically for the [Cassie robot](http://www.agilityrobotics.com/robots/). The exported trajectory serves as a reference in the [reinforcement learning process](https://arxiv.org/abs/1803.05580) such that the trajectory designed in this tool may be learned on a [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) and the physical robot.
 
 
-The tool *will allow* the user to either [initialize](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) the timeline with a single pose or a full trajectory. During the editing process, the tool helpes the developer visualize changes to the initial timeline. Once the
+The tool *will allow* the user to either [initialize](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) the timeline with a single pose or a full trajectory. During the editing process, the tool helpes the developer visualize changes to the initial timeline. After designing the walking gait, the user exports the finished trajectory to be used in the learning process.
+
 
 
 # Methods and Results
@@ -14,6 +15,8 @@ The tool *will allow* the user to either [initialize](https://github.com/osudrl/
 
 
 ## User Experience
+
+
 
 
 

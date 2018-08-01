@@ -221,3 +221,9 @@ int32_t doik | Controls the number of steps of IK that the solver will do. | Ini
 #### Fields
 
 
+# Contact
+
+
+This tool and documentation page was written by [Kevin Kellar](https://github.com/kkevlar) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University. For issues, comments, or suggestions about the tool or its documentation, feel free to [contact me](https://github.com/kkevlar) or [open a GitHub issue](https://github.com/osudrl/cassie-trajectory-editor/issues).
+
+
