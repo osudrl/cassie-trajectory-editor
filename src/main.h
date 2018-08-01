@@ -60,15 +60,16 @@ typedef struct _target_t_ target_t;
 
 enum node_type_e
 {
-    NODES_POSITIONAL,
-    NODES_JOINTID,
-    NODES_JOINTMOVE
+    NODES_POSITIONAL = 0,
+    NODES_JOINTID = 1,
+    NODES_JOINTMOVE = 2
 };
 
 enum pert_type_e
 {
-    PERT_TRANSLATION,
-    PERT_TARGET
+    PERT_TRANSLATION = 0,
+    PERT_ONESIDE_TRANS = 1,
+    PERT_TARGET =2
 };
 
 struct _selection_t_
