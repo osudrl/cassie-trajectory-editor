@@ -9,14 +9,14 @@ The Cassie Trajectory Editor aids in designing and exporting reference walking t
 The tool *will allow* the user to either [initialize](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) the timeline with a single pose or a full trajectory. During the editing process, the tool helpes the developer visualize changes to the initial timeline. After designing the walking gait, the user exports the finished trajectory to be used in the learning process.
 
 
+![fastwalk](https://i.imgur.com/rlcpkPP.gif)
+
 
 # Methods and Results
 
 
 
 ## User Experience
-
-
 
 
 
@@ -37,6 +37,8 @@ The tool *will allow* the user to either [initialize](https://github.com/osudrl/
 
 https://medium.com/unity3danimation/overview-of-inverse-kinematics-9769a43ba956
 
+
+[Imgur](https://i.imgur.com/2nrSmNf.png)
 
 ### Preferred Solution
 
