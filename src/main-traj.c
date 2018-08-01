@@ -12,7 +12,8 @@ void allow_node_transformations(traj_info_t* traj_info)
         traj_info->selection.id_last_body_select = traj_info->pert->select;    
     }
 
-    if(traj_info->pert->active) 
+    if( traj_info->pert->active &&
+        traj_info->selection.node_type == NODE_POSITIONAL) 
     {
         traj_info->selection.id_last_body_select = traj_info->pert->select;
         traj_info->selection.id_last_pert_activenum = traj_info->pert->active;

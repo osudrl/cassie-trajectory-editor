@@ -148,7 +148,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
     else if( key==GLFW_KEY_PAGE_DOWN)
             traj_info->selection.jointnum = (traj_info->selection.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
     else if(key == GLFW_KEY_ENTER)
+    {
         traj_info->selection.node_type = (traj_info->selection.node_type + 1) % NODE_TYPE_E_COUNT;
+        node_position_initial_using_cassie_body(traj_info,
+            node_get_cassie_id_from_index(
+                traj_info->selection.id_last_non_node_select)
+        );
+    }
 
      if( mods & GLFW_MOD_CONTROL )
      {
