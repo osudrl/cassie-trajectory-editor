@@ -69,7 +69,7 @@ enum pert_type_e
 {
     PERT_TRANSLATION = 0,
     PERT_ONESIDE_TRANS = 1,
-    PERT_TARGET =2
+    PERT_TARGET = 2
 };
 
 struct _selection_t_
