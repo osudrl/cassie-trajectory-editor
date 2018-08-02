@@ -32,11 +32,6 @@ v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
         return traj_info->d->mocap_pos + ((id.id - 26) * 3);
 }
 
-v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
-{
-    return traj_info->d->mocap_pos + ((id.id-26) * 3);
-}
-
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
 {
     return traj_info->d->xpos + (id.id * 3);
@@ -183,7 +178,7 @@ void node_calculate_rootframe_transformation_vector(
 
     rootframe = get_frame_from_node_body_id(traj_info, timeline, node_id);
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
-    node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
+    node_final_xpos = node_get_qpos_by_node_id(traj_info, node_id);
 
     mju_sub3(rootframe_transform_vector, node_final_xpos, body_init_xpos);
 }

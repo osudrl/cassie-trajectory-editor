@@ -25,7 +25,6 @@ node_body_id_t node_get_body_id_from_node_index(int index);
 node_body_id_t node_get_body_id_from_real_body_id(int real);
 cassie_body_id_t node_get_cassie_id_from_index(int i);
 v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id);
-v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id);
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id);
 v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info, timeline_t* timeline, int frame, cassie_body_id_t id);
 void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id);
