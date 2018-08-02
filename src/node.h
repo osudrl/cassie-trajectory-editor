@@ -8,13 +8,13 @@
 
 struct _cassie_body_id_t_
 {
-    uint8_t id;
+    uint16_t id;
 };
 typedef struct _cassie_body_id_t_ cassie_body_id_t;
 
 struct _node_body_id_t_
 {
-    uint8_t id;
+    uint16_t id;
 };
 typedef struct _node_body_id_t_ node_body_id_t;
 
