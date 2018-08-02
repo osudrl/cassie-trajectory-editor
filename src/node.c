@@ -56,7 +56,7 @@ double gaussian_distrobution(double r, double s)
     return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
 }
 
-void nodeframe_ik_transform(
+void node_perform_ik_on_xpos_transformation(
     traj_info_t* traj_info, 
     timeline_t* overwrite,
     ik_solver_params_t* params,
@@ -79,13 +79,15 @@ void nodeframe_ik_transform(
 void node_calclate_global_target_using_transformation_type(
     traj_info_t* traj_info,
     timeline_t* timeline,
+    v3_t global_body_init_xpos_at_rootframe,
     v3_t global_body_target_xpos, 
     v3_t rootframe_transform_vector,
     int rootframe,
     int frame_offset,
     cassie_body_id_t body_id)
 {
-    double dragvect[3];
+    double global_rootframe_target[3];
+    double diff_curr_init_to_global_rootframe_target[3];
     double filter;
     v3_t body_init_xpos;
 
@@ -94,8 +96,9 @@ void node_calclate_global_target_using_transformation_type(
     
     if (traj_info->selection.pert_type == PERT_TARGET)
     {
-        mju_sub3(dragvect, rootframe_transform_vector, body_init_xpos);
-        mju_addScl3(global_body_target_xpos, body_init_xpos, dragvect, filter);
+        mju_add3(global_rootframe_target, rootframe_transform_vector, global_body_init_xpos_at_rootframe);
+        mju_sub3(diff_curr_init_to_global_rootframe_target, global_rootframe_target, body_init_xpos);
+        mju_addScl3(global_body_target_xpos, body_init_xpos, diff_curr_init_to_global_rootframe_target, filter);
     }
     else if (traj_info->selection.pert_type == PERT_TRANSLATION)
     {
@@ -163,7 +166,7 @@ void node_refine_pert(
         frame = rootframe + traj_info->target_list[i].frame_offset;
         timeline_set_qposes_to_pose_frame(
             traj_info, timeline_old, frame );
-        nodeframe_ik_transform(
+        node_perform_ik_on_xpos_transformation(
             traj_info,
             timeline_new,
             params, 
@@ -193,6 +196,7 @@ void node_refine_pert(
     traj_info->time_start += iktimedelta;
 }
 
+
 void node_perform_pert(
     traj_info_t* traj_info,
     ik_solver_params_t* params,
@@ -201,6 +205,7 @@ void node_perform_pert(
     int rootframe)
 {
     int frame_offset;
+    double global_body_init_xpos_at_rootframe[3];
     double global_body_target_xpos[3];
     int iterations;
     uint64_t init_time;
@@ -211,23 +216,24 @@ void node_perform_pert(
     timeline_t* timeline_old;
     timeline_t* timeline_new;
 
+
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
+    mju_copy3(global_body_init_xpos_at_rootframe, node_get_body_xpos_curr(traj_info, body_id));    
 
     node_calclate_global_target_using_transformation_type(
         traj_info,
         timeline_old,
+        global_body_init_xpos_at_rootframe,
         global_body_target_xpos, 
         rootframe_transform_vector,
         rootframe,
         0,
         body_id);
 
-    timeline_set_qposes_to_pose_frame(traj_info, timeline_old, rootframe);
-
-    nodeframe_ik_transform(
+    node_perform_ik_on_xpos_transformation(
         traj_info,
         timeline_new,
         params, 
@@ -270,6 +276,7 @@ void node_perform_pert(
         node_calclate_global_target_using_transformation_type(
             traj_info,
             timeline_old,
+            global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
             rootframe,
@@ -282,7 +289,7 @@ void node_perform_pert(
             mju_copy3(traj_info->target_list[target_list_index++].target, global_body_target_xpos);
         }
 
-        nodeframe_ik_transform( 
+        node_perform_ik_on_xpos_transformation( 
             traj_info,
             timeline_new,
             params, 
@@ -295,6 +302,7 @@ void node_perform_pert(
         node_calclate_global_target_using_transformation_type(
             traj_info,
             timeline_old,
+            global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
             rootframe,
@@ -307,7 +315,7 @@ void node_perform_pert(
             mju_copy3(traj_info->target_list[target_list_index++].target, global_body_target_xpos);
         }
 
-        nodeframe_ik_transform(
+        node_perform_ik_on_xpos_transformation(
             traj_info,
             timeline_new, 
             params, 
@@ -380,6 +388,7 @@ void node_position_scale_visually(
     cassie_body_id_t body_id,
     node_body_id_t node_id)
 {
+    double global_body_init_xpos_at_rootframe[3];
     double rootframe_transform_vector[3];
     int rootframe;
     int frame_offset;
@@ -387,7 +396,6 @@ void node_position_scale_visually(
     int i;
     v3_t node_qpos;
    
-
     node_calculate_rootframe_transformation_vector(
         traj_info, 
         traj_info->timeline,
@@ -395,8 +403,8 @@ void node_position_scale_visually(
         body_id,
         node_id);
 
-
     rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
+    mju_copy3(global_body_init_xpos_at_rootframe, node_get_body_xpos_curr(traj_info, body_id));
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -408,8 +416,10 @@ void node_position_scale_visually(
         frame_offset = currframe - rootframe;
 
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
-        node_calclate_global_target_using_transformation_type(traj_info, 
+        node_calclate_global_target_using_transformation_type(
+            traj_info, 
             traj_info->timeline,
+            global_body_init_xpos_at_rootframe,
             node_qpos,
             rootframe_transform_vector,
             rootframe,
