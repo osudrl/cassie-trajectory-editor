@@ -152,6 +152,7 @@ void reset_traj_info()
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;
     traj_info.selection.jointnum =  34;
+    traj_info.selection.jointdiff = 0;
     
     // ik_default_fill_solver_params(&(traj_info.params));
 
