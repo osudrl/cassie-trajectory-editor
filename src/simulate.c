@@ -148,8 +148,14 @@ void reset_traj_info()
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
-    traj_info.nodesigma = 100;
-    traj_info.nodeheight = 1;
+    traj_info.selection.nodesigma = 100;
+    traj_info.selection.nodeheight = 1;
+    traj_info.selection.node_type = NODE_POSITIONAL;
+    traj_info.selection.jointnum =  34;
+    traj_info.selection.jointdiff = 100;
+    traj_info.selection.joint_move_rootframe = 1500;
+    traj_info.selection.nodecount = 50;
+    
     // ik_default_fill_solver_params(&(traj_info.params));
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
@@ -159,6 +165,7 @@ void reset_traj_info()
 
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
+
     showinfo = paused;
 
     for( int i=0; i<mjNRNDFLAG; i++ )
@@ -638,9 +645,9 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         showprofiler = !showprofiler;
         break;
 
-    case GLFW_KEY_ENTER:                // slow motion
-        slowmotion = !slowmotion;
-        break;
+    // case GLFW_KEY_ENTER:                // slow motion
+    //     slowmotion = !slowmotion;
+    //     break;
 
     case GLFW_KEY_SPACE:                // pause
         paused = !paused;
@@ -648,12 +655,12 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
         break;
 
-    case GLFW_KEY_PAGE_UP:              // previous keyreset
-    case GLFW_KEY_PAGE_DOWN:            // next keyreset
-        if( key==GLFW_KEY_PAGE_UP )
-            keyreset = mjMAX(-1, keyreset-1);
-        else
-            keyreset = mjMIN(m->nkey-1, keyreset+1);
+    // case GLFW_KEY_PAGE_UP:              // previous keyreset
+    // case GLFW_KEY_PAGE_DOWN:            // next keyreset
+    //     if( key==GLFW_KEY_PAGE_UP )
+    //         keyreset = mjMAX(-1, keyreset-1);
+    //     else
+    //         keyreset = mjMIN(m->nkey-1, keyreset+1);
 
         // continue with reset
 
@@ -676,21 +683,21 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         cam.type = mjCAMERA_FREE;
         break;
 
-    case '=':                           // bigger font
-        if( fontscale<200 )
-        {
-            fontscale += 50;
-            mjr_makeContext(m, &con, fontscale);
-        }
-        break;
+    // case '=':                           // bigger font
+    //     if( fontscale<200 )
+    //     {
+    //         fontscale += 50;
+    //         mjr_makeContext(m, &con, fontscale);
+    //     }
+    //     break;
 
-    case '-':                           // smaller font
-        if( fontscale>100 )
-        {
-            fontscale -= 50;
-            mjr_makeContext(m, &con, fontscale);
-        }
-        break;
+    // case '-':                           // smaller font
+    //     if( fontscale>100 )
+    //     {
+    //         fontscale -= 50;
+    //         mjr_makeContext(m, &con, fontscale);
+    //     }
+    //     break;
 
     case '[':                           // previous fixed camera or free
         if( m->ncam && cam.type==mjCAMERA_FIXED )
@@ -807,15 +814,15 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
         if( button_right )
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.pert_type = PERT_TRANSLATION;
-            traj_info.nodeheight = 1;
+            traj_info.selection.pert_type = PERT_TRANSLATION;
+            traj_info.selection.nodeheight = 1;
 
         }
         else if (button_left)
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.pert_type = PERT_TARGET;
-            traj_info.nodeheight = 1;
+            traj_info.selection.pert_type = PERT_TARGET;
+            traj_info.selection.nodeheight = 1;
         }
         // else if( button_left )
         //     newperturb = mjPERT_ROTATE;
@@ -974,9 +981,9 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
         double mult = yoffset/25.0;
         mult += 1;
         if(!mod_shift)
-            traj_info.nodesigma *= mult;
+            traj_info.selection.nodesigma *= mult;
         else
-            traj_info.nodeheight *= mult;
+            traj_info.selection.nodeheight *= mult;
 
 
     }
@@ -1076,7 +1083,6 @@ void simulation(void)
     }
     */
 }
-
 
 // render
 void render(GLFWwindow* window)
