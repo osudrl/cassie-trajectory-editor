@@ -26,9 +26,11 @@ Error | Solution
 
 # Development: ToDo's
 
-1. [ ] select change single joint
-2. [ ] one-sided scaling transformation
-3. [ ] Variable node count
+## Primary 
+
+* [ ] select change single joint
+* [ ] one-sided scaling transformation
+* [ ] Variable node count
 
 
 * [ ] Add user controls with respect to initialization
@@ -39,10 +41,10 @@ Error | Solution
 * [ ] Allow for "clipping" of larger trajectory
 * [ ] Fix undos/redos/overwrites so it doesn't leak memory
 * [ ] Document the current controls
-* [ ] PD Controller to 7 & 22 DOF
 * [ ] Make ctrl p respect the different pert types
 * [ ] Look into drag files into MuJoCo window
-* [ ] Expand the timeline
+* [ ] ghost nodes when dragging to show starting positions
+* [ ] Different color nodes for different transformation methods
 
 
 
