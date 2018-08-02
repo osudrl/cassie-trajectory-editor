@@ -55,16 +55,16 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     if(!traj_info->timeline)
         traj_info->timeline = malloc(sizeof(timeline_t));
 
-    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount * 3);
+    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount * 2);
 
-    for(i = 0; i < bytecount * 3; i++)
+    for(i = 0; i < bytecount * 2; i++)
     {
         mju_copy(traj_info->timeline->qposes[i].q,
             fulls[i % bytecount].qpos,
             CASSIE_QPOS_SIZE);
     }
 
-    for(big = 1; big <= 2; big++)
+    for(big = 1; big <= 1; big++)
     {
         start = bytecount * big;
         for(i = start; i < start + bytecount; i++)
@@ -78,7 +78,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
 
     free(fulls);
 
-    traj_info->timeline->numposes = bytecount * 3;
+    traj_info->timeline->numposes = bytecount * 2;
     traj_info->timeline->init = 1;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;

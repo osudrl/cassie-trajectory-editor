@@ -55,6 +55,14 @@ void node_calclate_global_target_using_transformation_type(
     int rootframe,
     int frame_offset,
     cassie_body_id_t body_id);
-
+void node_calculate_arbitrary_target_using_transformation_type(
+    traj_info_t* traj_info,
+    double* final_curr,
+    double* root_transformation,
+    double* init_curr,
+    double* init_root,
+    int vector_size,
+    double scalefactor);
+// 
 #endif
 

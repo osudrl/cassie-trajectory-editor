@@ -147,6 +147,22 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->selection.jointnum = (traj_info->selection.jointnum + 1) % CASSIE_QPOS_SIZE;
     else if( key==GLFW_KEY_PAGE_DOWN)
             traj_info->selection.jointnum = (traj_info->selection.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+    else if (key == GLFW_KEY_MINUS)
+    {
+        NODECOUNT /= 1.5;
+        node_position_initial_using_cassie_body(traj_info,
+            node_get_cassie_id_from_index(
+                traj_info->selection.id_last_non_node_select)
+        );
+    }
+    else if (key == GLFW_KEY_EQUAL)
+    {
+        NODECOUNT *= 1.5;     
+        node_position_initial_using_cassie_body(traj_info,
+            node_get_cassie_id_from_index(
+                traj_info->selection.id_last_non_node_select)
+        );
+    }
     else if(key == GLFW_KEY_ENTER)
     {
         traj_info->selection.node_type = (traj_info->selection.node_type + 1) % NODE_TYPE_E_COUNT;
@@ -158,15 +174,15 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
 
      if( mods & GLFW_MOD_CONTROL )
      {
-        if( key==GLFW_KEY_A )
-            traj_info->selection.nodesigma *= .95;
-        else if( key==GLFW_KEY_D)
-            traj_info->selection.nodesigma *= 1.05;
-        else if( key==GLFW_KEY_S )
-            traj_info->selection.nodeheight *= .95;
-        else if( key==GLFW_KEY_W)
-            traj_info->selection.nodeheight *= 1.05;
-        else if( key==GLFW_KEY_P)
+        // if( key==GLFW_KEY_A )
+        //     traj_info->selection.nodesigma *= .95;
+        // else if( key==GLFW_KEY_D)
+        //     traj_info->selection.nodesigma *= 1.05;
+        // else if( key==GLFW_KEY_S )
+        //     traj_info->selection.nodeheight *= .95;
+        // else if( key==GLFW_KEY_W)
+        //     traj_info->selection.nodeheight *= 1.05;
+        if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)
             refine_pert(traj_info);

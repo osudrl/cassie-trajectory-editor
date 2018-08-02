@@ -86,8 +86,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
     double* init_curr,
     double* init_root,
     int vector_size,
-    double scalefactor
-    )
+    double scalefactor)
 {
     int stack_mark;
     double* final_root;
@@ -100,27 +99,31 @@ void node_calculate_arbitrary_target_using_transformation_type(
 
     if (traj_info->selection.pert_type == PERT_TARGET)
     {
-        mju_add3(
+        mju_add(
             final_root, 
             root_transformation, 
-            init_root);
-        mju_sub3(
+            init_root,
+            vector_size);
+        mju_sub(
             init_curr_to_final_root,
             final_root,
-            init_curr);
-        mju_addScl3(
+            init_curr,
+            vector_size);
+        mju_addScl(
             final_curr,
             init_curr,
             init_curr_to_final_root,
-            scalefactor);
+            scalefactor,
+            vector_size);
     }
     else if (traj_info->selection.pert_type == PERT_TRANSLATION)
     {
-        mju_addScl3(
+        mju_addScl(
             final_curr,
             init_curr,
             root_transformation,
-            scalefactor);
+            scalefactor,
+            vector_size);
     }
 
     traj_info->d->pstack = stack_mark;
@@ -513,13 +516,42 @@ void node_position_joint_move(traj_info_t* traj_info, cassie_body_id_t body_id)
     int i;
     int frame;
     v3_t node_qpos;
+    double rootframe_init;
+    double filter;
+    double temp_new_qpos_val;
+
+    timeline_set_qposes_to_pose_frame(
+        traj_info,
+        traj_info->timeline,
+        traj_info->selection.joint_move_rootframe);
+    rootframe_init = traj_info->d->qpos[traj_info->selection.jointnum];
+
 
     for (i = 0; i < NODECOUNT; i++)
     {
         frame = (traj_info->timeline->numposes / NODECOUNT) * i;
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
+        
         timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
+
+        filter = node_calculate_filter_from_frame_offset(
+            (int) mju_abs(frame - traj_info->selection.joint_move_rootframe), 
+            traj_info->selection.nodesigma, 
+            traj_info->selection.nodeheight);
+
+        node_calculate_arbitrary_target_using_transformation_type(
+            traj_info,
+            &temp_new_qpos_val,
+            &traj_info->selection.jointdiff,
+            traj_info->d->qpos + traj_info->selection.jointnum,
+            &rootframe_init,
+            1,
+            filter);
+
+        traj_info->d->qpos[traj_info->selection.jointnum] = temp_new_qpos_val;
+
         mj_forward(traj_info->m, traj_info->d);
+
         mj_local2Global(
             traj_info->d,
             node_qpos,

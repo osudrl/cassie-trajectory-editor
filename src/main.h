@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define NODECOUNT 100
+#define NODECOUNT (traj_info->selection.nodecount)
 #define NON_NODE_COUNT 0
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 
@@ -84,10 +84,12 @@ struct _selection_t_
 
     enum node_type_e node_type;
     enum pert_type_e pert_type;
+    int nodecount;
     double nodesigma;
     double nodeheight;
     double jointdiff;
     int jointnum;
+    int joint_move_rootframe;
 };
 typedef struct _selection_t_ selection_t;
 

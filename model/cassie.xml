@@ -654,7 +654,426 @@
       <body pos='0 0 0' mocap='true' > 
          
        <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
->>>>>>> MOCAP
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body  pos='0 0 0' mocap='true' > 
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body>
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
+      </body> 
+
+      <body pos='0 0 0' mocap='true' > 
+         
+       <geom type='sphere' size='0.015 0.015 0.015' class='obstacle' contype='0' conaffinity='0'/> 
       </body> 
       
     
