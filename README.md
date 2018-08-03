@@ -243,16 +243,13 @@ To revert this type checking, all uses of these types can be replaced with unsig
 node_body_id_t node_get_body_id_from_node_index(int index);
 ```
 
-**Returns** a `node_body_id` type corrosponding to the **index** provided
+**Returns:** a `node_body_id` type corrosponding to the **index** provided
 
 Assumptions: Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
 
-**No changes to current qposes**
+**CQ:** None
 
-**No changes to any timeline**
-
-
-
+**CT:** None
 
 
 # Contact
