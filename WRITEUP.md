@@ -72,10 +72,10 @@ The diagram shows the four main elements of the current IK solver. These element
 
 
 If it was possible to just instantly set a body's position to the target, the IK problem would not need to be solved.
-Instead of allowing direct control of end-effector positions, MuJoCo allows external forces applied to any of the bodies in the model.
+Instead of allowing direct control of end-effector positions, [MuJoCo](http://www.mujoco.org/) allows [external forces applied](http://www.mujoco.org/book/reference.html#mjcb_control) to any of the bodies in the model.
 
 
-The PD control stage of the solver works by dragging th body to the target position by applying these external forces.
+The PD control stage of the solver drags the body to the target position by [applying these external forces](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.c#L30).
 The direction of the force vector is always toward the target position, but the magnitude is set by the output of the PD controller.
 For this solver, the P term is proportional to the body's current distance to the target, while the D term is proportional to the current velocity of the body, slowing it down as it approaches the target.
 
@@ -93,6 +93,9 @@ These two datasets were each plotted in three dimensions with [this script](http
 
 https://imgur.com/a/CnxWmec
 
+Kp (Lift) | Kp (Swing)
+--- | ---
+![lift](https://i.imgur.com/NJNvOV6.png) | ![swing](https://i.imgur.com/ScS2J86.png)
 
 
 ### Dead End Solutions
