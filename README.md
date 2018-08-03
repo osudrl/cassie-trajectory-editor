@@ -236,7 +236,7 @@ To revert this type checking, all uses of these types can be replaced with unsig
 
 ### Node Module Functions of Interest
 
-#### node_get_body_id_from_node_index()
+### node_get_body_id_from_node_index()
 
 Definition:
 ```c
@@ -251,7 +251,7 @@ Changes to qposes: None
 
 Changes to any timeline: None
 
-#### node_get_body_id_from_real_id()
+### node_get_body_id_from_real_id()
 
 Definition:
 ```c
@@ -266,7 +266,7 @@ Changes to qposes: None
 
 Changes to any timeline: None
 
-#### node_get_cassie_id_from_index()
+### node_get_cassie_id_from_index()
 
 Definition:
 ```c
@@ -281,7 +281,7 @@ Changes to qposes: None
 
 Changes to any timeline: None
 
-#### node_get_qpos_by_node_id()
+### node_get_qpos_by_node_id()
 
 Definition:
 ```c
@@ -298,7 +298,7 @@ Changes to qposes: None
 
 Changes to any timeline: None
 
-#### node_get_body_xpos_curr()
+### node_get_body_xpos_curr()
 
 Definition:
 ```c
@@ -316,7 +316,7 @@ Changes to qposes: None
 Changes to any timeline: None
 
 
-#### node_get_body_xpos_curr()
+### node_get_body_xpos_curr()
 
 Definition:
 ```c
@@ -342,7 +342,7 @@ Changes to qposes: **YES**, the current qposes are overwritten with the ones sto
 
 Changes to any timeline: None
 
-#### node_perform_ik_on_xpos_transformation()
+### node_perform_ik_on_xpos_transformation()
 
 Definition:
 ```c
@@ -366,7 +366,7 @@ Changes to qposes: **YES**, the current qposes will reflect the solution of the 
 
 Changes to any timeline: **YES,** the specified frame on the provided timeline will be overwritten with the solution
 
-#### node_calculate_arbitrary_target_using_transformation_type()
+### node_calculate_arbitrary_target_using_transformation_type()
 
 Definition:
 ```c
