@@ -245,9 +245,11 @@ node_body_id_t node_get_body_id_from_node_index(int index);
 
 **Returns** a `node_body_id` type corrosponding to the **index** provided
 
-Assumptions | CQ | CT
---- | --- | ---
-Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies | None | None
+Assumptions: Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
+
+**No changes to current qposes**
+
+**No changes to any timeline**
 
 
 
