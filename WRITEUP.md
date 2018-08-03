@@ -39,7 +39,7 @@ As explained simply [here](https://medium.com/unity3danimation/overview-of-inver
 For the trajectory tool, the IK solver performs calculations when a node is dragged and dropped while the nodes are in positional mode.
 
 
-<img src="https://i.imgur.com/2nrSmNf.png" width="300"> 
+<img align="right" src="doc/subpagelist.png" width=300 > 
 
 
 If the user were to make the above transformation, the foot is in a new position for each frame in the affected segment of the timeline. 
@@ -59,7 +59,7 @@ Once accepted, the joint positions are stored in the timeline, and the solver wo
 ![flowdiagram](https://i.imgur.com/ivDmzPu.png)
 
 
-The diagram shows the four main elements of the current IK solver. These elements, in the order they are discussed here, are listed below:
+The diagram shows the four main elements of the current IK solver. These elements, in the order they are discussed, are listed below:
 
 
 * PD Control
@@ -76,20 +76,23 @@ Instead of allowing direct control of end-effector positions, MuJoCo allows exte
 
 The PD control stage of the solver works by dragging th body to the target position by applying these external forces.
 The direction of the force vector is always toward the target position, but the magnitude is set by the output of the PD controller.
-For this solver,  
+For this solver, the P term is proportional to the body's current distance to the target, while the D term is proportional to the current velocity of the body, slowing it down as it approaches the target.
 
 
+Implementing a PD controller, however, requires a tuning the constants for the P and D terms.
+Increasing both constants imrproves response time and decreases the number of simulation cycles needed to reach the target, but increasing these parameters also increases the instability of the simulation.
+Though trial and error, it was determined that increasing the weighting of the derivative term was the primary factor causing simulation instability.
 
 
-#### Tuning
+To determine which set of constants result in the most favorable controller, an automated tester was run overnight.
+The test script independently tested different weightings for the two terms: simulation steps (dependent vairable) was measured as a function of Kp (independent) and Kd (independent).
+The script generated two sets of data: [lifting the right foot up](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-liftleg.csv) and [swinging the right foot out](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-swingleg.csv).
+These two datasets were each plotted in three dimensions with [this script](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/3dplot.py).
+
 
 https://imgur.com/a/CnxWmec
 
-https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/3dplot.py
 
-https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-liftleg.csv
-
-https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-swingleg.csv
 
 ### Dead End Solutions
 
