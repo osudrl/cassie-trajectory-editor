@@ -404,27 +404,30 @@ Assumptions:
 
 <!---https://imgur.com/gallery/iLAihrA--->
 
-![img](https://i.imgur.com/rJgPeQJ.png)
+<img src="https://i.imgur.com/rlcpkPP.gif" width="200"> 
 
-![img](https://i.imgur.com/FC9nbQm.png)
 
-![img](https://i.imgur.com/Cri5BbT.png)
+<img src="https://i.imgur.com/rJgPeQJ.png" width="200"> 
 
-![img](https://i.imgur.com/UtyMJbZ.png)
+<img src="https://i.imgur.com/FC9nbQm.png" width="200"> 
 
-![img](https://i.imgur.com/mQLGpsS.png)
+<img src="https://i.imgur.com/Cri5BbT.png" width="200"> 
 
-![img](https://i.imgur.com/A6YWwNP.png)
+<img src="https://i.imgur.com/UtyMJbZ.png" width="200"> 
 
-![img](https://i.imgur.com/eBY7IL5.png)
+<img src="https://i.imgur.com/mQLGpsS.png" width="200"> 
 
-![img](https://i.imgur.com/K6ev8cu.png)
+<img src="https://i.imgur.com/A6YWwNP.png" width="200"> 
 
-![img](https://i.imgur.com/tV10ofR.png)
+<img src="https://i.imgur.com/eBY7IL5.png" width="200"> 
 
-![img](https://i.imgur.com/TTR3zJ9.png)
+<img src="https://i.imgur.com/K6ev8cu.png" width="200"> 
 
-![img](https://i.imgur.com/bzVGl9v.png)
+<img src="https://i.imgur.com/tV10ofR.png" width="200"> 
+
+<img src="https://i.imgur.com/TTR3zJ9.png" width="200"> 
+
+<img src="https://i.imgur.com/bzVGl9v.png" width="200"> 
 
 
 
