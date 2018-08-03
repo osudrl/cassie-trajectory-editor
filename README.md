@@ -243,9 +243,9 @@ Definition:
 node_body_id_t node_get_body_id_from_node_index(int index);
 ```
 
-Returns: a `node_body_id` type corrosponding to the *index* provided
+Returns: a `node_body_id` type corresponding to the *index* provided
 
-Assumptions: Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
+Assumptions: Acceptable node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
 
 Changes to qposes: None
 
@@ -258,7 +258,7 @@ Definition:
 node_body_id_t node_get_body_id_from_real_body_id(int real);
 ```
 
-Returns: a `node_body_id` type corrosponding to the *body id*
+Returns: a `node_body_id` type corresponding to the *body id*
 
 Assumptions: For the cassie model, cassie bodies are within the id range [1,25] so the valid real ids are within the range [26,224]
 
@@ -273,7 +273,7 @@ Definition:
 cassie_body_id_t node_get_cassie_id_from_index(int i);
 ```
 
-Returns: a `cassie_body_id_t` type corrosponding to the *body id*
+Returns: a `cassie_body_id_t` type corresponding to the *body id*
 
 Assumptions: For the current cassie xml model, valid bodies range [1,25], where 1 is the pelvis and 25 is the right foot. Run `bash ./util/index-bodies.sh` for a list of bodies and associated ids.
 
@@ -292,7 +292,7 @@ v3_t node_get_qpos_by_node_id(
 
 Returns: a 3d vector used to get/set a node's position in the scene. Because nodes have mocap joints (not part of a physics chain), their qposes are used in the same way as body xposes.
 
-Assumptions: The `node_body_id_t` was constructed meeting the above assumtions
+Assumptions: The `node_body_id_t` was constructed meeting the above assumptions
 
 Changes to qposes: None
 
@@ -309,7 +309,7 @@ v3_t node_get_body_xpos_curr(
 
 Returns: a 3d vector of the specified body's 3d position
 s
-Assumptions: The `cassie_body_id_t` was constructed meeting the above assumtions
+Assumptions: The `cassie_body_id_t` was constructed meeting the above assumptions
 
 Changes to qposes: None
 
@@ -341,6 +341,67 @@ Assumptions: The timeline reference is non NULL
 Changes to qposes: **YES**, the current qposes are overwritten with the ones stored at the specified frame in the timeline struct
 
 Changes to any timeline: None
+
+#### node_perform_ik_on_xpos_transformation()
+
+Definition:
+```c
+void node_perform_ik_on_xpos_transformation(
+    traj_info_t* traj_info, 
+    timeline_t* overwrite,
+    ik_solver_params_t* params,
+    cassie_body_id_t body_id, 
+    int frame, 
+    int frameoffset, 
+    v3_t target,
+    double* ik_iter_total)
+```
+
+Given the cassie body and the target xpos for this body, this function calls the IK solver defined in ik.c and defines how many simulation cycles the solver is allowed to take. Increases the value pointed to by `ik_iter_total` by the number of simulation cycles used in solving IK.
+
+Assumptions: The target vector and `ik_iter_total` references should all be non NULL.
+Furthermore, the timeline reference should be non NULL and initialized properly.
+
+Changes to qposes: **YES**, the current qposes will reflect the solution of the IK solver
+
+Changes to any timeline: **YES,** the specified frame on the provided timeline will be overwritten with the solution
+
+#### node_calculate_arbitrary_target_using_transformation_type()
+
+Definition:
+```c
+void node_calculate_arbitrary_target_using_transformation_type(
+    traj_info_t* traj_info,
+    double* final_curr,
+    double* root_transformation,
+    double* init_curr,
+    double* init_root,
+    int vector_size,
+    double scalefactor)
+```
+
+Calculates a target (the vector can be an arbitrary dimension) using the vectors passed as parameters. 
+The target will depend on the current node transformation type, set by `traj_info->selection.node_type`.
+
+Parameters:
+
+Name/Type | Description
+--- | ---
+(vector) final_curr | The vector which the result (the target) will be stored. Must be of length `vector_size`
+(vector) root_transformation | The vector which describes how the "root" (often the node that was dragged and dropped) has moved in relation from its initial position at the root frame
+(vector) init_curr | The initial position of the body at the frame for which the target will be calculated
+(vector) init_root | The initial position of the body at the root frame before it was transformed
+int vector_size | Although this function makes the most sense in 3d, its stages are illustrated below in 2d and is used for a 1d transformation by `node_position_joint_move()`. This parameter defines the number of components for each source and result vector.
+double scale_factor | Also named `filter` in parts of the module, this value scales the full transformation down. This value is provably the result of the Gaussian distribution
+
+Returns: The target vector in `final_curr`
+
+Assumptions: 
+
+* The vectors are non NULL and at least the length of `vector_size`
+* Vector size > 0
+* Scale factor is \(0,1\] - other values work, but do not make sense
+
 
 # Contact
 
