@@ -39,7 +39,7 @@ After designing the walking gait, the user exports the finished trajectory to be
 
 <img align="right" src="https://i.imgur.com/2nrSmNf.png" width=250 > 
 
-As explained simply [here](https://medium.com/unity3danimation/overview-of-inverse-kinematics-9769a43ba956), Inverse Kinematics describes the problem of setting joint angles such that the position (dependent on these joint angles) of a body, like a foot, ends up at the desired position. 
+[Explained simply](https://medium.com/unity3danimation/overview-of-inverse-kinematics-9769a43ba956), inverse kinematics describes the problem of setting joint angles such that the position (dependent on these joint angles) of a body, like a foot, ends up at the desired position. 
 For the trajectory tool, the IK solver performs calculations when a node is dragged and dropped while the nodes are in positional mode.
 
 
@@ -108,7 +108,19 @@ Kd (Lift) | Kd (Swing)
 ![lift](https://i.imgur.com/Ez0qpNy.png) | ![swing](https://i.imgur.com/Hbpuxzb.png)
 
 
-This next set of graphs shows the 3d plot from an angle which emphasizes the Kd constant's effect
+This next set of graphs shows the 3d plot from an angle which emphasizes the Kd constant's effect. 
+In general, simulation steps decrease as Kd increases, however values in the 75-90 range pretty consistently cause the simulation instability for the swing leg perturbation, as shown by the sharp divergence upward.
+Even values in the 40-60 range caused the solver to fail if Kp was quite large.
+
+
+After examining the test data, the best pair of constants were determined by their ability to consistently converge on the solution, regardless of the perturbation.
+Because of this requirement, it was determined that the selected constants should err on the side of robustness.
+Constants were selected by targeting approximately 10,000 simulation cycles for this accuracy level.
+
+
+The default solver Kp and Kd for the tool are [480 and 30](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107), although these values could be tuned more accurately with further testing.  
+
+
 
 #### Cleanup
 
