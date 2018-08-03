@@ -13,7 +13,7 @@ The tool *will allow* the user to either [initialize](https://github.com/osudrl/
 During the editing process, the tool helpes the developer visualize changes to the initial timeline.
 After designing the walking gait, the user exports the finished trajectory to be used in the learning process.
 
-<img align="center" src="https://i.imgur.com/rlcpkPP.gif" width="400"> 
+<img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="300"> 
 
 # Methods and Results
 
