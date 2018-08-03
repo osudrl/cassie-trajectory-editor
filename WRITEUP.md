@@ -98,6 +98,11 @@ Kp (Lift) | Kp (Swing)
 ![lift](https://i.imgur.com/NJNvOV6.png) | ![swing](https://i.imgur.com/ScS2J86.png)
 
 
+Kd (Lift) | Kd (Swing)
+--- | ---
+![lift](https://i.imgur.com/Ez0qpNy.png) | ![swing](https://i.imgur.com/Hbpuxzb.png)
+
+
 ### Dead End Solutions
 
 
