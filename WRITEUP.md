@@ -63,10 +63,10 @@ Once accepted, the joint positions are stored in the timeline, and the solver wo
 The diagram shows the four main elements of the current IK solver. These elements, in the order they are discussed, are listed below:
 
 
-* PD Control
-* Cleanup
-* Target Cutoff
-* Setup
+* [PD Control](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#pd-control)
+* [Cleanup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#cleanup)
+* [Target Cutoff](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#target-cutoff)
+* [Setup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#ik-setup)
 
 #### PD Control
 
@@ -109,6 +109,16 @@ Kd (Lift) | Kd (Swing)
 
 
 This next set of graphs shows the 3d plot from an angle which emphasizes the Kd constant's effect
+
+#### Cleanup
+
+
+#### Target Cutoff
+
+
+#### IK Setup
+
+
 
 
 ### Dead End Solutions
