@@ -281,6 +281,65 @@ Changes to qposes: None
 
 Changes to any timeline: None
 
+#### node_get_qpos_by_node_id()
+
+Definition:
+```c
+v3_t node_get_qpos_by_node_id(
+	traj_info_t* traj_info, 
+	node_body_id_t id);
+```
+
+Returns: a 3d vector used to get/set a node's position in the scene. Because nodes have mocap joints (not part of a physics chain), their qposes are used in the same way as body xposes.
+
+Assumptions: The `node_body_id_t` was constructed meeting the above assumtions
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+#### node_get_body_xpos_curr()
+
+Definition:
+```c
+v3_t node_get_body_xpos_curr(
+	traj_info_t* traj_info, 
+	cassie_body_id_t id);
+```
+
+Returns: a 3d vector of the specified body's 3d position
+s
+Assumptions: The `cassie_body_id_t` was constructed meeting the above assumtions
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+
+#### node_get_body_xpos_curr()
+
+Definition:
+```c
+v3_t node_get_body_xpos_by_frame(
+	traj_info_t* traj_info, 
+	timeline_t* timeline, 
+	int frame, 
+	cassie_body_id_t id);
+```
+
+Returns: the body's xpos at the specified frame on the provided timeline
+
+Parameters:
+Type/Name | Description
+--- | ---
+timeline_t timeline | the timeline structure from which to read in the set of qposes
+int frame | The frame (within the timeline) at which to set the qposes
+
+Assumptions: The timeline reference is non NULL
+
+Changes to qposes: **YES**, the current qposes are overwritten with the ones stored at the specified frame in the timeline struct
+
+Changes to any timeline: None
 
 # Contact
 
