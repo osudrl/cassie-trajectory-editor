@@ -402,6 +402,31 @@ Assumptions:
 * Vector size > 0
 * Scale factor is \(0,1\] - other values work, but do not make sense
 
+<!---https://imgur.com/gallery/iLAihrA--->
+
+![img](https://i.imgur.com/rJgPeQJ.png)
+
+![img](https://i.imgur.com/FC9nbQm.png)
+
+![img](https://i.imgur.com/Cri5BbT.png)
+
+![img](https://i.imgur.com/UtyMJbZ.png)
+
+![img](https://i.imgur.com/mQLGpsS.png)
+
+![img](https://i.imgur.com/A6YWwNP.png)
+
+![img](https://i.imgur.com/eBY7IL5.png)
+
+![img](https://i.imgur.com/K6ev8cu.png)
+
+![img](https://i.imgur.com/tV10ofR.png)
+
+![img](https://i.imgur.com/TTR3zJ9.png)
+
+![img](https://i.imgur.com/bzVGl9v.png)
+
+
 
 # Contact
 
