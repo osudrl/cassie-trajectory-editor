@@ -39,7 +39,7 @@ As explained simply [here](https://medium.com/unity3danimation/overview-of-inver
 For the trajectory tool, the IK solver performs calculations when a node is dragged and dropped while the nodes are in positional mode.
 
 
-<img align="right" src="doc/subpagelist.png" width=300 > 
+<img align="right" src="https://i.imgur.com/2nrSmNf.png" width=300 > 
 
 
 If the user were to make the above transformation, the foot is in a new position for each frame in the affected segment of the timeline. 
