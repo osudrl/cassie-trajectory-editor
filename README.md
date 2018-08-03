@@ -243,9 +243,39 @@ To revert this type checking, all uses of these types can be replaced with unsig
 node_body_id_t node_get_body_id_from_node_index(int index);
 ```
 
-**Returns:** a `node_body_id` type corrosponding to the **index** provided
+**Returns:** a `node_body_id` type corrosponding to the *index* provided
 
-Assumptions: Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
+**Assumptions:** Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
+
+**Changes to qposes:** None
+
+**Changes to any timeline:** None
+
+#### node_get_body_id_from_real_id()
+
+**Definition:**
+```c
+node_body_id_t node_get_body_id_from_real_body_id(int real);
+```
+
+**Returns:** a `node_body_id` type corrosponding to the *body id*
+
+**Assumptions:** For the cassie model, cassie bodies are within the id range [1,25] so the valid real ids are within the range [26,224]
+
+**Changes to qposes:** None
+
+**Changes to any timeline:** None
+
+#### node_get_cassie_id_from_index()
+
+**Definition:**
+```c
+cassie_body_id_t node_get_cassie_id_from_index(int i);
+```
+
+**Returns:** a `cassie_body_id_t` type corrosponding to the *body id*
+
+**Assumptions:** For the current cassie xml model, valid bodies range [1,25], where 1 is the pelvis and 25 is the right foot. Run `bash ./util/index-bodies.sh` for a list of bodies and associated ids.
 
 **Changes to qposes:** None
 
