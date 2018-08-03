@@ -247,9 +247,9 @@ node_body_id_t node_get_body_id_from_node_index(int index);
 
 Assumptions: Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
 
-**CQ:** None
+**Changes to qposes:** None
 
-**CT:** None
+**Changes to any timeline:** None
 
 
 # Contact
