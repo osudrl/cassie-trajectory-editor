@@ -56,7 +56,7 @@ When the body's position is within the accepted error range, the solution is acc
 Once accepted, the joint positions are stored in the timeline, and the solver works on the next frame.
 
 
-**INCLUDE FLOW DIAGRAM**
+![flowdiagram](https://i.imgur.com/ivDmzPu.png)
 
 
 The diagram shows the four main elements of the current IK solver. These elements, in the order they are discussed here, are listed below:
