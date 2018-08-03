@@ -13,7 +13,7 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 ## Getting Started: Compilation / Dependencies
 
 1. Clone
-2. Add a MuJoCo key to the repository root directory and name it mjkey.txt
+2. Add a [MuJoCo key](https://www.roboti.us/license.html) to the repository root directory and name it mjkey.txt
 3. Install `libglfw3-dev` and `wget`
 4. `make`
 
@@ -21,7 +21,7 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 
 Error | Solution
 --- | ---
-"MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
+"MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please [provide this file](https://www.roboti.us/license.html).
 
 
 # Development: ToDo's
@@ -79,11 +79,6 @@ Ctrl+Shift+Scroll | Dragging a node | Scales the 'height' of the [Gaussian distr
 
 
 \*Refine-Command Context Note: Every time  calls the [IK solver](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/WRITEUP.md#inverse-kinematics), it saves a list of frame/xpos targets for the refiner function to use. Any time IK is solved, this target list is overwritten, however, this target list is not with respect to the timeline, just the last time IK was run. This may be improved in the future, but at the moment, all refine commands must directly follow a previous refine command or a node-drag-perturbation.
-
-
-
-
-
 
 
 # Tool Source Documentation
@@ -222,10 +217,45 @@ int32_t doik | Controls the number of steps of IK that the solver will do. | Ini
 
 #### Fields
 
+## Node.c Module
+
+
+The functions within the node module implements a few different types and specific vector math.
+These functions are core the the functionality of the tool, but are long and unwieldy.
+
+### Node Module Specific Types
+
+**v3_t** is defined in node.h, and adds a bit more specificity than "double\*" when dealing with 3d vectors.
+Although `v3_t` and `double\*` are literally interchangeable, this type should only be used when requiring a vector of length 3.
+Functions with v3_t as a parameter will expect to be able to index the array at v[0], v[1], and v[2] and that these values should be the x, y and z values of the specified vector.
+
+**cassie_body_t** and **node_body_t** do not provide any more information than an int.
+Yet wrapping these ints in a struct provides strong type checking, preventing the functions which use these types from mistakenly interchanging these two different types.
+Furthermore, the function prototypes in the header are able to clearly communicate what kind of body (cassie or node) is needed for the calculations.
+To revert this type checking, all uses of these types can be replaced with unsigned ints, and the functions for wrapping the ids can be deleted.
+
+### Node Module Functions of Interest
+
+#### node_get_body_id_from_node_index()
+
+```c
+node_body_id_t node_get_body_id_from_node_index(int index);
+```
+
+Returns a `node_body_id` type corrosponding to the **index** provided
+
+Assumptions | CQ | CT
+--- | --- | ---
+Acceptible node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies | None | None
+
+
+
+
 
 # Contact
 
 
-This tool and documentation page was written by [Kevin Kellar](https://github.com/kkevlar) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University. For issues, comments, or suggestions about the tool or its documentation, feel free to [contact me](https://github.com/kkevlar) or [open a GitHub issue](https://github.com/osudrl/cassie-trajectory-editor/issues).
+This tool and documentation page was written by [Kevin Kellar](https://github.com/kkevlar) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University.
+For issues, comments, or suggestions about the tool or its documentation, feel free to [contact me](https://github.com/kkevlar) or [open a GitHub issue](https://github.com/osudrl/cassie-trajectory-editor/issues).
 
 
