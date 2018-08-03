@@ -236,7 +236,7 @@ To revert this type checking, all uses of these types can be replaced with unsig
 
 ### Node Module Functions of Interest
 
-#### node_get_body_id_from_node_index()
+### node_get_body_id_from_node_index()
 
 **Definition:**
 ```c
@@ -251,7 +251,7 @@ node_body_id_t node_get_body_id_from_node_index(int index);
 
 **Changes to any timeline:** None
 
-#### node_get_body_id_from_real_id()
+### node_get_body_id_from_real_id()
 
 **Definition:**
 ```c
@@ -266,7 +266,7 @@ node_body_id_t node_get_body_id_from_real_body_id(int real);
 
 **Changes to any timeline:** None
 
-#### node_get_cassie_id_from_index()
+### node_get_cassie_id_from_index()
 
 **Definition:**
 ```c
