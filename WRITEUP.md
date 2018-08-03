@@ -81,12 +81,12 @@ For this solver, the P term is proportional to the body's current distance to th
 
 
 Implementing a PD controller, however, requires a tuning the constants for the P and D terms.
-Increasing both constants imrproves response time and decreases the number of simulation cycles needed to reach the target, but increasing these parameters also increases the instability of the simulation.
+Increasing both constants improves response time and decreases the number of simulation cycles needed to reach the target, but increasing these parameters also increases the instability of the simulation.
 Though trial and error, it was determined that increasing the weighting of the derivative term was the primary factor causing simulation instability.
 
 
-To determine which set of constants result in the most favorable controller, an automated tester was run overnight.
-The test script independently tested different weightings for the two terms: simulation steps (dependent vairable) was measured as a function of Kp (independent) and Kd (independent).
+To determine which set of constants result in the most favorable controller, an [automated tester](https://github.com/osudrl/cassie-trajectory-editor/tree/automatedrop) was run overnight.
+The [test script](https://github.com/osudrl/cassie-trajectory-editor/blob/automatedrop/auto.py) independently tested different weightings for the two terms: simulation steps (dependent variable) was measured as a function of Kp (independent) and Kd (independent).
 The script generated two sets of data: [lifting the right foot up](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-liftleg.csv) and [swinging the right foot out](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/auto-swingleg.csv).
 These two datasets were each plotted in three dimensions with [this script](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/3dplot.py).
 
@@ -99,13 +99,16 @@ Kp (Lift) | Kp (Swing)
 ![lift](https://i.imgur.com/NJNvOV6.png) | ![swing](https://i.imgur.com/ScS2J86.png)
 
 
-The above set of graphs shows the 3d plot from an angle which emphasises the Kp constant's affect on the number of simulation cycles required to solve inverse kinematics for the two different transformations.
-As expected, the number of cycles 
+The above set of graphs shows the 3d plot from an angle which emphasizes the Kp constant's effect on the number of simulation cycles required to solve inverse kinematics for the two different transformations.
+As expected, the number of cycles decreases with a larger Kp, but the effect becomes less and less pronounced as the spring constant (Kp) gets larger and larger.
 
 
 Kd (Lift) | Kd (Swing)
 --- | ---
 ![lift](https://i.imgur.com/Ez0qpNy.png) | ![swing](https://i.imgur.com/Hbpuxzb.png)
+
+
+This next set of graphs shows the 3d plot from an angle which emphasizes the Kd constant's effect
 
 
 ### Dead End Solutions
