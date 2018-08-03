@@ -91,11 +91,16 @@ The script generated two sets of data: [lifting the right foot up](https://githu
 These two datasets were each plotted in three dimensions with [this script](https://github.com/osudrl/cassie-trajectory-editor/blob/87ed7f0df94cba1e70309e44e64a87882f006453/3dplot.py).
 
 
-https://imgur.com/a/CnxWmec
+<!---https://i.imgur.com/Hbpuxzb.png-->
+
 
 Kp (Lift) | Kp (Swing)
 --- | ---
 ![lift](https://i.imgur.com/NJNvOV6.png) | ![swing](https://i.imgur.com/ScS2J86.png)
+
+
+The above set of graphs shows the 3d plot from an angle which emphasises the Kp constant's affect on the number of simulation cycles required to solve inverse kinematics for the two different transformations.
+As expected, the number of cycles 
 
 
 Kd (Lift) | Kd (Swing)
