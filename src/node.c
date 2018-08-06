@@ -598,7 +598,7 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
         node_position_initial_positional(traj_info, body_id);
     else if (traj_info->selection.node_type == NODE_JOINTMOVE)
     {
-        traj_info->selection.jointdiff = 0;
+        // traj_info->selection.jointdiff = 0;
         node_position_joint_move(traj_info, body_id);
     }
     else if (traj_info->selection.node_type == NODE_JOINTID)

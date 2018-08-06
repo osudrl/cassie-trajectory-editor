@@ -1,13 +1,20 @@
 #include "main.h"
 
+
+void some_cheater_nonsense(traj_info_t* traj_info)
+{
+    if(traj_info->pert->active)
+    {
+        printf("a\n");
+    }
+}
+
+
 void allow_node_transformations(traj_info_t* traj_info)
 {
     if (traj_info->pert->select > 0 && 
         traj_info->pert->select <= 25 &&
-        (
-            traj_info->pert->select != traj_info->selection.id_last_body_select ||
-            traj_info->selection.node_type != NODE_POSITIONAL
-        ))
+        traj_info->pert->select != traj_info->selection.id_last_body_select )
     {
         node_position_initial_using_cassie_body(traj_info, 
         	node_get_cassie_id_from_index(traj_info->pert->select));
@@ -16,21 +23,19 @@ void allow_node_transformations(traj_info_t* traj_info)
     }
 
     if( traj_info->pert->active &&
+        traj_info->pert->select > 25 &&
         traj_info->selection.node_type == NODE_POSITIONAL) 
     {
         traj_info->selection.id_last_body_select = traj_info->pert->select;
         traj_info->selection.id_last_pert_activenum = traj_info->pert->active;
-
-        if( traj_info->pert->select > 25)
-        {
-            v3_t dqpos = node_get_qpos_by_node_id(traj_info, 
-                node_get_body_id_from_real_body_id(traj_info->pert->select));
-            mju_copy3(dqpos,traj_info->pert->refpos);
-            node_position_scale_visually(traj_info, 
-                node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select), 
-                node_get_body_id_from_real_body_id(traj_info->pert->select)); 
+    
+        v3_t dqpos = node_get_qpos_by_node_id(traj_info, 
+            node_get_body_id_from_real_body_id(traj_info->pert->select));
+        mju_copy3(dqpos,traj_info->pert->refpos);
+        node_position_scale_visually(traj_info, 
+            node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select), 
+            node_get_body_id_from_real_body_id(traj_info->pert->select)); 
             
-        }
     }
     else if (traj_info->selection.id_last_pert_activenum == 1 && 
         traj_info->selection.id_last_body_select > 25 &&

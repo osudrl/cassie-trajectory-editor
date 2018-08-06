@@ -152,7 +152,7 @@ void reset_traj_info()
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;
     traj_info.selection.jointnum =  34;
-    traj_info.selection.jointdiff = 100;
+    traj_info.selection.jointdiff = 1;
     traj_info.selection.joint_move_rootframe = 1500;
     traj_info.selection.nodecount = 50;
     
