@@ -497,54 +497,30 @@ void node_position_joint_move(traj_info_t* traj_info,
     }
 }
 
-
 void node_scale_visually_jointmove(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id)
 {
-    /*double global_body_init_xpos_at_rootframe[3];
     double rootframe_transform_vector[3];
+    double jointdiff;
     int rootframe;
-    int frame_offset;
-    int currframe;
-    int i;
     v3_t node_qpos;
-   
-    node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
-    mju_copy3(node_qpos, traj_info->pert->refpos);
 
-    node_calculate_rootframe_transformation_vector(
-        traj_info, 
+    node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
+    mju_sub3(rootframe_transform_vector,
+        traj_info->pert->refpos,
+        node_qpos);
+    jointdiff = mju_norm(rootframe_transform_vector, 3);
+
+    rootframe = get_frame_from_node_body_id(traj_info,
         traj_info->timeline,
-        rootframe_transform_vector,
-        body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
-    mju_copy3(global_body_init_xpos_at_rootframe, node_get_body_xpos_curr(traj_info, body_id));
-
-    for (i = 0; i < NODECOUNT; i++)
-    {
-        //skips the node currently being dragged
-        if(node_get_body_id_from_node_index(i).id == node_id.id)
-            continue;
-
-        currframe = (traj_info->timeline->numposes / NODECOUNT) * i;
-        frame_offset = currframe - rootframe;
-
-        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
-        node_calclate_global_target_using_transformation_type(
-            traj_info, 
-            traj_info->timeline,
-            global_body_init_xpos_at_rootframe,
-            node_qpos,
-            rootframe_transform_vector,
-            rootframe,
-            frame_offset,
-            body_id);
-    }*/
-
+    node_position_joint_move(traj_info,
+        body_id,
+        rootframe,
+        jointdiff);
 }
 
 void node_scale_visually_positional(
