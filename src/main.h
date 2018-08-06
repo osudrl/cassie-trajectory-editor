@@ -88,6 +88,8 @@ struct _selection_t_
     double nodesigma;
     double nodeheight;
     int jointnum;
+
+    double localpos[3];
 };
 typedef struct _selection_t_ selection_t;
 

@@ -1,6 +1,8 @@
 
 #include "node.h"
 
+#define SEL traj_info->selection
+
 node_body_id_t node_get_body_id_from_node_index(int index)
 {
     node_body_id_t id;
@@ -92,7 +94,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
     final_root = mj_stackAlloc(traj_info->d, vector_size);
     init_curr_to_final_root = mj_stackAlloc(traj_info->d, vector_size);
 
-    if (traj_info->selection.pert_type == PERT_TARGET)
+    if (SEL.pert_type == PERT_TARGET)
     {
         mju_add(
             final_root, 
@@ -111,7 +113,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
             scalefactor,
             vector_size);
     }
-    else if (traj_info->selection.pert_type == PERT_TRANSLATION)
+    else if (SEL.pert_type == PERT_TRANSLATION)
     {
         mju_addScl(
             final_curr,
@@ -140,8 +142,8 @@ void node_calclate_global_target_using_transformation_type(
 
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
-        traj_info->selection.nodesigma, 
-        traj_info->selection.nodeheight);
+        SEL.nodesigma, 
+        SEL.nodeheight);
     body_init_xpos = node_get_body_xpos_by_frame(
         traj_info, 
         timeline, 
@@ -303,7 +305,7 @@ void node_perform_pert(
         &ik_iter_total);
 
     //this is toomuch
-    iterations = 3.491 * traj_info->selection.nodesigma;
+    iterations = 3.491 * SEL.nodesigma;
 
     if(traj_info->target_list)
     {
@@ -323,12 +325,12 @@ void node_perform_pert(
 
     for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
-        if(((int)(.2 * percent(frame_offset, iterations, traj_info->selection.nodesigma))) > outcount)
+        if(((int)(.2 * percent(frame_offset, iterations, SEL.nodesigma))) > outcount)
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
             printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per pose ...\n", 
-                percent(frame_offset, iterations, traj_info->selection.nodesigma),
+                percent(frame_offset, iterations, SEL.nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
@@ -434,7 +436,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
          body_id.id,
          rootframe,
-         traj_info->selection.nodesigma,
+         SEL.nodesigma,
          rootframe_transform_vector[0],
          rootframe_transform_vector[1],
          rootframe_transform_vector[2]
@@ -459,7 +461,7 @@ void node_position_joint_move(traj_info_t* traj_info,
         traj_info,
         traj_info->timeline,
         rootframe);
-    rootframe_init = traj_info->d->qpos[traj_info->selection.jointnum];
+    rootframe_init = traj_info->d->qpos[SEL.jointnum];
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -470,19 +472,19 @@ void node_position_joint_move(traj_info_t* traj_info,
 
         filter = node_calculate_filter_from_frame_offset(
             (int) mju_abs(frame - rootframe), 
-            traj_info->selection.nodesigma, 
-            traj_info->selection.nodeheight);
+            SEL.nodesigma, 
+            SEL.nodeheight);
 
         node_calculate_arbitrary_target_using_transformation_type(
             traj_info,
             &temp_new_qpos_val,
             &jointdiff,
-            traj_info->d->qpos + traj_info->selection.jointnum,
+            traj_info->d->qpos + SEL.jointnum,
             &rootframe_init,
             1,
             filter);
 
-        traj_info->d->qpos[traj_info->selection.jointnum] = temp_new_qpos_val;
+        traj_info->d->qpos[SEL.jointnum] = temp_new_qpos_val;
 
         mj_forward(traj_info->m, traj_info->d);
 
@@ -490,7 +492,7 @@ void node_position_joint_move(traj_info_t* traj_info,
             traj_info->d,
             node_qpos,
             NULL,
-            traj_info->pert->localpos,
+            SEL.localpos,
             traj_info->d->xquat + (4*body_id.id),
             body_id.id
             );
@@ -502,25 +504,41 @@ void node_scale_visually_jointmove(
     cassie_body_id_t body_id,
     node_body_id_t node_id)
 {
+    double qpos_cache[CASSIE_QPOS_SIZE];
     double rootframe_transform_vector[3];
     double jointdiff;
+    int jointdiffsign;
     int rootframe;
-    v3_t node_qpos;
+    v3_t body_root_xpos;
 
-    node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
-    mju_sub3(rootframe_transform_vector,
-        traj_info->pert->refpos,
-        node_qpos);
-    jointdiff = mju_norm(rootframe_transform_vector, 3);
-
+    mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);   
     rootframe = get_frame_from_node_body_id(traj_info,
         traj_info->timeline,
         node_id);
+
+    body_root_xpos = node_get_body_xpos_by_frame(
+        traj_info,
+        traj_info->timeline,
+        rootframe,
+        body_id);
+
+    mju_sub3(rootframe_transform_vector,
+        traj_info->pert->refpos,
+        body_root_xpos);
+
+    jointdiffsign = rootframe_transform_vector[2] < 0 ? -1 : 1;
+
+    jointdiff = jointdiffsign * mju_norm(rootframe_transform_vector, 3);
+
+    printf("jointdiff %.3f\n");
 
     node_position_joint_move(traj_info,
         body_id,
         rootframe,
         jointdiff);
+
+    mju_copy(traj_info->d->qpos, qpos_cache, CASSIE_QPOS_SIZE);
+    mj_forward(traj_info->m, traj_info->d);
 }
 
 void node_scale_visually_positional(
@@ -595,12 +613,12 @@ void node_position_jointid(traj_info_t* traj_info, cassie_body_id_t body_id)
     double diff;
     v3_t node_qpos;
 
-    init = traj_info->d->qpos[traj_info->selection.jointnum];
+    init = traj_info->d->qpos[SEL.jointnum];
     for (i = 0; i < NODECOUNT; i++)
     {
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
         diff = (i - NODECOUNT/2) * 1.0/(NODECOUNT/2);
-        traj_info->d->qpos[traj_info->selection.jointnum] = init + diff;
+        traj_info->d->qpos[SEL.jointnum] = init + diff;
         mj_forward(traj_info->m, traj_info->d);
         mj_local2Global(
             traj_info->d,
@@ -619,13 +637,13 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
 
     mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 
-    if(traj_info->selection.node_type == NODE_POSITIONAL)
+    if(SEL.node_type == NODE_POSITIONAL)
         node_position_initial_positional(traj_info, body_id);
-    else if (traj_info->selection.node_type == NODE_JOINTMOVE)
+    else if (SEL.node_type == NODE_JOINTMOVE)
     {
         node_position_joint_move(traj_info, body_id, 1, 0);
     }
-    else if (traj_info->selection.node_type == NODE_JOINTID)
+    else if (SEL.node_type == NODE_JOINTID)
         node_position_jointid(traj_info, body_id);
 
     mju_copy(traj_info->d->qpos, qpos_cache, CASSIE_QPOS_SIZE);
