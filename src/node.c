@@ -406,7 +406,16 @@ void node_perform_pert(
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
-void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
+void node_dropped_jointmove(traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+{
+    
+}
+
+void node_dropped_positional(traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
 {
     FILE* pfile;
     int rootframe;
@@ -445,7 +454,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     }
 }
 
-void node_position_joint_move(traj_info_t* traj_info, 
+void node_position_jointmove(traj_info_t* traj_info, 
     cassie_body_id_t body_id,
     int rootframe,
     double jointdiff)
@@ -507,7 +516,6 @@ void node_scale_visually_jointmove(
     double qpos_cache[CASSIE_QPOS_SIZE];
     double rootframe_transform_vector[3];
     double jointdiff;
-    int jointdiffsign;
     int rootframe;
     v3_t body_root_xpos;
 
@@ -528,9 +536,7 @@ void node_scale_visually_jointmove(
 
     jointdiff = rootframe_transform_vector[2];
 
-    printf("jointdiff %.3f\n", jointdiff);
-
-    node_position_joint_move(traj_info,
+    node_position_jointmove(traj_info,
         body_id,
         rootframe,
         jointdiff);
@@ -562,8 +568,11 @@ void node_scale_visually_positional(
         body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
-    mju_copy3(global_body_init_xpos_at_rootframe, node_get_body_xpos_curr(traj_info, body_id));
+    rootframe = get_frame_from_node_body_id(traj_info,
+        traj_info->timeline,
+        node_id);
+    mju_copy3(global_body_init_xpos_at_rootframe,
+        node_get_body_xpos_curr(traj_info, body_id));
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -574,7 +583,8 @@ void node_scale_visually_positional(
         currframe = (traj_info->timeline->numposes / NODECOUNT) * i;
         frame_offset = currframe - rootframe;
 
-        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
+        node_qpos = node_get_qpos_by_node_id(traj_info,
+            node_get_body_id_from_node_index(i));
         node_calclate_global_target_using_transformation_type(
             traj_info, 
             traj_info->timeline,
@@ -588,7 +598,8 @@ void node_scale_visually_positional(
 
 }
 
-void node_position_initial_positional(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_initial_positional(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     int i;
     int frame;
@@ -604,7 +615,8 @@ void node_position_initial_positional(traj_info_t* traj_info, cassie_body_id_t b
     }    
 }
 
-void node_position_jointid(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_jointid(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     int i;
     double init;
@@ -629,7 +641,8 @@ void node_position_jointid(traj_info_t* traj_info, cassie_body_id_t body_id)
     }
 }
 
-void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_initial_using_cassie_body(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     double qpos_cache[CASSIE_QPOS_SIZE];
 
@@ -639,7 +652,7 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
         node_position_initial_positional(traj_info, body_id);
     else if (SEL.node_type == NODE_JOINTMOVE)
     {
-        node_position_joint_move(traj_info, body_id, 1, 0);
+        node_position_jointmove(traj_info, body_id, 1, 0);
     }
     else if (SEL.node_type == NODE_JOINTID)
         node_position_jointid(traj_info, body_id);
@@ -648,7 +661,9 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body
     mj_forward(traj_info->m, traj_info->d);
 }
 
-double node_calculate_filter_from_frame_offset(double frame_offset, double sigma, double nodeheight)
+double node_calculate_filter_from_frame_offset(double frame_offset,
+    double sigma,
+    double nodeheight)
 {
     return mju_min(
         mju_max(nodeheight,1) * 

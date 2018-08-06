@@ -40,12 +40,21 @@ void allow_node_transformations(traj_info_t* traj_info)
     else if (
         !TP->active &&
         SEL.id_last_pert_activenum == 1 && 
-        SEL.id_last_body_select > 25 &&
-        SEL.node_type == NODE_POSITIONAL)
+        SEL.id_last_body_select > 25)
     {
-        node_dropped(traj_info, 
-            node_get_cassie_id_from_index(SEL.id_last_non_node_select), 
-            node_get_body_id_from_real_body_id(SEL.id_last_body_select));
+        if (SEL.node_type == NODE_POSITIONAL)
+        {
+            node_dropped_positional(traj_info, 
+                node_get_cassie_id_from_index(SEL.id_last_non_node_select), 
+                node_get_body_id_from_real_body_id(SEL.id_last_body_select));
+        }
+        else if (SEL.node_type == NODE_JOINTMOVE)
+        {
+            node_dropped_jointmove(traj_info, 
+                node_get_cassie_id_from_index(SEL.id_last_non_node_select), 
+                node_get_body_id_from_real_body_id(SEL.id_last_body_select));
+        }
+
 
         SEL.id_last_body_select = TP->select;
         SEL.id_last_pert_activenum = TP->active;
