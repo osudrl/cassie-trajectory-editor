@@ -77,6 +77,7 @@ void nodes_recolor(traj_info_t* traj_info)
         traj_info->m->geom_rgba[i*4 + 0] = .2;
         traj_info->m->geom_rgba[i*4 + 1] = .6;
         traj_info->m->geom_rgba[i*4 + 2] = .2;
+        traj_info->m->geom_rgba[i*4 + 3] = 0;
         traj_info->m->geom_size[i*3 + 0] = .015;
         traj_info->m->geom_size[i*3 + 1] = .015;
         traj_info->m->geom_size[i*3 + 2] = .015;

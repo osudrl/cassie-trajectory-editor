@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define NODECOUNT 100
+#define NODECOUNT 0
 #define NON_NODE_COUNT 0
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 
