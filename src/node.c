@@ -530,7 +530,7 @@ void node_scale_visually_jointmove(
 
     jointdiff = jointdiffsign * mju_norm(rootframe_transform_vector, 3);
 
-    printf("jointdiff %.3f\n");
+    printf("jointdiff %.3f\n", jointdiff);
 
     node_position_joint_move(traj_info,
         body_id,
