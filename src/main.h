@@ -90,6 +90,7 @@ struct _selection_t_
     int jointnum;
 
     double localpos[3];
+    double joint_move_ref[3];
 };
 typedef struct _selection_t_ selection_t;
 

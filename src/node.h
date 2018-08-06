@@ -90,6 +90,8 @@ void node_position_jointmove(traj_info_t* traj_info,
     cassie_body_id_t body_id,
     int rootframe,
     double jointdiff);
+double node_caluclate_jointdiff(traj_info_t* traj_info,
+    v3_t body_init_xpos);
 void node_scale_visually_jointmove(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
