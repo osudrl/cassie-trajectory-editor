@@ -87,9 +87,7 @@ struct _selection_t_
     int nodecount;
     double nodesigma;
     double nodeheight;
-    double jointdiff;
     int jointnum;
-    int joint_move_rootframe;
 };
 typedef struct _selection_t_ selection_t;
 
@@ -122,6 +120,7 @@ typedef struct _traj_info_ traj_info_t;
 
 uint64_t traj_time_in_micros();
 void traj_foreach_frame(traj_info_t* traj_info);
+void nodes_recolor(traj_info_t* traj_info);
 int64_t traj_calculate_runtime_micros(traj_info_t* traj_info);
 
 #endif
