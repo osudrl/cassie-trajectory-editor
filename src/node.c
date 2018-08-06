@@ -526,9 +526,7 @@ void node_scale_visually_jointmove(
         traj_info->pert->refpos,
         body_root_xpos);
 
-    jointdiffsign = rootframe_transform_vector[2] < 0 ? -1 : 1;
-
-    jointdiff = jointdiffsign * mju_norm(rootframe_transform_vector, 3);
+    jointdiff = rootframe_transform_vector[2];
 
     printf("jointdiff %.3f\n", jointdiff);
 
