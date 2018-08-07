@@ -13,7 +13,7 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 ## Getting Started: Compilation / Dependencies
 
 1. Clone
-2. Add a MuJoCo key to the repository root directory and name it mjkey.txt
+2. Add a [MuJoCo key](https://www.roboti.us/license.html) to the repository root directory and name it mjkey.txt
 3. Install `libglfw3-dev` and `wget`
 4. `make`
 
@@ -21,7 +21,7 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 
 Error | Solution
 --- | ---
-"MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please provide this file.
+"MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please [provide this file](https://www.roboti.us/license.html).
 
 
 # Development: ToDo's
@@ -79,11 +79,6 @@ Ctrl+Shift+Scroll | Dragging a node | Scales the 'height' of the [Gaussian distr
 
 
 \*Refine-Command Context Note: Every time  calls the [IK solver](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/WRITEUP.md#inverse-kinematics), it saves a list of frame/xpos targets for the refiner function to use. Any time IK is solved, this target list is overwritten, however, this target list is not with respect to the timeline, just the last time IK was run. This may be improved in the future, but at the moment, all refine commands must directly follow a previous refine command or a node-drag-perturbation.
-
-
-
-
-
 
 
 # Tool Source Documentation
@@ -222,10 +217,223 @@ int32_t doik | Controls the number of steps of IK that the solver will do. | Ini
 
 #### Fields
 
+## Node.c Module
+
+
+The functions within the node module implements a few different types and specific vector math.
+These functions are core the the functionality of the tool, but are long and unwieldy.
+
+### Node Module Specific Types
+
+**v3_t** is defined in node.h, and adds a bit more specificity than "double\*" when dealing with 3d vectors.
+Although `v3_t` and `double\*` are literally interchangeable, this type should only be used when requiring a vector of length 3.
+Functions with v3_t as a parameter will expect to be able to index the array at v[0], v[1], and v[2] and that these values should be the x, y and z values of the specified vector.
+
+**cassie_body_t** and **node_body_t** do not provide any more information than an int.
+Yet wrapping these ints in a struct provides strong type checking, preventing the functions which use these types from mistakenly interchanging these two different types.
+Furthermore, the function prototypes in the header are able to clearly communicate what kind of body (cassie or node) is needed for the calculations.
+To revert this type checking, all uses of these types can be replaced with unsigned ints, and the functions for wrapping the ids can be deleted.
+
+### Node Module Functions of Interest
+
+### node_get_body_id_from_node_index()
+
+Definition:
+```c
+node_body_id_t node_get_body_id_from_node_index(int index);
+```
+
+Returns: a `node_body_id` type corresponding to the *index* provided
+
+Assumptions: Acceptable node indecies are in the range [0,199]: at the moment, cassie.xml defines 200 node bodies
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+### node_get_body_id_from_real_id()
+
+Definition:
+```c
+node_body_id_t node_get_body_id_from_real_body_id(int real);
+```
+
+Returns: a `node_body_id` type corresponding to the *body id*
+
+Assumptions: For the cassie model, cassie bodies are within the id range [1,25] so the valid real ids are within the range [26,224]
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+### node_get_cassie_id_from_index()
+
+Definition:
+```c
+cassie_body_id_t node_get_cassie_id_from_index(int i);
+```
+
+Returns: a `cassie_body_id_t` type corresponding to the *body id*
+
+Assumptions: For the current cassie xml model, valid bodies range [1,25], where 1 is the pelvis and 25 is the right foot. Run `bash ./util/index-bodies.sh` for a list of bodies and associated ids.
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+### node_get_qpos_by_node_id()
+
+Definition:
+```c
+v3_t node_get_qpos_by_node_id(
+	traj_info_t* traj_info, 
+	node_body_id_t id);
+```
+
+Returns: a 3d vector used to get/set a node's position in the scene. Because nodes have mocap joints (not part of a physics chain), their qposes are used in the same way as body xposes.
+
+Assumptions: The `node_body_id_t` was constructed meeting the above assumptions
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+### node_get_body_xpos_curr()
+
+Definition:
+```c
+v3_t node_get_body_xpos_curr(
+	traj_info_t* traj_info, 
+	cassie_body_id_t id);
+```
+
+Returns: a 3d vector of the specified body's 3d position
+s
+Assumptions: The `cassie_body_id_t` was constructed meeting the above assumptions
+
+Changes to qposes: None
+
+Changes to any timeline: None
+
+
+### node_get_body_xpos_curr()
+
+Definition:
+```c
+v3_t node_get_body_xpos_by_frame(
+	traj_info_t* traj_info, 
+	timeline_t* timeline, 
+	int frame, 
+	cassie_body_id_t id);
+```
+
+Returns: the body's xpos at the specified frame on the provided timeline
+
+Parameters:
+
+Type/Name | Description
+--- | ---
+timeline_t timeline | the timeline structure from which to read in the set of qposes
+int frame | The frame (within the timeline) at which to set the qposes
+
+Assumptions: The timeline reference is non NULL
+
+Changes to qposes: **YES**, the current qposes are overwritten with the ones stored at the specified frame in the timeline struct
+
+Changes to any timeline: None
+
+### node_perform_ik_on_xpos_transformation()
+
+Definition:
+```c
+void node_perform_ik_on_xpos_transformation(
+    traj_info_t* traj_info, 
+    timeline_t* overwrite,
+    ik_solver_params_t* params,
+    cassie_body_id_t body_id, 
+    int frame, 
+    int frameoffset, 
+    v3_t target,
+    double* ik_iter_total)
+```
+
+Given the cassie body and the target xpos for this body, this function calls the IK solver defined in ik.c and defines how many simulation cycles the solver is allowed to take. Increases the value pointed to by `ik_iter_total` by the number of simulation cycles used in solving IK.
+
+Assumptions: The target vector and `ik_iter_total` references should all be non NULL.
+Furthermore, the timeline reference should be non NULL and initialized properly.
+
+Changes to qposes: **YES**, the current qposes will reflect the solution of the IK solver
+
+Changes to any timeline: **YES,** the specified frame on the provided timeline will be overwritten with the solution
+
+### node_calculate_arbitrary_target_using_transformation_type()
+
+Definition:
+```c
+void node_calculate_arbitrary_target_using_transformation_type(
+    traj_info_t* traj_info,
+    double* final_curr,
+    double* root_transformation,
+    double* init_curr,
+    double* init_root,
+    int vector_size,
+    double scalefactor)
+```
+
+Calculates a target (the vector can be an arbitrary dimension) using the vectors passed as parameters. 
+The target will depend on the current node transformation type, set by `traj_info->selection.node_type`.
+
+Parameters:
+
+Name/Type | Description
+--- | ---
+(vector) final_curr | The vector which the result (the target) will be stored. Must be of length `vector_size`
+(vector) root_transformation | The vector which describes how the "root" (often the node that was dragged and dropped) has moved in relation from its initial position at the root frame
+(vector) init_curr | The initial position of the body at the frame for which the target will be calculated
+(vector) init_root | The initial position of the body at the root frame before it was transformed
+int vector_size | Although this function makes the most sense in 3d, its stages are illustrated below in 2d and is used for a 1d transformation by `node_position_joint_move()`. This parameter defines the number of components for each source and result vector.
+double scale_factor | Also named `filter` in parts of the module, this value scales the full transformation down. This value is provably the result of the Gaussian distribution
+
+Returns: The target vector in `final_curr`
+
+Assumptions: 
+
+* The vectors are non NULL and at least the length of `vector_size`
+* Vector size > 0
+* Scale factor is \(0,1\] - other values work, but do not make sense
+
+<!---https://imgur.com/gallery/iLAihrA--->
+
+
+
+<img src="https://i.imgur.com/rJgPeQJ.png" width="500"> 
+
+<img src="https://i.imgur.com/FC9nbQm.png" width="500"> 
+
+<img src="https://i.imgur.com/Cri5BbT.png" width="500"> 
+
+<img src="https://i.imgur.com/UtyMJbZ.png" width="500"> 
+
+<img src="https://i.imgur.com/mQLGpsS.png" width="500"> 
+
+<img src="https://i.imgur.com/A6YWwNP.png" width="500"> 
+
+<img src="https://i.imgur.com/eBY7IL5.png" width="500"> 
+
+<img src="https://i.imgur.com/K6ev8cu.png" width="500"> 
+
+<img src="https://i.imgur.com/tV10ofR.png" width="500"> 
+
+<img src="https://i.imgur.com/TTR3zJ9.png" width="500"> 
+
+<img src="https://i.imgur.com/bzVGl9v.png" width="500"> 
+
+
 
 # Contact
 
 
-This tool and documentation page was written by [Kevin Kellar](https://github.com/kkevlar) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University. For issues, comments, or suggestions about the tool or its documentation, feel free to [contact me](https://github.com/kkevlar) or [open a GitHub issue](https://github.com/osudrl/cassie-trajectory-editor/issues).
+This tool and documentation page was written by [Kevin Kellar](https://github.com/kkevlar) for use within the [Dynamic Robotics Laboratory](http://mime.oregonstate.edu/research/drl/) at Oregon State University.
+For issues, comments, or suggestions about the tool or its documentation, feel free to [contact me](https://github.com/kkevlar) or [open a GitHub issue](https://github.com/osudrl/cassie-trajectory-editor/issues).
 
 
