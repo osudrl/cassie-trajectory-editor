@@ -1,6 +1,7 @@
 
 #include "control.h"
 
+#define SEL traj_info->selection
 
 void load_pert(traj_info_t* traj_info)
 {
@@ -27,7 +28,7 @@ void load_pert(traj_info_t* traj_info)
         result = fgets(buf,2048,pfile);
         if(!result)
             return;
-        traj_info->selection.nodesigma = strtod(buf, NULL);
+        SEL.nodesigma = strtod(buf, NULL);
 
         result = fgets(buf,2048,pfile);
         if(!result)
@@ -52,7 +53,7 @@ void load_pert(traj_info_t* traj_info)
             rootframe
             );
 
-        traj_info->selection.id_last_non_node_select = body_id;
+        SEL.id_last_non_node_select = body_id;
     }
 }
 
@@ -76,6 +77,8 @@ void refine_pert(traj_info_t* traj_info)
         globparams);
 }
 
+#define REVISUALIZE node_position_initial_using_cassie_body(traj_info, node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select))
+
 void undo_pert(traj_info_t* traj_info)
 {
     if(!traj_info->timeline->next)
@@ -83,8 +86,8 @@ void undo_pert(traj_info_t* traj_info)
 
     traj_info->timeline = traj_info->timeline->next;
 
-    if(traj_info->selection.id_last_non_node_select > 0 && traj_info->selection.id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select));
+    if(SEL.id_last_non_node_select > 0 && SEL.id_last_non_node_select <= 25)
+        REVISUALIZE;
 }
 
 void redo_pert(traj_info_t* traj_info)
@@ -94,8 +97,8 @@ void redo_pert(traj_info_t* traj_info)
 
     traj_info->timeline = traj_info->timeline->prev;
 
-    if(traj_info->selection.id_last_non_node_select > 0 && traj_info->selection.id_last_non_node_select <= 25)
-        node_position_initial_using_cassie_body(traj_info,  node_get_cassie_id_from_index(traj_info->selection.id_last_non_node_select));
+    if(SEL.id_last_non_node_select > 0 && SEL.id_last_non_node_select <= 25)
+        REVISUALIZE;
 }
 
 void control_expand_pose(traj_info_t* traj_info)
@@ -144,44 +147,44 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
     }
 
     if( key==GLFW_KEY_PAGE_UP)
-            traj_info->selection.jointnum = (traj_info->selection.jointnum + 1) % CASSIE_QPOS_SIZE;
+    {
+        SEL.jointnum = (SEL.jointnum + 1) % CASSIE_QPOS_SIZE;
+        if(SEL.node_type == NODE_JOINTID)
+            REVISUALIZE;
+    }
     else if( key==GLFW_KEY_PAGE_DOWN)
-            traj_info->selection.jointnum = (traj_info->selection.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+    {
+        SEL.jointnum = (SEL.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+        if(SEL.node_type == NODE_JOINTID)
+            REVISUALIZE;
+    }
     else if (key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;
-        node_position_initial_using_cassie_body(traj_info,
-            node_get_cassie_id_from_index(
-                traj_info->selection.id_last_non_node_select)
-        );
+        REVISUALIZE;
     }
     else if (key == GLFW_KEY_EQUAL)
     {
         NODECOUNT *= 1.5;     
-        node_position_initial_using_cassie_body(traj_info,
-            node_get_cassie_id_from_index(
-                traj_info->selection.id_last_non_node_select)
-        );
+        REVISUALIZE;
     }
     else if(key == GLFW_KEY_ENTER)
     {
-        traj_info->selection.node_type = (traj_info->selection.node_type + 1) % NODE_TYPE_E_COUNT;
-        node_position_initial_using_cassie_body(traj_info,
-            node_get_cassie_id_from_index(
-                traj_info->selection.id_last_non_node_select)
-        );
+        SEL.node_type = (SEL.node_type + 1) % NODE_TYPE_E_COUNT;
+        nodes_recolor(traj_info);
+        REVISUALIZE;
     }
 
      if( mods & GLFW_MOD_CONTROL )
      {
         // if( key==GLFW_KEY_A )
-        //     traj_info->selection.nodesigma *= .95;
+        //     SEL.nodesigma *= .95;
         // else if( key==GLFW_KEY_D)
-        //     traj_info->selection.nodesigma *= 1.05;
+        //     SEL.nodesigma *= 1.05;
         // else if( key==GLFW_KEY_S )
-        //     traj_info->selection.nodeheight *= .95;
+        //     SEL.nodeheight *= .95;
         // else if( key==GLFW_KEY_W)
-        //     traj_info->selection.nodeheight *= 1.05;
+        //     SEL.nodeheight *= 1.05;
         if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)

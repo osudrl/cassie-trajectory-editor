@@ -1,6 +1,8 @@
 
 #include "node.h"
 
+#define SEL traj_info->selection
+
 node_body_id_t node_get_body_id_from_node_index(int index)
 {
     node_body_id_t id;
@@ -30,11 +32,6 @@ v3_t node_get_qpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
         return 0;
     else
         return traj_info->d->mocap_pos + ((id.id - 26) * 3);
-}
-
-v3_t node_get_xpos_by_node_id(traj_info_t* traj_info, node_body_id_t id)
-{
-    return traj_info->d->mocap_pos + ((id.id-26) * 3);
 }
 
 v3_t node_get_body_xpos_curr(traj_info_t* traj_info, cassie_body_id_t id)
@@ -97,7 +94,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
     final_root = mj_stackAlloc(traj_info->d, vector_size);
     init_curr_to_final_root = mj_stackAlloc(traj_info->d, vector_size);
 
-    if (traj_info->selection.pert_type == PERT_TARGET)
+    if (SEL.pert_type == PERT_TARGET)
     {
         mju_add(
             final_root, 
@@ -116,7 +113,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
             scalefactor,
             vector_size);
     }
-    else if (traj_info->selection.pert_type == PERT_TRANSLATION)
+    else if (SEL.pert_type == PERT_TRANSLATION)
     {
         mju_addScl(
             final_curr,
@@ -145,8 +142,8 @@ void node_calclate_global_target_using_transformation_type(
 
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
-        traj_info->selection.nodesigma, 
-        traj_info->selection.nodeheight);
+        SEL.nodesigma, 
+        SEL.nodeheight);
     body_init_xpos = node_get_body_xpos_by_frame(
         traj_info, 
         timeline, 
@@ -183,7 +180,7 @@ void node_calculate_rootframe_transformation_vector(
 
     rootframe = get_frame_from_node_body_id(traj_info, timeline, node_id);
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
-    node_final_xpos = node_get_xpos_by_node_id(traj_info, node_id);
+    node_final_xpos = node_get_qpos_by_node_id(traj_info, node_id);
 
     mju_sub3(rootframe_transform_vector, node_final_xpos, body_init_xpos);
 }
@@ -308,7 +305,7 @@ void node_perform_pert(
         &ik_iter_total);
 
     //this is toomuch
-    iterations = 3.491 * traj_info->selection.nodesigma;
+    iterations = 3.491 * SEL.nodesigma;
 
     if(traj_info->target_list)
     {
@@ -328,12 +325,12 @@ void node_perform_pert(
 
     for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
-        if(((int)(.2 * percent(frame_offset, iterations, traj_info->selection.nodesigma))) > outcount)
+        if(((int)(.2 * percent(frame_offset, iterations, SEL.nodesigma))) > outcount)
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
             printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per pose ...\n", 
-                percent(frame_offset, iterations, traj_info->selection.nodesigma),
+                percent(frame_offset, iterations, SEL.nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
@@ -409,7 +406,62 @@ void node_perform_pert(
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
-void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id_t node_id)
+void node_dropped_jointmove(traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+{
+    int frame;
+    int rootframe;
+    double rootframe_init;
+    double filter;
+    double jointdiff;
+    timeline_t* timeline_old;
+    timeline_t* timeline_new;
+
+    timeline_old = traj_info->timeline;
+    timeline_new = timeline_duplicate(timeline_old);
+
+    rootframe = get_frame_from_node_body_id(traj_info,
+        timeline_new,
+        node_id);
+
+    timeline_set_qposes_to_pose_frame(
+        traj_info,
+        timeline_old,
+        rootframe);
+    rootframe_init = traj_info->d->qpos[SEL.jointnum];
+
+    mj_forward(traj_info->m, traj_info->d);
+    jointdiff = node_caluclate_jointdiff(traj_info,
+        node_get_body_xpos_curr(traj_info, body_id));
+
+    for (frame = 0; frame < timeline_new->numposes; frame++)
+    {
+        filter = node_calculate_filter_from_frame_offset(
+            frame - rootframe, 
+            SEL.nodesigma, 
+            SEL.nodeheight);
+
+        node_calculate_arbitrary_target_using_transformation_type(
+            traj_info,
+            timeline_new->qposes[frame].q + SEL.jointnum,
+            &jointdiff,
+            timeline_old->qposes[frame].q + SEL.jointnum,
+            &rootframe_init,
+            1,
+            filter);
+    }
+
+    timeline_new->next = timeline_old;
+    timeline_old->prev = timeline_new;
+    traj_info->timeline = timeline_new;
+
+    node_position_initial_using_cassie_body(traj_info,  body_id);
+}
+
+void node_dropped_positional(traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
 {
     FILE* pfile;
     int rootframe;
@@ -439,7 +491,7 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
         fprintf(pfile, "%d\n%d\n%.5f\n%.10f\n%.10f\n%.10f\n",
          body_id.id,
          rootframe,
-         traj_info->selection.nodesigma,
+         SEL.nodesigma,
          rootframe_transform_vector[0],
          rootframe_transform_vector[1],
          rootframe_transform_vector[2]
@@ -448,8 +500,109 @@ void node_dropped(traj_info_t* traj_info, cassie_body_id_t body_id, node_body_id
     }
 }
 
+void node_position_jointmove(traj_info_t* traj_info, 
+    cassie_body_id_t body_id,
+    int rootframe,
+    double jointdiff)
+{
+    int i;
+    int frame;
+    v3_t node_qpos;
+    double rootframe_init;
+    double filter;
+    double temp_new_qpos_val;
 
-void node_position_scale_visually(
+    timeline_set_qposes_to_pose_frame(
+        traj_info,
+        traj_info->timeline,
+        rootframe);
+    rootframe_init = traj_info->d->qpos[SEL.jointnum];
+
+    for (i = 0; i < NODECOUNT; i++)
+    {
+        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
+        node_qpos = node_get_qpos_by_node_id(traj_info, 
+            node_get_body_id_from_node_index(i));
+        
+        timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
+
+        filter = node_calculate_filter_from_frame_offset(
+            (int) mju_abs(frame - rootframe), 
+            SEL.nodesigma, 
+            SEL.nodeheight);
+
+        node_calculate_arbitrary_target_using_transformation_type(
+            traj_info,
+            &temp_new_qpos_val,
+            &jointdiff,
+            traj_info->d->qpos + SEL.jointnum,
+            &rootframe_init,
+            1,
+            filter);
+
+        traj_info->d->qpos[SEL.jointnum] = temp_new_qpos_val;
+
+        mj_forward(traj_info->m, traj_info->d);
+
+        mj_local2Global(
+            traj_info->d,
+            node_qpos,
+            NULL,
+            SEL.localpos,
+            traj_info->d->xquat + (4*body_id.id),
+            body_id.id
+            );
+    }
+}
+
+double node_caluclate_jointdiff(traj_info_t* traj_info,
+    v3_t body_init_xpos)
+{
+    double rootframe_transform_vector[3];
+
+    mju_sub3(rootframe_transform_vector,
+        SEL.joint_move_ref,
+        body_init_xpos);
+
+    return rootframe_transform_vector[2];
+}
+
+void node_scale_visually_jointmove(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+{
+    double qpos_cache[CASSIE_QPOS_SIZE];
+    double jointdiff;
+    int rootframe;
+    v3_t body_init_xpos;
+
+    mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);   
+    rootframe = get_frame_from_node_body_id(traj_info,
+        traj_info->timeline,
+        node_id);
+
+    body_init_xpos = node_get_body_xpos_by_frame(
+        traj_info,
+        traj_info->timeline,
+        rootframe,
+        body_id);
+
+    mju_copy3(SEL.joint_move_ref,
+        traj_info->pert->refpos);
+
+    jointdiff = node_caluclate_jointdiff(traj_info, body_init_xpos);
+ 
+    node_position_jointmove(traj_info,
+        body_id,
+        rootframe,
+        jointdiff); 
+
+    mju_copy(traj_info->d->qpos, qpos_cache, CASSIE_QPOS_SIZE);
+    mj_forward(traj_info->m, traj_info->d);
+}
+
+void node_scale_visually_positional(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id)
@@ -461,7 +614,10 @@ void node_position_scale_visually(
     int currframe;
     int i;
     v3_t node_qpos;
-   
+
+    node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
+    mju_copy3(node_qpos, traj_info->pert->refpos);
+
     node_calculate_rootframe_transformation_vector(
         traj_info, 
         traj_info->timeline,
@@ -469,8 +625,11 @@ void node_position_scale_visually(
         body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
-    mju_copy3(global_body_init_xpos_at_rootframe, node_get_body_xpos_curr(traj_info, body_id));
+    rootframe = get_frame_from_node_body_id(traj_info,
+        traj_info->timeline,
+        node_id);
+    mju_copy3(global_body_init_xpos_at_rootframe,
+        node_get_body_xpos_curr(traj_info, body_id));
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -481,7 +640,8 @@ void node_position_scale_visually(
         currframe = (traj_info->timeline->numposes / NODECOUNT) * i;
         frame_offset = currframe - rootframe;
 
-        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
+        node_qpos = node_get_qpos_by_node_id(traj_info,
+            node_get_body_id_from_node_index(i));
         node_calclate_global_target_using_transformation_type(
             traj_info, 
             traj_info->timeline,
@@ -495,7 +655,8 @@ void node_position_scale_visually(
 
 }
 
-void node_position_initial_positional(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_initial_positional(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     int i;
     int frame;
@@ -511,71 +672,20 @@ void node_position_initial_positional(traj_info_t* traj_info, cassie_body_id_t b
     }    
 }
 
-void node_position_joint_move(traj_info_t* traj_info, cassie_body_id_t body_id)
-{
-    int i;
-    int frame;
-    v3_t node_qpos;
-    double rootframe_init;
-    double filter;
-    double temp_new_qpos_val;
-
-    timeline_set_qposes_to_pose_frame(
-        traj_info,
-        traj_info->timeline,
-        traj_info->selection.joint_move_rootframe);
-    rootframe_init = traj_info->d->qpos[traj_info->selection.jointnum];
-
-
-    for (i = 0; i < NODECOUNT; i++)
-    {
-        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
-        node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
-        
-        timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
-
-        filter = node_calculate_filter_from_frame_offset(
-            (int) mju_abs(frame - traj_info->selection.joint_move_rootframe), 
-            traj_info->selection.nodesigma, 
-            traj_info->selection.nodeheight);
-
-        node_calculate_arbitrary_target_using_transformation_type(
-            traj_info,
-            &temp_new_qpos_val,
-            &traj_info->selection.jointdiff,
-            traj_info->d->qpos + traj_info->selection.jointnum,
-            &rootframe_init,
-            1,
-            filter);
-
-        traj_info->d->qpos[traj_info->selection.jointnum] = temp_new_qpos_val;
-
-        mj_forward(traj_info->m, traj_info->d);
-
-        mj_local2Global(
-            traj_info->d,
-            node_qpos,
-            NULL,
-            traj_info->pert->localpos,
-            traj_info->d->xquat + (4*body_id.id),
-            body_id.id
-            );
-    }
-}
-
-void node_position_jointid(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_jointid(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     int i;
     double init;
     double diff;
     v3_t node_qpos;
 
-    init = traj_info->d->qpos[traj_info->selection.jointnum];
+    init = traj_info->d->qpos[SEL.jointnum];
     for (i = 0; i < NODECOUNT; i++)
     {
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
         diff = (i - NODECOUNT/2) * 1.0/(NODECOUNT/2);
-        traj_info->d->qpos[traj_info->selection.jointnum] = init + diff;
+        traj_info->d->qpos[SEL.jointnum] = init + diff;
         mj_forward(traj_info->m, traj_info->d);
         mj_local2Global(
             traj_info->d,
@@ -588,27 +698,29 @@ void node_position_jointid(traj_info_t* traj_info, cassie_body_id_t body_id)
     }
 }
 
-void node_position_initial_using_cassie_body(traj_info_t* traj_info, cassie_body_id_t body_id)
+void node_position_initial_using_cassie_body(traj_info_t* traj_info,
+    cassie_body_id_t body_id)
 {
     double qpos_cache[CASSIE_QPOS_SIZE];
 
     mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 
-    if(traj_info->selection.node_type == NODE_POSITIONAL)
+    if(SEL.node_type == NODE_POSITIONAL)
         node_position_initial_positional(traj_info, body_id);
-    else if (traj_info->selection.node_type == NODE_JOINTMOVE)
+    else if (SEL.node_type == NODE_JOINTMOVE)
     {
-        traj_info->selection.jointdiff = 0;
-        node_position_joint_move(traj_info, body_id);
+        node_position_jointmove(traj_info, body_id, 1, 0);
     }
-    else if (traj_info->selection.node_type == NODE_JOINTID)
+    else if (SEL.node_type == NODE_JOINTID)
         node_position_jointid(traj_info, body_id);
 
     mju_copy(traj_info->d->qpos, qpos_cache, CASSIE_QPOS_SIZE);
     mj_forward(traj_info->m, traj_info->d);
 }
 
-double node_calculate_filter_from_frame_offset(double frame_offset, double sigma, double nodeheight)
+double node_calculate_filter_from_frame_offset(double frame_offset,
+    double sigma,
+    double nodeheight)
 {
     return mju_min(
         mju_max(nodeheight,1) * 
