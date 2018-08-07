@@ -73,7 +73,7 @@ enum pert_type_e
     PERT_TARGET = 1,
 };
 
-#define PERT_TYPE_E_COUNT 3
+#define PERT_TYPE_E_COUNT 2
 
 struct _selection_t_
 {
