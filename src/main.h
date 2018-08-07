@@ -70,8 +70,7 @@ enum node_type_e
 enum pert_type_e
 {
     PERT_TRANSLATION = 0,
-    PERT_ONESIDE_TRANS = 1,
-    PERT_TARGET = 2
+    PERT_TARGET = 1,
 };
 
 #define PERT_TYPE_E_COUNT 3
