@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define NODECOUNT 100
+#define NODECOUNT (traj_info->selection.nodecount)
 #define NON_NODE_COUNT 0
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 
@@ -58,11 +58,40 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
+enum node_type_e
+{
+    NODE_POSITIONAL = 0,
+    NODE_JOINTID = 1,
+    NODE_JOINTMOVE = 2
+};
+
+#define NODE_TYPE_E_COUNT 3
+
 enum pert_type_e
 {
-    PERT_TRANSLATION,
-    PERT_TARGET
+    PERT_TRANSLATION = 0,
+    PERT_TARGET = 1,
 };
+
+#define PERT_TYPE_E_COUNT 2
+
+struct _selection_t_
+{
+    int id_last_body_select;
+    int id_last_non_node_select;
+    int id_last_pert_activenum;
+
+    enum node_type_e node_type;
+    enum pert_type_e pert_type;
+    int nodecount;
+    double nodesigma;
+    double nodeheight;
+    int jointnum;
+
+    double localpos[3];
+    double joint_move_ref[3];
+};
+typedef struct _selection_t_ selection_t;
 
 struct _traj_info_
 {
@@ -70,25 +99,20 @@ struct _traj_info_
     mjData* d;
     mjvPerturb* pert;
     target_t* target_list;
+
     int refine_body;
     int refine_rootframe;
 
     pdikdata_t ik;
+    selection_t selection;
     timeline_t* timeline;
     
     int64_t time_start;
     int64_t time_frozen;
     bool* paused;
     char* filename_step_data;
-    int id_last_body_select;
-    int id_last_non_node_select;
-    int id_last_pert_activenum;
 
-    double nodesigma;
-    double nodeheight;
-    enum pert_type_e pert_type;
-
-    int target_list_size;
+    int target_list_size;    
 };
 typedef struct _traj_info_ traj_info_t;
 
@@ -98,6 +122,7 @@ typedef struct _traj_info_ traj_info_t;
 
 uint64_t traj_time_in_micros();
 void traj_foreach_frame(traj_info_t* traj_info);
+void nodes_recolor(traj_info_t* traj_info);
 int64_t traj_calculate_runtime_micros(traj_info_t* traj_info);
 
 #endif
