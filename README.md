@@ -66,7 +66,7 @@ The following sections discuss the code base of the tool.
 
 ![rough roadmap diagram](https://i.imgur.com/hGbAoiS.png)
 
-The above diagram (**outdated, see** #11) identifies many of the key source files, data structures, and fucntions of the tool.
+The above diagram (**outdated, see [#11](osudrl/casie-trajectory-editor#11)**) identifies many of the key source files, data structures, and fucntions of the tool.
 
 Symbol | Description
 --- | ---
