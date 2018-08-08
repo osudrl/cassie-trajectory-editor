@@ -66,7 +66,7 @@ The following sections discuss the code base of the tool.
 
 ![rough roadmap diagram](https://i.imgur.com/hGbAoiS.png)
 
-The above diagram identifies many of the key source files, data structures, and fucntions of the tool.
+The above diagram (**outdated, see #11**) identifies many of the key source files, data structures, and fucntions of the tool.
 
 Symbol | Description
 --- | ---
@@ -120,10 +120,13 @@ bool* paused | A reference to the paused variable in simulate.c's globals | Same
 [mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping nodes | Initialized in `reset_traj_info()` | `main-traj.c : allow_node_transformations()` and some helper functions in node.c
 [timeline_t\*](https://github.com/osudrl/cassie-trajectory-editor#timeline_t-definition) timeline | A struct listing each discrete pose throughout the step duration | Initialized in timeline.c | Most of the timeline.c functions use this field for setting / overwriting poses
 pdikdata_t ik | A struct containing the parameters for solving IK using the [MuJoCo control function callback](http://www.mujoco.org/book/reference.html#mjcb_control) | In [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128:L133) | Used to control the pdik solver in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.c#L21:L40)
-~double nodesigma~ | ~The relative standard deviation of the Gaussian filter used to smooth translations~ | ~Same as above~ | ~Used in the node.c module to apply smoothed translations and determine the "cutoff" for the Gaussian filter~
+selection_t selection | A struct containing the parameters corroponding to the selections and transformations of nodes and bodies | Initialized in `reset_traj_info()` | Used by the node.c transformation functions and `main-traj.c : allow_node_transformations()` 
 
 
 ### pdikdata_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.h#L11:L24))
+
+
+A struct containing the parameters for solving IK using the [MuJoCo control function callback](http://www.mujoco.org/book/reference.html#mjcb_control)
 
 
 #### Memory Location
@@ -157,6 +160,36 @@ double pd_b | The 'damping constant', which is the coefficient for the D (deriva
 int32_t max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the call in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
 int32_t doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
 
+### selection_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
+
+A struct containing the parameters corroponding to the selections and transformations of nodes and bodies.
+Not really used apart from the traj_info struct, but logically groups the information.
+
+
+#### Memory Location
+
+Stored within the traj_info struct.
+
+
+#### Setup
+
+Setup in `reset_traj_info()` in simulate.c
+
+#### Usages
+
+Used primarily in node.c seleciton functions and in `main : allow_node_transformations()`.
+In many modules, the macro `SEL` [provides an alias](https://github.com/osudrl/cassie-trajectory-editor/blob/23891bf8d50521b568a936f3c957935b47e269fe/src/node.c#L4) for accessing this structure.
+
+
+#### Fields
+
+Almost every field is initialized in `simulate.c : reset_traj_info()`, so that column was deleted.
+
+Type / Name | Description | Usages
+--- | --- | --- | ---
+int id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow_node_transformations()` to determine selection / transformation / drop behavior
+
+
 
 ### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
@@ -175,21 +208,6 @@ int32_t doik | Controls the number of steps of IK that the solver will do. | Ini
 #### Fields
 
 
-### selection_t
-
-
-#### Memory Location
-
-
-
-#### Setup
-
-
-
-#### Usages
-
-
-#### Fields
 
 ## Node.c Module
 
