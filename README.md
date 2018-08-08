@@ -152,13 +152,13 @@ Used in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c
 
 Type / Name | Description | Initial State | Used In
 --- | --- | --- | ---
-int body_id | The body id on Cassie which is being manipulated | Set in ik.c using the function argument from the call node.c | Used in pdik.c, defines which body the pdik controller is applied
-double target_body[3] | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pd_controller()` in pdik.c as the target for the PD controller
-double lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating the IK solver
-double pd_k | The 'spring constant', which is the coefficient for the P (positional) term for the pd controller | Set in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/5d9722b7fdfb91c40a43e6a97ea7320624ed869f/src/ik.c#L67:L82) | Used in `apply_pd_controller()` to scale the positional term
-double pd_b | The 'damping constant', which is the coefficient for the D (derivative) term for the pd controller | Same as above | Used in `apply_pd_controller()` to scale the derivative term
-int32_t max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the call in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
-int32_t doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
+**int** body id | The body id on Cassie which is being manipulated | Set in ik.c using the function argument from the call node.c | Used in pdik.c, defines which body the pdik controller is applied
+**double[3]** target body | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pd_controller()` in pdik.c as the target for the PD controller
+**double** lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating the IK solver
+**double** pd_k | The 'spring constant', which is the coefficient for the P (positional) term for the pd controller | Set in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/5d9722b7fdfb91c40a43e6a97ea7320624ed869f/src/ik.c#L67:L82) | Used in `apply_pd_controller()` to scale the positional term
+**double** pd_b | The 'damping constant', which is the coefficient for the D (derivative) term for the pd controller | Same as above | Used in `apply_pd_controller()` to scale the derivative term
+**int32_t** max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the call in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
+**int32_t** doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
 
 ### selection_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
@@ -177,7 +177,7 @@ Setup in `reset_traj_info()` in simulate.c
 
 #### Usages
 
-Used primarily in node.c seleciton functions and in `main : allow_node_transformations()`.
+Used primarily in node.c selection functions and in `main : allow_node_transformations()`.
 In many modules, the macro `SEL` [provides an alias](https://github.com/osudrl/cassie-trajectory-editor/blob/23891bf8d50521b568a936f3c957935b47e269fe/src/node.c#L4) for accessing this structure.
 
 
@@ -185,19 +185,19 @@ In many modules, the macro `SEL` [provides an alias](https://github.com/osudrl/c
 
 Almost every field is initialized in `simulate.c : reset_traj_info()`, so that column was deleted.
 
-Type | Name | Description | Usages
---- | --- | --- | ---
-int | id last body select | The most recent body (on cassie or node) that was selected with the mouse | `allow node transformations()` to determine selection / transformation / drop behavior
-int | id last non node select | The most recent body **on cassie** that was selected with the mouse | Same as above
-int | id last pert activenum | The most recent value of the boolean pert->active | `allow node transformations()` to determine if a node was dropped
-enum | node_type | Sets the type of selection/nodes which appears when the user clicks a body | Primarily used in node.c functions like `node position initial using cassie body()` or in `allow node transformations()` to determine what node functions to call
-enum | pert_type | Sets the type of perturbation filtering-- behavior of nearby nodes when a node is being currently transformed | Primary usage is to change behavior in `node calculate arbitrary target using transformation type()`
-int | nodecount | Total number of nodes displayed along the trajectory | Used by nearly all the functions which transform nodes. May still need a bug fix ([#4](https://github.com/osudrl/cassie-trajectory-editor/issues/4)) or may be changed completely ([#10](https://github.com/osudrl/cassie-trajectory-editor/issues/10)/[#1](https://github.com/osudrl/cassie-trajectory-editor/issues/1))
-double | nodesigma | The standard deviation of the Gaussian filtering used for transformations | Used in node functions which apply transformation or scale nodes visually while a node is being dragged
-double | nodeheight | Technically the height scaling of the Gaussian filtering | Used as an argument for `node calculate filter from frame offset()` to change the shape of the nearby nodes' transformations
-int | jointnum | The specific joint being transformed in the jointid/jointnum selection modes | Used in all the node jointmove functions to display / apply transformations for a specific joint
-double[] | localpos | A copy of the localpos vector in the [mjvPerturb struct](http://www.mujoco.org/book/reference.html#mjvPerturb), copied when the user has clicked on a Cassie body | Used to display nodes going through the selection point on the body in the jointid and jointnum selection types; we care about where the user clicked on the Cassie body, even when a node is selected and this pert->localpos value is overwritten by this new selection
-double[] | joint move ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `node scale visually jointmove()` so that when the node is dropped, `node calculate jointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory because the nodes do not track directly with the mouse in this mode)
+Type / Name | Description | Usages
+ --- | --- | ---
+**int** id last body select | The most recent body (on cassie or node) that was selected with the mouse | `allow node transformations()` to determine selection / transformation / drop behavior
+**int** id last non node select | The most recent body **on cassie** that was selected with the mouse | Same as above
+**int** id last pert activenum | The most recent value of the boolean pert->active | `allow node transformations()` to determine if a node was dropped
+**enum** node type | Sets the type of selection/nodes which appears when the user clicks a body | Primarily used in node.c functions like `node position initial using cassie body()` or in `allow node transformations()` to determine what node functions to call
+**enum** pert type | Sets the type of perturbation filtering-- behavior of nearby nodes when a node is being currently transformed | Primary usage is to change behavior in `node calculate arbitrary target using transformation type()`
+**int** nodecount | Total number of nodes displayed along the trajectory | Used by nearly all the functions which transform nodes. May still need a bug fix ([#4](https://github.com/osudrl/cassie-trajectory-editor/issues/4)) or may be changed completely ([#10](https://github.com/osudrl/cassie-trajectory-editor/issues/10)/[#1](https://github.com/osudrl/cassie-trajectory-editor/issues/1))
+**double** nodesigma | The standard deviation of the Gaussian filtering used for transformations | Used in node functions which apply transformation or scale nodes visually while a node is being dragged
+**double** nodeheight | Technically the height scaling of the Gaussian filtering | Used as an argument for `node calculate filter from frame offset()` to change the shape of the nearby nodes' transformations
+**int** | jointnum | The specific joint being transformed in the jointid/jointnum selection modes | Used in all the node jointmove functions to display / apply transformations for a specific joint
+**double[3]** localpos | A copy of the localpos vector in the [mjvPerturb struct](http://www.mujoco.org/book/reference.html#mjvPerturb), copied when the user has clicked on a Cassie body | Used to display nodes going through the selection point on the body in the jointid and jointnum selection types; we care about where the user clicked on the Cassie body, even when a node is selected and this pert->localpos value is overwritten by this new selection
+**double[3]** joint move ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `node scale visually jointmove()` so that when the node is dropped, `node calculate jointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory because the nodes do not track directly with the mouse in this mode)
 
 
 
