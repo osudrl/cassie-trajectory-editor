@@ -148,6 +148,12 @@ void reset_traj_info()
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
     traj_info.nodesigma = 100;
+
+    for( int i=0; i<mjNRNDFLAG; i++ )
+        if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
+        {
+            scn.flags[i] = 0;
+        }
 }
 
 
