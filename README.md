@@ -197,7 +197,7 @@ double | nodesigma | The standard deviation of the Gaussian filtering used for t
 double | nodeheight | Technically the height scaling of the Gaussian filtering | Used as an argument for `node calculate filter from frame offset()` to change the shape of the nearby nodes' transformations
 int | jointnum | The specific joint being transformed in the jointid/jointnum selection modes | Used in all the node jointmove functions to display / apply transformations for a specific joint
 double[] | localpos | A copy of the localpos vector in the [mjvPerturb struct](http://www.mujoco.org/book/reference.html#mjvPerturb), copied when the user has clicked on a cassie body | Used to display nodes going through the selection point on the body in the jointid and jointnum selection types; we care about where the user clicked on the cassie body, even when a node is selected and this pert->localpos value is overwritten by this new selection
-double[] | joint move ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `nodescalevisuallyjointmove()` so that when the node is dropped, `nodecalcualtejointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory becasuse the nodes do not track directly with the mouse in this mode)
+double[] | joint move ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `node scale visually jointmove()` so that when the node is dropped, `node calcualte jointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory becasuse the nodes do not track directly with the mouse in this mode)
 
 
 
