@@ -187,14 +187,22 @@ Almost every field is initialized in `simulate.c : reset_traj_info()`, so that c
 
 Type | Name | Description | Usages
 --- | --- | --- | ---
-int | id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow_node_transformations()` to determine selection / transformation / drop behavior
+int | id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow node transformations()` to determine selection / transformation / drop behavior
 int | id_last_non_node_select | The most recent body **on cassie** that was selected with the mouse | Same as above
-int | id_last_pert_activenum | The most recent value of the boolean pert->active | `allow_node_transformations()` to determine if a node was dropped
-enum | node_type | Sets the type of selection/nodes which appears when the user clicks a body | Primarily used in node.c functions like `node_position_initial_using_cassie_body()` or in `allow_node_transformations()` to determine what node functions to call
+int | id_last_pert_activenum | The most recent value of the boolean pert->active | `allow node transformations()` to determine if a node was dropped
+enum | node_type | Sets the type of selection/nodes which appears when the user clicks a body | Primarily used in node.c functions like `node position initial using cassie body()` or in `allow node transformations()` to determine what node functions to call
+enum | pert_type | Sets the type of perturbation filtering-- behavior of nearby nodes when a node is being currently transformed | Primary usage is to change behavior in `node calculate arbitrary target using transformation type()`
+int | nodecount | Total number of nodes displayed along the trajectory | Used by nearly all the functions which transform nodes. May still need a bugfix ([#4](https://github.com/osudrl/cassie-trajectory-editor/issues/4)) or may be changed completely ([#10](https://github.com/osudrl/cassie-trajectory-editor/issues/10)/[#1](https://github.com/osudrl/cassie-trajectory-editor/issues/1))
+double | nodesigma | The standard deviation of the Gaussian filtering used for transformations | Used in node functions which apply transformation or scale nodes visually while a node is being dragged
+double | nodeheight | Technically the height scaling of the Gaussian filtering | Used as an argument for `node calculate filter from frame offset()` to change the shape of the nearby nodes' transformations
+int | jointnum | The specific joint being transformed in the jointid/jointnum selection modes | Used in all the node jointmove functions to display / apply transformations for a specific joint
+double[] | localpos | A copy of the localpos vector in the [mjvPerturb struct](http://www.mujoco.org/book/reference.html#mjvPerturb), copied when the user has clicked on a cassie body | Used to display nodes going through the selection point on the body in the jointid and jointnum selection types; we care about where the user clicked on the cassie body, even when a node is selected and this pert->localpos value is overwritten by this new selection
+double[] | joint_move_ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `nodescalevisuallyjointmove()` so that when the node is dropped, `nodecalcualtejointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory becasuse the nodes do not track directly with the mouse in this mode)
 
 
 
-### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
+
+### timeline+t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
 
 #### Memory Location
