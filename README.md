@@ -23,32 +23,6 @@ Error | Solution
 --- | ---
 "MuJoCo will need a product key to run the tool. Please provide a product key for MuJoCo and name it mjkey.txt." | The makefile will terminate compilation if mjkey.txt is not in the root repository directory. Please [provide this file](https://www.roboti.us/license.html).
 
-
-# Development: ToDo's
-
-## Primary 
-
-* [ ] select change single joint
-* [ ] one-sided scaling transformation
-* [ ] Variable node count
-
-
-* [ ] Add user controls with respect to initialization
-  * [ ] Allow different trajectories to be loaded in
-  * [ ] Add control over loop number
-  * [ ] Allow for initialization with a single pose
-* [ ] Export trajectories in the same format as the input file
-* [ ] Allow for "clipping" of larger trajectory
-* [ ] Fix undos/redos/overwrites so it doesn't leak memory
-* [ ] Document the current controls
-* [ ] Make ctrl p respect the different pert types
-* [ ] Look into drag files into MuJoCo window
-* [ ] ghost nodes when dragging to show starting positions
-* [ ] Different color nodes for different transformation methods
-
-
-
-
 # Controls
 
 
@@ -120,7 +94,7 @@ Setup | How and where is structure is initially set up
 Usages | Relevant times the structure is used in functions
 Fields | List of contained fields, ordered from most to least relevant
 
-### traj_info_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main.h#L53:L69))
+### traj_info_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
 The traj_info struct initially was defined just to encapsulate the [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) / [mjData\*](http://www.mujoco.org/book/reference.html#mjData) references such that method calls had the ability to modify the robot's qpos values. Now, however, the struct has expanded to hold all the current runtime information about the tool, including the pose timeline and other common structures used by MuJoCo method calls.
 
@@ -134,7 +108,7 @@ The struct is initially set up by [simulate.c : reset_traj_info()](https://githu
 
 #### Usages
 
-Nearly ever function of the tool takes a traj_info reference because it allows access to the the timeline of poses and allows helper functions to modify the model's joint angles, external forces, etc.
+Nearly every function of the tool takes a traj_info reference because it allows access to the the list of timelines and allows helper functions to modify the model's joint angles, external forces, etc.
 
 #### Fields
 
@@ -143,7 +117,7 @@ Type / Name | Description | Initial State | Used In
 [mjModel\*](http://www.mujoco.org/book/reference.html#mjModel) m | Contains the information about the simulated Cassie model | Initialized in `reset_traj_info()` with the value set by `load_model()` | When making calls to MuJoCo functions such as `mj_foward()` and `mj_step()` 
 [mjData\*](http://www.mujoco.org/book/reference.html#mjData) d | Contains runtime physics data, such as joint positions, forces, and velocities | Same as above | Same as above
 bool* paused | A reference to the paused variable in simulate.c's globals | Same as above | Used in [main_traj.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/main-traj.c#L49:L63) to calculate the runtime of the visualization
-[mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping bodies (not anymore) with Ctrl+RightMouse  / nodes | Initialized in `reset_traj_info()`. Always points to the same structure allocated in globals | By `main-traj.c : allow_node_transformations()` to update the dragged node's position to match the mouse's position
+[mjvPerturb\*](http://www.mujoco.org/book/reference.html#mjvPerturb) pert | A reference to struct allocated in simulate.c's globals, containing data about the user dragging and dropping nodes | Initialized in `reset_traj_info()` | `main-traj.c : allow_node_transformations()` and some helper functions in node.c
 [timeline_t\*](https://github.com/osudrl/cassie-trajectory-editor#timeline_t-definition) timeline | A struct listing each discrete pose throughout the step duration | Initialized in timeline.c | Most of the timeline.c functions use this field for setting / overwriting poses
 pdikdata_t ik | A struct containing the parameters for solving IK using the [MuJoCo control function callback](http://www.mujoco.org/book/reference.html#mjcb_control) | In [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128:L133) | Used to control the pdik solver in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/pdik.c#L21:L40)
 ~double nodesigma~ | ~The relative standard deviation of the Gaussian filter used to smooth translations~ | ~Same as above~ | ~Used in the node.c module to apply smoothed translations and determine the "cutoff" for the Gaussian filter~
@@ -161,7 +135,7 @@ Stored within the traj_info struct.
 #### Setup
 
 
-Set up mostly in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128:L133) and a bit in [simulate.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/simulate.c#L146:L147)
+Set up mostly in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/5373ee8e04b0bfeaffbbbfd6c14abcb2e2690360/src/ik.c#L128:L133) and a bit in [simulate.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/simulate.c#L146:L147)
 
 
 #### Usages
@@ -175,16 +149,16 @@ Used in [pdik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c
 
 Type / Name | Description | Initial State | Used In
 --- | --- | --- | ---
-int body_id | The body id on Cassie which is being manipulated | Set in ik.c using the function argument passed through by `nodeframe_ik_transform` in node.c | Used in pdik.c, defining to which body the pdik controller is applied
+int body_id | The body id on Cassie which is being manipulated | Set in ik.c using the function argument from the call node.c | Used in pdik.c, defines which body the pdik controller is applied
 double target_body[3] | The xyz coordinates which are the target for the IK to be solved | Same as above | Used in `apply_pd_controller()` in pdik.c as the target for the PD controller
-double lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating to solve IK
+double lowscore | The smallest "error" from the body's position to the target position so far | Initially set as a large value so that it is set to the actual error after a single step of pdik | Used in ik.c to decide when to stop iterating the IK solver
 double pd_k | The 'spring constant', which is the coefficient for the P (positional) term for the pd controller | Set in [ik.c](https://github.com/osudrl/cassie-trajectory-editor/blob/5d9722b7fdfb91c40a43e6a97ea7320624ed869f/src/ik.c#L67:L82) | Used in `apply_pd_controller()` to scale the positional term
 double pd_b | The 'damping constant', which is the coefficient for the D (derivative) term for the pd controller | Same as above | Used in `apply_pd_controller()` to scale the derivative term
-int32_t max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the `nodeframe_ik_transform()` function in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
+int32_t max_doik | Controls the maximum number of steps for the IK solver before it will be forced to give up | Set in ik.c to the value of the [count parameter](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L128) which is passed by the call in [node.c](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/node.c#L89:L95) | Used to set the initial value of doik (see below)
 int32_t doik | Controls the number of steps of IK that the solver will do. | Initially set to the value of max_doik in ik.c during the pdikdata struct setup | Used in the `pdik_per_step_control()` function, as it will only perform IK while this value is a positive number. Decrements this number every simulation step.
 
 
-### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/v0.1/src/main.h#L16:L27))
+### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
 
 #### Memory Location
