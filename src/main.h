@@ -8,6 +8,7 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
+#define XMLNODECOUNT 200
 #define NODECOUNT (traj_info->selection.nodecount)
 #define NON_NODE_COUNT 0
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()

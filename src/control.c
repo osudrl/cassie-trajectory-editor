@@ -132,6 +132,22 @@ void control_expand_pose(traj_info_t* traj_info)
 //     traj_info->timeline = modified;
 // }
 
+void control_clean_up_unused_nodes(traj_info_t* traj_info)
+{
+    int i;
+    node_body_id_t node;
+    double* nodeqpos;
+
+    for(i = NODECOUNT; i < XMLNODECOUNT; i++)
+    {
+        node = node_get_body_id_from_node_index(i);
+        nodeqpos = node_get_qpos_by_node_id(traj_info, node);
+        nodeqpos[0] = 0;
+        nodeqpos[1] = 0;
+        nodeqpos[2] = -.1;
+    }
+}
+
 void control_key_event(traj_info_t* traj_info, int key, int mods)
 {
     if (*(traj_info->paused))
@@ -161,11 +177,14 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
     else if (key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;
+        NODECOUNT = (int) (mju_max(2,NODECOUNT));
         REVISUALIZE;
+        control_clean_up_unused_nodes(traj_info);
     }
     else if (key == GLFW_KEY_EQUAL)
     {
-        NODECOUNT *= 1.5;     
+        NODECOUNT *= 1.5; 
+        NODECOUNT = (int) (mju_min(XMLNODECOUNT,NODECOUNT));
         REVISUALIZE;
     }
     else if(key == GLFW_KEY_ENTER)
