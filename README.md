@@ -188,6 +188,9 @@ Almost every field is initialized in `simulate.c : reset_traj_info()`, so that c
 Type | Name | Description | Usages
 --- | --- | --- | ---
 int | id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow_node_transformations()` to determine selection / transformation / drop behavior
+int | id_last_non_node_select | The most recent body **on cassie** that was selected with the mouse | Same as above
+int | id_last_pert_activenum | The most recent value of the boolean pert->active | `allow_node_transformations()` to determine if a node was dropped
+enum | node_type | Sets the type of selection/nodes which appears when the user clicks a body | Primarily used in node.c functions like `node_position_initial_using_cassie_body()` or in `allow_node_transformations()` to determine what node functions to call
 
 
 
