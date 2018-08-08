@@ -208,11 +208,15 @@ Type / Name | Description | Usages
 #### Memory Location
 
 Dynamically allocated on the heap with links constructing a doubly-linked list in both directions.
-In a way, this structure is doubly dynamically allocated because both the `timeline_t` structure and the list of `qpos_t` structs (representing a single set of Cassie qposes) is also malloc'd based on the desired timeline size.
-As referenced in [#7](https://github.com/osudrl/cassie-trajectory-editor/issues/7), any number of undos followed by a transformation will cause the "redo" chain of timelines to be leaked permanently.
+In a way, this structure is **doubly dynamically allocated** because both the `timeline_t` structure and the list of `qpos_t` structs (representing a single set of Cassie qposes) is also malloc'd based on the desired timeline size.
+As referenced in [#7](https://github.com/osudrl/cassie-trajectory-editor/issues/7), any number of undos followed by a transformation will cause the "redo" chain of timelines to be **leaked permanently**.
+
 
 #### Setup
 
+Initially malloc'd and initialzed through calls to `timeline update mj poses from realtime()`, which tests for a NULL timeline reference and then initializes the timeline with a call to `timeiline init from input file()`.
+Other timeline instances are allocated through calls to `timeline duplicate()`, normally made by node.c functions such as `node perform pert()` or `node dropped jointmove()`.
+Timeline initialization functionality should be changed significantly by resolving issue [#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5).
 
 #### Usages
 
