@@ -202,7 +202,7 @@ Type / Name | Description | Usages
 
 
 
-### timeline+t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
+### timeline_t ([Definition](https://github.com/osudrl/cassie-trajectory-editor/blob/master/src/main.h))
 
 
 #### Memory Location

@@ -79,7 +79,6 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     free(fulls);
 
     traj_info->timeline->numposes = bytecount * 2;
-    traj_info->timeline->init = 1;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
 }
@@ -98,7 +97,6 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
         mju_copy(dest->qposes[i].q, xcopy->qposes[i].q, 1);    
     }
 
-    dest->init = 1;
     dest->next = NULL;
     dest->prev = NULL;
     dest->numposes = xcopy->numposes;
@@ -117,7 +115,6 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     dest->qposes = malloc(qposbytecount);
 
     memcpy(dest->qposes, ref->qposes, qposbytecount);
-    dest->init = 1;
     dest->next = NULL;
     dest->prev = NULL;
     dest->numposes = ref->numposes;
@@ -151,7 +148,7 @@ void panic()
 
 void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame)
 {   
-    if(!timeline || !timeline->init)
+    if(!timeline)
         panic();
 
     frame = timeline_make_frame_safe(frame, timeline->numposes);
@@ -163,7 +160,7 @@ void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t
 {
     qpos_t* qposes;
 
-    if(!timeline || !timeline->init)
+    if(!timeline)
        panic();
     
     qposes = timeline_get_qposes_from_frame(timeline, frame);
@@ -180,7 +177,7 @@ void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)
 {
     int frame;
 
-    if(!traj_info->timeline || !traj_info->timeline->init)
+    if(!traj_info->timeline)
         timeiline_init_from_input_file(traj_info);
 
     frame = timeline_get_frame_from_time(traj_info);

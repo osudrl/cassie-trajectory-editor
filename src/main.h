@@ -20,7 +20,6 @@ typedef struct _qpos_t_ qpos_t;
 
 struct _timeline_t_
 {
-    bool init;
     int numposes;
     qpos_t* qposes;
     struct _timeline_t_* prev;
