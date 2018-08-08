@@ -220,10 +220,16 @@ Timeline initialization functionality should be changed significantly by resolvi
 
 #### Usages
 
+Timeline references are passed frequently to any helper function getting or setting the robot's pose.
+Anytime a pose is needed but a timeline is not a function parameter, the `traj_info->timeline` reference is assumed.
+
 
 #### Fields
 
-
+Type / Name | Description | Initial State | Used In
+--- | --- | --- | ---
+**int** numposes | The length of the qposes list (see below) | Initially set in `timeiline init from input file()` and copied over in calls to `timeline duplicate()` | Used whenever looping over every pos in the timeline
+**timeline_t\*** prev / next | The previous / next timeline instances in the undo/redo list | These references are initially set to NULL by both `timeiline init from input file()` and copied over in calls to `timeline duplicate()`, but are changed in function such as `node perform pert()` and `node dropped jointmove()` to chain old timelines to new 
 
 ## Node.c Module
 
