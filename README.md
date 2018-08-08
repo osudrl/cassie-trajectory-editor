@@ -207,10 +207,11 @@ Type / Name | Description | Usages
 
 #### Memory Location
 
-
+Dynamically allocated on the heap with links constructing a doubly-linked list in both directions.
+In a way, this structure is doubly dynamically allocated because both the `timeline_t` structure and the list of `qpos_t` structs (representing a single set of Cassie qposes) is also malloc'd based on the desired timeline size.
+As referenced in [#7](https://github.com/osudrl/cassie-trajectory-editor/issues/7), any number of undos followed by a transformation will cause the "redo" chain of timelines to be leaked permanently.
 
 #### Setup
-
 
 
 #### Usages
@@ -237,7 +238,6 @@ Yet wrapping these ints in a struct provides strong type checking, preventing th
 Furthermore, the function prototypes in the header are able to clearly communicate what kind of body (cassie or node) is needed for the calculations.
 To revert this type checking, all uses of these types can be replaced with unsigned ints, and the functions for wrapping the ids can be deleted.
 
-### Node Module Functions of Interest
 
 ### node_get_body_id_from_node_index()
 
