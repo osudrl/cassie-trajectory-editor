@@ -185,9 +185,9 @@ In many modules, the macro `SEL` [provides an alias](https://github.com/osudrl/c
 
 Almost every field is initialized in `simulate.c : reset_traj_info()`, so that column was deleted.
 
-Type / Name | Description | Usages
---- | --- | ---
-int id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow_node_transformations()` to determine selection / transformation / drop behavior
+Type | Name | Description | Usages
+--- | --- | --- | ---
+int | id_last_body_select | The most recent body (on cassie or node) that was selected with the mouse | `allow_node_transformations()` to determine selection / transformation / drop behavior
 
 
 
