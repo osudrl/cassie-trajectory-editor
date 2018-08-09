@@ -106,7 +106,7 @@ int ik_iterative_better_body_optimizer(
     traj_info->ik.body_id = body_id_end;
     mju_copy3(traj_info->ik.target_body, xyz_xpos_target);
 
-    if((frameoffset + 10000 )% 1000 == 0)
+    if((frameoffset + 10000 )% 100 == 0)
         ik_basic_setup(traj_info);
     else
         ik_cheater_setup(traj_info, frameoffset, body_id_end);
