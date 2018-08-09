@@ -10,8 +10,9 @@
 #define CASSIE_QPOS_SIZE 35
 #define XMLNODECOUNT 200
 #define NODECOUNT (traj_info->selection.nodecount)
-#define NON_NODE_COUNT 0
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
+#define DECOR_BUF_SIZE 400
+
 
 struct _qpos_t_
 {
@@ -75,6 +76,14 @@ enum pert_type_e
 
 #define PERT_TYPE_E_COUNT 2
 
+struct _decor_t_
+{
+    int count;
+    double pos[3 * DECOR_BUF_SIZE];
+    float color[4 * DECOR_BUF_SIZE];
+};
+typedef struct _decor_t_ decor_t;
+
 struct _selection_t_
 {
     int id_last_body_select;
@@ -104,6 +113,7 @@ struct _traj_info_
     int refine_rootframe;
 
     pdikdata_t ik;
+    decor_t decor;
     selection_t selection;
     timeline_t* timeline;
     
