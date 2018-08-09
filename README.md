@@ -52,7 +52,7 @@ Ctrl+Scroll | Dragging a node | Scales the standard deviation of the trajectory 
 Ctrl+Shift+Scroll | Dragging a node | Scales the 'height' of the [Gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution) that is used to smooth perturbations. Height defaults at 1 and will not go lower than 1, but an increased height will cause nearby nodes to be transformed as much as the root node of the perturbation. Often used in combination with a 'target' perturbation command to hold the body in the same place for a number of frames
 
 
-\*Refine-Command Context Note: Every time  calls the [IK solver](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/WRITEUP.md#inverse-kinematics), it saves a list of frame/xpos targets for the refiner function to use. Any time IK is solved, this target list is overwritten, however, this target list is not with respect to the timeline, just the last time IK was run. This may be improved in the future, but at the moment, all refine commands must directly follow a previous refine command or a node-drag-perturbation.
+\*Refine-Command Context Note: Bugged. See [#19](https://github.com/osudrl/cassie-trajectory-editor/issues/19).
 
 
 # Tool Source Documentation
