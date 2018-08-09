@@ -35,7 +35,7 @@ The tool allows ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/
 If the user drags the robot's foot to a new position, we need to know what hip, knee and tarsus joints will get the foot there.
 Every time the user drags a set of nodes (with some exceptions), the program solves inverse kinematics.
 
-If the user were to make the above transformation, the foot is in a new position for each frame much of the timeline.
+If the user were to make the above transformation, the foot is in a new position for each frame for most of the timeline.
 The solver knows the target position for each discreet pose.
 But only inverse kinematics can determine what joint angles, will get the foot to its target.
 
@@ -115,7 +115,7 @@ I chose the best pair of constants by their ability to consistently converge on 
 Selected constants should err on the side of robustness.
 
 
-The default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107)values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
+The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107)values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
 
 
 #### Cleanup
