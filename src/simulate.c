@@ -1166,6 +1166,7 @@ void render(GLFWwindow* window)
     // update scene
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
 
+    decor_showdecor(&traj_info);
     // render
     mjr_render(rect, &scn, &con);
 

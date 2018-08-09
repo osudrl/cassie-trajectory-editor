@@ -129,6 +129,7 @@ typedef struct _traj_info_ traj_info_t;
 #include "timeline.h"
 #include "ik.h"
 #include "node.h"
+#include "decor.h"
 
 uint64_t traj_time_in_micros();
 void traj_foreach_frame(traj_info_t* traj_info);
