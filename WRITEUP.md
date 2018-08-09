@@ -26,31 +26,6 @@ The tool allows ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/
 
 ### Calculation Delays
 
-Inverse kinematics is finding a set of joint angles such that the position of a body ends up at a target. If the user drags the robot's foot to a new position, we need to know what hip, knee and tarsus joints will get the foot there. Every time the user drags a set of nodes (with some exceptions), the program solves inverse kinematics.  
-
-If the user were to make the above transformation, the foot is in a new position for each frame much of the timeline. The solver knows the target position for each discreet pose. But only inverse kinematics can determine what joint angles, will get the foot to its target.
-
-The tool implements an inverse kinematics solver which relies on MuJoCo physics simulation. At a high level, the simulation first initializes the robot's pose. Next, a PD controller applies external forces to the body, pushing it towards the target position. The solver accepts the current pose as a solution when the body's position is within the accepted error range. Once accepted, we store the joint positions in the timeline and begin work on the next frame.
-
-The diagram shows the four main elements of the current IK solver. These elements are listed below:
-
-If it was possible to set a body's position, there would not be a need for an IK solver. Instead of allowing direct control of body positions, MuJoCo allows the solver to apply external forces to the body.
-
-The PD controller drags the body to the target position by applying  external forces. The direction of the force vector is always toward the target position, but its magnitude is set by the output of the PD controller. For this PD controller,  the P term is proportional to the body's current distance to the target. The D term is proportional to the current velocity of the body, slowing it down as it approaches the target.
-
-Implementing a PD controller requires a tuning the constants for the P and D terms. Increasing in either constant helps the body get to target faster. Yet increasing these parameters also increases the instability of the simulation. Much more than the P term, increasing the weighting of the D term caused significant simulation instability.
-
-I ran automated testing overnight to determine the most efficient set of constants. The test script tested different weightings for the two terms. The tester plotted simulation steps (dependent variable) as a function of Kp and Kd. The script generated data for two scenarios: lifting the right foot up and swinging the right foot out. This script plotted these data sets in three dimensions.
-
-The above set of graphs emphasizes the Kp constant's effect on the solve time. Increasing Kp cuts down on the computation time, but this effect becomes less pronounced for large Kp values.
-
-This next set of graphs shows the 3d plot from an angle which emphasizes the Kd constant's effect. In general, simulation steps decrease as Kd increases. But values in the 75-90 cause the simulation instability for the swing leg perturbation, as shown by the sharp divergence upward. Even values in the 40-60 range cause the solver to fail if Kp was quite large.
-
-I chose the best pair of constants by their ability to consistently converge on the solution, regardless of the perturbation. Selected constants should err on the side of robustness. 
-
-The default Kp and Kd values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
-
-
 
 ## Inverse Kinematics
 
