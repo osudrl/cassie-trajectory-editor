@@ -79,7 +79,8 @@ enum pert_type_e
 struct _decor_t_
 {
     int count;
-    double pos[3 * DECOR_BUF_SIZE];
+    mjtNum pos[3 * DECOR_BUF_SIZE];
+    mjtNum size[3 * DECOR_BUF_SIZE];
     float color[4 * DECOR_BUF_SIZE];
 };
 typedef struct _decor_t_ decor_t;

@@ -111,6 +111,20 @@ void nodes_recolor(traj_info_t* traj_info)
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
+    traj_info->decor.pos[0] = 0;
+    traj_info->decor.pos[1] = 0;
+    traj_info->decor.pos[2] = 1;
+
+    traj_info->decor.size[0] = 0.02;
+    traj_info->decor.size[1] = 0.02;
+    traj_info->decor.size[2] = 0.02;
+
+    traj_info->decor.color[0] = .5;
+    traj_info->decor.color[1] = .5;
+    traj_info->decor.color[2] = .5;
+    traj_info->decor.color[3] = 1;
+
+    traj_info->decor.count = 1;
 
     allow_node_transformations(traj_info);
     

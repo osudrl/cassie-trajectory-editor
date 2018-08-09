@@ -153,6 +153,8 @@ void reset_traj_info()
     traj_info.selection.node_type = NODE_POSITIONAL;
     traj_info.selection.jointnum =  34;
     traj_info.selection.nodecount = 50;
+
+    traj_info.decor.count = 0;
     
     // ik_default_fill_solver_params(&(traj_info.params));
 
@@ -1166,7 +1168,7 @@ void render(GLFWwindow* window)
     // update scene
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
 
-    decor_showdecor(&traj_info);
+    decor_showdecor(&traj_info, &scn);
     // render
     mjr_render(rect, &scn, &con);
 
