@@ -142,6 +142,10 @@ void reset_traj_info()
     traj_info.d = d;
     traj_info.pert = &pert;
     // traj_info.timeline.init = 0;
+    
+    traj_info.selection.nodecount = 10;
+
+
     traj_info.time_start = traj_time_in_micros();
     traj_info.paused = &paused;
     traj_info.ik.m = m;
@@ -152,7 +156,6 @@ void reset_traj_info()
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;
     traj_info.selection.jointnum =  34;
-    traj_info.selection.nodecount = 50;
 
     traj_info.decor.count = 0;
     
@@ -170,6 +173,8 @@ void reset_traj_info()
     traj_info.decor.size_default_joint[0] = .010;
     traj_info.decor.size_default_joint[1] = .010;
     traj_info.decor.size_default_joint[2] = .010;
+
+    traj_info.selection.frame_offset = 0;
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
         free(traj_info.target_list);

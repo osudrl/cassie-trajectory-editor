@@ -164,7 +164,16 @@ int get_frame_from_node_body_id(traj_info_t* traj_info,
     timeline_t* timeline, 
     node_body_id_t node_id)
 {
-    return (traj_info->timeline->numposes / NODECOUNT) * (node_id.id - 26); // or maybe 28
+    int offset;
+    int frame;
+    offset = SEL.frame_offset;
+    while(offset < 0)
+        offset += timeline->numposes;
+    offset = SEL.frame_offset % timeline->numposes;
+    frame = (timeline->numposes / NODECOUNT) * (node_id.id - 26); // or maybe 28
+    frame += offset;
+    frame %= timeline->numposes;
+    return frame;
 }
 
 void node_calculate_rootframe_transformation_vector(

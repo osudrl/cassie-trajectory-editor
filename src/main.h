@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #define CASSIE_QPOS_SIZE 35
-#define XMLNODECOUNT 200
+#define XMLNODECOUNT 50
 #define NODECOUNT (traj_info->selection.nodecount)
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 #define DECOR_BUF_SIZE 400
@@ -97,6 +97,7 @@ struct _selection_t_
     int id_last_non_node_select;
     int id_last_pert_activenum;
 
+    int frame_offset;
     enum node_type_e node_type;
     enum pert_type_e pert_type;
     int nodecount;

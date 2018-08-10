@@ -150,7 +150,7 @@ void control_clean_up_unused_nodes(traj_info_t* traj_info)
 
 void control_key_event(traj_info_t* traj_info, int key, int mods)
 {
-    if (*(traj_info->paused))
+    if (*(traj_info->paused) && !(mods & GLFW_MOD_CONTROL))
     {
         if(key == GLFW_KEY_RIGHT)
             traj_info->time_frozen -= 50000;
@@ -160,6 +160,29 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->time_frozen -= 500000;
         if (key == GLFW_KEY_UP)
             traj_info->time_frozen += 500000;
+    }
+    else if (mods & GLFW_MOD_CONTROL)
+    {
+        if(key == GLFW_KEY_RIGHT)
+        {
+            SEL.frame_offset += 1;
+            REVISUALIZE;
+        }
+        if(key == GLFW_KEY_LEFT)
+        {
+            SEL.frame_offset -= 1;
+            REVISUALIZE;
+        }
+        if(key == GLFW_KEY_DOWN)
+        {
+            SEL.frame_offset -= 10;
+            REVISUALIZE;
+        }
+        if (key == GLFW_KEY_UP)
+        {
+            SEL.frame_offset += 10;
+            REVISUALIZE;
+        }
     }
 
     if( key==GLFW_KEY_PAGE_UP)
