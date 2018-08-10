@@ -84,28 +84,37 @@ int64_t traj_calculate_runtime_micros(traj_info_t* traj_info)
     }
 }
 
+void f_copy(float* to, float* from, int num)
+{
+    int i;
+    for (i = 0; i < num; i++)
+    {
+        to[i] = from[i];
+    }
+}
+
 void nodes_recolor(traj_info_t* traj_info)
 {
     int i;
 
     for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type == NODE_POSITIONAL; i++)
     {
-        traj_info->m->geom_rgba[i*4 + 0] = MAKE THIS A MACRO OR GLOBAL ARRAY.2;
-        traj_info->m->geom_rgba[i*4 + 1] = .6;
-        traj_info->m->geom_rgba[i*4 + 2] = .2;
-        traj_info->m->geom_size[i*3 + 0] = .015;
-        traj_info->m->geom_size[i*3 + 1] = .015;
-        traj_info->m->geom_size[i*3 + 2] = .015;
+        f_copy(traj_info->m->geom_rgba + i*4,
+            traj_info->decor.rgba_default_positional,
+            4);
+        mju_copy(traj_info->m->geom_size + i*3,
+            traj_info->decor.size_default_positional,
+            3);
     }
 
     for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type != NODE_POSITIONAL; i++)
     {
-        traj_info->m->geom_rgba[i*4 + 0] = .1;
-        traj_info->m->geom_rgba[i*4 + 1] = .1;
-        traj_info->m->geom_rgba[i*4 + 2] = .8;
-        traj_info->m->geom_size[i*3 + 0] = .010;
-        traj_info->m->geom_size[i*3 + 1] = .010;
-        traj_info->m->geom_size[i*3 + 2] = .010;
+        f_copy(traj_info->m->geom_rgba + i*4,
+            traj_info->decor.rgba_default_joint,
+            4);
+        mju_copy(traj_info->m->geom_size + i*3,
+            traj_info->decor.size_default_joint,
+            3);
     }
 }
 

@@ -79,9 +79,15 @@ enum pert_type_e
 struct _decor_t_
 {
     int count;
+
+    mjtNum size_default_positional[3];
+    mjtNum size_default_joint[3];
+    float rgba_default_positional[4];
+    float rgba_default_joint[4];
+
     mjtNum pos[3 * DECOR_BUF_SIZE];
     mjtNum size[3 * DECOR_BUF_SIZE];
-    float color[4 * DECOR_BUF_SIZE];
+    float rgba[4 * DECOR_BUF_SIZE];
 };
 typedef struct _decor_t_ decor_t;
 
@@ -132,6 +138,7 @@ typedef struct _traj_info_ traj_info_t;
 #include "node.h"
 #include "decor.h"
 
+void f_copy(float* to, float* from, int num);
 uint64_t traj_time_in_micros();
 void traj_foreach_frame(traj_info_t* traj_info);
 void nodes_recolor(traj_info_t* traj_info);

@@ -1,7 +1,6 @@
 #include "decor.h"
 
 #define DEC traj_info->decor
-#define AT3 (+ 3*)
 
 void decor_single_sphere(traj_info_t* traj_info, mjvScene* scn, int num)
 {
@@ -12,7 +11,7 @@ void decor_single_sphere(traj_info_t* traj_info, mjvScene* scn, int num)
         DEC.size + 3*num,
         DEC.pos + 3*num,
         NULL,
-        DEC.color + 4*num);
+        DEC.rgba + 4*num);
 
 }
 
@@ -37,15 +36,27 @@ bool decor_has_init(traj_info_t* traj_info)
     return DEC.count >= 0;
 }
 
-void decor_positional_rootframe(traj_info_t* traj_info, v3_t pos)
+void decor_positional_rootframe(traj_info_t* traj_info, double* pos)
 {
     DEC.count = 0;
-    (DEC.pos AT3 DEC.count)[0] = 0;
+    DEC.pos[DEC.count * 3 + 0] = pos[0];
+    DEC.pos[DEC.count * 3 + 1] = pos[1];
+    DEC.pos[DEC.count * 3 + 2] = pos[2];
+    mju_copy(DEC.size + DEC.count * 3, DEC.size_default_positional, 3);
+    f_copy(DEC.rgba + DEC.count * 4, DEC.rgba_default_positional, 4);
+    DEC.rgba[DEC.count * 4 + 3] = 0.25;
+    DEC.count++;
 }
 
-void decor_positional_addto(traj_info_t* traj_info, v3_t pos)
+void decor_positional_addto(traj_info_t* traj_info, double* pos)
 {
-
+    DEC.pos[DEC.count * 3 + 0] = pos[0];
+    DEC.pos[DEC.count * 3 + 1] = pos[1];
+    DEC.pos[DEC.count * 3 + 2] = pos[2];
+    mju_copy(DEC.size + DEC.count * 3, DEC.size_default_positional, 3);
+    f_copy(DEC.rgba + DEC.count * 4, DEC.rgba_default_positional, 4);
+    DEC.rgba[DEC.count * 4 + 3] = 0.25;
+    DEC.count++;
 }
 
 

@@ -156,7 +156,20 @@ void reset_traj_info()
 
     traj_info.decor.count = 0;
     
-    // ik_default_fill_solver_params(&(traj_info.params));
+    traj_info.decor.rgba_default_positional[0] = .2;
+    traj_info.decor.rgba_default_positional[1] = .6;
+    traj_info.decor.rgba_default_positional[2] = .2;
+    traj_info.decor.rgba_default_positional[3] = 1;
+    traj_info.decor.size_default_positional[0] = .015;
+    traj_info.decor.size_default_positional[1] = .015;
+    traj_info.decor.size_default_positional[2] = .015;
+    traj_info.decor.rgba_default_joint[0] = .1;
+    traj_info.decor.rgba_default_joint[1] = .1;
+    traj_info.decor.rgba_default_joint[2] = .8;
+    traj_info.decor.rgba_default_joint[3] = 1;
+    traj_info.decor.size_default_joint[0] = .010;
+    traj_info.decor.size_default_joint[1] = .010;
+    traj_info.decor.size_default_joint[2] = .010;
 
     if (firsttrajinforeset > 0 && traj_info.target_list)
         free(traj_info.target_list);
