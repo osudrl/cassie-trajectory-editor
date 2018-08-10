@@ -72,7 +72,7 @@ void node_perform_ik_on_xpos_transformation(
         target, 
         body_id.id, 
         frameoffset, 
-        1500);
+        IK_STEP_CUTOFF);
     timeline_overwrite_frame_using_curr_pose(traj_info, overwrite, frame);
 }
 
@@ -283,8 +283,9 @@ void node_perform_pert(
     int target_list_index = 0;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
+    bool failed;
 
-
+    failed = 0;
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
 
@@ -396,18 +397,28 @@ void node_perform_pert(
             -frame_offset,
             global_body_target_xpos,
             &ik_iter_total);
+
+        if(frame_offset > 1 && ik_iter_total > (.95 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
+        {
+            printf("TOO HARD. ABORTING. \n");
+            failed = 1;
+            break;
+        }
     }
 
     iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
 
-    printf("Finished solving IK for %d poses in %.1f seconds, accurate to %.5fmm\n", 
-        1+iterations*2, 
-        (iktimedelta/1000000.0),
-        1000.0*params->ik_accuracy_cutoff);
+    if(!failed)
+    {
+        printf("Finished solving IK for %d poses in %.1f seconds, accurate to %.5fmm\n", 
+            1+iterations*2, 
+            (iktimedelta/1000000.0),
+            1000.0*params->ik_accuracy_cutoff);
 
-    timeline_new->next = timeline_old;
-    timeline_old->prev = timeline_new;
-    traj_info->timeline = timeline_new;
+        timeline_new->next = timeline_old;
+        timeline_old->prev = timeline_new;
+        traj_info->timeline = timeline_new;
+    }   
 
     traj_info->refine_rootframe = rootframe;
     traj_info->refine_body = body_id.id;

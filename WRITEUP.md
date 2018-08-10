@@ -4,27 +4,27 @@
 
 <img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="300"> 
 
-The Cassie Trajectory Editor aids in designing reference trajectories for the [Cassie robot](http://www.agilityrobotics.com/robots/). The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
+The Cassie Trajectory Editor aids in designing reference trajectories for the [Cassie robot](http://www.agilityrobotics.com/robots/). 
+The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
+Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
 
-The tool allows ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5)) the user to either [initialize the timeline](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) with a single pose or a full trajectory. While editing, the tool helps the user visualize changes to the initial timeline. After designing the gait, the user exports the reference trajectory to seed the learning process.
+The tool allows  the user to either [initialize the timeline](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5)) with a single pose or a full trajectory. 
+While editing, the tool helps the user visualize changes to the initial timeline. 
+After designing the gait, the user exports the reference trajectory to seed the learning process.
 
 # Methods and Results
 
 
 
-## User Experience
+## Modification Tools
 
 
 
-### Keybinds
+### Gaussian Smoothing
 
 
 
-### Installation
-
-
-
-### Calculation Delays
+### Target-Based Transformation
 
 
 ## Inverse Kinematics
