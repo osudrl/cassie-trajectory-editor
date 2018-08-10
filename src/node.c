@@ -523,7 +523,9 @@ void node_position_jointmove(traj_info_t* traj_info,
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
+        frame = get_frame_from_node_body_id(traj_info, 
+            traj_info->timeline,
+            node_get_body_id_from_node_index(i));
         node_qpos = node_get_qpos_by_node_id(traj_info, 
             node_get_body_id_from_node_index(i));
         
@@ -652,7 +654,9 @@ void node_scale_visually_positional(
         if(node_get_body_id_from_node_index(i).id == node_id.id)
             continue;
 
-        currframe = (traj_info->timeline->numposes / NODECOUNT) * i;
+        currframe = get_frame_from_node_body_id(traj_info, 
+            traj_info->timeline,
+            node_get_body_id_from_node_index(i));
         frame_offset = currframe - rootframe;
 
         node_qpos = node_get_qpos_by_node_id(traj_info,
@@ -683,7 +687,9 @@ void node_position_initial_positional(traj_info_t* traj_info,
    
     for (i = 0; i < NODECOUNT; i++)
     {
-        frame = (traj_info->timeline->numposes / NODECOUNT) * i;
+        frame = get_frame_from_node_body_id(traj_info, 
+            traj_info->timeline,
+            node_get_body_id_from_node_index(i));
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
         body_xpos = node_get_body_xpos_by_frame(traj_info, traj_info->timeline, frame, body_id);
         mju_copy3(node_qpos, body_xpos);
