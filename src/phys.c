@@ -510,6 +510,13 @@ void loadmodel(GLFWwindow* window, const char* filename)
     // set window title to mode name
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
+
+    paused = true;
+    for( int i=0; i<mjNRNDFLAG; i++ )
+        if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
+        {
+            scn.flags[i] = 0;
+        }
 }
 
 
@@ -970,6 +977,7 @@ void makeoptionstring(const char* name, char key, char* buf)
     buf[cnt+4] = 0;
 }
 
+uint64_t delay = 0;
 
 // advance simulation
 void simulation(void)
@@ -1002,7 +1010,8 @@ void simulation(void)
 
         // advance effective simulation time by 1/refreshrate
         mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/100)
+
+        while( (d->time-startsimtm)*factor<1.0/1000)
         {
             // clear old perturbations, apply new
             mju_zero(d->xfrc_applied, 6*m->nbody);

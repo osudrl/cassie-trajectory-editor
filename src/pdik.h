@@ -5,7 +5,7 @@
 #define CASSIE_QPOS_SIZE 35
 #endif
 
-#define IK_ITER 10000000
+#define IK_ITER 100000000
 
 #include "mujoco.h"
 #include <stdio.h>
