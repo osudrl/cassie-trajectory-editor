@@ -90,7 +90,7 @@ void nodes_recolor(traj_info_t* traj_info)
 
     for(i = 35; i < traj_info->m->ngeom && traj_info->selection.node_type == NODE_POSITIONAL; i++)
     {
-        traj_info->m->geom_rgba[i*4 + 0] = .2;
+        traj_info->m->geom_rgba[i*4 + 0] = MAKE THIS A MACRO OR GLOBAL ARRAY.2;
         traj_info->m->geom_rgba[i*4 + 1] = .6;
         traj_info->m->geom_rgba[i*4 + 2] = .2;
         traj_info->m->geom_size[i*3 + 0] = .015;
@@ -111,21 +111,6 @@ void nodes_recolor(traj_info_t* traj_info)
 
 void traj_foreach_frame(traj_info_t* traj_info)
 {
-    traj_info->decor.pos[0] = 0;
-    traj_info->decor.pos[1] = 0;
-    traj_info->decor.pos[2] = 1;
-
-    traj_info->decor.size[0] = 0.02;
-    traj_info->decor.size[1] = 0.02;
-    traj_info->decor.size[2] = 0.02;
-
-    traj_info->decor.color[0] = .5;
-    traj_info->decor.color[1] = .5;
-    traj_info->decor.color[2] = .5;
-    traj_info->decor.color[3] = 1;
-
-    traj_info->decor.count = 1;
-
     allow_node_transformations(traj_info);
     
     timeline_update_mj_poses_from_realtime(traj_info);

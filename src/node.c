@@ -614,6 +614,7 @@ void node_scale_visually_positional(
     int currframe;
     int i;
     v3_t node_qpos;
+    bool decor_update = 1;
 
     node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
     mju_copy3(node_qpos, traj_info->pert->refpos);
@@ -630,6 +631,12 @@ void node_scale_visually_positional(
         node_id);
     mju_copy3(global_body_init_xpos_at_rootframe,
         node_get_body_xpos_curr(traj_info, body_id));
+
+    if(decor_has_init(traj_info))
+        decor_update = 0;
+
+    if(decor_update)
+        decor_positional_rootframe(traj_info, global_body_init_xpos_at_rootframe);
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -651,6 +658,9 @@ void node_scale_visually_positional(
             rootframe,
             frame_offset,
             body_id);
+
+        if(decor_update)
+            decor_positional_addto(traj_info, node_get_body_xpos_curr(traj_info, body_id));
     }
 
 }
@@ -703,6 +713,7 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info,
 {
     double qpos_cache[CASSIE_QPOS_SIZE];
 
+    decor_reset(traj_info);
     mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);
 
     if(SEL.node_type == NODE_POSITIONAL)
