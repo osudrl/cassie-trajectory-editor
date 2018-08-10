@@ -36,7 +36,7 @@ bool decor_has_init(traj_info_t* traj_info)
     return DEC.count >= 0;
 }
 
-void decor_positional_rootframe(traj_info_t* traj_info, double* pos)
+void decor_positional_init(traj_info_t* traj_info, double* pos)
 {
     DEC.count = 0;
     DEC.pos[DEC.count * 3 + 0] = pos[0];
@@ -55,6 +55,29 @@ void decor_positional_addto(traj_info_t* traj_info, double* pos)
     DEC.pos[DEC.count * 3 + 2] = pos[2];
     mju_copy(DEC.size + DEC.count * 3, DEC.size_default_positional, 3);
     f_copy(DEC.rgba + DEC.count * 4, DEC.rgba_default_positional, 4);
+    DEC.rgba[DEC.count * 4 + 3] = 0.25;
+    DEC.count++;
+}
+
+void decor_joint_init(traj_info_t* traj_info, double* pos)
+{
+    DEC.count = 0;
+    DEC.pos[DEC.count * 3 + 0] = pos[0];
+    DEC.pos[DEC.count * 3 + 1] = pos[1];
+    DEC.pos[DEC.count * 3 + 2] = pos[2];
+    mju_copy(DEC.size + DEC.count * 3, DEC.size_default_joint, 3);
+    f_copy(DEC.rgba + DEC.count * 4, DEC.rgba_default_joint, 4);
+    DEC.rgba[DEC.count * 4 + 3] = 0.25;
+    DEC.count++;
+}
+
+void decor_joint_addto(traj_info_t* traj_info, double* pos)
+{
+    DEC.pos[DEC.count * 3 + 0] = pos[0];
+    DEC.pos[DEC.count * 3 + 1] = pos[1];
+    DEC.pos[DEC.count * 3 + 2] = pos[2];
+    mju_copy(DEC.size + DEC.count * 3, DEC.size_default_joint, 3);
+    f_copy(DEC.rgba + DEC.count * 4, DEC.rgba_default_joint, 4);
     DEC.rgba[DEC.count * 4 + 3] = 0.25;
     DEC.count++;
 }

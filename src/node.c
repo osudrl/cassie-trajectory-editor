@@ -511,12 +511,15 @@ void node_position_jointmove(traj_info_t* traj_info,
     double rootframe_init;
     double filter;
     double temp_new_qpos_val;
+    bool update_decor;
 
     timeline_set_qposes_to_pose_frame(
         traj_info,
         traj_info->timeline,
         rootframe);
     rootframe_init = traj_info->d->qpos[SEL.jointnum];
+
+    update_decor = !decor_has_init(traj_info);
 
     for (i = 0; i < NODECOUNT; i++)
     {
@@ -552,6 +555,11 @@ void node_position_jointmove(traj_info_t* traj_info,
             traj_info->d->xquat + (4*body_id.id),
             body_id.id
             );
+        if(update_decor && i == 0)
+            decor_joint_init(traj_info, node_qpos);
+        else if (update_decor)
+            decor_joint_addto(traj_info, node_qpos);
+
     }
 }
 
@@ -636,7 +644,7 @@ void node_scale_visually_positional(
         decor_update = 0;
 
     if(decor_update)
-        decor_positional_rootframe(traj_info, global_body_init_xpos_at_rootframe);
+        decor_positional_init(traj_info, global_body_init_xpos_at_rootframe);
 
     for (i = 0; i < NODECOUNT; i++)
     {
