@@ -27,18 +27,26 @@ The first modification tool I wrote used interpolated motion among frames as the
 Yet there was no need for interpolation, the transofrmations just needed to be smoothed over a number of discreet frames.
 
 
-Gaussian smoothing needs a width and height.
-The width is controlled by the standard deviation of the distrobution.
-When making transformations, the user may want the transfor
-
-
-
-
 ### Gaussian Smoothing
 
 
+Gaussian smoothing needs a width and height.
+The width is controlled by the standard deviation of the distrobution.
+When making transformations, the user may want the transformation to affect more/less frames but still remain smoothly filtered.
+
+I did not initially consider allowing the user to tweak height.
+But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect, and the full transformation will apply to a number of frames.
+
 
 ### Target-Based Transformation
+
+
+Translation based transformation only considers the final position of the node in relation to its initial position.
+In contrast, target based transformations compare each node's own staring position to the mouse's (rootframe's) starting postiion.
+As a result, each node's translation is unique.
+In order for the nodes to converge on a target (to hold a body in place), the target based transformation and the height options were added.
+Allows holding a number of nodes at a position for some time.
+
 
 
 ## Inverse Kinematics
