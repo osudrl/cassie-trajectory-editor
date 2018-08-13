@@ -206,7 +206,7 @@ Yet the starting pose has enough of an effect that the solution trajectory will 
 0% | 100% | 95%
 --- | --- | ---
 44.7 sec | 1.7 sec | 1.7 sec
-![0](https://i.imgur.com/ODM9GNz.gifv) | ![100](https://i.imgur.com/SKCPJfL.mp4) | ![95](https://i.imgur.com/Mof3qL0.mp4)
+![0](https://i.imgur.com/ODM9GNz.gif) | ![100](https://i.imgur.com/SKCPJfL.gif) | ![95](https://i.imgur.com/Mof3qL0.gif)
 
 ### Dead End Solutions
 
