@@ -30,9 +30,12 @@ Yet there was no need for interpolation, the transofrmations just needed to be s
 ### Gaussian Smoothing
 
 
-Gaussian smoothing needs a width and height.
-The width is controlled by the standard deviation of the distrobution.
-When making transformations, the user may want the transformation to affect more/less frames but still remain smoothly filtered.
+At the start of this project, I wasn't sure what transformation tools the editor would need.
+The editors' first modification tool allowed the user to drag a body in real time while the editor solved spline interpolation.
+Yet there was no need for interpolation or trajectories based on the mouse's real time position.
+Instead, a smoothed perturbation transforms a subset of the trajectory.
+
+In the editor, perturbations are represented by dragging and dropping a node along the trajectory. But once a perturbation is performed, 
 
 I did not initially consider allowing the user to tweak height.
 But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect, and the full transformation will apply to a number of frames.
