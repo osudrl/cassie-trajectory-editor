@@ -176,8 +176,10 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <!---https://imgur.com/a/bUZJipk-->
 
-The current solver uses an optimization which seeds each .
-The advantage of seeing the last frame's solution is that because the trajectory is continuous, the body's position in the previous pose is much closer to the target than the initial position, so the body needs to move a much shorter distance to be within the cutoff, and fewer simulation cycles are needed.
+The current solver optimizes the process by seeding the last (solved) frame's pose for subsequent calculation.
+Because the trajectory is continuous, this seed will be much closer to the target than the initial position.
+As a result, the body needs to move a much shorter distance, and fewer simulation cycles are needed.
+Furthermore, the seed puts the body "right next" to the target, so greater K/D term constants can be used without the simulation becoming unstable.
 Furthermore, the seed puts the body "right next" to the target, so greater K/D term constants can be used without the simulation becoming unstable.
 
 
