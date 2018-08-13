@@ -179,7 +179,7 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 The current solver optimizes the process by seeding the last (solved) frame's pose for subsequent calculation.
 The trajectory is continuous, so this seed will be much closer to the target than this frame's initial position.
 As a result, the solver needs fewer simulation cycles to get the body to the target.
-Furthermore, seeding puts the body "right next" to the target, so the solver can use larger PD constants without risking simulation instability.
+Furthermore, a shorter distance allows the solver to use larger PD constants without risking simulation instability.
 
 
 There is a disadvantage: the seeding finds a "band" of solutions.
