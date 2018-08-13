@@ -18,7 +18,9 @@ After designing the gait, the user exports the reference trajectory to seed the 
 
 ## Modification Tools
 
+https://imgur.com/a/EUN9YRz
 
+https://imgur.com/a/EUN9YRz
 
 ### Gaussian Smoothing
 
@@ -121,12 +123,15 @@ The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/
 #### Cleanup
 
 
-#### Target Cutoff
+https://imgur.com/a/GuL7v5K
 
 
 #### IK Setup
 
 
+https://imgur.com/a/KIEMrxg
+
+https://imgur.com/a/bUZJipk
 
 
 ### Dead End Solutions
