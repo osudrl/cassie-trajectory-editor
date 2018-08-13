@@ -32,7 +32,6 @@ The most obvious smoothing method scales the initial perturbation for nearby nod
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
-
 I implement this effect using the Gaussian distribution (bell curve).
 At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
 The scale factor tapers off to zero at the ends of the curve, ensuring pose continuity across the entire trajectory.
@@ -40,7 +39,6 @@ The scale factor tapers off to zero at the ends of the curve, ensuring pose cont
 Gaussian smoothing needs a width and height.
 The standard deviation defines the width of the distribution.
 Modifying the width will cause the transformation to affect more/less frames.
-
 
 At first, I assumed there was no reason to allow the user to tweak the distribution height.
 Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
@@ -52,12 +50,10 @@ In contrast, I use a different scaling strategy, B-Scaling.
 B-Scaling compares each node's own staring position to the mouse's end point.
 As a result, each node undergoes a unique translation, both in direction and magnitude.
 
-
 B-Scaling transformations allows nodes to converge on a target.
 A user can use B-Scaling to hold a body in place for a set of frames.
 Increasing the height of the Gaussian distribution causes many nodes move all the way to the mouse's ending position.
 The user can use these tools to hold a body at a single position for some time.
-
 
 ## Inverse Kinematics
 
