@@ -203,6 +203,10 @@ The setup phase will add 95% of the previous solution to the initial position of
 Partial seeding speeds up computation because the body will start much closer to the target.
 Yet the starting pose has enough of an effect that the solution trajectory will not diverge.
 
+0% | 100% | 95%
+--- | --- | ---
+44.7 sec | 1.7 sec | 1.7 sec
+![0](https://i.imgur.com/ODM9GNz.gifv) | ![100](https://i.imgur.com/SKCPJfL.mp4) | ![95](https://i.imgur.com/Mof3qL0.mp4)
 
 ### Dead End Solutions
 
