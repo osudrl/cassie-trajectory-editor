@@ -154,17 +154,17 @@ While PDIK is being performed, `m->qpos_spring` hold the pelvis in place.
 But the solver does not apply any forces to the other leg.
 So while the solver pushes the primary leg towards the target, the other leg diverges from it staring position.
 
-In most cases, the user will want to transform a leg while it is the air
-Yet lifting a leg in the air requires Cassie to firmly plant the other leg on the ground
-While standing on the ground, the springs in the Cassie leg deflect and store energy
-The IK solver allows the other leg to release this stored energy, moving this leg out of position
+In most cases, the user will want to transform a leg while it is the air.
+Yet lifting a leg in the air requires Cassie to firmly plant the other leg on the ground.
+While standing on the ground, the springs in the Cassie leg deflect and store energy.
+The IK solver allows the other leg to release this stored energy, moving this leg out of position.
 
-This issue caused a bug with the IK solver, where perturbing a leg would cause the other leg to move out of position
-To fix this bug, the solver saves the initial pose of the robot before initiating any solver steps
-After finishing moving the primary leg, the other leg's joints are reset to their initial state
+This issue caused a bug with the IK solver, where perturbing a leg would cause the other leg to move out of position.
+To fix this bug, the solver saves the initial pose of the robot before initiating any solver steps.
+After finishing moving the primary leg, the other leg's joints are reset to their initial state.
 
-I named this phase"cleanup" because once the PDIK solver exits, it causes unwanted side effects on the other leg
-As far as I know, joint modifications on the other leg are unwanted, and these positions should be reset
+I named this phase"cleanup" because once the PDIK solver exits, it causes unwanted side effects on the other leg.
+As far as I know, joint modifications on the other leg are unwanted, and these positions should be reset.
 
 <!--- issues #18 and #14 -->
 
