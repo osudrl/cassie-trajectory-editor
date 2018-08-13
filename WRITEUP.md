@@ -35,7 +35,16 @@ The editors' first modification tool allowed the user to drag a body in real tim
 Yet there was no need for interpolation or trajectories based on the mouse's real time position.
 Instead, a smoothed perturbation transforms a subset of the trajectory.
 
-In the editor, perturbations are represented by dragging and dropping a node along the trajectory. But once a perturbation is performed, 
+In the editor, perturbations are represented by dragging and dropping a node along the trajectory. 
+But once a perturbation is performed, the nearby nodes also need to move in order to for the trajectory to stay continuous.
+The most obvious smoothing method scales the initial perturbation for nearby nodes, as if the user dragged the body in the same direction for every frame in the trajectory, but dragged less and less distance as the frames get further away from the root.
+This less and less effect is represented mathematically as the Gaussian distrobution (bell curve).
+At the center of the distrobution (root of the perturbation), the scale factor is 1, because the frame recieves the full perturbation, but this scale factor eventually tapers off to essential zero.
+The smoothing will ensure pose continuity across the entire trajectory.
+
+Gaussian smoothing needs a width and height.
+The width is controlled by the standard deviation of the distribution.
+When making transformations, the user may want the transformation to affect more/less frames but still remain smoothly filtered.
 
 I did not initially consider allowing the user to tweak height.
 But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect, and the full transformation will apply to a number of frames.
