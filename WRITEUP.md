@@ -149,22 +149,22 @@ The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/
 
 <!---https://imgur.com/a/GuL7v5K-->
 
-When solving inverse kinematics with the above PD control method, the PD controller only apllies forces to single leg.
-While PDIK is being performed, the pelvis is held in place with a spring (`m->qpos_spring`).
-However, the other leg does not just stay in place while appling forces to the primary leg.
-While the primary leg is being pushed around, the other leg diverges from it staring position.
+When solving inverse kinematics with the above PD control method, the PD controller only applies forces to single leg.
+While PDIK is being performed, `m->qpos_spring` hold the pelvis in place.
+But the solver does not apply any forces to the other leg.
+So while the solver pushes the primary leg towards the target, the other leg diverges from it staring position.
 
+In most cases, the user will want to transform a leg while it is the air
+Yet lifting a leg in the air requires Cassie to firmly plant the other leg on the ground
+While standing on the ground, the springs in the Cassie leg deflect and store energy
+The IK solver allows the other leg to release this stored energy, moving this leg out of position
 
-Normally, transformations are performed on a leg while it is the air, so the other leg is on the ground.
-While a leg is standing on the ground, the springs on the cassie leg deflect and store energy.
-Therefore, steps in simulation attempting to put the parimary leg in the desired positional also allow the other leg to release this stroed energy, moving this leg out of position.
+This issue caused a bug with the IK solver, where perturbing a leg would cause the other leg to move out of position
+To fix this bug, the solver saves the initial pose of the robot before initiating any solver steps
+After finishing moving the primary leg, the other leg's joints are reset to their initial state
 
-This issue caused a bug with the IK solver, where dragging a leg around would couse the other leg to move out of position by accident.
-The solution saves the initial pose of the robot before inittiaitng any solver steps.
-After the solver finishes moving the primary leg, the other leg's joint positions are reset to the initial state.
-
-This phase of the IK solver is called the cleanup phase because the PDIK sovler exits with a valid solution for the primary leg, but causes unwanted side effects on the other leg.
-As far as I know, joint modifications on the other leg are unwanted, and these positions should be reset.
+I named this phase"cleanup" because once the PDIK solver exits, it causes unwanted side effects on the other leg
+As far as I know, joint modifications on the other leg are unwanted, and these positions should be reset
 
 <!--- issues #18 and #14 -->
 
@@ -176,10 +176,9 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <!---https://imgur.com/a/bUZJipk-->
 
-IK setup is the first stage of the solver, but discussed last in this section because setup is dependent on the parameters selected in the sections above.
-More specifically, the current setup uses an optimaiztion where the previosu qposes are used to seed the solver for a subsequent frame.
-The advantage of seeing the last frame's solution is that because the trajecory is continuous, the body's position in the previous pose is much closer to the target than the intial position, so the body needs to move a much shorter distance to be within the cutoff, and fewer simulation cycles are needed.
-Furthermore, the seed puts the body "right next" to the target, so greater K/D term constants can be used without the simulation becomming unstable.
+The current solver uses an optimization which seeds each .
+The advantage of seeing the last frame's solution is that because the trajectory is continuous, the body's position in the previous pose is much closer to the target than the initial position, so the body needs to move a much shorter distance to be within the cutoff, and fewer simulation cycles are needed.
+Furthermore, the seed puts the body "right next" to the target, so greater K/D term constants can be used without the simulation becoming unstable.
 
 
 There is a disadvantage: the seeding finds a "band" of solutions.
