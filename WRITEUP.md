@@ -183,7 +183,10 @@ Furthermore, a shorter distance allows the solver to use larger PD constants wit
 
 
 There is a disadvantage: the seeding finds a "band" of solutions.
-The robot poses are continuous within this band, but diverge from the original trajectory, and form signicficant discontinuities from the end of the IK solution and the rest of the trajectory.
+The robot poses are continuous within the "solved" frames.
+Yet the edges of the solved frames diverge from the original trajectory.
+Ideally, the solver only slightly modifies the poses at the tail ends of the smoothed perturbation.
+But full seeding results in significant discontinuities in the "solved" trajectory.
 
 <!---https://imgur.com/a/pPfTpM3-->
 
