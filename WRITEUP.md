@@ -122,16 +122,36 @@ The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/
 
 #### Cleanup
 
+<!---https://imgur.com/a/GuL7v5K-->
 
-https://imgur.com/a/GuL7v5K
+When solving inverse kinematics with the above PD control method, the PD controller only apllies forces to single leg.
+While PDIK is being performed, the pelvis is held in place with a spring (`m->qpos_spring`).
+However, the other leg does not just stay in place while appling forces to the primary leg.
+While the primary leg is being pushed around, the other leg diverges from it staring position.
+
+
+Normally, transformations are performed on a leg while it is the air, so the other leg is on the ground.
+While a leg is standing on the ground, the springs on the cassie leg deflect and store energy.
+Therefore, steps in simulation attempting to put the parimary leg in the desired positional also allow the other leg to release this stroed energy, moving this leg out of position.
+
+This issue caused a bug with the IK solver, where dragging a leg around would couse the other leg to move out of position by accident.
+The solution saves the initial pose of the robot before inittiaitng any solver steps.
+After the solver finishes moving the primary leg, the other leg's joint positions are reset to the initial state.
+
+This phase of the IK solver is called the cleanup phase because the PDIK sovler exits with a valid solution for the primary leg, but causes unwanted side effects on the other leg.
+As far as I know, joint modifications on the other leg are unwanted, and these positions should be reset.
+
+<!--- issues #18 and #14 -->
 
 
 #### IK Setup
 
 
-https://imgur.com/a/KIEMrxg
+<!---https://imgur.com/a/KIEMrxg-->
 
-https://imgur.com/a/bUZJipk
+<!---https://imgur.com/a/bUZJipk-->
+
+Because the positions of bodies within MuJoCo
 
 
 ### Dead End Solutions
