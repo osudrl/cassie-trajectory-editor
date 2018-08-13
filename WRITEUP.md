@@ -197,11 +197,11 @@ The error doesn't diverge, but joints diverge from their initial positions.
 When using full seeding, the initial pose for a frame has no impact on the solved pose for that frame.
 
 Seeding the last solution causes obvious problems, but allowing the solver to start "from scratch" for each frame takes so much longer.
-The current solver makes a comprimise between these two approaches.
+So the current solver makes a compromise between the two approaches.
 When the IK solver is called, it partially seeds the last solution's qposes.
-More specifically, the setup phase will add 95% of the previous solution to the initial position of this pose.
-Partially seeding speeeds up comutaiton significantly; the body will start much closer to the target.
-The starting os has enough of an effect on the initialization that the solution trajectory will not diverge.
+The setup phase will add 95% of the previous solution to the initial position of for this frame.
+Partial seeding speeds up computation because the body will start much closer to the target.
+Yet the starting pose has enough of an effect that the solution trajectory will not diverge.
 
 
 ### Dead End Solutions
