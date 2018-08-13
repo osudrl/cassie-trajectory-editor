@@ -70,7 +70,6 @@ But only inverse kinematics can determine what joint angles, will get the foot t
 
 ### Preferred Solution
 
-
 The tool implements an inverse kinematics solver which relies on MuJoCo physics simulation.
 At a high level, the simulation first initializes the robot's pose.
 Next, a [PD controller](http://robotic-controls.com/learn/programming/pd-feedback-control-introduction) applies external forces to the body, pushing it towards the target position.
