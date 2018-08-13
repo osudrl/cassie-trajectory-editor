@@ -190,8 +190,9 @@ But full seeding results in significant discontinuities in the "solved" trajecto
 
 <!---https://imgur.com/a/pPfTpM3-->
 
-Solving each frame independently allows the solution to respect the inital pose of the robot at each frame before the transformation is made: the solution is continouous among the solution frames, but also contiouns with the starting trajectory at the ends.
-However, seeding the previous IK solution will allow the solution trejector to diverge: not the body's error divergeing, but other joints diverge from their initial positions because these initil positions do not impact seed positions for each solved frame.
+Solving each frame independently allows the solution to respect the initial pose of the robot before the transformation is made.
+The solution is continuous among the solution frames, but also contentious with the starting trajectory at the ends.
+However, seeding the previous IK solution will allow the solution trajectory to diverge: not the body's error diverging, but other joints diverge from their initial positions because these initial positions do not impact seed positions for each solved frame.
 
 Seeding the last solution was causing obvious problems, but it would be too too slow for the solver to start "from scratch" for each frame to solve.
 The current solver makes a comprimise between these two approaches.
