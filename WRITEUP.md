@@ -144,15 +144,6 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 <!--- issues #18 and #14 -->
 
 
-#### Target Cutoff
-
-Because the positions of bodies within MuJoCo are floating point numbers, the body's position after a PDIk step will never be exactly equal to the target postion.
-There needs to be a range fo distances to the target within whic the solver decides the IK is "close enough" and ther will not be a signficant differntce in the resulting trajectory if the solver stops here.
-
-The tests in the PD-control section used 0.00005 meters as the cut off, the tool's default cutoff fro solving IK is 1mm.
-Visually, there is not much difference betweena solution trajectory with .1mm and 1mm as the IK solver cut off, and these trajectories are planned to bbe used to seed a RL contrller, not use as raw feed foward trajectory.
-Furthermore, a trajectory can be refined further using the refiend command if futher accuracy is needed for a certain transformation.
-
 #### IK Setup
 
 
@@ -160,7 +151,26 @@ Furthermore, a trajectory can be refined further using the refiend command if fu
 
 <!---https://imgur.com/a/bUZJipk-->
 
+IK setup is the first stage of the solver, but discussed last in this section because setup is dependent on the parameters selected in the sections above.
+More specifically, the current setup uses an optimaiztion where the previosu qposes are used to seed the solver for a subsequent frame.
+The advantage of seeing the last frame's solution is that because the trajecory is continuous, the body's position in the previous pose is much closer to the target than the intial position, so the body needs to move a much shorter distance to be within the cutoff, and fewer simulation cycles are needed.
+Furthermore, the seed puts the body "right next" to the target, so greater K/D term constants can be used without the simulation becomming unstable.
 
+
+There is a disadvantage: the seeding finds a "band" of solutions.
+The robot poses are continuous within this band, but diverge from the original trajectory, and form signicficant discontinuities from the end of the IK solution and the rest of the trajectory.
+
+<!---https://imgur.com/a/pPfTpM3-->
+
+Solving each frame independently allows the solution to respect the inital pose of the robot at each frame before the transformation is made: the solution is continouous among the solution frames, but also contiouns with the starting trajectory at the ends.
+However, seeding the previous IK solution will allow the solution trejector to diverge: not the body's error divergeing, but other joints diverge from their initial positions because these initil positions do not impact seed positions for each solved frame.
+
+Seeding the last solution was causing obvious problems, but it would be too too slow for the solver to start "from scratch" for each frame to solve.
+The current solver makes a comprimise between these two approaches.
+When the IK solver is called, it partially seeds the last solution's qposes.
+More specifically, the setup phase will add 95% of the previous solution to the initial position of this pose.
+Partially seeding speeeds up comutaiton significantly; the body will start much closer to the target.
+The starting os has enough of an effect on the initialization that the solution trajectory will not diverge.
 
 
 ### Dead End Solutions
