@@ -151,7 +151,12 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <!---https://imgur.com/a/bUZJipk-->
 
-Because the positions of bodies within MuJoCo
+Because the positions of bodies within MuJoCo are floating point numbers, the body's position after a PDIk step will never be exactly equal to the target postion.
+There needs to be a range fo distances to the target within whic the solver decides the IK is "close enough" and ther will not be a signficant differntce in the resulting trajectory if the solver stops here.
+
+The tests in the PD-control section used 0.00005 meters as the cut off, the tool's default cutoff fro solving IK is 1mm.
+Visually, there is not much difference betweena solution trajectory with .1mm and 1mm as the IK solver cut off, and these trajectories are planned to bbe used to seed a RL contrller, not use as raw feed foward trajectory.
+Furthermore, a trajectory can be refined further using the refiend command if futher accuracy is needed for a certain transformation.
 
 
 ### Dead End Solutions
