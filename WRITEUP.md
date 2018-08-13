@@ -191,8 +191,10 @@ But full seeding results in significant discontinuities in the "solved" trajecto
 <!---https://imgur.com/a/pPfTpM3-->
 
 Not seeding previous solutions forces each solved frame to respect the initial pose of the robot before the any perturbation.
-The solution maintains continuity among the solution frames, bu with the starting trajectory at the ends.
-However, seeding the previous IK solution will allow the solution trajectory to diverge: not the body's error diverging, but other joints diverge from their initial positions because these initial positions do not impact seed positions for each solved frame.
+The solution maintains continuity both within the solution and with the starting trajectory at the ends.
+However, seeding the previous IK solution allows the solution trajectory to diverge. 
+The error doesn't diverge, but joints diverge from their initial positions.
+When using full seeding, the initial pose for a frame has no impact on the solved pose for that frame.
 
 Seeding the last solution was causing obvious problems, but it would be too too slow for the solver to start "from scratch" for each frame to solve.
 The current solver makes a comprimise between these two approaches.
