@@ -46,8 +46,8 @@ Modifying the width will cause the transformation to affect more/less frames.
 
 At first, I assumed there was no reason to allow the user to tweak the distribution height.
 Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
- But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
- The full transformation applies to many frames, defined by the distribution width.
+But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
+The full transformation applies to many frames, defined by the distribution width.
 
 A-Scaling only considers the final position of the node compared to its initial position.
 In contrast, I use a different scaling strategy, B-Scaling.
