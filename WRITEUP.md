@@ -18,9 +18,21 @@ After designing the gait, the user exports the reference trajectory to seed the 
 
 ## Modification Tools
 
-https://imgur.com/a/EUN9YRz
+<!--https://imgur.com/a/EUN9YRz-->
 
-https://imgur.com/a/EUN9YRz
+<!--https://imgur.com/a/EUN9YRz-->
+
+In starting this project, it was unclear what tools would be useful or nessesary for modifying tajectecoties.
+The first modification tool I wrote used interpolated motion among frames as the body was dragged around by the mouse.
+Yet there was no need for interpolation, the transofrmations just needed to be smoothed over a number of discreet frames.
+
+
+Gaussian smoothing needs a width and height.
+The width is controlled by the standard deviation of the distrobution.
+When making transformations, the user may want the transfor
+
+
+
 
 ### Gaussian Smoothing
 
