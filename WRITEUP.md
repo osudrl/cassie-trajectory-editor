@@ -196,7 +196,7 @@ However, seeding the previous IK solution allows the solution trajectory to dive
 The error doesn't diverge, but joints diverge from their initial positions.
 When using full seeding, the initial pose for a frame has no impact on the solved pose for that frame.
 
-Seeding the last solution was causing obvious problems, but it would be too too slow for the solver to start "from scratch" for each frame to solve.
+Seeding the last solution causes obvious problems, but allowing the solver to start "from scratch" for each frame takes so much longer.
 The current solver makes a comprimise between these two approaches.
 When the IK solver is called, it partially seeds the last solution's qposes.
 More specifically, the setup phase will add 95% of the previous solution to the initial position of this pose.
