@@ -19,10 +19,7 @@ After designing the gait, the user exports the reference trajectory to seed the 
 ## Modification Tools
 
 <!--https://imgur.com/a/EUN9YRz-->
-
 <!--https://imgur.com/a/EUN9YRz-->
-
-
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
 The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
