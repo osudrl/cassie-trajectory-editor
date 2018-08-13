@@ -22,43 +22,43 @@ After designing the gait, the user exports the reference trajectory to seed the 
 
 <!--https://imgur.com/a/EUN9YRz-->
 
-In starting this project, it was unclear what tools would be useful or nessesary for modifying tajectecoties.
-The first modification tool I wrote used interpolated motion among frames as the body was dragged around by the mouse.
-Yet there was no need for interpolation, the transofrmations just needed to be smoothed over a number of discreet frames.
-
-
-### Gaussian Smoothing
-
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
-The editors' first modification tool allowed the user to drag a body in real time while the editor solved spline interpolation.
-Yet there was no need for interpolation or trajectories based on the mouse's real time position.
+The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
+Yet there was no need to create trajectories based on the mouse's real time position.
 Instead, a smoothed perturbation transforms a subset of the trajectory.
 
-In the editor, perturbations are represented by dragging and dropping a node along the trajectory. 
-But once a perturbation is performed, the nearby nodes also need to move in order to for the trajectory to stay continuous.
-The most obvious smoothing method scales the initial perturbation for nearby nodes, as if the user dragged the body in the same direction for every frame in the trajectory, but dragged less and less distance as the frames get further away from the root.
-This less and less effect is represented mathematically as the Gaussian distrobution (bell curve).
-At the center of the distrobution (root of the perturbation), the scale factor is 1, because the frame recieves the full perturbation, but this scale factor eventually tapers off to essential zero.
-The smoothing will ensure pose continuity across the entire trajectory.
+The editor allows perturbations by dragging and dropping a node along the trajectory.
+Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
+The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
+This method solves every pose as if the user dragged the body at this pose.
+But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
+
+
+I implement this effect using the Gaussian distribution (bell curve).
+At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
+The scale factor tapers off to zero at the ends of the curve, ensuring pose continuity across the entire trajectory.
 
 Gaussian smoothing needs a width and height.
-The width is controlled by the standard deviation of the distribution.
-When making transformations, the user may want the transformation to affect more/less frames but still remain smoothly filtered.
-
-I did not initially consider allowing the user to tweak height.
-But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect, and the full transformation will apply to a number of frames.
+The standard deviation defines the width of the distribution.
+Modifying the width will cause the transformation to affect more/less frames.
 
 
-### Target-Based Transformation
+At first, I assumed there was no reason to allow the user to tweak the distribution height.
+Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
+ But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
+ The full transformation applies to many frames, defined by the distribution width.
+
+A-Scaling only considers the final position of the node compared to its initial position.
+In contrast, I use a different scaling strategy, B-Scaling.
+B-Scaling compares each node's own staring position to the mouse's end point.
+As a result, each node undergoes a unique translation, both in direction and magnitude.
 
 
-Translation based transformation only considers the final position of the node in relation to its initial position.
-In contrast, target based transformations compare each node's own staring position to the mouse's (rootframe's) starting postiion.
-As a result, each node's translation is unique.
-In order for the nodes to converge on a target (to hold a body in place), the target based transformation and the height options were added.
-Allows holding a number of nodes at a position for some time.
-
+B-Scaling transformations allows nodes to converge on a target.
+A user can use B-Scaling to hold a body in place for a set of frames.
+Increasing the height of the Gaussian distribution causes many nodes move all the way to the mouse's ending position.
+The user can use these tools to hold a body at a single position for some time.
 
 
 ## Inverse Kinematics
@@ -149,7 +149,7 @@ I chose the best pair of constants by their ability to consistently converge on 
 Selected constants should err on the side of robustness.
 
 
-The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107)values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
+The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107) values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
 
 
 #### Cleanup
