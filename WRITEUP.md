@@ -27,10 +27,11 @@ The editors' first modification tool allowed the user to drag a body in real tim
 Yet there was no need to create trajectories based on the mouse's real time position.
 Instead, a smoothed perturbation transforms a subset of the trajectory.
 
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="500">
+ 
 The editor allows perturbations by dragging and dropping a node along the trajectory.
 Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="300"> 
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
