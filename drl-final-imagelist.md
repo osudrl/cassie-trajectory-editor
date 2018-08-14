@@ -17,15 +17,13 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [4: pert no scaling example-- decorated](https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png)
 
-[5: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
-
-[5: B-scaling with arrows](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
+[5: ab scaling table](https://user-images.githubusercontent.com/10334426/44121352-80e848d6-9fd4-11e8-817f-1376dc79a3cb.png)
 
 [6: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
 
 [6: ascaled full pert](https://user-images.githubusercontent.com/10334426/44118057-cf8ac96a-9fc9-11e8-9534-70952680fcf6.gif)
 
-[7: B-scaling with arrows](https://i.imgur.com/NQJ2r44.pngs)
+[7: B-scaling with arrows](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
 
 [7: B-scaling holds a body in plae](https://i.imgur.com/ynlZpe3.gif)
 
