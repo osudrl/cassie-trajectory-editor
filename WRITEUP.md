@@ -12,10 +12,9 @@ The tool allows  the user to either [initialize the timeline](https://github.com
 While editing, the tool helps the user visualize changes to the initial timeline. 
 After designing the gait, the user exports the reference trajectory to seed the learning process.
 
-See this write-up in slide format at [bit.ly/cte-slides](https://bit.ly/cte-slides).
+See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte-slides).
 
 # Methods and Results
-
 
 
 ## Modification Tools
@@ -30,6 +29,9 @@ Instead, a smoothed perturbation transforms a subset of the trajectory.
 
 The editor allows perturbations by dragging and dropping a node along the trajectory.
 Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
+
+![pert no scaling example decorated](https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png)
+
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
