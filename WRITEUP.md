@@ -22,7 +22,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 <!--https://imgur.com/a/EUN9YRz-->
 <!--https://imgur.com/a/EUN9YRz-->
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="400">
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
@@ -37,6 +37,10 @@ Once the user performs a perturbation, the nearby nodes need to move to maintain
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
+
+
+<img align="center" src="https://i.imgur.com/DaJm0NS.png" width="500">
+
 
 I implement this effect using the Gaussian distribution (bell curve).
 At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
