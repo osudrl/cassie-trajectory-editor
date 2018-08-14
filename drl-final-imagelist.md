@@ -1,0 +1,49 @@
+
+# DRL Presentation- Image List
+
+link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcMmMSk-ZmTRsP15z8SK_GFuwJrVGJWfBCo/edit?usp=sharing)
+
+[1: Cassie quick walking right](https://i.imgur.com/rlcpkPP.gif)
+
+[2: goal diagram](https://user-images.githubusercontent.com/10334426/44117806-2d42b820-9fc9-11e8-9e61-bd8a99b6d911.png)
+
+[3: learning diagram](https://user-images.githubusercontent.com/10334426/44120246-a7d00514-9fd0-11e8-8a18-33c895b3127d.png)
+
+[4: pert no scaling example](https://user-images.githubusercontent.com/10334426/44117555-79d91216-9fc8-11e8-87ed-42f3098f7f81.png)
+
+[5: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
+
+[5: B-scaling with arrows](https://i.imgur.com/NQJ2r44.pngs)
+
+[6: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
+
+[6: ascaled full pert](https://user-images.githubusercontent.com/10334426/44118057-cf8ac96a-9fc9-11e8-9534-70952680fcf6.gif)
+
+[7: B-scaling with arrows](https://i.imgur.com/NQJ2r44.pngs)
+
+[7: B-scaling holds a body in plae](https://i.imgur.com/ynlZpe3.gif)
+
+[8: ik drawn diagram](https://i.imgur.com/2nrSmNf.png)
+
+[8: ik flowchart](https://user-images.githubusercontent.com/10334426/44120238-a37877da-9fd0-11e8-86ca-460781af76b6.png)
+
+[11: spring drawn on leg for pdik](https://user-images.githubusercontent.com/10334426/44118330-8ff8dd68-9fca-11e8-8a96-1f93bf757b3e.png)
+
+[12: p terms from 3d chart](https://user-images.githubusercontent.com/10334426/44118390-c7df3948-9fca-11e8-8efa-46d4137b89bc.png)
+
+[12: p terms 3d chart drawn](https://user-images.githubusercontent.com/10334426/44118744-f153bb90-9fcb-11e8-8cac-e55cba5e29a4.png)
+
+[13: d terms from 3d chart](https://user-images.githubusercontent.com/10334426/44118389-c7c740f4-9fca-11e8-8f00-7048ac2e7c94.png)
+
+[13: d terms 3d chart drawn](https://user-images.githubusercontent.com/10334426/44118745-f1660a52-9fcb-11e8-9c97-c493f121b170.png)
+
+[15: left foot drop into ground](https://i.imgur.com/SzfOnoD.gif)
+
+[18: introduce seeding with distances](https://user-images.githubusercontent.com/10334426/44119024-cc6c101a-9fcc-11e8-95d8-4905f256dcef.png)
+
+[20: 100% seeding gif](https://i.imgur.com/SKCPJfL.gif)
+
+[23: table comparing seeding strategies](https://drive.google.com/uc?export=download&id=1eJvwDe9y7CA1Ipsw1DimuP9yGUJiCkOR)
+
+[26: learning conclusion](https://user-images.githubusercontent.com/10334426/44120397-17b7b41c-9fd1-11e8-92c3-eea1aca20761.png)
+
