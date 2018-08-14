@@ -45,6 +45,10 @@ Increasing the max scale factor above 1 would cause transformations to extend be
 But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
 The full transformation applies to many frames, defined by the distribution width.
 
+A-Scaling | B-Scaling
+--- | ---
+https://i.imgur.com/DaJm0NS.png | https://i.imgur.com/NQJ2r44.pngs
+
 A-Scaling only considers the final position of the node compared to its initial position.
 In contrast, I use a different scaling strategy, B-Scaling.
 B-Scaling compares each node's own staring position to the mouse's end point.
