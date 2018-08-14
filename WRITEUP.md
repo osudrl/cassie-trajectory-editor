@@ -23,14 +23,18 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 <!--https://imgur.com/a/EUN9YRz-->
 
 
-<table style="width:50%">
+<table align="right" style="width:40%">
   <tr>
     <th>
     	<img  src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="400">
     </th>
   </tr>
   <tr>
-    <td>My Caption</td>
+    <td>
+    	<p align="center"> 
+    		My Caption
+    	</p>
+	</td>
 </table>
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
