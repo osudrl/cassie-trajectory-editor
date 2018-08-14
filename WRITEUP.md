@@ -23,7 +23,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 <!--https://imgur.com/a/EUN9YRz-->
 
 
-<table style="margin-left:60%, width:40%">
+<table style="margin-left:60%; width:40%">
   <tr>
     <th>
         <img  src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="400">
