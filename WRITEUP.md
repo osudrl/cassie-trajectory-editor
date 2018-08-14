@@ -22,7 +22,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 <!--https://imgur.com/a/EUN9YRz-->
 <!--https://imgur.com/a/EUN9YRz-->
 
-<right>
+<center>
 <table>
   <tr>
     <th>
@@ -35,7 +35,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
     </td>
 </tr>
 </table>
-</right>
+</center>
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
 The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
