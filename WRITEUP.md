@@ -86,7 +86,6 @@ These elements are listed below:
 
 * [PD Control](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#pd-control)
 * [Cleanup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#cleanup)
-* [Target Cutoff](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#target-cutoff)
 * [Setup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#ik-setup)
 
 #### PD Control
