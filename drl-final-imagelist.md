@@ -5,6 +5,10 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [1: Cassie quick walking right](https://i.imgur.com/rlcpkPP.gif)
 
+[1: people credits](https://user-images.githubusercontent.com/10334426/44120588-ace37634-9fd1-11e8-8abc-f1e4d640c8a9.png)
+
+[2: goal vid of tool](https://user-images.githubusercontent.com/10334426/44120701-077aef96-9fd2-11e8-82ca-2a2d03ca32c4.gif)
+
 [2: goal diagram](https://user-images.githubusercontent.com/10334426/44117806-2d42b820-9fc9-11e8-9e61-bd8a99b6d911.png)
 
 [3: learning diagram](https://user-images.githubusercontent.com/10334426/44120246-a7d00514-9fd0-11e8-8a18-33c895b3127d.png)
