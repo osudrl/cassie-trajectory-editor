@@ -19,7 +19,7 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [5: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
 
-[5: B-scaling with arrows](https://i.imgur.com/NQJ2r44.pngs)
+[5: B-scaling with arrows](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
 
 [6: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
 
