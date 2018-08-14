@@ -13,7 +13,9 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [3: learning diagram](https://user-images.githubusercontent.com/10334426/44120246-a7d00514-9fd0-11e8-8a18-33c895b3127d.png)
 
-[4: pert no scaling example](https://user-images.githubusercontent.com/10334426/44117555-79d91216-9fc8-11e8-87ed-42f3098f7f81.png)
+[4: pert no scaling example](https://user-images.githubusercontent.com/10334426/44121075-606573f0-9fd3-11e8-8195-7473b59007da.png)
+
+[4: pert no scaling example-- decorated](https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png)
 
 [5: A-scaling with arrows](https://i.imgur.com/DaJm0NS.png)
 
