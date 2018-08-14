@@ -47,7 +47,7 @@ The full transformation applies to many frames, defined by the distribution widt
 
 A-Scaling | B-Scaling
 --- | ---
-![ascaling](https://i.imgur.com/DaJm0NS.png) | ![bscaling](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.pngs)
+![ascaling](https://i.imgur.com/DaJm0NS.png) | ![bscaling](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
 
 A-Scaling only considers the final position of the node compared to its initial position.
 In contrast, I use a different scaling strategy, B-Scaling.
