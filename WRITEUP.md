@@ -103,7 +103,7 @@ The solver accepts the current pose as a solution when the body's position is wi
 Once accepted, we store the joint positions in the timeline and begin work on the next frame.
 
 
-![flowdiagram](https://i.imgur.com/ivDmzPu.png)
+![flowdiagram](https://user-images.githubusercontent.com/10334426/44120238-a37877da-9fd0-11e8-86ca-460781af76b6.png)
 
 
 The diagram shows the four main elements of the current IK solver.
