@@ -39,7 +39,7 @@ This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
 
-<img align="center" src="https://i.imgur.com/DaJm0NS.png" width="500">
+<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
 
 
 I implement this effect using the Gaussian distribution (bell curve).
