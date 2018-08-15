@@ -42,9 +42,7 @@ But for these poses, the distance shortens as the frames get further and further
 <img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
 
 <br></br>
-<br></br>
-<br></br>
-<br></br>
+
 
 I implement this effect using the Gaussian distribution (bell curve).
 At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
@@ -56,8 +54,7 @@ Modifying the width will cause the transformation to affect more/less frames.
 
 <br></br>
 <br></br>
-<br></br>
-<br></br>
+
 
 At first, I assumed there was no reason to allow the user to tweak the distribution height.
 Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
