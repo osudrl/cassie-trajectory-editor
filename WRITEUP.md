@@ -206,6 +206,8 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <img align="right" src="https://user-images.githubusercontent.com/10334426/44125251-5c2ccc6c-9fe6-11e8-9641-b55f9eeeeec0.png" width="300"> 
 
+#### Full Seeding
+
 The current solver optimizes the process by seeding the last (solved) frame's pose for subsequent calculation.
 This seed will be much closer to the target than this frame's initial position.
 As a result, the solver needs fewer simulation cycles to get the body to the target.
@@ -221,6 +223,9 @@ But full seeding results in significant discontinuities in the "solved" trajecto
 
 <!---https://imgur.com/a/pPfTpM3-->
 
+
+#### Seeding vs No Seeding
+
 <img align="right" src="https://i.imgur.com/SKCPJfL.gif" width="300"> 
 
 Not seeding previous solutions forces each solved frame to respect the initial pose of the robot before the any perturbation.
@@ -229,7 +234,7 @@ However, seeding the previous IK solution allows the solution trajectory to dive
 The error doesn't diverge, but joints diverge from their initial positions.
 When using full seeding, the initial pose for a frame has no impact on the solved pose for that frame.
 
-#### Seeding Solution: Partial Seeding
+#### Solution: Partial Seeding
 
 Seeding the last solution causes obvious problems, but allowing the solver to start "from scratch" for each frame takes so much longer.
 So the current solver makes a compromise between the two approaches.
