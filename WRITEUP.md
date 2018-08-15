@@ -33,12 +33,13 @@ Yet there was no need to create trajectories based on the mouse's real time posi
 The editor allows perturbations by dragging and dropping a node along the trajectory.
 Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
 
+<br></br>
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
-<br></br>
+
 
 <img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
 
@@ -54,7 +55,6 @@ The standard deviation defines the width of the distribution.
 Modifying the width will cause the transformation to affect more/less frames.
 
 <br></br>
-
 
 At first, I assumed there was no reason to allow the user to tweak the distribution height.
 Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
