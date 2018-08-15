@@ -24,6 +24,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 
 <img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
+#### A Case for Scaling
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
 The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
@@ -33,18 +34,16 @@ Yet there was no need to create trajectories based on the mouse's real time posi
 The editor allows perturbations by dragging and dropping a node along the trajectory.
 Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
 
-<br></br>
+#### A-Scaling
+
+<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
 
-
-<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
-
-<br></br>
-
+#### Scaling Parameters
 
 I implement this effect using the Gaussian distribution (bell curve).
 At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
@@ -54,12 +53,12 @@ Gaussian smoothing needs a width and height.
 The standard deviation defines the width of the distribution.
 Modifying the width will cause the transformation to affect more/less frames.
 
-<br></br>
-
 At first, I assumed there was no reason to allow the user to tweak the distribution height.
 Increasing the max scale factor above 1 would cause transformations to extend beyond the mouse.
 But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
 The full transformation applies to many frames, defined by the distribution width.
+
+#### B-Scaling
 
 A-Scaling | B-Scaling
 --- | ---
