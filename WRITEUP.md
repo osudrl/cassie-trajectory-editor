@@ -24,7 +24,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 
 <img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
-### A Case for Scaling
+### The Scaling Problem
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
 The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
@@ -69,6 +69,8 @@ The full transformation applies to many frames, defined by the distribution widt
 A-Scaling | B-Scaling
 --- | ---
 ![ascaling](https://i.imgur.com/DaJm0NS.png) | ![bscaling](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
+
+<img align="right" src="https://i.imgur.com/ynlZpe3.gif" width="300"> 
 
 A-Scaling only considers the final position of the node compared to its initial position.
 In contrast, I use a different scaling strategy, B-Scaling.
