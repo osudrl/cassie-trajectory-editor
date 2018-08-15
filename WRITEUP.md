@@ -36,12 +36,14 @@ Once the user performs a perturbation, the nearby nodes need to move to maintain
 
 #### A-Scaling
 
-<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
+<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="300">
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
+<br></br>
+<br></br>
 
 #### Scaling Parameters
 
