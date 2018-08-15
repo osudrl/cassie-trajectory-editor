@@ -12,7 +12,7 @@ The tool allows  the user to either [initialize the timeline](https://github.com
 While editing, the tool helps the user visualize changes to the initial timeline. 
 After designing the gait, the user exports the reference trajectory to seed the learning process.
 
-See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte-slides).
+See this write-up in slide show format [here](https://docs.google.com/presentation/d/1-XZgo2CTrMZGU7WgSqcN6Vu8hxZXwEL6FBmaoF5cSpE/edit?usp=sharing).
 
 # Research Learning
 
