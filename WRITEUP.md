@@ -24,7 +24,7 @@ See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte
 
 <img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
-#### A Case for Scaling
+### A Case for Scaling
 
 At the start of this project, I wasn't sure what transformation tools the editor would need.
 The editors' first modification tool allowed the user to drag a body in real time while solving spline interpolation.
@@ -40,7 +40,7 @@ Once the user performs a perturbation, the nearby nodes need to move to maintain
 
 
 
-#### A-Scaling
+### A-Scaling
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
@@ -49,7 +49,7 @@ But for these poses, the distance shortens as the frames get further and further
 <br></br>
 <br></br>
 
-#### Scaling Parameters
+### Scaling Parameters
 
 I implement this effect using the Gaussian distribution (bell curve).
 At the center of the distribution, the scale factor is 1, because the root frame receives the full perturbation.
@@ -64,7 +64,7 @@ Increasing the max scale factor above 1 would cause transformations to extend be
 But by capping the filter scaling factor at 1, increasing the height will form a sort of mesa effect.
 The full transformation applies to many frames, defined by the distribution width.
 
-#### B-Scaling
+### B-Scaling vs A-Scaling
 
 A-Scaling | B-Scaling
 --- | ---
