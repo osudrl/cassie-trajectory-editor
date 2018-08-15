@@ -196,7 +196,6 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <!--- issues #18 and #14 -->
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44125251-5c2ccc6c-9fe6-11e8-9641-b55f9eeeeec0.png" width="300"> 
 
 
 #### IK Setup
@@ -205,6 +204,9 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 <!---https://imgur.com/a/KIEMrxg-->
 
 <!---https://imgur.com/a/bUZJipk-->
+
+
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44125251-5c2ccc6c-9fe6-11e8-9641-b55f9eeeeec0.png" width="300"> 
 
 The current solver optimizes the process by seeding the last (solved) frame's pose for subsequent calculation.
 The trajectory is continuous, so this seed will be much closer to the target than this frame's initial position.
