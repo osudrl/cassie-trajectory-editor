@@ -34,11 +34,13 @@ Yet there was no need to create trajectories based on the mouse's real time posi
 The editor allows perturbations by dragging and dropping a node along the trajectory.
 Once the user performs a perturbation, the nearby nodes need to move to maintain continuity along the trajectory.
 
-#### A-Scaling
+
 
 <img align="right" src="https://i.imgur.com/DaJm0NS.png" width="300">
 
 <br></br>
+
+#### A-Scaling
 
 The most obvious smoothing method scales the initial perturbation for nearby nodes (A-Scaling).
 This method solves every pose as if the user dragged the body at this pose.
