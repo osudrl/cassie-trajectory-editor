@@ -196,7 +196,7 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 <!--- issues #18 and #14 -->
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44119024-cc6c101a-9fcc-11e8-95d8-4905f256dcef.png" width="300"> 
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44125178-f18803d6-9fe5-11e8-99f9-5d0dcaa687cf.png" width="300"> 
 
 
 #### IK Setup
