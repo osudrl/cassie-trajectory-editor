@@ -45,6 +45,11 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [18: introduce seeding with distances](https://user-images.githubusercontent.com/10334426/44119024-cc6c101a-9fcc-11e8-95d8-4905f256dcef.png)
 
+[18: introduce seeding with distances zoom1](https://user-images.githubusercontent.com/10334426/44125177-f16e6a2a-9fe5-11e8-984a-e5cc80d405d4.png)
+
+[18: introduce seeding with distances zoom2](https://user-images.githubusercontent.com/10334426/44125178-f18803d6-9fe5-11e8-99f9-5d0dcaa687cf.png)
+
+
 [20: 100% seeding gif](https://i.imgur.com/SKCPJfL.gif)
 
 [23: table comparing seeding strategies](https://drive.google.com/uc?export=download&id=1eJvwDe9y7CA1Ipsw1DimuP9yGUJiCkOR)
