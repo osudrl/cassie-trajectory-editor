@@ -174,6 +174,9 @@ The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/
 
 <!---https://imgur.com/a/GuL7v5K-->
 
+<img align="right" src="https://i.imgur.com/SzfOnoD.gif" width="300"> 
+
+
 When solving inverse kinematics with the above PD control method, the PD controller only applies forces to single leg.
 While PDIK is being performed, `m->qpos_spring` hold the pelvis in place.
 But the solver does not apply any forces to the other leg.
