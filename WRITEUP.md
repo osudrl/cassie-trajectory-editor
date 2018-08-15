@@ -219,8 +219,6 @@ Yet the edges of the solved frames diverge from the original trajectory.
 Ideally, the solver only slightly modifies the poses at the tail ends of the smoothed perturbation.
 But full seeding results in significant discontinuities in the "solved" trajectory.
 
-<br></br>
-
 <!---https://imgur.com/a/pPfTpM3-->
 
 
