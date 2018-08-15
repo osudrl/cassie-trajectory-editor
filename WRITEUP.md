@@ -70,7 +70,7 @@ A-Scaling | B-Scaling
 --- | ---
 ![ascaling](https://i.imgur.com/DaJm0NS.png) | ![bscaling](https://user-images.githubusercontent.com/10334426/44121302-40330c5e-9fd4-11e8-9339-2b9ba7286024.png)
 
-<img align="right" src="https://i.imgur.com/ynlZpe3.gif" width="300"> 
+
 
 A-Scaling only considers the final position of the node compared to its initial position.
 In contrast, I use a different scaling strategy, B-Scaling.
@@ -81,6 +81,8 @@ B-Scaling transformations allows nodes to converge on a target.
 A user can use B-Scaling to hold a body in place for a set of frames.
 Increasing the height of the Gaussian distribution causes many nodes move all the way to the mouse's ending position.
 The user can use these tools to hold a body at a single position for some time.
+
+![hold in plce](https://i.imgur.com/ynlZpe3.gif)
 
 ## Inverse Kinematics
 
