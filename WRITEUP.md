@@ -47,7 +47,6 @@ This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
 <br></br>
-<br></br>
 
 ### Scaling Parameters
 
