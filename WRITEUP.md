@@ -14,7 +14,7 @@ After designing the gait, the user exports the reference trajectory to seed the 
 
 See this write-up in slide show format at [bit.ly/cte-slides](https://bit.ly/cte-slides).
 
-# Methods and Results
+# Research Learning
 
 
 ## Modification Tools
@@ -244,16 +244,6 @@ Yet the starting pose has enough of an effect that the solution trajectory will 
 --- | --- | ---
 Computation time: **44.7 sec** | Computation time: **1.7 sec** | Computation time: **1.7 sec**
 ![0](https://i.imgur.com/ODM9GNz.gif) | ![100](https://i.imgur.com/SKCPJfL.gif) | ![95](https://i.imgur.com/Mof3qL0.gif)
-
-### Dead End Solutions
-
-
-
-#### Complete Seeding
-
-
-
-#### Library of Poses
 
 
 
