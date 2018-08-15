@@ -94,8 +94,6 @@ The solver knows the target position for each discreet pose.
 But only inverse kinematics can determine what joint angles, will get the foot to its target.
 
 
-### Preferred Solution
-
 The tool implements an inverse kinematics solver which relies on MuJoCo physics simulation.
 At a high level, the simulation first initializes the robot's pose.
 Next, a [PD controller](http://robotic-controls.com/learn/programming/pd-feedback-control-introduction) applies external forces to the body, pushing it towards the target position.
@@ -114,7 +112,7 @@ These elements are listed below:
 * [Cleanup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#cleanup)
 * [Setup](https://github.com/osudrl/cassie-trajectory-editor/blob/selection-docs/WRITEUP.md#ik-setup)
 
-#### PD Control
+### PD Control
 
 
 If it was possible to set a body's position, there would not be a need for an IK solver.
@@ -171,7 +169,7 @@ The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/
 
 <img align="right" src="https://i.imgur.com/SzfOnoD.gif" width="300"> 
 
-#### Cleanup
+### Cleanup
 
 <!---https://imgur.com/a/GuL7v5K-->
 
@@ -198,7 +196,7 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 
 
 
-#### IK Setup
+### IK Setup
 
 
 <!---https://imgur.com/a/KIEMrxg-->
@@ -209,12 +207,11 @@ As far as I know, joint modifications on the other leg are unwanted, and these p
 <img align="right" src="https://user-images.githubusercontent.com/10334426/44125251-5c2ccc6c-9fe6-11e8-9641-b55f9eeeeec0.png" width="300"> 
 
 The current solver optimizes the process by seeding the last (solved) frame's pose for subsequent calculation.
-The trajectory is continuous, so this seed will be much closer to the target than this frame's initial position.
+This seed will be much closer to the target than this frame's initial position.
 As a result, the solver needs fewer simulation cycles to get the body to the target.
 Furthermore, a shorter distance allows the solver to use larger PD constants without risking simulation instability.
 
-
-There is a disadvantage: the seeding finds a "band" of solutions.
+There is a disadvantage: **complete** seeding finds a "band" of solutions.
 The robot poses are continuous within the "solved" frames.
 Yet the edges of the solved frames diverge from the original trajectory.
 Ideally, the solver only slightly modifies the poses at the tail ends of the smoothed perturbation.
@@ -225,12 +222,12 @@ But full seeding results in significant discontinuities in the "solved" trajecto
 <img align="right" src="https://i.imgur.com/SKCPJfL.gif" width="300"> 
 
 Not seeding previous solutions forces each solved frame to respect the initial pose of the robot before the any perturbation.
-The solution maintains continuity both within the solution and with the starting trajectory at the ends.
-
-
+The solution maintains continuity both within the solution and with the starting trajectory at the ends. 
 However, seeding the previous IK solution allows the solution trajectory to diverge. 
 The error doesn't diverge, but joints diverge from their initial positions.
 When using full seeding, the initial pose for a frame has no impact on the solved pose for that frame.
+
+#### Seeding Solution: Partial Seeding
 
 Seeding the last solution causes obvious problems, but allowing the solver to start "from scratch" for each frame takes so much longer.
 So the current solver makes a compromise between the two approaches.
