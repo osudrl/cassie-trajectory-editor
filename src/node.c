@@ -94,7 +94,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
     final_root = mj_stackAlloc(traj_info->d, vector_size);
     init_curr_to_final_root = mj_stackAlloc(traj_info->d, vector_size);
 
-    if (SEL.pert_type == PERT_TARGET)
+    if (SEL.scale_type == SCALING_A)
     {
         mju_add(
             final_root, 
@@ -113,7 +113,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
             scalefactor,
             vector_size);
     }
-    else if (SEL.pert_type == PERT_TRANSLATION)
+    else if (SEL.scale_type == SCALING_B)
     {
         mju_addScl(
             final_curr,

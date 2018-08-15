@@ -68,13 +68,13 @@ enum node_type_e
 
 #define NODE_TYPE_E_COUNT 3
 
-enum pert_type_e
+enum scale_type_e
 {
-    PERT_TRANSLATION = 0,
-    PERT_TARGET = 1,
+    SCALING_A = 0,
+    SCALING_B = 1,
 };
 
-#define PERT_TYPE_E_COUNT 2
+#define SCALE_TYPE_E_COUNT 2
 
 struct _decor_t_
 {
@@ -99,7 +99,7 @@ struct _selection_t_
 
     int frame_offset;
     enum node_type_e node_type;
-    enum pert_type_e pert_type;
+    enum scale_type_e scale_type;
     int nodecount;
     double nodesigma;
     double nodeheight;

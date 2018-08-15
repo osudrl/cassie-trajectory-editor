@@ -832,14 +832,14 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
         if( button_right )
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.selection.pert_type = PERT_TRANSLATION;
+            traj_info.selection.scale_type = SCALING_A;
             traj_info.selection.nodeheight = 1;
 
         }
         else if (button_left)
         {
             newperturb = mjPERT_TRANSLATE;
-            traj_info.selection.pert_type = PERT_TARGET;
+            traj_info.selection.scale_type = SCALING_B;
             traj_info.selection.nodeheight = 1;
         }
         // else if( button_left )
