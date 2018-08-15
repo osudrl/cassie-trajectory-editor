@@ -36,7 +36,7 @@ Once the user performs a perturbation, the nearby nodes need to move to maintain
 
 #### A-Scaling
 
-<img align="left" src="https://i.imgur.com/DaJm0NS.png" width="300">
+<img align="right" src="https://i.imgur.com/DaJm0NS.png" width="300">
 
 <br></br>
 
