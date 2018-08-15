@@ -38,6 +38,7 @@ The most obvious smoothing method scales the initial perturbation for nearby nod
 This method solves every pose as if the user dragged the body at this pose.
 But for these poses, the distance shortens as the frames get further and further from the actual perturbation frame.
 
+<br></br>
 
 <img align="left" src="https://i.imgur.com/DaJm0NS.png" width="400">
 
@@ -52,7 +53,6 @@ Gaussian smoothing needs a width and height.
 The standard deviation defines the width of the distribution.
 Modifying the width will cause the transformation to affect more/less frames.
 
-<br></br>
 <br></br>
 
 
