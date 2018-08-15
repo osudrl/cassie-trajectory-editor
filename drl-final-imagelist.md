@@ -49,6 +49,8 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [18: introduce seeding with distances zoom2](https://user-images.githubusercontent.com/10334426/44125178-f18803d6-9fe5-11e8-99f9-5d0dcaa687cf.png)
 
+[18: introduce seeding with distances zoom3](https://user-images.githubusercontent.com/10334426/44125251-5c2ccc6c-9fe6-11e8-9641-b55f9eeeeec0.png)
+
 
 [20: 100% seeding gif](https://i.imgur.com/SKCPJfL.gif)
 
