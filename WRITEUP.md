@@ -222,6 +222,8 @@ But full seeding results in significant discontinuities in the "solved" trajecto
 
 <!---https://imgur.com/a/pPfTpM3-->
 
+<img align="right" src="https://i.imgur.com/SKCPJfL.gif" width="300"> 
+
 Not seeding previous solutions forces each solved frame to respect the initial pose of the robot before the any perturbation.
 The solution maintains continuity both within the solution and with the starting trajectory at the ends.
 
