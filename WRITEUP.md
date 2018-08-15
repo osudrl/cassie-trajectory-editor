@@ -169,12 +169,12 @@ Selected constants should err on the side of robustness.
 
 The [default Kp and Kd](https://github.com/osudrl/cassie-trajectory-editor/blob/0dbf44c7536c35cd1c7d0dfab21b6e0a6ace8941/src/ik.c#L106:L107) values for the tool are 480 and 30, although these values could be tuned more accurately with further testing.
 
+<img align="right" src="https://i.imgur.com/SzfOnoD.gif" width="300"> 
 
 #### Cleanup
 
 <!---https://imgur.com/a/GuL7v5K-->
 
-<img align="right" src="https://i.imgur.com/SzfOnoD.gif" width="300"> 
 
 
 When solving inverse kinematics with the above PD control method, the PD controller only applies forces to single leg.
