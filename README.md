@@ -418,7 +418,7 @@ Explaination:
 
 The [scaling problem](https://github.com/osudrl/cassie-trajectory-editor/blob/master/WRITEUP.md#the-scaling-problem) discusses the need for A-Scaling and B-Scaling methods.
 This function implements both the A-Scaling and B-Scaling methods.
-The implementation is kept abstract so that vectors of any length can be scaled with the two methods.
+The implementation is kept abstract so that vectors of any length can be scaled.
 For positional transformations, `node calclate global target using transformation type()` calls the function with a vector size of 3.
 For joint-only transformations, `node dropped jointmove()` calls the function with a vector size of 1.
 
@@ -444,7 +444,7 @@ Parameters:
 
 Name/Type | Description
 --- | ---
-(vector) global body init xpos at rootframe | The vector representing the initial position of the value at the root frame
+(vector) global body init xpos at rootframe | The vector representing the initial position of the body at the root frame
 (vector) global body target xpos | The **result** of the calculations from the function. Represents the target for the body at the specified frame 
 (vector) rootframe transform vector | The translation that the root node experienced. For A-Scaling, all nearby nodes will undergo scaled-down transformations in the same direction
 int rootframe | At what frame was the main perturbation applied? The rootframe can be found by finding node_body_id of the node that was dragged and dropped and using `get frame from node body id()`
@@ -461,10 +461,65 @@ This function sets up the call to `node calculate arbitrary target using scale t
 It should only be used when dealing with positional transformations (not joint transformations).
 Called by `node perform pert()` and `node position scale visually()`.
 
-Changes to qposes: **YES:** qposes are overwritten and set to timeline-> qposes at (`rootframe` + `frame_offset`).
+Changes to qposes: **YES: qposes are overwritten** and set to timeline-> qposes at (`rootframe` + `frame_offset`).
 
-Changes to timeline: No. The timeline referenced is left unchaged.
+Changes to timeline: No. The timeline is left unchaged.
 
+
+### get_frame_from_node_body_id()
+
+Definition:
+
+```c
+void get_frame_from_node_body_id(
+    traj_info_t* traj_info,
+    timeline_t* timeline,
+    v3_t global_body_init_xpos_at_rootframe,
+    v3_t global_body_target_xpos, 
+    v3_t rootframe_transform_vector,
+    int rootframe,
+    int frame_offset,
+    cassie_body_id_t body_id);
+```
+
+Assumptions: 
+* `node_id` meets the above assumptions for a node body id
+
+Changes to qposes: No
+
+Changes to timeline: No
+
+
+### node_calculate_rootframe_transformation_vector()
+
+Definition:
+
+```c
+void node_calculate_rootframe_transformation_vector(
+    traj_info_t* traj_info, 
+    timeline_t* timeline,
+    v3_t rootframe_transform_vector,
+    cassie_body_id_t body_id, 
+    node_body_id_t node_id)
+```
+
+Name/Type | Description
+--- | ---
+(vector) rootframe transform vector | Is the **result** of the function. Describes the transformation that the rootnode underwent
+cassie body_id | The model body that the user clicked to cause the nodes to appear. This body will be perturbed
+node node_id | The node body which the user dragged to cause this perturbation. The result (`rootframe transform vector`) is how far this node was dragged
+
+Assumptions:
+* cassie and node body_ids meet the above assumptions
+* the result vector is a non-NULL reference to a double[3]
+
+Changes to qposes: **YES: qposes are overwritten** with the qposes from the timeline at the calculated rootframe (calculated using the node_body)
+
+Changes to timeline: No
+
+### node_refine_pert()
+
+See [#19](https://github.com/osudrl/cassie-trajectory-editor/issues/19).
 
 
 # Contact
