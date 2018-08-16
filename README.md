@@ -422,12 +422,48 @@ The implementation is kept abstract so that vectors of any length can be scaled 
 For positional transformations, `node calclate global target using transformation type()` calls the function with a vector size of 3.
 For joint-only transformations, `node dropped jointmove()` calls the function with a vector size of 1.
 
-
-
 <!---https://imgur.com/gallery/iLAihrA--->
 
+### node_calclate_global_target_using_transformation_type()
 
+Definition:
 
+```c
+void node_calclate_global_target_using_transformation_type(
+    traj_info_t* traj_info,
+    timeline_t* timeline,
+    v3_t global_body_init_xpos_at_rootframe,
+    v3_t global_body_target_xpos, 
+    v3_t rootframe_transform_vector,
+    int rootframe,
+    int frame_offset,
+    cassie_body_id_t body_id);
+```
+
+Parameters:
+
+Name/Type | Description
+--- | ---
+(vector) global body init xpos at rootframe | The vector representing the initial position of the value at the root frame
+(vector) global body target xpos | The **result** of the calculations from the function. Represents the target for the body at the specified frame 
+(vector) rootframe transform vector | The translation that the root node experienced. For A-Scaling, all nearby nodes will undergo scaled-down transformations in the same direction
+int rootframe | At what frame was the main perturbation applied? The rootframe can be found by finding node_body_id of the node that was dragged and dropped and using `get frame from node body id()`
+int frame_offset | Defines how many frames away from the rootframe that the that the target is being polled. Add `frame_offset` to `rootframe` to get the absolute frame for which the target is being caluclated by calling this function
+cassie body_id | The body that was perturbed
+
+Assumptions:
+* `traj_info` / `timeline` are non-NULL
+* All the vectors are of length 3 and non-NULL
+* Rootframe is within the bounds \[0,timeline->numposes\)
+* Frame offset can be any integer- it will just wrap around the timeline
+
+This function sets up the call to `node calculate arbitrary target using scale type()`. 
+It should only be used when dealing with positional transformations (not joint transformations).
+Called by `node perform pert()` and `node position scale visually()`.
+
+Changes to qposes: **YES:** qposes are overwritten and set to timeline-> qposes at (`rootframe` + `frame_offset`).
+
+Changes to timeline: No. The timeline referenced is left unchaged.
 
 
 
