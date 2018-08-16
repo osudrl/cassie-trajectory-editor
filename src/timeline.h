@@ -5,6 +5,7 @@
 #include "glfw3.h"
 #include "main.h"
 #include <stdio.h>
+#include <time.h>
 #include <string.h>
 
 struct __attribute__ ((packed)) _full_traj_state_t_
@@ -29,7 +30,7 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timel
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame);
 int timeline_get_frame_from_time(traj_info_t* traj_info);
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info);
-
+void timeline_export(traj_info_t* traj_info, timeline_t* timeline);
 
 
 #endif

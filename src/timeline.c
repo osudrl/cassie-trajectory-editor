@@ -83,6 +83,51 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->prev = NULL;
 }
 
+void timeline_export_to_file(full_traj_state_t* fulls, int numposes)
+{
+   char filename[64];
+   time_t now;
+   FILE* outfile;
+
+   now = time(NULL);
+   strftime(filename, 64, "stepdata-%Y-%m-%d--%H-%M-%S.bin", localtime(&now));
+   outfile = fopen(filename, "w");
+
+   printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
+   fwrite(fulls, sizeof(full_traj_state_t), numposes, outfile);
+   fflush(outfile);
+   fclose(outfile);
+}
+
+void timeline_export(traj_info_t* traj_info, timeline_t* timeline)
+{
+    int savestackptr;
+    double numDubsNeeded;
+    int i;
+    full_traj_state_t* membuf;
+
+    savestackptr = traj_info->d->pstack;
+    numDubsNeeded = timeline->numposes * sizeof(full_traj_state_t);
+    numDubsNeeded /= sizeof(double);
+    membuf = (full_traj_state_t*) 
+        mj_stackAlloc(traj_info->d, mju_ceil(numDubsNeeded));
+
+    for(i = 0; i < timeline->numposes; i++)
+    {
+        mju_zero(&membuf[i].time, 1);
+        mju_copy(membuf[i].qpos, timeline->qposes[i].q, 35);
+        mju_zero(membuf[i].qvel, 32);
+        mju_zero(membuf[i].torque, 10);
+        mju_zero(membuf[i].mpos, 10);
+        mju_zero(membuf[i].mvel, 10);
+    }
+
+    timeline_export_to_file(membuf, timeline->numposes);
+
+    traj_info->d->pstack = savestackptr; 
+}
+
+
 timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
 {
     timeline_t* dest;

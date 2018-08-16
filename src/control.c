@@ -238,6 +238,8 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         else if( key==GLFW_KEY_Y || (
             key==GLFW_KEY_Z &&  (mods & GLFW_MOD_SHIFT)  ))
             redo_pert(traj_info);
+        else if(key == GLFW_KEY_S)
+            timeline_export(traj_info, traj_info->timeline);
     }
 
 }
