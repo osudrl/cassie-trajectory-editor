@@ -43,7 +43,7 @@ void node_perform_ik_on_xpos_transformation(
     int frameoffset, 
     v3_t target,
     double* ik_iter_total);
-void node_calculate_arbitrary_target_using_transformation_type(
+void node_calculate_arbitrary_target_using_scale_type(
     traj_info_t* traj_info,
     double* final_curr,
     double* root_transformation,

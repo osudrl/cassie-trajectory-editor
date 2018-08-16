@@ -76,7 +76,7 @@ void node_perform_ik_on_xpos_transformation(
     timeline_overwrite_frame_using_curr_pose(traj_info, overwrite, frame);
 }
 
-void node_calculate_arbitrary_target_using_transformation_type(
+void node_calculate_arbitrary_target_using_scale_type(
     traj_info_t* traj_info,
     double* final_curr,
     double* root_transformation,
@@ -150,7 +150,7 @@ void node_calclate_global_target_using_transformation_type(
         rootframe + frame_offset, 
         body_id);
     
-    node_calculate_arbitrary_target_using_transformation_type(
+    node_calculate_arbitrary_target_using_scale_type(
         traj_info,
         global_body_target_xpos,
         rootframe_transform_vector,
@@ -462,7 +462,7 @@ void node_dropped_jointmove(traj_info_t* traj_info,
             SEL.nodesigma, 
             SEL.nodeheight);
 
-        node_calculate_arbitrary_target_using_transformation_type(
+        node_calculate_arbitrary_target_using_scale_type(
             traj_info,
             timeline_new->qposes[frame].q + SEL.jointnum,
             &jointdiff,
@@ -556,7 +556,7 @@ void node_position_jointmove(traj_info_t* traj_info,
             SEL.nodesigma, 
             SEL.nodeheight);
 
-        node_calculate_arbitrary_target_using_transformation_type(
+        node_calculate_arbitrary_target_using_scale_type(
             traj_info,
             &temp_new_qpos_val,
             &jointdiff,

@@ -376,11 +376,11 @@ Changes to qposes: **YES**, the current qposes will reflect the solution of the 
 
 Changes to any timeline: **YES,** the specified frame on the provided timeline will be overwritten with the solution
 
-### node_calculate_arbitrary_target_using_transformation_type()
+### node_calculate_arbitrary_target_using_scale_type()
 
 Definition:
 ```c
-void node_calculate_arbitrary_target_using_transformation_type(
+void node_calculate_arbitrary_target_using_scale_type(
     traj_info_t* traj_info,
     double* final_curr,
     double* root_transformation,
@@ -391,7 +391,7 @@ void node_calculate_arbitrary_target_using_transformation_type(
 ```
 
 Calculates a target (the vector can be an arbitrary dimension) using the vectors passed as parameters. 
-The target will depend on the current node transformation type, set by `traj_info->selection.node_type`.
+The target will depend on the current scaling type, set by `traj_info->selection.scale_type`.
 
 Parameters:
 
@@ -402,41 +402,32 @@ Name/Type | Description
 (vector) init_curr | The initial position of the body at the frame for which the target will be calculated
 (vector) init_root | The initial position of the body at the root frame before it was transformed
 int vector_size | Although this function makes the most sense in 3d, its stages are illustrated below in 2d and is used for a 1d transformation by `node_position_joint_move()`. This parameter defines the number of components for each source and result vector.
-double scale_factor | Also named `filter` in parts of the module, this value scales the full transformation down. This value is provably the result of the Gaussian distribution
+double scale_factor | Also named `filter` in parts of the module, this value scales the full transformation down. This value is probably the result of the Gaussian distribution
 
 Returns: The target vector in `final_curr`
 
 Assumptions: 
 
 * The vectors are non NULL and at least the length of `vector_size`
-* Vector size > 0
+* `vector_size` > 0
 * Scale factor is \(0,1\] - other values work, but do not make sense
+
+Changes to qpos/timeline: No
+
+Explaination:
+
+The [scaling problem](https://github.com/osudrl/cassie-trajectory-editor/blob/master/WRITEUP.md#the-scaling-problem) discusses the need for A-Scaling and B-Scaling methods.
+This function implements both the A-Scaling and B-Scaling methods.
+The implementation is kept abstract so that vectors of any length can be scaled with the two methods.
+For positional transformations, `node calclate global target using transformation type()` calls the function with a vector size of 3.
+For joint-only transformations, `node dropped jointmove()` calls the function with a vector size of 1.
+
+
 
 <!---https://imgur.com/gallery/iLAihrA--->
 
 
 
-<img src="https://i.imgur.com/rJgPeQJ.png" width="500"> 
-
-<img src="https://i.imgur.com/FC9nbQm.png" width="500"> 
-
-<img src="https://i.imgur.com/Cri5BbT.png" width="500"> 
-
-<img src="https://i.imgur.com/UtyMJbZ.png" width="500"> 
-
-<img src="https://i.imgur.com/mQLGpsS.png" width="500"> 
-
-<img src="https://i.imgur.com/A6YWwNP.png" width="500"> 
-
-<img src="https://i.imgur.com/eBY7IL5.png" width="500"> 
-
-<img src="https://i.imgur.com/K6ev8cu.png" width="500"> 
-
-<img src="https://i.imgur.com/tV10ofR.png" width="500"> 
-
-<img src="https://i.imgur.com/TTR3zJ9.png" width="500"> 
-
-<img src="https://i.imgur.com/bzVGl9v.png" width="500"> 
 
 
 
