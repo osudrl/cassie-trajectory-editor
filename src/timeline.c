@@ -46,6 +46,9 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     full_traj_state_t* fulls;
     int big;
     int start;
+    int loopcount;
+
+    loopcount = 1;
 
     bytecount = timeline_fill_full_traj_state_array(traj_info, (uint8_t**) &fulls);
     bytecount /= sizeof(full_traj_state_t);
@@ -55,16 +58,16 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     if(!traj_info->timeline)
         traj_info->timeline = malloc(sizeof(timeline_t));
 
-    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount * 2);
+    traj_info->timeline->qposes = malloc(sizeof(qpos_t) * bytecount * loopcount);
 
-    for(i = 0; i < bytecount * 2; i++)
+    for(i = 0; i < bytecount * loopcount; i++)
     {
         mju_copy(traj_info->timeline->qposes[i].q,
             fulls[i % bytecount].qpos,
             CASSIE_QPOS_SIZE);
     }
 
-    for(big = 1; big <= 1; big++)
+    for(big = 1; big <= loopcount-1; big++)
     {
         start = bytecount * big;
         for(i = start; i < start + bytecount; i++)
@@ -76,9 +79,11 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
         }
     }
 
+    traj_info->timeline->duration = fulls[bytecount-1].time * loopcount;
+
     free(fulls);
 
-    traj_info->timeline->numposes = bytecount * 2;
+    traj_info->timeline->numposes = bytecount * loopcount;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
 }
@@ -93,7 +98,7 @@ void timeline_export_to_file(full_traj_state_t* fulls, int numposes)
    strftime(filename, 64, "stepdata-%Y-%m-%d--%H-%M-%S.bin", localtime(&now));
    outfile = fopen(filename, "w");
 
-   printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
+   // printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
    fwrite(fulls, sizeof(full_traj_state_t), numposes, outfile);
    fflush(outfile);
    fclose(outfile);
@@ -114,7 +119,7 @@ void timeline_export(traj_info_t* traj_info, timeline_t* timeline)
 
     for(i = 0; i < timeline->numposes; i++)
     {
-        mju_zero(&membuf[i].time, 1);
+        membuf[i].time = (timeline->duration / (timeline->numposes-1)) * i;
         mju_copy(membuf[i].qpos, timeline->qposes[i].q, 35);
         mju_zero(membuf[i].qvel, 32);
         mju_zero(membuf[i].torque, 10);
@@ -163,6 +168,7 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     dest->next = NULL;
     dest->prev = NULL;
     dest->numposes = ref->numposes;
+    dest->duration = ref->duration;
 
     return dest;
 }

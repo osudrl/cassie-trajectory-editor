@@ -23,6 +23,7 @@ typedef struct _qpos_t_ qpos_t;
 struct _timeline_t_
 {
     int numposes;
+    double duration;
     qpos_t* qposes;
     struct _timeline_t_* prev;
     struct _timeline_t_* next;
