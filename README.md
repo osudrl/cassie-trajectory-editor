@@ -503,6 +503,8 @@ void node_calculate_rootframe_transformation_vector(
     node_body_id_t node_id)
 ```
 
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
+
 Name/Type | Description
 --- | ---
 (vector) rootframe transform vector | Is the **result** of the function. Describes the transformation that the rootnode underwent
