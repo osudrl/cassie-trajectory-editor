@@ -69,7 +69,7 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
 
-![Rendering while solving IK- no seeding](https://user-images.githubusercontent.com/10334426/44432077-6465da80-a555-11e8-88b6-8707365c362c.gif)
+[Rendering while solving IK- no seeding](https://user-images.githubusercontent.com/10334426/44432077-6465da80-a555-11e8-88b6-8707365c362c.gif)
 
-![Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
+[Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
 
