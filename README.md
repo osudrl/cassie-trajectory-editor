@@ -510,7 +510,7 @@ Name/Type | Description
 cassie body_id | The model body that the user clicked to cause the nodes to appear. This body will be perturbed
 node node_id | The node body which the user dragged to cause this perturbation. The result (`rootframe transform vector`) is how far this node was dragged
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44414902-cc033200-a523-11e8-87e9-78f707596dc6.png" width="375">
 
 Assumptions:
 * cassie and node body_ids meet the above assumptions
