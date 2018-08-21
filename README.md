@@ -471,15 +471,9 @@ Changes to timeline: No. The timeline is left unchaged.
 Definition:
 
 ```c
-void get_frame_from_node_body_id(
-    traj_info_t* traj_info,
-    timeline_t* timeline,
-    v3_t global_body_init_xpos_at_rootframe,
-    v3_t global_body_target_xpos, 
-    v3_t rootframe_transform_vector,
-    int rootframe,
-    int frame_offset,
-    cassie_body_id_t body_id);
+int get_frame_from_node_body_id(traj_info_t* traj_info, 
+    timeline_t* timeline, 
+    node_body_id_t node_id)
 ```
 
 Assumptions: 
