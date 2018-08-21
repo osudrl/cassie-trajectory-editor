@@ -471,7 +471,8 @@ Changes to timeline: No. The timeline is left unchaged.
 Definition:
 
 ```c
-int get_frame_from_node_body_id(traj_info_t* traj_info, 
+int get_frame_from_node_body_id(
+	traj_info_t* traj_info, 
     timeline_t* timeline, 
     node_body_id_t node_id)
 ```
