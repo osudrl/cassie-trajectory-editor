@@ -58,3 +58,7 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [26: learning conclusion](https://user-images.githubusercontent.com/10334426/44120397-17b7b41c-9fd1-11e8-92c3-eea1aca20761.png)
 
+[node calculate rootframe transformation vector() illustration](https://user-images.githubusercontent.com/10334426/44414902-cc033200-a523-11e8-87e9-78f707596dc6.png)
+
+
+
