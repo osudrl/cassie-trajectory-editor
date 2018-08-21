@@ -173,6 +173,15 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     return dest;
 }
 
+void timeline_safe_link(timeline_t* next, timeline_t* prev)
+{
+    if(prev->next)
+        timeline_free(prev->next);
+
+    prev->next = next;
+    next->prev = prev;
+}
+
 void timeline_free(timeline_t* ref)
 {
     free(ref->qposes);

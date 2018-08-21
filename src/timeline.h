@@ -24,6 +24,7 @@ typedef struct _full_traj_state_t_ full_traj_state_t;
 
 timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy);
 timeline_t* timeline_duplicate(timeline_t* ref);
+void timeline_safe_link(timeline_t* next, timeline_t* prev);
 void timeline_free(timeline_t* ref);
 qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, int frame);
 void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame);

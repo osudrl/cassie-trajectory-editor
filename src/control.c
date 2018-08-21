@@ -81,10 +81,10 @@ void refine_pert(traj_info_t* traj_info)
 
 void undo_pert(traj_info_t* traj_info)
 {
-    if(!traj_info->timeline->next)
+    if(!traj_info->timeline->prev)
         return;
 
-    traj_info->timeline = traj_info->timeline->next;
+    traj_info->timeline = traj_info->timeline->prev;
 
     if(SEL.id_last_non_node_select > 0 && SEL.id_last_non_node_select <= 25)
         REVISUALIZE;
@@ -92,10 +92,10 @@ void undo_pert(traj_info_t* traj_info)
 
 void redo_pert(traj_info_t* traj_info)
 {
-    if(!traj_info->timeline->prev)
+    if(!traj_info->timeline->next)
         return;
 
-    traj_info->timeline = traj_info->timeline->prev;
+    traj_info->timeline = traj_info->timeline->next;
 
     if(SEL.id_last_non_node_select > 0 && SEL.id_last_non_node_select <= 25)
         REVISUALIZE;
@@ -111,8 +111,8 @@ void control_expand_pose(traj_info_t* traj_info)
     qpos = timeline_get_qposes_from_frame(traj_info->timeline, frame);
     expanded = timeline_init_with_single_pose(qpos, traj_info->timeline);
 
-    expanded->next = traj_info->timeline;
-    traj_info->timeline->prev = expanded;
+    expanded->prev = traj_info->timeline;
+    traj_info->timeline->next = expanded;
     traj_info->timeline = expanded;
 }
 
