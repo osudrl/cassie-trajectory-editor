@@ -54,32 +54,6 @@ Ctrl+Shift+Scroll | Dragging a node | Scales the 'height' of the [Gaussian distr
 
 # Tool Source Documentation
 
-
-The following sections discuss the code base of the tool.
-
-
-## Big Picture: Roadmap Diagram
-
-
-![rough roadmap diagram](https://i.imgur.com/hGbAoiS.png)
-
-The above diagram (**outdated, see [#11](https://github.com/osudrl/cassie-trajectory-editor/issues/11)**) identifies many of the key source files, data structures, and fucntions of the tool.
-
-Symbol | Description
---- | ---
-Rectangle (solid outline) | Function
-Rectangle (dashed outline) | Data structure
-Solid Arrow | Connects function caller (base) to callee (tip)
-Number on Arrow | Identifies the order that the caller calls these functions
-Dashed Arrow | Data accesses and overwrites
-Dashed Fence | The files (.c/.h) where these functions/structures are sourced
-Diamond | Confusing decision points within functions
-Circle | Distinct tasks within a method
-
-
-The diagram is most useful when used in conjunction with the written description of each feature.
-
-
 ## Important Data Structures
 
 Each major data structure is explained below
