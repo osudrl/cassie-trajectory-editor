@@ -58,7 +58,18 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [26: learning conclusion](https://user-images.githubusercontent.com/10334426/44120397-17b7b41c-9fd1-11e8-92c3-eea1aca20761.png)
 
+# from README
+
 [node calculate rootframe transformation vector() illustration](https://user-images.githubusercontent.com/10334426/44414902-cc033200-a523-11e8-87e9-78f707596dc6.png)
 
 
+# REU Final
+
+[Rendering while solving IK- no seeding](https://user-images.githubusercontent.com/10334426/44432077-6465da80-a555-11e8-88b6-8707365c362c.gif)
+
+[Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
+
+![Rendering while solving IK- no seeding](https://user-images.githubusercontent.com/10334426/44432077-6465da80-a555-11e8-88b6-8707365c362c.gif)
+
+![Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
 

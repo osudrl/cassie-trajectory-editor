@@ -107,11 +107,15 @@ void ik_default_fill_solver_params(ik_solver_params_t* params)
     params->pd_b_regular = 30;
     params->pd_k_lastsoln = 5000;
     params->pd_b_lastsoln = 10;
-    params->lastsoln_merge_scale = .95;
+    params->lastsoln_merge_scale = 1;
     params->seedoption = IK_ALWAYS_SEED_LASTSOLN;
     params->frame_mostly_seed_frequency = -1; //unused for this seedoption
     params->width_frame_noseed_around_rootframe = 0;
 }
+
+#define RENNUM 45
+
+#define EZRENDER if(frameoffset % RENNUM == 0) render(traj_info->window, 0)
 
 int ik_iterative_better_body_optimizer(
     traj_info_t* traj_info,
@@ -145,10 +149,25 @@ int ik_iterative_better_body_optimizer(
     ik_set_pelvis_springs(traj_info);
     ik_zero_velocities(traj_info);
 
+    if(frameoffset % RENNUM == 0)
+    {
+        mj_forward(traj_info->m, traj_info->d);
+        params->ik_accuracy_cutoff = 0.001;
+    }
+    else
+        params->ik_accuracy_cutoff = 1;
+
+
+    for(int z = 0; z < 25; z++)
+        EZRENDER;
+
     while(traj_info->ik.doik > 0 && traj_info->ik.lowscore > params->ik_accuracy_cutoff)
     {
         mju_zero(traj_info->d->xfrc_applied, 6*traj_info->m->nbody);
         mj_step(traj_info->m,traj_info->d);
+
+        if (traj_info->ik.doik % 10 == 2)
+            EZRENDER;
     }
 
     if(traj_info->ik.doik == 0)
@@ -161,10 +180,16 @@ int ik_iterative_better_body_optimizer(
 
     ik_set_opposite_leg(traj_info, initqpos, QPOS_TRANSFORM_FULL /*= 1*/, body_id_end);
 
+    if(frameoffset % RENNUM == 0)
+    {
     if(frameoffset >= 0)
         mju_copy(ik_positive_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
     if(frameoffset <= 0)
         mju_copy(ik_negative_keyed_qposes, traj_info->d->qpos, CASSIE_QPOS_SIZE);
+
+    }
+    for(int z = 0; z < 15; z++)
+        EZRENDER;
 
     // outit(traj_info, frameoffset, initqpos, returnvalue);
 

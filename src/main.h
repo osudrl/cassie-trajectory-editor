@@ -14,6 +14,8 @@
 #define DECOR_BUF_SIZE 400
 #define IK_STEP_CUTOFF 1500
 
+void render(GLFWwindow* window, bool dosim);
+
 struct _qpos_t_
 {
     double q[CASSIE_QPOS_SIZE];
@@ -116,6 +118,8 @@ struct _traj_info_
     mjModel* m;
     mjData* d;
     mjvPerturb* pert;
+    GLFWwindow* window;
+
     target_t* target_list;
 
     int refine_body;

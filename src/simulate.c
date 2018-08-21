@@ -136,11 +136,12 @@ char opt_content[1000];
 traj_info_t traj_info;
 int firsttrajinforeset = 0;
 
-void reset_traj_info()
+void reset_traj_info(GLFWwindow* window)
 {
     traj_info.m = m;
     traj_info.d = d;
     traj_info.pert = &pert;
+    traj_info.window = window;
     // traj_info.timeline.init = 0;
     
     traj_info.selection.nodecount = 50;
@@ -577,7 +578,7 @@ void loadmodel(GLFWwindow* window, const char* filename)
     if( window && m->names )
         glfwSetWindowTitle(window, m->names);
 
-    reset_traj_info();
+    reset_traj_info(window);
 }
 
 
@@ -1103,7 +1104,7 @@ void simulation(void)
 }
 
 // render
-void render(GLFWwindow* window)
+void render(GLFWwindow* window, bool dosim)
 {
     // past data for FPS calculation
     static double lastrendertm = 0;
@@ -1129,7 +1130,8 @@ void render(GLFWwindow* window)
     }
 
     // advance simulation
-    simulation();
+    if(dosim)
+        simulation();
 
     // update simulation statistics
     if( !paused )
@@ -1298,6 +1300,11 @@ void render(GLFWwindow* window)
     glfwSwapBuffers(window);
 }
 
+void windowrefresh(GLFWwindow* window)
+{
+    render(window, 1);
+}
+
 
 //-------------------------------- main function ----------------------------------------
 
@@ -1359,7 +1366,7 @@ int main(int argc, const char** argv)
     glfwSetMouseButtonCallback(window, mouse_button);
     glfwSetScrollCallback(window, scroll);
     glfwSetDropCallback(window, drop);
-    glfwSetWindowRefreshCallback(window, render);
+    glfwSetWindowRefreshCallback(window, windowrefresh);
 
     // set MuJoCo time callback for profiling
     mjcb_time = timer;
@@ -1376,7 +1383,7 @@ int main(int argc, const char** argv)
     while( !glfwWindowShouldClose(window) )
     {
         // simulate and render
-        render(window);
+        render(window, 1);
 
         // handle events (this calls all callbacks)
         glfwPollEvents();
