@@ -180,7 +180,6 @@ Type / Name | Description | Usages
 
 Dynamically allocated on the heap with links constructing a doubly-linked list in both directions.
 In a way, this structure is **doubly dynamically allocated** because both the `timeline_t` structure and the list of `qpos_t` structs (representing a single set of Cassie qposes) is also malloc'd based on the desired timeline size.
-As referenced in [#7](https://github.com/osudrl/cassie-trajectory-editor/issues/7), any number of undos followed by a transformation will cause the "redo" chain of timelines to be **leaked permanently**.
 
 
 #### Setup
