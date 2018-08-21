@@ -503,13 +503,14 @@ void node_calculate_rootframe_transformation_vector(
     node_body_id_t node_id)
 ```
 
-<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
 Name/Type | Description
 --- | ---
 (vector) rootframe transform vector | Is the **result** of the function. Describes the transformation that the rootnode underwent
 cassie body_id | The model body that the user clicked to cause the nodes to appear. This body will be perturbed
 node node_id | The node body which the user dragged to cause this perturbation. The result (`rootframe transform vector`) is how far this node was dragged
+
+<img align="right" src="https://user-images.githubusercontent.com/10334426/44121073-5f04952c-9fd3-11e8-99fe-6454cc62a26d.png" width="375">
 
 Assumptions:
 * cassie and node body_ids meet the above assumptions
