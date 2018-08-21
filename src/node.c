@@ -416,7 +416,11 @@ void node_perform_pert(
 
         timeline_safe_link(timeline_new, timeline_old);
         traj_info->timeline = timeline_new;
-    }   
+    }
+    else
+    {
+        timeline_free(timeline_new);
+    }
 
     traj_info->refine_rootframe = rootframe;
     traj_info->refine_body = body_id.id;
