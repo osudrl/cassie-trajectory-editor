@@ -428,7 +428,8 @@ void node_perform_pert(
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
-void node_dropped_jointmove(traj_info_t* traj_info,
+void node_dropped_jointmove(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id)
 {
@@ -474,14 +475,14 @@ void node_dropped_jointmove(traj_info_t* traj_info,
             filter);
     }
 
-    timeline_new->next = timeline_old;
-    timeline_old->prev = timeline_new;
+    timeline_safe_link(timeline_new, timeline_old);
     traj_info->timeline = timeline_new;
 
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
-void node_dropped_positional(traj_info_t* traj_info,
+void node_dropped_positional(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id)
 {
@@ -522,7 +523,8 @@ void node_dropped_positional(traj_info_t* traj_info,
     }
 }
 
-void node_position_jointmove(traj_info_t* traj_info, 
+void node_position_jointmove(
+    traj_info_t* traj_info, 
     cassie_body_id_t body_id,
     int rootframe,
     double jointdiff)
@@ -587,7 +589,8 @@ void node_position_jointmove(traj_info_t* traj_info,
     }
 }
 
-double node_caluclate_jointdiff(traj_info_t* traj_info,
+double node_caluclate_jointdiff(
+    traj_info_t* traj_info,
     v3_t body_init_xpos)
 {
     double rootframe_transform_vector[3];
@@ -699,7 +702,8 @@ void node_scale_visually_positional(
 
 }
 
-void node_position_initial_positional(traj_info_t* traj_info,
+void node_position_initial_positional(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id)
 {
     int i;
@@ -718,7 +722,8 @@ void node_position_initial_positional(traj_info_t* traj_info,
     }    
 }
 
-void node_position_jointid(traj_info_t* traj_info,
+void node_position_jointid(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id)
 {
     int i;
@@ -744,7 +749,8 @@ void node_position_jointid(traj_info_t* traj_info,
     }
 }
 
-void node_position_initial_using_cassie_body(traj_info_t* traj_info,
+void node_position_initial_using_cassie_body(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id)
 {
     double qpos_cache[CASSIE_QPOS_SIZE];
@@ -765,7 +771,8 @@ void node_position_initial_using_cassie_body(traj_info_t* traj_info,
     mj_forward(traj_info->m, traj_info->d);
 }
 
-double node_calculate_filter_from_frame_offset(double frame_offset,
+double node_calculate_filter_from_frame_offset(
+    double frame_offset,
     double sigma,
     double nodeheight)
 {

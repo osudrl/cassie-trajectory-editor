@@ -80,17 +80,21 @@ void node_perform_pert(
     v3_t rootframe_transform_vector,
     cassie_body_id_t body_id,
     int rootframe);
-void node_dropped_jointmove(traj_info_t* traj_info,
+void node_dropped_jointmove(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id);
-void node_dropped_positional(traj_info_t* traj_info,
+void node_dropped_positional(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id);
-void node_position_jointmove(traj_info_t* traj_info, 
+void node_position_jointmove(
+    traj_info_t* traj_info, 
     cassie_body_id_t body_id,
     int rootframe,
     double jointdiff);
-double node_caluclate_jointdiff(traj_info_t* traj_info,
+double node_caluclate_jointdiff(
+    traj_info_t* traj_info,
     v3_t body_init_xpos);
 void node_scale_visually_jointmove(
     traj_info_t* traj_info,
@@ -100,13 +104,17 @@ void node_scale_visually_positional(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id);
-void node_position_initial_positional(traj_info_t* traj_info,
+void node_position_initial_positional(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id);
-void node_position_jointid(traj_info_t* traj_info,
+void node_position_jointid(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id);
-void node_position_initial_using_cassie_body(traj_info_t* traj_info,
+void node_position_initial_using_cassie_body(
+    traj_info_t* traj_info,
     cassie_body_id_t body_id);
-double node_calculate_filter_from_frame_offset(double frame_offset,
+double node_calculate_filter_from_frame_offset(
+    double frame_offset,
     double sigma,
     double nodeheight);
 
