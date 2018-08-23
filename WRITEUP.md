@@ -8,7 +8,7 @@ The Cassie Trajectory Editor aids in designing reference trajectories for the [C
 The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
 Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
 
-The tool helps users manipulate a timeline of robot poses.
+The tool helps users manipulate the trajectory, stored as a timeline of robot poses.
 The user may choose to initialize this timeline with a full trajectory or a single pose.
 When initialized with a trajectory, the user may want to tweak parameters such as the walking step height or foot speed.
 If instead the user starts with a single pose, the tool can help create behaviors from scratch.
