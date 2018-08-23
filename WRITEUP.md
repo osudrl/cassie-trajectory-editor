@@ -15,12 +15,11 @@ If instead the user starts with a single pose, the tool can help create behavior
 Finally, the user exports the finished trajectory for use in reinforcement learning.
 
 The editor solves a problem with designing learned Cassie controllers.
-Learning results in a controller which mimics a reference behavior.
-Although the training focuses on this reference, it prioritizes robustness.
-The learning process only rewards a controller if it can keep the robot upright.
+The learning process trains a controller to mimic a reference behavior.
+However, it only rewards a controller if it can keep the robot upright.
 In this way, researchers can teach Cassie to mimic any behavior without falling over.
-However, the learning process requires a reference trajectory featuring the desired behavior.
-The editor solves this problem.
+This process, however, requires a reference trajectory featuring the desired behavior.
+Cassie trajectory editor solves this problem.
 It allows researchers to design and export these reference trajectories.
 As a result, it serves a critical role in the reinforcement learning workflow.
 
