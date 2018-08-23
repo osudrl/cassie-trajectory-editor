@@ -2,17 +2,27 @@
 
 # Introduction
 
-<img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="300"> 
+<img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="350"> 
 
 The Cassie Trajectory Editor aids in designing reference trajectories for the [Cassie robot](http://www.agilityrobotics.com/robots/). 
 The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
 Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
 
-The tool allows  the user to either [initialize the timeline](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5)) with a single pose or a full trajectory. 
-While editing, the tool helps the user visualize changes to the initial timeline. 
-After designing the gait, the user exports the reference trajectory to seed the learning process.
+The tool helps users manipulate the trajectory, stored as a timeline of robot poses.
+The user chooses to initialize this timeline with a full trajectory or a single pose.
+When initialized with a trajectory, the user uses the editor's tools to tweak gait parameters such as step height or foot speed.
+If instead the user starts with a single pose, the tool can help create behaviors such as walking, crouching, and hopping.
+Finally, the user exports the finished trajectory for use in reinforcement learning.
 
-See this write-up in slide show format [here](https://docs.google.com/presentation/d/1-XZgo2CTrMZGU7WgSqcN6Vu8hxZXwEL6FBmaoF5cSpE/edit?usp=sharing).
+The editor solves a problem with designing learned Cassie controllers.
+The learning process trains a controller to mimic a reference behavior.
+However, it only rewards a controller if it can keep the robot upright.
+In this way, researchers can teach Cassie to mimic any behavior without falling over.
+This process, however, requires a reference trajectory featuring the desired behavior.
+Cassie trajectory editor solves this problem.
+It allows researchers to design and export these reference trajectories.
+As a result, it serves a critical role in the reinforcement learning workflow.
+
 
 # Research Learning
 
