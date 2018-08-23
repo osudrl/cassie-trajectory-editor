@@ -2,7 +2,7 @@
 
 # Introduction
 
-<img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="500"> 
+<img align="right" src="https://i.imgur.com/rlcpkPP.gif" width="350"> 
 
 The Cassie Trajectory Editor aids in designing reference trajectories for the [Cassie robot](http://www.agilityrobotics.com/robots/). 
 The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
