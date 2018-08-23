@@ -14,8 +14,8 @@ When initialized with a trajectory, the user uses the editor's tools to tweak ga
 If instead the user starts with a single pose, the tool can help create behaviors such as walking, crouching, and hopping.
 Finally, the user exports the finished trajectory for use in reinforcement learning.
 
-The editor solves a critical problem in making learned Cassie controllers.
-Further discussed in the UBC paper, the learning process results in a controller which mimics a reference behavior.
+The editor solves a problem with designing learned Cassie controllers.
+Learning results in a controller which mimics a reference behavior.
 Although the training focuses on this reference, it prioritizes robustness.
 The learning process only rewards a controller if it can keep the robot upright.
 In this way, researchers can teach Cassie to mimic any behavior without falling over.
