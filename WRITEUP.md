@@ -10,7 +10,7 @@ Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim
 
 The tool helps users manipulate the trajectory, stored as a timeline of robot poses.
 The user chooses to initialize this timeline with a full trajectory or a single pose.
-When initialized with a trajectory, the user uses the editor's tools to tweak parameters such as the walking step height or foot speed.
+When initialized with a trajectory, the user uses the editor's tools to tweak gait parameters such as step height or foot speed.
 If instead the user starts with a single pose, the tool can help create behaviors from scratch.
 Researchers can design  robot behaviors like walking, crouching, and hopping.
 Finally, the user will export the finished trajectory for use in reinforcement learning.
