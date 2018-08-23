@@ -8,11 +8,23 @@ The Cassie Trajectory Editor aids in designing reference trajectories for the [C
 The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
 Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
 
-The tool allows  the user to either [initialize the timeline](https://github.com/osudrl/cassie-trajectory-editor/blob/docs/README.md#initialization) ([#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5)) with a single pose or a full trajectory. 
-While editing, the tool helps the user visualize changes to the initial timeline. 
-After designing the gait, the user exports the reference trajectory to seed the learning process.
+The tool helps users manipulate a timeline of robot poses.
+The user may choose to initialize this timeline with a full trajectory or a single pose.
+When initialized with a trajectory, the user may want to tweak parameters such as the walking step height or foot speed.
+If instead the user starts with a single pose, the tool can help create behaviors from scratch.
+Researchers can design  robot behaviors like walking, crouching, and hopping.
+Finally, the user will export the finished trajectory for use in reinforcement learning.
 
-See this write-up in slide show format [here](https://docs.google.com/presentation/d/1-XZgo2CTrMZGU7WgSqcN6Vu8hxZXwEL6FBmaoF5cSpE/edit?usp=sharing).
+The editor solves a critical problem in making learned Cassie controllers.
+Further discussed in the UBC paper, the learning process results in a controller which mimics a reference behavior.
+Although the training focuses on this reference, it prioritizes robustness.
+The learning process only rewards a controller if it can keep the robot upright.
+In this way, researchers can teach Cassie to mimic any behavior without falling over.
+However, the learning process requires a reference trajectory featuring the desired behavior.
+The editor solves this problem.
+It allows researchers to design and export these reference trajectories.
+As a result, it serves a critical role in the reinforcement learning workflow.
+
 
 # Research Learning
 
