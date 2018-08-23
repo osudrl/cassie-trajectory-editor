@@ -241,6 +241,7 @@ void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)
         timeiline_init_from_input_file(traj_info);
 
     frame = timeline_get_frame_from_time(traj_info);
+    overlay_set_time_and_frame(traj_info, frame);
     timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
 }
 

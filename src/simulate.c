@@ -1161,20 +1161,22 @@ void render(GLFWwindow* window)
         solerr = mju_log10(mju_max(mjMINVAL, solerr));
 
         // status
-        sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s",
-                d->time, 
-                d->nefc, 
-                d->ncon,
-                d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
-                1.0/(glfwGetTime()-lastrendertm),
-                d->energy[0]+d->energy[1],
-                solerr,
-                d->solver_iter, 
-                mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
-                mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
-                camstr, 
-                keyresetstr
-            );
+
+        // sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s",
+        //         d->time, 
+        //         d->nefc, 
+        //         d->ncon,
+        //         d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
+        //         1.0/(glfwGetTime()-lastrendertm),
+        //         d->energy[0]+d->energy[1],
+        //         solerr,
+        //         d->solver_iter, 
+        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
+        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
+        //         camstr, 
+        //         keyresetstr
+        //     );
+        overlay_fill_info_status_buf(status, &traj_info, camstr);
     }
 
     // FPS timing satistics

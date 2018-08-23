@@ -111,6 +111,16 @@ struct _selection_t_
 };
 typedef struct _selection_t_ selection_t;
 
+struct _info_overlay_t_
+{
+    float sec;
+    int frame;
+    bool canundo;
+    bool canredo;
+    bool canrefine;
+};
+typedef struct _info_overlay_t_ info_overlay_t;
+
 struct _traj_info_
 {
     mjModel* m;
@@ -124,6 +134,7 @@ struct _traj_info_
     pdikdata_t ik;
     decor_t decor;
     selection_t selection;
+    info_overlay_t info_overlay;
     timeline_t* timeline;
     
     int64_t time_start;
