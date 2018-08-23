@@ -184,7 +184,7 @@ void reset_traj_info()
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
 
-    showinfo = paused;
+    showinfo = 1;
 
     for( int i=0; i<mjNRNDFLAG; i++ )
         if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
@@ -669,7 +669,6 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
     case GLFW_KEY_SPACE:                // pause
         paused = !paused;
-        showinfo = paused;
 
         break;
 
@@ -1162,7 +1161,7 @@ void render(GLFWwindow* window)
         solerr = mju_log10(mju_max(mjMINVAL, solerr));
 
         // status
-        sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s\n%s\n%s",
+        sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s",
                 d->time, 
                 d->nefc, 
                 d->ncon,
@@ -1174,8 +1173,6 @@ void render(GLFWwindow* window)
                 mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
                 mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
                 camstr, 
-                mjFRAMESTRING[vopt.frame], 
-                mjLABELSTRING[vopt.label],
                 keyresetstr
             );
     }
@@ -1227,13 +1224,10 @@ void render(GLFWwindow* window)
         mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, help_title, help_content, &con);
 
     // show info
-    if( showinfo )
+    if( 1 || showinfo )
     {
-        if( paused )
-            mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, "PAUSED", 0, &con);
-        else
-            mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
-                "Time\nSize\nCPU\nFPS\nEnergy\nSolver\nFwdInv\nCamera\nFrame\nLabel\nReset", status, &con);
+        mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
+            overlay_get_info_string(), status, &con);
     }
 
     // show options

@@ -47,7 +47,8 @@ OBJS =\
 	bin/pdik.o \
 	bin/control.o \
 	bin/node.o \
-	bin/decor.o
+	bin/decor.o \
+	bin/overlay.o
 
 HEADS =  \
 	src/main.h \
@@ -56,7 +57,9 @@ HEADS =  \
 	src/pdik.h \
 	src/control.h \
 	src/ik.h \
-	src/decor.h
+	src/decor.h\
+	src/overlay.h
+
 
 all : $(MAIN) | mjkey.txt
 
@@ -157,6 +160,14 @@ bin/decor.o : $(HEADS) src/decor.c | mjkey.txt $(MJ) $(CASSIE)
 		$(CCOMMON) \
 		src/decor.c \
 		-o bin/decor.o
+
+bin/overlay.o : $(HEADS) src/overlay.c | mjkey.txt $(MJ) $(CASSIE)
+	-@mkdir -p bin
+	gcc -c \
+		$(FLAGS) \
+		$(CCOMMON) \
+		src/overlay.c \
+		-o bin/overlay.o
 
 clean :
 	-rm -rf bin 

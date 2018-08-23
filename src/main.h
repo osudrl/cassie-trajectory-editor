@@ -139,6 +139,7 @@ typedef struct _traj_info_ traj_info_t;
 #include "ik.h"
 #include "node.h"
 #include "decor.h"
+#include "overlay.h"
 
 void f_copy(float* to, float* from, int num);
 uint64_t traj_time_in_micros();
