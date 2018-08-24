@@ -106,3 +106,13 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 [from usage gif 2](https://i.imgur.com/a5xO5E3.png)
 
 [leaping behavior](https://user-images.githubusercontent.com/10334426/44607929-daad4b80-a7a6-11e8-82b7-32768ab7072d.png)
+
+[crouch green 1](https://user-images.githubusercontent.com/10334426/44609171-8ce71200-a7ab-11e8-8a11-5f15634ad73f.png)
+
+[crouch green 2](https://user-images.githubusercontent.com/10334426/44609172-8ce71200-a7ab-11e8-82af-98be6a161a34.png)
+
+[best crouch with blue](https://user-images.githubusercontent.com/10334426/44609173-8d7fa880-a7ab-11e8-9b3a-4454dbf4b3d6.png)
+
+
+
+
