@@ -314,7 +314,7 @@ void node_perform_pert(
         &ik_iter_total);
 
     //this is toomuch
-    iterations = 3.491 * SEL.nodesigma;
+    iterations = 10000;
 
     if(traj_info->target_list)
     {
@@ -332,6 +332,7 @@ void node_perform_pert(
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(rootframe_transform_vector, 3)) * traj_info->nodesigma);
 
+    rootframe = timeline_make_frame_safe(rootframe);
     for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
         if(((int)(.2 * percent(frame_offset, iterations, SEL.nodesigma))) > outcount)
@@ -343,6 +344,9 @@ void node_perform_pert(
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
+
+        if(rootframe + frame_offset < timeline_old->numposes)
+        {
         node_calclate_global_target_using_transformation_type(
             traj_info,
             timeline_old,
@@ -368,6 +372,9 @@ void node_perform_pert(
             frame_offset,
             global_body_target_xpos,
             &ik_iter_total);        
+        }
+        if(rootframe - frame_offset >= 0)
+        {
 
         node_calclate_global_target_using_transformation_type(
             traj_info,
@@ -396,6 +403,7 @@ void node_perform_pert(
             -frame_offset,
             global_body_target_xpos,
             &ik_iter_total);
+        }
 
         if(frame_offset > 1 && ik_iter_total > (.95 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
         {
