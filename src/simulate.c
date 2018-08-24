@@ -1226,10 +1226,12 @@ void render(GLFWwindow* window)
         mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, help_title, help_content, &con);
 
     // show info
-    if( 1 || showinfo )
+    if(showinfo )
     {
         mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
             overlay_get_info_string(), status, &con);
+        mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMRIGHT, rect, 
+            overlay_get_selection_type_string(), NULL, &con);
     }
 
     // show options

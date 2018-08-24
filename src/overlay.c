@@ -18,11 +18,17 @@ Refine\n\
 Camera";
 }
 
+char* overlay_get_selection_type_string()
+{
+    return "Selection Mode: Positonal\n\
+Do fool thingsssssssssssssssssssssssss";
+}
+
 void overlay_update_urr(traj_info_t* traj_info)
 {
     OV.canundo = traj_info->timeline->prev != NULL;
     OV.canredo = traj_info->timeline->next != NULL;
-    OV.canrefine = !OV.canredo && OV.canundo;
+    OV.canrefine = !OV.canredo && OV.canundo && traj_info->timeline->node_type == NODE_POSITIONAL;
 }
 
 void overlay_set_time_and_frame(traj_info_t* traj_info, int frame)

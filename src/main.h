@@ -20,11 +20,30 @@ struct _qpos_t_
 };
 typedef struct _qpos_t_ qpos_t;
 
+enum node_type_e
+{
+    NODE_NONE = 0,
+    NODE_POSITIONAL,
+    NODE_JOINTID,
+    NODE_JOINTMOVE
+};
+
+#define NODE_TYPE_E_COUNT 3
+
+enum scale_type_e
+{
+    SCALING_A = 0,
+    SCALING_B = 1,
+};
+
+#define SCALE_TYPE_E_COUNT 2
+
 struct _timeline_t_
 {
     int numposes;
     double duration;
     qpos_t* qposes;
+    enum node_type_e node_type;
     struct _timeline_t_* prev;
     struct _timeline_t_* next;
 };
@@ -60,22 +79,6 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
-enum node_type_e
-{
-    NODE_POSITIONAL = 0,
-    NODE_JOINTID = 1,
-    NODE_JOINTMOVE = 2
-};
-
-#define NODE_TYPE_E_COUNT 3
-
-enum scale_type_e
-{
-    SCALING_A = 0,
-    SCALING_B = 1,
-};
-
-#define SCALE_TYPE_E_COUNT 2
 
 struct _decor_t_
 {

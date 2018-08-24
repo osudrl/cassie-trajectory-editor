@@ -259,6 +259,7 @@ void node_refine_pert(
     printf("Refined: accurate to %.5fmm\n", 1000.0*params->ik_accuracy_cutoff);
 
     timeline_safe_link(timeline_new, timeline_old);
+    timeline_new->node_type = NODE_POSITIONAL;
     traj_info->timeline = timeline_new;
     traj_info->time_start += iktimedelta;
 }
@@ -416,6 +417,7 @@ void node_perform_pert(
 
         timeline_safe_link(timeline_new, timeline_old);
         traj_info->timeline = timeline_new;
+        timeline_new->node_type = NODE_POSITIONAL;
     }
     else
     {
