@@ -89,4 +89,10 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [reference from paper -- highlight](https://user-images.githubusercontent.com/10334426/44603832-ee51b580-a798-11e8-8580-8bab7db5f39e.png)
 
+[jhurst photo](https://mime.oregonstate.edu/research/drl/people/_images/jonathan_hurst.jpg)
+
+[pclary photo](https://mime.oregonstate.edu/research/drl/people/_images/patrick_clary.jpg)
+
+[full person list](https://user-images.githubusercontent.com/10334426/44605347-cb75d000-a79d-11e8-9b44-501d9f2f32f0.png)
+
 
