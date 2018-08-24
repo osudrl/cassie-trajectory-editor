@@ -113,6 +113,9 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [crouch green 2](https://user-images.githubusercontent.com/10334426/44609173-8d7fa880-a7ab-11e8-9b3a-4454dbf4b3d6.png)
 
+[crouch no nodes](https://user-images.githubusercontent.com/10334426/44609652-72ae3380-a7ad-11e8-82da-ce38924ba7b5.png)
+
+
 
 
 
