@@ -1001,7 +1001,7 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
         if(!mod_shift)
             traj_info.selection.nodesigma *= mult;
         else
-            traj_info.selection.nodeheight *= 50 * mult;
+            traj_info.selection.nodeheight *= 5 * mult;
 
 
     }
