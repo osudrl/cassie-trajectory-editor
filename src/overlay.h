@@ -10,7 +10,7 @@ void overlay_fill_info_status_buf(
     traj_info_t* traj_info,
     char* camerastr,
     double fps);
-
+void overlay_update_urr(traj_info_t* traj_info);
 
 #endif
 

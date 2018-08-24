@@ -18,6 +18,13 @@ Refine\n\
 Camera";
 }
 
+void overlay_update_urr(traj_info_t* traj_info)
+{
+    OV.canundo = traj_info->timeline->prev != NULL;
+    OV.canredo = traj_info->timeline->next != NULL;
+    OV.canrefine = !OV.canredo && OV.canundo;
+}
+
 void overlay_set_time_and_frame(traj_info_t* traj_info, int frame)
 {
     float result;
@@ -39,6 +46,8 @@ void overlay_fill_info_status_buf(
     double fps)
 {
     int offset = 0;
+
+    overlay_update_urr(traj_info);
 
     offset += sprintf(buf + offset, "%s\n", !(*(traj_info->paused)) ? "FALSE" : "TRUE");
     offset += sprintf(buf + offset, "%.3f seconds\n", OV.sec);
