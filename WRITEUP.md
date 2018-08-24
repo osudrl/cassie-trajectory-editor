@@ -8,20 +8,20 @@ The Cassie Trajectory Editor aids in designing reference trajectories for the [C
 The trajectories serve as targets in the [reinforcement learning process](https://arxiv.org/abs/1803.05580). 
 Both physical and [simulated Cassie](https://github.com/osudrl/cassie-mujoco-sim) can learn different walking gaits through this process.
 
-The tool helps users manipulate the trajectory, stored as a timeline of robot poses.
-The user chooses to initialize this timeline with a full trajectory or a single pose.
-When initialized with a trajectory, the user uses the editor's tools to tweak gait parameters such as step height or foot speed.
-If instead the user starts with a single pose, the tool can help create behaviors such as walking, crouching, and hopping.
-Finally, the user exports the finished trajectory for use in reinforcement learning.
-
-The editor solves a problem with designing learned Cassie controllers.
+The editor streamlines the design process for creating learned Cassie controllers.
 The learning process trains a controller to mimic a reference behavior.
 However, it only rewards a controller if it can keep the robot upright.
 In this way, researchers can teach Cassie to mimic any behavior without falling over.
 This process, however, requires a reference trajectory featuring the desired behavior.
-Cassie trajectory editor solves this problem.
-It allows researchers to design and export these reference trajectories.
+Cassie trajectory editor solves this problem, by allowing researchers to design and export these reference trajectories.
 As a result, it serves a critical role in the reinforcement learning workflow.
+
+The tool helps users manipulate a trajectory, which is represented as a timeline of robot poses.
+The user chooses to initialize this timeline with a either full trajectory or a single pose.
+When initialized with a trajectory, editor's tools help tweak gait parameters such as step height or foot speed.
+If instead the user starts with a single pose, the tool can help create behaviors such as walking, crouching, and hopping.
+Finally, the user exports the finished trajectory for use in reinforcement learning process.
+
 
 
 # Research Learning

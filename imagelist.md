@@ -71,5 +71,18 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [Rendering while solving IK- full seeding](https://user-images.githubusercontent.com/10334426/44432185-dc340500-a555-11e8-9aa0-a05e7f7821e6.gif)
 
+# Poster flowcharts
 
+[album link](https://imgur.com/a/j6eCgBo)
 
+[reference from paper](https://i.imgur.com/lC49tQU.png)
+
+[2 block](https://i.imgur.com/FY041J3.png)
+
+[4 block "how far off?"](https://i.imgur.com/S5LTeup.png)
+
+[4 block "policy"](https://i.imgur.com/Iux8gVT.png)
+
+[5 block](https://i.imgur.com/tytjIkS.png)
+
+[6 block](https://i.imgur.com/X9rV77U.png)
