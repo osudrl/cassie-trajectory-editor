@@ -95,4 +95,14 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [full person list](https://user-images.githubusercontent.com/10334426/44605347-cb75d000-a79d-11e8-9b44-501d9f2f32f0.png)
 
+[still from solving gif](https://user-images.githubusercontent.com/10334426/44605639-0a585580-a79f-11e8-912a-dafe4387459f.png)
 
+[full cassie pose blue nodes](https://i.imgur.com/CqOroKi.png)
+
+[verticle blue nodes from pelvis face](https://i.imgur.com/2PWVEMp.png)
+
+[from usage gif 1](https://i.imgur.com/u89Wn4P.png)
+
+[from usage gif 2](https://i.imgur.com/a5xO5E3.png)
+
+[leaping behavior](https://user-images.githubusercontent.com/10334426/44607929-daad4b80-a7a6-11e8-82b7-32768ab7072d.png)
