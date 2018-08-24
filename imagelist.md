@@ -86,3 +86,7 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 [5 block](https://i.imgur.com/tytjIkS.png)
 
 [6 block](https://i.imgur.com/X9rV77U.png)
+
+[reference from paper -- highlight](https://user-images.githubusercontent.com/10334426/44603832-ee51b580-a798-11e8-8580-8bab7db5f39e.png)
+
+
