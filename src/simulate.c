@@ -1131,34 +1131,35 @@ void render(GLFWwindow* window)
     simulation();
 
     // update simulation statistics
-    if( !paused )
-    {
+    char camstr[20];
+    if( cam.type==mjCAMERA_FREE )
+        strcpy(camstr, "Free");
+    else if( cam.type==mjCAMERA_TRACKING )
+        strcpy(camstr, "Tracking");
+    else
+        sprintf(camstr, "Fixed %d", cam.fixedcamid);
+    // if( !paused )
+    // {
         // camera string
-        char camstr[20];
-        if( cam.type==mjCAMERA_FREE )
-            strcpy(camstr, "Free");
-        else if( cam.type==mjCAMERA_TRACKING )
-            strcpy(camstr, "Tracking");
-        else
-            sprintf(camstr, "Fixed %d", cam.fixedcamid);
+        
 
         // keyreset string
-        char keyresetstr[20];
-        if( keyreset<0 )
-            strcpy(keyresetstr, "qpos0");
-        else 
-            sprintf(keyresetstr, "Key %d", keyreset);
+        // char keyresetstr[20];
+        // if( keyreset<0 )
+        //     strcpy(keyresetstr, "qpos0");
+        // else 
+        //     sprintf(keyresetstr, "Key %d", keyreset);
 
-        // solver error
-        mjtNum solerr = 0;
-        if( d->solver_iter )
-        {
-            int ind = mjMIN(d->solver_iter-1,mjNSOLVER-1);
-            solerr = mju_min(d->solver[ind].improvement, d->solver[ind].gradient);
-            if( solerr==0 )
-                solerr = mju_max(d->solver[ind].improvement, d->solver[ind].gradient);
-        }
-        solerr = mju_log10(mju_max(mjMINVAL, solerr));
+        // // solver error
+        // mjtNum solerr = 0;
+        // if( d->solver_iter )
+        // {
+        //     int ind = mjMIN(d->solver_iter-1,mjNSOLVER-1);
+        //     solerr = mju_min(d->solver[ind].improvement, d->solver[ind].gradient);
+        //     if( solerr==0 )
+        //         solerr = mju_max(d->solver[ind].improvement, d->solver[ind].gradient);
+        // }
+        // solerr = mju_log10(mju_max(mjMINVAL, solerr));
 
         // status
 
@@ -1167,7 +1168,6 @@ void render(GLFWwindow* window)
         //         d->nefc, 
         //         d->ncon,
         //         d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
-        //         1.0/(glfwGetTime()-lastrendertm),
         //         d->energy[0]+d->energy[1],
         //         solerr,
         //         d->solver_iter, 
@@ -1176,8 +1176,8 @@ void render(GLFWwindow* window)
         //         camstr, 
         //         keyresetstr
         //     );
-        overlay_fill_info_status_buf(status, &traj_info, camstr);
-    }
+    // }
+    overlay_fill_info_status_buf(status, &traj_info, camstr, 1.0/(glfwGetTime()-lastrendertm));
 
     // FPS timing satistics
     lastrendertm = glfwGetTime();

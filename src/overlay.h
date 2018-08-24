@@ -8,7 +8,8 @@ char* overlay_get_info_string();
 void overlay_fill_info_status_buf(
     char* buf,
     traj_info_t* traj_info,
-    char* camerastr);
+    char* camerastr,
+    double fps);
 
 
 #endif

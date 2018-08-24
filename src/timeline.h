@@ -29,6 +29,7 @@ void timeline_free(timeline_t* ref);
 qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, int frame);
 void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame);
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame);
+int timeline_make_frame_safe(int frame, int numposes);
 int timeline_get_frame_from_time(traj_info_t* traj_info);
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info);
 void timeline_export(traj_info_t* traj_info, timeline_t* timeline);
