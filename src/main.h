@@ -20,11 +20,30 @@ struct _qpos_t_
 };
 typedef struct _qpos_t_ qpos_t;
 
+enum node_type_e
+{
+    NODE_NONE = 0,
+    NODE_POSITIONAL,
+    NODE_JOINTID,
+    NODE_JOINTMOVE
+};
+
+#define NODE_TYPE_E_COUNT 3
+
+enum scale_type_e
+{
+    SCALING_A = 0,
+    SCALING_B = 1,
+};
+
+#define SCALE_TYPE_E_COUNT 2
+
 struct _timeline_t_
 {
     int numposes;
     double duration;
     qpos_t* qposes;
+    enum node_type_e node_type;
     struct _timeline_t_* prev;
     struct _timeline_t_* next;
 };
@@ -60,22 +79,6 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
-enum node_type_e
-{
-    NODE_POSITIONAL = 0,
-    NODE_JOINTID = 1,
-    NODE_JOINTMOVE = 2
-};
-
-#define NODE_TYPE_E_COUNT 3
-
-enum scale_type_e
-{
-    SCALING_A = 0,
-    SCALING_B = 1,
-};
-
-#define SCALE_TYPE_E_COUNT 2
 
 struct _decor_t_
 {
@@ -111,6 +114,16 @@ struct _selection_t_
 };
 typedef struct _selection_t_ selection_t;
 
+struct _info_overlay_t_
+{
+    float sec;
+    int frame;
+    bool canundo;
+    bool canredo;
+    bool canrefine;
+};
+typedef struct _info_overlay_t_ info_overlay_t;
+
 struct _traj_info_
 {
     mjModel* m;
@@ -124,6 +137,7 @@ struct _traj_info_
     pdikdata_t ik;
     decor_t decor;
     selection_t selection;
+    info_overlay_t info_overlay;
     timeline_t* timeline;
     
     int64_t time_start;
@@ -139,6 +153,7 @@ typedef struct _traj_info_ traj_info_t;
 #include "ik.h"
 #include "node.h"
 #include "decor.h"
+#include "overlay.h"
 
 void f_copy(float* to, float* from, int num);
 uint64_t traj_time_in_micros();

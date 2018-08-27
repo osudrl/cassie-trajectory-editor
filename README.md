@@ -40,7 +40,7 @@ Input Command | Context | Effect
 Ctrl+Z | Any | Undo a trajectory modification. Will reset the timeline to its complete previous state. An 'Undo' can be redone with 'Redo'
 Ctrl+Y or Ctrl+Shift+Z | Any | Redo a trajectory modification
 Ctrl+P | Any | Load a perturbation from the configuration file at last.pert; In the current implementation, any perturbation with the mouse overwrites this file
-Ctrl+R | Bugged! See [#19](https://github.com/osudrl/cassie-trajectory-editor/issues/19) | Refines a completed modification. Uses the list of frame/xpos target pairs saved after every call to `node_perform_pert()`, and will re-run IK on each target with a smaller error cutoff. Can be undone with the Undo command
+Ctrl+R | Anytime Permitted | Refines a completed modification. Uses the list of frame/xpos target pairs saved after every call to `node_perform_pert()`, and will re-run IK on each target with a smaller error cutoff. Can be undone with the Undo command
 Ctrl+E | Any | 'Expands' the current pose. The resulting timeline (undo-able) will have the same length and number of poses as the previous timeline, but will be filled with the current pose (except xpos[0], which is copied over)
 Space | Any | Toggles pause for trajectory playback. When paused the camera may still be moved, bodies can be selected, nodes can be perturbed, IK will still be solved, Undo/Redo/LoadPert/Refine/Expand will all still work
 Right Arrow | Any | Will step the trajectory time forward by some arbitrary step size. This step is in relation to visualization time, not number of frames although this may change in the future
@@ -491,10 +491,6 @@ Assumptions:
 Changes to qposes: **YES: qposes are overwritten** with the qposes from the timeline at the calculated rootframe (calculated using the node_body)
 
 Changes to timeline: No
-
-### node_refine_pert()
-
-See [#19](https://github.com/osudrl/cassie-trajectory-editor/issues/19).
 
 
 # Contact

@@ -61,6 +61,10 @@ ik_solver_params_t* globparams = NULL;
 
 void refine_pert(traj_info_t* traj_info)
 {
+    if(!traj_info->info_overlay.canrefine)
+        return;
+
+    
     if(!globparams)
     {
         globparams = malloc(sizeof (ik_solver_params_t));

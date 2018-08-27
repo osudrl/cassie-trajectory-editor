@@ -86,6 +86,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->numposes = bytecount * loopcount;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
+    traj_info->timeline->node_type = NODE_NONE;
 }
 
 void timeline_export_to_file(full_traj_state_t* fulls, int numposes)
@@ -150,6 +151,8 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
     dest->next = NULL;
     dest->prev = NULL;
     dest->numposes = xcopy->numposes;
+    dest->node_type = NODE_NONE;
+
 
     return dest;
 }
@@ -169,6 +172,8 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     dest->prev = NULL;
     dest->numposes = ref->numposes;
     dest->duration = ref->duration;
+    dest->node_type = NODE_NONE;
+
 
     return dest;
 }
@@ -241,6 +246,7 @@ void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info)
         timeiline_init_from_input_file(traj_info);
 
     frame = timeline_get_frame_from_time(traj_info);
+    overlay_set_time_and_frame(traj_info, frame);
     timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
 }
 

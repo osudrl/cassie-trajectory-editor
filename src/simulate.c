@@ -184,7 +184,7 @@ void reset_traj_info()
     traj_info.target_list = NULL;
     traj_info.target_list_size = -1;
 
-    showinfo = paused;
+    showinfo = 1;
 
     for( int i=0; i<mjNRNDFLAG; i++ )
         if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
@@ -669,7 +669,6 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
     case GLFW_KEY_SPACE:                // pause
         paused = !paused;
-        showinfo = paused;
 
         break;
 
@@ -1132,53 +1131,53 @@ void render(GLFWwindow* window)
     simulation();
 
     // update simulation statistics
-    if( !paused )
-    {
+    char camstr[20];
+    if( cam.type==mjCAMERA_FREE )
+        strcpy(camstr, "Free");
+    else if( cam.type==mjCAMERA_TRACKING )
+        strcpy(camstr, "Tracking");
+    else
+        sprintf(camstr, "Fixed %d", cam.fixedcamid);
+    // if( !paused )
+    // {
         // camera string
-        char camstr[20];
-        if( cam.type==mjCAMERA_FREE )
-            strcpy(camstr, "Free");
-        else if( cam.type==mjCAMERA_TRACKING )
-            strcpy(camstr, "Tracking");
-        else
-            sprintf(camstr, "Fixed %d", cam.fixedcamid);
+        
 
         // keyreset string
-        char keyresetstr[20];
-        if( keyreset<0 )
-            strcpy(keyresetstr, "qpos0");
-        else 
-            sprintf(keyresetstr, "Key %d", keyreset);
+        // char keyresetstr[20];
+        // if( keyreset<0 )
+        //     strcpy(keyresetstr, "qpos0");
+        // else 
+        //     sprintf(keyresetstr, "Key %d", keyreset);
 
-        // solver error
-        mjtNum solerr = 0;
-        if( d->solver_iter )
-        {
-            int ind = mjMIN(d->solver_iter-1,mjNSOLVER-1);
-            solerr = mju_min(d->solver[ind].improvement, d->solver[ind].gradient);
-            if( solerr==0 )
-                solerr = mju_max(d->solver[ind].improvement, d->solver[ind].gradient);
-        }
-        solerr = mju_log10(mju_max(mjMINVAL, solerr));
+        // // solver error
+        // mjtNum solerr = 0;
+        // if( d->solver_iter )
+        // {
+        //     int ind = mjMIN(d->solver_iter-1,mjNSOLVER-1);
+        //     solerr = mju_min(d->solver[ind].improvement, d->solver[ind].gradient);
+        //     if( solerr==0 )
+        //         solerr = mju_max(d->solver[ind].improvement, d->solver[ind].gradient);
+        // }
+        // solerr = mju_log10(mju_max(mjMINVAL, solerr));
 
         // status
-        sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s\n%s\n%s",
-                d->time, 
-                d->nefc, 
-                d->ncon,
-                d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
-                1.0/(glfwGetTime()-lastrendertm),
-                d->energy[0]+d->energy[1],
-                solerr,
-                d->solver_iter, 
-                mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
-                mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
-                camstr, 
-                mjFRAMESTRING[vopt.frame], 
-                mjLABELSTRING[vopt.label],
-                keyresetstr
-            );
-    }
+
+        // sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s",
+        //         d->time, 
+        //         d->nefc, 
+        //         d->ncon,
+        //         d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
+        //         d->energy[0]+d->energy[1],
+        //         solerr,
+        //         d->solver_iter, 
+        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
+        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
+        //         camstr, 
+        //         keyresetstr
+        //     );
+    // }
+    overlay_fill_info_status_buf(status, &traj_info, camstr, 1.0/(glfwGetTime()-lastrendertm));
 
     // FPS timing satistics
     lastrendertm = glfwGetTime();
@@ -1227,13 +1226,12 @@ void render(GLFWwindow* window)
         mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, help_title, help_content, &con);
 
     // show info
-    if( showinfo )
+    if(showinfo )
     {
-        if( paused )
-            mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, "PAUSED", 0, &con);
-        else
-            mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
-                "Time\nSize\nCPU\nFPS\nEnergy\nSolver\nFwdInv\nCamera\nFrame\nLabel\nReset", status, &con);
+        mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
+            overlay_get_info_string(), status, &con);
+        mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMRIGHT, rect, 
+            overlay_get_selection_type_string(), NULL, &con);
     }
 
     // show options
