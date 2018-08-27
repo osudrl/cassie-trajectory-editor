@@ -228,7 +228,7 @@ void node_refine_pert(
     timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
-
+    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
     for(i = 0; i < traj_info->target_list_size; i++)
     {
         frame = rootframe + traj_info->target_list[i].frame_offset;
