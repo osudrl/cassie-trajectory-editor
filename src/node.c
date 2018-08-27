@@ -333,7 +333,7 @@ void node_perform_pert(
     // printf("math= %.3f\n", 
     //     inv_norm(0.0005/mju_norm(rootframe_transform_vector, 3)) * traj_info->nodesigma);
 
-    rootframe = timeline_make_frame_safe(rootframe);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
     for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
     {
         if(((int)(.2 * percent(frame_offset, iterations, SEL.nodesigma))) > outcount)
