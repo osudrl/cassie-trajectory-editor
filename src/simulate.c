@@ -139,6 +139,17 @@ int firsttrajinforeset = 0;
 
 void reset_traj_info()
 {
+    uint8_t joint_cycle_list[] = {
+        0,1,2,
+        3,4,5,6,
+        7,8,9,
+        14,15,16,
+        20,
+        21,22,23,
+        28,29,30,
+        34
+    };
+
     traj_info.m = m;
     traj_info.d = d;
     traj_info.pert = &pert;
@@ -156,7 +167,11 @@ void reset_traj_info()
     traj_info.selection.nodesigma = 100;
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;
-    traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list) - 1;
+    traj_info.selection.joint_cycle_list_size = sizeof(joint_cycle_list);
+    traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list)-1;
+    traj_info.selection.joint_cycle_list = malloc(sizeof(joint_cycle_list));
+
+    memcpy(traj_info.selection.joint_cycle_list,joint_cycle_list,sizeof(joint_cycle_list));
 
     traj_info.decor.count = 0;
     

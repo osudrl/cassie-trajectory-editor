@@ -191,13 +191,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
 
     if( key==GLFW_KEY_PAGE_UP)
     {
-        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) %  sizeof(joint_cycle_list);
+        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
         if(SEL.node_type == NODE_JOINTID)
             REVISUALIZE;
     }
     else if( key==GLFW_KEY_PAGE_DOWN)
     {
-        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + sizeof(joint_cycle_list)) %  sizeof(joint_cycle_list);
+        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
         if(SEL.node_type == NODE_JOINTID)
             REVISUALIZE;
     }

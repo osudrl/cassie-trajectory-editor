@@ -110,9 +110,9 @@ struct _selection_t_
     double localpos[3];
     double joint_move_ref[3];
 
-    int* joint_cycle_list;
-    int joint_cycle_list_size;
-    int joint_cycle_list_index;
+    uint8_t* joint_cycle_list;
+    uint8_t joint_cycle_list_size;
+    uint8_t joint_cycle_list_index;
 };
 typedef struct _selection_t_ selection_t;
 

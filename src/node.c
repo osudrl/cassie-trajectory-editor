@@ -2,7 +2,7 @@
 #include "node.h"
 
 #define SEL traj_info->selection
-#define GETJOINTNUM joint_cycle_list[traj_info->selection.joint_cycle_list_index]
+#define GETJOINTNUM traj_info->selection.joint_cycle_list[traj_info->selection.joint_cycle_list_index]
 
 
 node_body_id_t node_get_body_id_from_node_index(int index)

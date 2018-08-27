@@ -3,7 +3,7 @@
 
 #define OV traj_info->info_overlay
 #define SEL traj_info->selection
-#define GETJOINTNUM joint_cycle_list[traj_info->selection.joint_cycle_list_index]
+#define GETJOINTNUM traj_info->selection.joint_cycle_list[traj_info->selection.joint_cycle_list_index]
 
 
 char* overlay_get_info_string()
