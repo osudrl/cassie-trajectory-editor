@@ -1230,8 +1230,9 @@ void render(GLFWwindow* window)
     {
         mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
             overlay_get_info_string(), status, &con);
+        overlay_fill_selection_type_buf(&traj_info, status);
         mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMRIGHT, rect, 
-            overlay_get_selection_type_string(), NULL, &con);
+            status, NULL, &con);
     }
 
     // show options

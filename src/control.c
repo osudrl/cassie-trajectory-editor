@@ -216,7 +216,7 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
     }
     else if(key == GLFW_KEY_ENTER)
     {
-        SEL.node_type = (SEL.node_type + 1) % NODE_TYPE_E_COUNT;
+        SEL.node_type = (SEL.node_type) % NODE_TYPE_E_COUNT + 1;
         nodes_recolor(traj_info);
         REVISUALIZE;
     }
