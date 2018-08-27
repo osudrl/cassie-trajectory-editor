@@ -30,13 +30,20 @@ char* overlay_get_selection_type_name(traj_info_t* traj_info)
         return NULL;
 }
 
-void overlay_fill_selection_type_buf(traj_info_t* traj_info, char* buf)
+void overlay_fill_selection_status_buf(char* buf, traj_info_t* traj_info)
 {
     int offset = 0;
 
-    offset += sprintf(buf + offset, 
-        "Transformation Mode (Change with ENTER): %s",
-        overlay_get_selection_type_name(traj_info));
+    offset += sprintf(buf + offset, "%s\n", overlay_get_selection_type_name(traj_info));
+    offset += sprintf(buf + offset, "%d\n", SEL.id_last_non_node_select);
+    offset += sprintf(buf + offset, "%s\n", "String version haha");
+    offset += sprintf(buf + offset, "%d\n", SEL.jointnum);
+    offset += sprintf(buf + offset, "%s", "String version haha");
+}
+
+char* overlay_get_selection_string()
+{
+   return "Tool\nSelId\nSelN\nJId\nJN";
 }
 
 void overlay_update_urr(traj_info_t* traj_info)

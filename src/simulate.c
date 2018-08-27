@@ -46,7 +46,8 @@ mjvFigure figcost;
 mjvFigure figtimer;
 mjvFigure figsize;
 mjvFigure figsensor;
-char status[1000] = "";
+char info_status[1000] = "";
+char selection_status[1000] = "";
 
 // OpenGL rendering
 int refreshrate;
@@ -1177,7 +1178,8 @@ void render(GLFWwindow* window)
         //         keyresetstr
         //     );
     // }
-    overlay_fill_info_status_buf(status, &traj_info, camstr, 1.0/(glfwGetTime()-lastrendertm));
+    overlay_fill_info_status_buf(info_status, &traj_info, camstr, 1.0/(glfwGetTime()-lastrendertm));
+    overlay_fill_selection_status_buf(selection_status, &traj_info);
 
     // FPS timing satistics
     lastrendertm = glfwGetTime();
@@ -1229,10 +1231,10 @@ void render(GLFWwindow* window)
     if(showinfo )
     {
         mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMLEFT, smallrect, 
-            overlay_get_info_string(), status, &con);
-        overlay_fill_selection_type_buf(&traj_info, status);
+            overlay_get_info_string(), info_status, &con);
         mjr_overlay(mjFONT_NORMAL, mjGRID_BOTTOMRIGHT, rect, 
-            status, NULL, &con);
+            overlay_get_selection_string(),
+            selection_status, &con);
     }
 
     // show options
