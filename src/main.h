@@ -79,7 +79,6 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
-
 struct _decor_t_
 {
     int count;
@@ -107,10 +106,13 @@ struct _selection_t_
     int nodecount;
     double nodesigma;
     double nodeheight;
-    int jointnum;
 
     double localpos[3];
     double joint_move_ref[3];
+
+    int* joint_cycle_list;
+    int joint_cycle_list_size;
+    int joint_cycle_list_index;
 };
 typedef struct _selection_t_ selection_t;
 

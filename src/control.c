@@ -191,13 +191,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
 
     if( key==GLFW_KEY_PAGE_UP)
     {
-        SEL.jointnum = (SEL.jointnum + 1) % CASSIE_QPOS_SIZE;
+        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) %  sizeof(joint_cycle_list);
         if(SEL.node_type == NODE_JOINTID)
             REVISUALIZE;
     }
     else if( key==GLFW_KEY_PAGE_DOWN)
     {
-        SEL.jointnum = (SEL.jointnum + CASSIE_QPOS_SIZE - 1) % CASSIE_QPOS_SIZE;
+        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + sizeof(joint_cycle_list)) %  sizeof(joint_cycle_list);
         if(SEL.node_type == NODE_JOINTID)
             REVISUALIZE;
     }

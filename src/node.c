@@ -2,6 +2,8 @@
 #include "node.h"
 
 #define SEL traj_info->selection
+#define GETJOINTNUM joint_cycle_list[traj_info->selection.joint_cycle_list_index]
+
 
 node_body_id_t node_get_body_id_from_node_index(int index)
 {
@@ -438,6 +440,7 @@ void node_perform_pert(
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
 
+
 void node_dropped_jointmove(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
@@ -462,7 +465,8 @@ void node_dropped_jointmove(
         traj_info,
         timeline_old,
         rootframe);
-    rootframe_init = traj_info->d->qpos[SEL.jointnum];
+
+    rootframe_init = traj_info->d->qpos[GETJOINTNUM];
 
     mj_forward(traj_info->m, traj_info->d);
     jointdiff = node_caluclate_jointdiff(traj_info,
@@ -477,9 +481,9 @@ void node_dropped_jointmove(
 
         node_calculate_arbitrary_target_using_scale_type(
             traj_info,
-            timeline_new->qposes[frame].q + SEL.jointnum,
+            timeline_new->qposes[frame].q + GETJOINTNUM,
             &jointdiff,
-            timeline_old->qposes[frame].q + SEL.jointnum,
+            timeline_old->qposes[frame].q + GETJOINTNUM,
             &rootframe_init,
             1,
             filter);
@@ -551,7 +555,7 @@ void node_position_jointmove(
         traj_info,
         traj_info->timeline,
         rootframe);
-    rootframe_init = traj_info->d->qpos[SEL.jointnum];
+    rootframe_init = traj_info->d->qpos[GETJOINTNUM];
 
     update_decor = !decor_has_init(traj_info);
 
@@ -574,12 +578,12 @@ void node_position_jointmove(
             traj_info,
             &temp_new_qpos_val,
             &jointdiff,
-            traj_info->d->qpos + SEL.jointnum,
+            traj_info->d->qpos + GETJOINTNUM,
             &rootframe_init,
             1,
             filter);
 
-        traj_info->d->qpos[SEL.jointnum] = temp_new_qpos_val;
+        traj_info->d->qpos[GETJOINTNUM] = temp_new_qpos_val;
 
         mj_forward(traj_info->m, traj_info->d);
 
@@ -741,12 +745,12 @@ void node_position_jointid(
     double diff;
     v3_t node_qpos;
 
-    init = traj_info->d->qpos[SEL.jointnum];
+    init = traj_info->d->qpos[GETJOINTNUM];
     for (i = 0; i < NODECOUNT; i++)
     {
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i));
         diff = (i - NODECOUNT/2) * 1.0/(NODECOUNT/2);
-        traj_info->d->qpos[SEL.jointnum] = init + diff;
+        traj_info->d->qpos[GETJOINTNUM] = init + diff;
         mj_forward(traj_info->m, traj_info->d);
         mj_local2Global(
             traj_info->d,

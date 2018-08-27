@@ -3,6 +3,8 @@
 
 #define OV traj_info->info_overlay
 #define SEL traj_info->selection
+#define GETJOINTNUM joint_cycle_list[traj_info->selection.joint_cycle_list_index]
+
 
 char* overlay_get_info_string()
 {
@@ -169,8 +171,8 @@ void overlay_fill_selection_status_buf(char* buf, traj_info_t* traj_info)
     offset += sprintf(buf + offset, "%s\n", overlay_get_selection_type_name(traj_info));
     offset += sprintf(buf + offset, "%d\n", SEL.id_last_non_node_select);
     offset += sprintf(buf + offset, "%s\n", overlay_get_cassie_body_string(SEL.id_last_non_node_select));
-    offset += sprintf(buf + offset, "%d\n", SEL.jointnum);
-    offset += sprintf(buf + offset, "%s", overlay_get_cassie_joint_string(SEL.jointnum));
+    offset += sprintf(buf + offset, "%d\n", GETJOINTNUM);
+    offset += sprintf(buf + offset, "%s", overlay_get_cassie_joint_string(GETJOINTNUM));
 }
 
 char* overlay_get_selection_string()

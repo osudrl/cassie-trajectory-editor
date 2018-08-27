@@ -156,7 +156,7 @@ void reset_traj_info()
     traj_info.selection.nodesigma = 100;
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;
-    traj_info.selection.jointnum =  34;
+    traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list) - 1;
 
     traj_info.decor.count = 0;
     
