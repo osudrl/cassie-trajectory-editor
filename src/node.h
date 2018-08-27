@@ -33,7 +33,7 @@ v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info,
     timeline_t* timeline,
     int frame, 
     cassie_body_id_t id);
-double gaussian_distrobution(double r, double s);
+double gaussian_distrobution(double r);
 void node_perform_ik_on_xpos_transformation(
     traj_info_t* traj_info, 
     timeline_t* overwrite,

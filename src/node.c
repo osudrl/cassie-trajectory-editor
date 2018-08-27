@@ -50,10 +50,9 @@ v3_t node_get_body_xpos_by_frame(traj_info_t* traj_info,
 }
 
 
-double gaussian_distrobution(double r, double s)
+double gaussian_distrobution(double r)
 {
-    s *= 2;
-    return (mju_exp(-(r*r)/s))/(mjPI * s) * 2;
+    return (mju_exp(-(r*r)));
 }
 
 void node_perform_ik_on_xpos_transformation(
@@ -264,6 +263,34 @@ void node_refine_pert(
     traj_info->time_start += iktimedelta;
 }
 
+void node_calc_frame_lowhigh(
+    int* low_frame,
+    int* high_frame,
+    int rootframe,
+    int numposes,
+    traj_info_t* traj_info)
+{
+    int low_edge;
+    int high_edge;
+    int i;
+    double filter;
+
+    for(i = 0; 1; i++)
+    {
+        filter = node_calculate_filter_from_frame_offset(
+            i,
+            SEL.nodesigma,
+            SEL.nodeheight);
+        if(filter < 0.001)
+            break;
+    }
+    
+    low_edge = rootframe - i;
+    high_edge = rootframe + i;
+
+    *low_frame = mju_max(0, low_edge);
+    *high_frame = mju_min(numposes-1, high_edge);
+}
 
 void node_perform_pert(
     traj_info_t* traj_info,
@@ -281,6 +308,9 @@ void node_perform_pert(
     long iktimedelta;
     int outcount = 0;
     int target_list_index = 0;
+    int low_frame;
+    int high_frame;
+    int loopcount;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
     bool failed;
@@ -288,6 +318,13 @@ void node_perform_pert(
     failed = 0;
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
+    node_calc_frame_lowhigh(
+        &low_frame,
+        &high_frame,
+        rootframe,
+        timeline_old->numposes,
+        traj_info);
 
     init_time = traj_calculate_runtime_micros(traj_info);
     mju_copy3(
@@ -314,39 +351,34 @@ void node_perform_pert(
         global_body_target_xpos,
         &ik_iter_total);
 
-    //this is toomuch
-    iterations = 10000;
+    iterations = high_frame-low_frame+1;
 
     if(traj_info->target_list)
     {
         free(traj_info->target_list);
         traj_info->target_list = NULL;
     }
-
     
-    traj_info->target_list_size = (iterations*2 + 1);
+    traj_info->target_list_size = (iterations);
     traj_info->target_list = malloc(sizeof(target_t) * traj_info->target_list_size);
     traj_info->target_list[target_list_index].frame_offset = 0;
     mju_copy3(traj_info->target_list[target_list_index++].target, global_body_target_xpos);
     
+    loopcount = mju_max(high_frame-rootframe, rootframe-low_frame); 
 
-    // printf("math= %.3f\n", 
-    //     inv_norm(0.0005/mju_norm(rootframe_transform_vector, 3)) * traj_info->nodesigma);
-
-    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
-    for(frame_offset = 1; frame_offset <= iterations; frame_offset++)
+    for(frame_offset = 1; frame_offset <= loopcount; frame_offset++)
     {
         if(((int)(.2 * percent(frame_offset, iterations, SEL.nodesigma))) > outcount)
         {
             outcount++;
             iktimedelta = traj_calculate_runtime_micros(traj_info) - init_time;
             printf("Solving IK (%2.0f%%,%3ds) @ %4d simulation steps per pose ...\n", 
-                percent(frame_offset, iterations, SEL.nodesigma),
+                percent(frame_offset*2, iterations, SEL.nodesigma),
                 (int) (iktimedelta/1000000.0),
                 (int) (ik_iter_total/(1+frame_offset*2)));
         }
 
-        if(rootframe + frame_offset < timeline_old->numposes)
+        if(rootframe + frame_offset <= high_frame)
         {
         node_calclate_global_target_using_transformation_type(
             traj_info,
@@ -374,7 +406,7 @@ void node_perform_pert(
             global_body_target_xpos,
             &ik_iter_total);        
         }
-        if(rootframe - frame_offset >= 0)
+        if(rootframe - frame_offset >= low_frame)
         {
 
         node_calclate_global_target_using_transformation_type(
@@ -788,8 +820,7 @@ double node_calculate_filter_from_frame_offset(
 {
     return mju_min(
         mju_max(nodeheight,1) * 
-        gaussian_distrobution(frame_offset/sigma, 1)
-        *(1/0.318310)
+        gaussian_distrobution(frame_offset/sigma)
         ,1);
 }
 

@@ -79,7 +79,6 @@ struct _target_t_
 };
 typedef struct _target_t_ target_t;
 
-
 struct _decor_t_
 {
     int count;
