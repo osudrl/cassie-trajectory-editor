@@ -187,13 +187,16 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             SEL.frame_offset += 10;
             REVISUALIZE;
         }
-        if( key==GLFW_KEY_PAGE_UP)
+        if( key==GLFW_KEY_PAGE_DOWN)
         {
             traj_info->playback_time_scale *= 1.2;
+            traj_info->time_start += traj_info->time_start*(.2) - traj_time_in_micros()*(.2);
         }
-        else if( key==GLFW_KEY_PAGE_DOWN)
+        else if( key==GLFW_KEY_PAGE_UP)
         {
             traj_info->playback_time_scale *= .8;
+            traj_info->time_start -= traj_info->time_start*(.2) - traj_time_in_micros()*(.2);
+
         }
     }
     else
