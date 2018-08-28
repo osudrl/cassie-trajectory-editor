@@ -15,6 +15,7 @@ for i in range(14):
 	print("i: %d" % i,end='')
 	print("  len: %d  " % len(pose),end='')
 	full = numpy.append(full,pose)
+	full = numpy.append(full,pose)
 
 full.tofile("stepdata.bin")
 
