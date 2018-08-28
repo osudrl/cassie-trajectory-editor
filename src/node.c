@@ -272,8 +272,6 @@ void node_calc_frame_lowhigh(
     int numposes,
     traj_info_t* traj_info)
 {
-    int low_edge;
-    int high_edge;
     int i;
     double filter;
 
@@ -286,12 +284,11 @@ void node_calc_frame_lowhigh(
         if(filter < 0.001)
             break;
     }
-    
-    low_edge = rootframe - i;
-    high_edge = rootframe + i;
-
-    *low_frame = mju_max(0, low_edge);
-    *high_frame = mju_min(numposes-1, high_edge);
+ 
+     // *low_frame = mju_max(0, rootframe - i);
+    *low_frame = rootframe - i;
+    // *high_frame = mju_min(numposes-1, rootframe + i);
+    *high_frame = rootframe + i;
 }
 
 void node_perform_pert(
@@ -728,7 +725,14 @@ void node_scale_visually_positional(
         currframe = get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
-        frame_offset = currframe - rootframe;
+        frame_offset = mju_abs(currframe - rootframe);
+
+        printf("i:%d fo:%d\n", i , frame_offset);
+        frame_offset =
+            mju_min(frame_offset,
+            mju_abs(currframe - rootframe - traj_info->timeline->numposes));
+        printf("i:%d FO:%d\n", i , frame_offset);
+
 
         node_qpos = node_get_qpos_by_node_id(traj_info,
             node_get_body_id_from_node_index(i));
