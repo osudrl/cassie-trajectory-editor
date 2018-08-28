@@ -318,17 +318,18 @@ void node_perform_pert(
     int loopcount;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
+    timeline_t* timeline_final;
     bool failed;
 
     failed = 0;
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_duplicate(timeline_old);
-    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
+    timeline_new = timeline_truncate(timeline_old, timeline_old->numposes/2);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numposes);
     node_calc_frame_lowhigh(
         &low_frame,
         &high_frame,
         rootframe,
-        timeline_old->numposes,
+        timeline_new->numposes,
         traj_info);
 
     init_time = traj_calculate_runtime_micros(traj_info);
@@ -338,7 +339,7 @@ void node_perform_pert(
 
     node_calclate_global_target_using_transformation_type(
         traj_info,
-        timeline_old,
+        timeline_new,
         global_body_init_xpos_at_rootframe,
         global_body_target_xpos, 
         rootframe_transform_vector,
@@ -387,7 +388,7 @@ void node_perform_pert(
         {
         node_calclate_global_target_using_transformation_type(
             traj_info,
-            timeline_old,
+            timeline_new,
             global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
@@ -416,7 +417,7 @@ void node_perform_pert(
 
         node_calclate_global_target_using_transformation_type(
             traj_info,
-            timeline_old,
+            timeline_new,
             global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
@@ -460,6 +461,9 @@ void node_perform_pert(
             (iktimedelta/1000000.0),
             1000.0*params->ik_accuracy_cutoff);
 
+        timeline_final = timeline_loop(timeline_new,2);
+        timeline_free(timeline_new);
+        timeline_new = timeline_final;
         timeline_safe_link(timeline_new, timeline_old);
         traj_info->timeline = timeline_new;
         timeline_new->node_type = NODE_POSITIONAL;

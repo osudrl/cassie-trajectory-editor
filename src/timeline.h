@@ -23,6 +23,8 @@ typedef struct _full_traj_state_t_ full_traj_state_t;
 
 
 timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy);
+timeline_t* timeline_loop(timeline_t* ref, int loopcount);
+timeline_t*  timeline_truncate(timeline_t* ref, int numposes);
 timeline_t* timeline_duplicate(timeline_t* ref);
 void timeline_safe_link(timeline_t* next, timeline_t* prev);
 void timeline_free(timeline_t* ref);

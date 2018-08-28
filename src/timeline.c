@@ -48,7 +48,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     int start;
     int loopcount;
 
-    loopcount = 1;
+    loopcount = 2;
 
     bytecount = timeline_fill_full_traj_state_array(traj_info, (uint8_t**) &fulls);
     bytecount /= sizeof(full_traj_state_t);
@@ -158,6 +158,69 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
     return dest;
 }
 
+
+
+timeline_t* timeline_loop(timeline_t* ref, int loopcount)
+{
+    timeline_t* dest;
+    int qposbytecount;
+    int i;
+    int big;
+    int start;
+
+    qposbytecount = sizeof(qpos_t) * ref->numposes * loopcount;
+
+    dest = malloc(sizeof(timeline_t));
+    dest->qposes = malloc(qposbytecount);
+
+    for(i = 0; i < ref->numposes * loopcount; i++)
+    {
+        mju_copy(dest->qposes[i].q, 
+            ref->qposes[i % ref->numposes].q,
+            CASSIE_QPOS_SIZE);
+    }
+
+    for(big = 1; big <= loopcount-1; big++)
+    {
+        start = ref->numposes * big;
+        for(i = start; i < start + ref->numposes; i++)
+        {
+            mju_add(dest->qposes[i].q,
+                dest->qposes[i].q,
+                dest->qposes[start-1].q,
+                1);
+        }
+    }
+
+    dest->next = NULL;
+    dest->prev = NULL;
+    dest->numposes = ref->numposes * loopcount;
+    dest->duration = ref->duration;
+    dest->node_type = NODE_NONE;
+
+    return dest;
+}
+
+timeline_t*  timeline_truncate(timeline_t* ref, int numposes)
+{
+    timeline_t* dest;
+    int qposbytecount;
+
+    qposbytecount = sizeof(qpos_t) * numposes;
+
+    dest = malloc(sizeof(timeline_t));
+    dest->qposes = malloc(qposbytecount);
+
+    memcpy(dest->qposes, ref->qposes, qposbytecount);
+    dest->next = NULL;
+    dest->prev = NULL;
+    dest->numposes = numposes;
+    dest->duration = ref->duration;
+    dest->node_type = NODE_NONE;
+
+    return dest;
+}
+
 timeline_t* timeline_duplicate(timeline_t* ref)
 {
     timeline_t* dest;
@@ -174,7 +237,6 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     dest->numposes = ref->numposes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
-
 
     return dest;
 }
