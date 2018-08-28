@@ -157,9 +157,9 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
     if (*(traj_info->paused) && !(mods & GLFW_MOD_CONTROL))
     {
         if(key == GLFW_KEY_RIGHT)
-            traj_info->time_frozen -= 50000;
-        if(key == GLFW_KEY_LEFT)
             traj_info->time_frozen += 50000;
+        if(key == GLFW_KEY_LEFT)
+            traj_info->time_frozen -= 50000;
         if(key == GLFW_KEY_DOWN)
             traj_info->time_frozen -= 500000;
         if (key == GLFW_KEY_UP)
@@ -219,6 +219,10 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         SEL.node_type = (SEL.node_type) % NODE_TYPE_E_COUNT + 1;
         nodes_recolor(traj_info);
         REVISUALIZE;
+    }
+    else if(key == GLFW_KEY_L)
+    {
+        SEL.loop_enabled = !SEL.loop_enabled;
     }
 
      if( mods & GLFW_MOD_CONTROL )

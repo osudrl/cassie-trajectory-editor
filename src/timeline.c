@@ -48,7 +48,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     int start;
     int loopcount;
 
-    loopcount = 2;
+    loopcount = 1;
 
     bytecount = timeline_fill_full_traj_state_array(traj_info, (uint8_t**) &fulls);
     bytecount /= sizeof(full_traj_state_t);
@@ -65,6 +65,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
         mju_copy(traj_info->timeline->qposes[i].q,
             fulls[i % bytecount].qpos,
             CASSIE_QPOS_SIZE);
+        // traj_info->timeline->qposes[i].q[0] = 0;
     }
 
     for(big = 1; big <= loopcount-1; big++)

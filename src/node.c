@@ -700,8 +700,8 @@ void node_compare_looped_filters(
         SEL.nodesigma,
         SEL.nodeheight);
 
-    if(filter < 
-        node_calculate_filter_from_frame_offset(
+    if(SEL.loop_enabled && 
+        filter < node_calculate_filter_from_frame_offset(
             oldcurrframe - rootframe - traj_info->timeline->numposes,
             SEL.nodesigma,
             SEL.nodeheight))
@@ -712,8 +712,8 @@ void node_compare_looped_filters(
             SEL.nodesigma,
             SEL.nodeheight);
     }
-    if(filter < 
-        node_calculate_filter_from_frame_offset(
+    if(SEL.loop_enabled &&
+        filter < node_calculate_filter_from_frame_offset(
             oldcurrframe - rootframe + traj_info->timeline->numposes,
             SEL.nodesigma,
             SEL.nodeheight))

@@ -8,16 +8,17 @@
 
 char* overlay_get_info_string()
 {
-    return "Paused\n\
-Time\n\
+    return "Paused (Space)\n\
+Time (Ctrl+Scroll)\n\
 Frame\n\
 FPS\n\
-N StdDev\n\
-N Height\n\
-Undo\n\
-Redo\n\
-Refine\n\
-Camera";
+N StdDev (F1)\n\
+N Height (F1)\n\
+Loop (L)\n\
+Undo (Ctrl+Z)\n\
+Redo (Ctrl+Y)\n\
+Refine (Ctrl+R)\n\
+Camera ([ and ])";
 }
 
 char* overlay_get_cassie_joint_string(int joint)
@@ -177,7 +178,12 @@ void overlay_fill_selection_status_buf(char* buf, traj_info_t* traj_info)
 
 char* overlay_get_selection_string()
 {
-   return "Tool\nSelId\nSelN\nJId\nJN";
+   return 
+"Tool (Enter)\n\
+BodId (LMouse)\n\
+BodName\n\
+JId (PgUpDn)\n\
+Joint Name";
 }
 
 void overlay_update_urr(traj_info_t* traj_info)
@@ -212,13 +218,14 @@ void overlay_fill_info_status_buf(
     overlay_update_urr(traj_info);
 
     offset += sprintf(buf + offset, "%s\n", !(*(traj_info->paused)) ? "FALSE" : "TRUE");
-    offset += sprintf(buf + offset, "%.3f seconds\n", OV.sec);
+    offset += sprintf(buf + offset, "%.3f sec\n", OV.sec);
     offset += sprintf(buf + offset, "%d\n", OV.frame);
     offset += sprintf(buf + offset, "%.1f\n", fps);
     offset += sprintf(buf + offset, "%.2f\n", SEL.nodesigma);
     offset += sprintf(buf + offset, "%.2f\n", SEL.nodeheight);
-    offset += sprintf(buf + offset, "%s\n", OV.canundo == 0 ? "no" : "READY");
-    offset += sprintf(buf + offset, "%s\n", OV.canredo == 0 ? "no" : "READY");
-    offset += sprintf(buf + offset, "%s\n", OV.canrefine == 0 ? "no" : "READY");
+    offset += sprintf(buf + offset, "%s\n", SEL.loop_enabled ? "Enabled" : "Disabled");
+    offset += sprintf(buf + offset, "%s\n", OV.canundo == 0 ? "not ready" : "READY");
+    offset += sprintf(buf + offset, "%s\n", OV.canredo == 0 ? "not ready" : "READY");
+    offset += sprintf(buf + offset, "%s\n", OV.canrefine == 0 ? "not ready" : "READY");
     offset += sprintf(buf + offset, "%s", camerastr);
 }

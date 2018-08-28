@@ -170,6 +170,7 @@ void reset_traj_info()
     traj_info.selection.joint_cycle_list_size = sizeof(joint_cycle_list);
     traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list)-1;
     traj_info.selection.joint_cycle_list = malloc(sizeof(joint_cycle_list));
+    traj_info.selection.loop_enabled = 0;
 
     memcpy(traj_info.selection.joint_cycle_list,joint_cycle_list,sizeof(joint_cycle_list));
 
@@ -1016,7 +1017,10 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
         if(!mod_shift)
             traj_info.selection.nodesigma *= mult;
         else
+        {
             traj_info.selection.nodeheight *= mult;
+            traj_info.selection.nodeheight = mju_max(traj_info.selection.nodeheight, 1);
+        }
 
 
     }

@@ -110,6 +110,8 @@ struct _selection_t_
     double localpos[3];
     double joint_move_ref[3];
 
+    bool loop_enabled;
+
     uint8_t* joint_cycle_list;
     uint8_t joint_cycle_list_size;
     uint8_t joint_cycle_list_index;
