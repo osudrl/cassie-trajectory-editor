@@ -100,6 +100,11 @@ void node_scale_visually_jointmove(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,
     node_body_id_t node_id);
+void node_compare_looped_filters(
+    traj_info_t* traj_info,
+    int rootframe,
+    int* currframe, 
+    int* frame_offset);
 void node_scale_visually_positional(
     traj_info_t* traj_info,
     cassie_body_id_t body_id,

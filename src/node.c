@@ -573,7 +573,8 @@ void node_position_jointmove(
     double jointdiff)
 {
     int i;
-    int frame;
+    int currframe;
+    int frame_offset;
     v3_t node_qpos;
     double rootframe_init;
     double filter;
@@ -590,16 +591,21 @@ void node_position_jointmove(
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        frame = get_frame_from_node_body_id(traj_info, 
+        currframe = get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
         node_qpos = node_get_qpos_by_node_id(traj_info, 
             node_get_body_id_from_node_index(i));
         
-        timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, frame);
+        timeline_set_qposes_to_pose_frame(traj_info, traj_info->timeline, currframe);
+
+        node_compare_looped_filters(traj_info,
+            rootframe,
+            &currframe,
+            &frame_offset);
 
         filter = node_calculate_filter_from_frame_offset(
-            (int) mju_abs(frame - rootframe), 
+            frame_offset, 
             SEL.nodesigma, 
             SEL.nodeheight);
 
