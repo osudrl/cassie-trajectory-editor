@@ -155,7 +155,7 @@ void reset_traj_info()
     traj_info.pert = &pert;
     // traj_info.timeline.init = 0;
     
-    traj_info.selection.nodecount = 50;
+    traj_info.selection.nodecount = 5;
 
 
     traj_info.time_start = traj_time_in_micros();
