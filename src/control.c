@@ -187,21 +187,33 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             SEL.frame_offset += 10;
             REVISUALIZE;
         }
+        if( key==GLFW_KEY_PAGE_UP)
+        {
+            traj_info->playback_time_scale *= 1.2;
+        }
+        else if( key==GLFW_KEY_PAGE_DOWN)
+        {
+            traj_info->playback_time_scale *= .8;
+        }
+    }
+    else
+    {
+        if( key==GLFW_KEY_PAGE_UP)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
+        else if( key==GLFW_KEY_PAGE_DOWN)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
     }
 
-    if( key==GLFW_KEY_PAGE_UP)
-    {
-        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
-        if(SEL.node_type == NODE_JOINTID)
-            REVISUALIZE;
-    }
-    else if( key==GLFW_KEY_PAGE_DOWN)
-    {
-        SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
-        if(SEL.node_type == NODE_JOINTID)
-            REVISUALIZE;
-    }
-    else if (key == GLFW_KEY_MINUS)
+    
+    if (key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;
         NODECOUNT = (int) (mju_max(2,NODECOUNT));

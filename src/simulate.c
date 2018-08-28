@@ -164,6 +164,7 @@ void reset_traj_info()
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
     traj_info.filename_step_data = FILENAME_STEP_DATA;
+    traj_info.playback_time_scale = 10000;
     traj_info.selection.nodesigma = 100;
     traj_info.selection.nodeheight = 1;
     traj_info.selection.node_type = NODE_POSITIONAL;

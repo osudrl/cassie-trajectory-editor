@@ -149,7 +149,8 @@ struct _traj_info_
     bool* paused;
     char* filename_step_data;
 
-    int target_list_size;    
+    int target_list_size;
+    double playback_time_scale;  
 };
 typedef struct _traj_info_ traj_info_t;
 
