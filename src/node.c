@@ -284,11 +284,17 @@ void node_calc_frame_lowhigh(
         if(filter < 0.001)
             break;
     }
- 
-     // *low_frame = mju_max(0, rootframe - i);
-    *low_frame = rootframe - i;
-    // *high_frame = mju_min(numposes-1, rootframe + i);
-    *high_frame = rootframe + i;
+    
+    if(!SEL.loop_enabled)
+    {
+        *low_frame = mju_max(0, rootframe - i);
+        *high_frame = mju_min(numposes-1, rootframe + i);
+    }
+    else
+    {
+       *low_frame = rootframe - i;
+       *high_frame = rootframe + i; 
+   }    
 }
 
 void node_perform_pert(
