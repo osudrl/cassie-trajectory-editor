@@ -725,14 +725,7 @@ void node_scale_visually_positional(
         currframe = get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
-        frame_offset = mju_abs(currframe - rootframe);
-
-        printf("i:%d fo:%d\n", i , frame_offset);
-        frame_offset =
-            mju_min(frame_offset,
-            mju_abs(currframe - rootframe - traj_info->timeline->numposes));
-        printf("i:%d FO:%d\n", i , frame_offset);
-
+        frame_offset = currframe - rootframe;
 
         node_qpos = node_get_qpos_by_node_id(traj_info,
             node_get_body_id_from_node_index(i));
