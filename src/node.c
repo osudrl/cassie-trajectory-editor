@@ -680,6 +680,44 @@ void node_scale_visually_jointmove(
     mj_forward(traj_info->m, traj_info->d);
 }
 
+void node_compare_looped_filters(
+    traj_info_t* traj_info,
+    int rootframe,
+    int* currframe, 
+    int* frame_offset)
+{
+    int oldcurrframe = *currframe;
+    double filter;
+
+    filter = node_calculate_filter_from_frame_offset(
+        oldcurrframe - rootframe,
+        SEL.nodesigma,
+        SEL.nodeheight);
+
+    if(filter < 
+        node_calculate_filter_from_frame_offset(
+            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            SEL.nodesigma,
+            SEL.nodeheight))
+    {
+        *currframe = oldcurrframe - traj_info->timeline->numposes;
+        filter = node_calculate_filter_from_frame_offset(
+            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            SEL.nodesigma,
+            SEL.nodeheight);
+    }
+    if(filter < 
+        node_calculate_filter_from_frame_offset(
+            oldcurrframe - rootframe + traj_info->timeline->numposes,
+            SEL.nodesigma,
+            SEL.nodeheight))
+    {
+        *currframe = oldcurrframe + traj_info->timeline->numposes;
+    }
+
+    *frame_offset = *currframe - rootframe;
+}
+
 
 void node_scale_visually_positional(
     traj_info_t* traj_info,
@@ -691,11 +729,9 @@ void node_scale_visually_positional(
     int rootframe;
     int frame_offset;
     int currframe;
-    int oldcurrframe;
     int i;
     v3_t node_qpos;
     bool decor_update = 1;
-    double tempfilter;
 
 
     node_qpos = node_get_qpos_by_node_id(traj_info, node_id);
@@ -729,36 +765,12 @@ void node_scale_visually_positional(
         currframe = get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
-        oldcurrframe = currframe;
-
-        frame_offset = currframe - rootframe;
-        tempfilter = node_calculate_filter_from_frame_offset(
-            frame_offset,
-            SEL.nodesigma,
-            SEL.nodeheight);
-
-        if(tempfilter < 
-            node_calculate_filter_from_frame_offset(
-                frame_offset - traj_info->timeline->numposes,
-                SEL.nodesigma,
-                SEL.nodeheight))
-        {
-            currframe = oldcurrframe - traj_info->timeline->numposes;
-            tempfilter = node_calculate_filter_from_frame_offset(
-                frame_offset - traj_info->timeline->numposes,
-                SEL.nodesigma,
-                SEL.nodeheight);
-        }
-        if(tempfilter < 
-            node_calculate_filter_from_frame_offset(
-                frame_offset + traj_info->timeline->numposes,
-                SEL.nodesigma,
-                SEL.nodeheight))
-        {
-            currframe = oldcurrframe + traj_info->timeline->numposes;
-        }
-
-        frame_offset = currframe - rootframe;
+        
+        node_compare_looped_filters(
+            traj_info,
+            rootframe,
+            &currframe,
+            &frame_offset);
 
         node_qpos = node_get_qpos_by_node_id(traj_info,
             node_get_body_id_from_node_index(i));
