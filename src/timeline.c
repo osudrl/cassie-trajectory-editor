@@ -8,6 +8,12 @@ uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, uint8_t** b
     int readsofar = 0;
 
     fd_in = fopen(traj_info->filename_step_data, "r");
+
+    if(!fd_in)
+    {
+        fprintf(stderr, "File %s cannot be opened!\n", traj_info->filename_step_data);
+        exit(1);
+    }
     
     size = 131072;
     *buf = malloc(size);
@@ -131,6 +137,12 @@ void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, i
    strftime(timestring, 256, "%Y-%m-%d-%H-%M-%S.bin", localtime(&now));
    snprintf(filename, 256, "%s%s", infilename, timestring);
    outfile = fopen(filename, "w");
+
+   if(!outfile)
+   {
+       fprintf(stderr, "File %s cannot be opened!\n", filename);
+       exit(1);
+   }
 
    // printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
    fwrite(fulls, sizeof(full_traj_state_t), numposes, outfile);

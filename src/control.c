@@ -55,6 +55,10 @@ void load_pert(traj_info_t* traj_info)
 
         SEL.id_last_non_node_select = body_id;
     }
+    if(!pfile)
+    {
+       fprintf(stderr, "File %s cannot be opened!\n", "last.pert");
+    }
 }
 
 ik_solver_params_t* globparams = NULL;
