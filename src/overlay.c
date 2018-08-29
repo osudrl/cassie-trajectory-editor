@@ -15,6 +15,7 @@ FPS\n\
 N StdDev (F1)\n\
 N Height (F1)\n\
 Loop (L)\n\
+Contact (C)\n \
 Undo (Ctrl+Z)\n\
 Redo (Ctrl+Y)\n\
 Refine (Ctrl+R)\n\
@@ -224,6 +225,7 @@ void overlay_fill_info_status_buf(
     offset += sprintf(buf + offset, "%.2f\n", SEL.nodesigma);
     offset += sprintf(buf + offset, "%.2f\n", SEL.nodeheight);
     offset += sprintf(buf + offset, "%s\n", SEL.loop_enabled ? "Enabled" : "Disabled");
+    offset += sprintf(buf + offset, "%s\n", !(traj_info->m->opt.disableflags & (mjDSBL_CONTACT)) ? "Enabled" : "Disabled");
     offset += sprintf(buf + offset, "%s\n", OV.canundo == 0 ? "not ready" : "READY");
     offset += sprintf(buf + offset, "%s\n", OV.canredo == 0 ? "not ready" : "READY");
     offset += sprintf(buf + offset, "%s\n", OV.canrefine == 0 ? "not ready" : "READY");

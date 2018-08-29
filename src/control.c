@@ -218,7 +218,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         }
     }
 
-    
+    if(key== GLFW_KEY_C)
+    {
+        if( traj_info->m->opt.disableflags & (mjDSBL_CONTACT))
+            traj_info->m->opt.disableflags &= ~(mjDSBL_CONTACT);
+        else
+            traj_info->m->opt.disableflags |= (mjDSBL_CONTACT);
+    }
     if (key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;

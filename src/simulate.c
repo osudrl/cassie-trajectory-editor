@@ -288,8 +288,8 @@ void loadmodel(GLFWwindow* window, const char* filename)
         
     m->opt.disableflags |= 0xddc;
 
-    m->opt.disableflags &= ~(mjDSBL_LIMIT); // comment if segfaults
-    // m->opt.disableflags &= ~(mjDSBL_CONTACT); //  comment if segfaults
+    m->opt.disableflags &= ~(mjDSBL_LIMIT); 
+    m->opt.disableflags &= ~(mjDSBL_CONTACT);
 
 
     mj_forward(m, d);
@@ -742,10 +742,13 @@ void simulation(void)
             mjv_applyPerturbPose(m, d, &pert, 1);      // move mocap and dynamic bodies
             mj_forward(m, d);
         }
+
     }
     else
     {
+        
     }
+
         traj_foreach_frame(&traj_info);
 }
 
