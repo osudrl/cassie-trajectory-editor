@@ -154,7 +154,7 @@ void reset_traj_info()
     traj_info.ik.m = m;
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
-    traj_info.filename_step_data = FILENAME_STEP_DATA;
+    strcpy(traj_info.filename_step_data,FILENAME_STEP_DATA);
     traj_info.playback_time_scale = 10000;
     traj_info.selection.nodesigma = 100;
     traj_info.selection.nodeheight = 1;
@@ -962,10 +962,9 @@ int main(int argc, const char** argv)
 
 
     // load model if filename given as argument
-    if( argc==2 )
-        loadmodel(window, argv[1]);
-    else
-        loadmodel(window, "model/cassie.xml");
+    loadmodel(window, "model/cassie.xml");
+    if(argc > 1)
+        strcpy(traj_info.filename_step_data,argv[1]);
 
     // main loop
     while( !glfwWindowShouldClose(window) )
