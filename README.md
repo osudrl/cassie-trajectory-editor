@@ -186,7 +186,6 @@ In a way, this structure is **doubly dynamically allocated** because both the `t
 
 Initially malloc'd and initialzed through calls to `timeline update mj poses from realtime()`, which tests for a NULL timeline reference and then initializes the timeline with a call to `timeiline init from input file()`.
 Other timeline instances are allocated through calls to `timeline duplicate()`, normally made by node.c functions such as `node perform pert()` or `node dropped jointmove()`.
-Timeline initialization functionality should be changed significantly by resolving issue [#5](https://github.com/osudrl/cassie-trajectory-editor/issues/5).
 
 #### Usages
 
