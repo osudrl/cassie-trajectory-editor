@@ -146,12 +146,15 @@ void node_calclate_global_target_using_transformation_type(
         frame_offset, 
         SEL.nodesigma, 
         SEL.nodeheight);
+
+    #warning "fix this"
+
     plus = node_calculate_filter_from_frame_offset(
-        frame_offset + traj_info->timeline->numposes/2,
+        frame_offset + traj_info->timeline->numframes/2,
         SEL.nodesigma, 
         SEL.nodeheight);
     minus = node_calculate_filter_from_frame_offset(
-        frame_offset - traj_info->timeline->numposes/2,
+        frame_offset - traj_info->timeline->numframes/2,
         SEL.nodesigma, 
         SEL.nodeheight);
     filter = mju_max(mju_max(plus,minus),filter);
@@ -180,11 +183,11 @@ int get_frame_from_node_body_id(traj_info_t* traj_info,
     int frame;
     offset = SEL.frame_offset;
     while(offset < 0)
-        offset += timeline->numposes;
-    offset = SEL.frame_offset % timeline->numposes;
-    frame = (timeline->numposes / NODECOUNT) * (node_id.id - 26); // or maybe 28
+        offset += timeline->numframes;
+    offset = SEL.frame_offset % timeline->numframes;
+    frame = (timeline->numframes / NODECOUNT) * (node_id.id - 26); // or maybe 28
     frame += offset;
-    frame %= timeline->numposes;
+    frame %= timeline->numframes;
     return frame;
 }
 
@@ -240,7 +243,7 @@ void node_refine_pert(
     timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
-    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numframes);
     for(i = 0; i < traj_info->target_list_size; i++)
     {
         frame = rootframe + traj_info->target_list[i].frame_offset;
@@ -280,7 +283,7 @@ void node_calc_frame_lowhigh(
     int* low_frame,
     int* high_frame,
     int rootframe,
-    int numposes,
+    int numframes,
     traj_info_t* traj_info)
 {
     int i;
@@ -299,7 +302,7 @@ void node_calc_frame_lowhigh(
     if(!SEL.loop_enabled)
     {
         *low_frame = mju_max(0, rootframe - i);
-        *high_frame = mju_min(numposes-1, rootframe + i);
+        *high_frame = mju_min(numframes-1, rootframe + i);
     }
     else
     {
@@ -334,13 +337,13 @@ void node_perform_pert(
 
     failed = 0;
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_truncate(timeline_old, timeline_old->numposes/2);
-    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numposes);
+    timeline_new = timeline_truncate(timeline_old, timeline_old->numframes/2);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numframes);
     node_calc_frame_lowhigh(
         &low_frame,
         &high_frame,
         rootframe,
-        timeline_new->numposes,
+        timeline_new->numframes,
         traj_info);
 
     init_time = traj_calculate_runtime_micros(traj_info);
@@ -522,7 +525,7 @@ void node_dropped_jointmove(
     jointdiff = node_caluclate_jointdiff(traj_info,
         node_get_body_xpos_curr(traj_info, body_id));
 
-    for (frame = 0; frame < timeline_new->numposes; frame++)
+    for (frame = 0; frame < timeline_new->numframes; frame++)
     {
         filter = node_calculate_filter_from_frame_offset(
             frame - rootframe, 
@@ -723,23 +726,23 @@ void node_compare_looped_filters(
 
     if(SEL.loop_enabled && 
         filter < node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            oldcurrframe - rootframe - traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight))
     {
-        *currframe = oldcurrframe - traj_info->timeline->numposes;
+        *currframe = oldcurrframe - traj_info->timeline->numframes;
         filter = node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            oldcurrframe - rootframe - traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight);
     }
     if(SEL.loop_enabled &&
         filter < node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe + traj_info->timeline->numposes,
+            oldcurrframe - rootframe + traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight))
     {
-        *currframe = oldcurrframe + traj_info->timeline->numposes;
+        *currframe = oldcurrframe + traj_info->timeline->numframes;
     }
 
     *frame_offset = *currframe - rootframe;

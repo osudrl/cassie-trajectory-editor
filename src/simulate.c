@@ -162,7 +162,7 @@ void reset_traj_info()
     traj_info.selection.joint_cycle_list_size = sizeof(joint_cycle_list);
     traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list)-1;
     traj_info.selection.joint_cycle_list = malloc(sizeof(joint_cycle_list));
-    traj_info.selection.loop_enabled = 0;
+    traj_info.selection.loop_enabled = 1;
 
     memcpy(traj_info.selection.joint_cycle_list,joint_cycle_list,sizeof(joint_cycle_list));
 

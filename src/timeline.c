@@ -37,11 +37,11 @@ uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, uint8_t** b
     return readsofar;
 }
 
-int timeline_make_frame_safe(int frame, int numposes)
+int timeline_make_frame_safe(int frame, int numframes)
 {
     while(frame < 0)
-        frame += numposes;
-    frame %= numposes;
+        frame += numframes;
+    frame %= numframes;
     return frame;
 }
 
@@ -90,7 +90,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
 
     free(fulls);
 
-    traj_info->timeline->numposes = bytecount * loopcount;
+    traj_info->timeline->numframes = bytecount * loopcount;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
     traj_info->timeline->node_type = NODE_NONE;
@@ -123,7 +123,7 @@ void filename_replace_dots(char* filename)
     }
 }
 
-void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, int numposes)
+void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, int numframes)
 {
    char filename[256];
    char infilename[256];
@@ -145,7 +145,7 @@ void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, i
    }
 
    // printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
-   fwrite(fulls, sizeof(full_traj_state_t), numposes, outfile);
+   fwrite(fulls, sizeof(full_traj_state_t), numframes, outfile);
    fflush(outfile);
    fclose(outfile);
 }
@@ -158,14 +158,14 @@ void timeline_export(traj_info_t* traj_info, timeline_t* timeline)
     full_traj_state_t* membuf;
 
     savestackptr = traj_info->d->pstack;
-    numDubsNeeded = timeline->numposes * sizeof(full_traj_state_t);
+    numDubsNeeded = timeline->numframes * sizeof(full_traj_state_t);
     numDubsNeeded /= sizeof(double);
     membuf = (full_traj_state_t*) 
         mj_stackAlloc(traj_info->d, mju_ceil(numDubsNeeded));
 
-    for(i = 0; i < timeline->numposes; i++)
+    for(i = 0; i < timeline->numframes; i++)
     {
-        membuf[i].time = (timeline->duration / (timeline->numposes-1)) * i;
+        membuf[i].time = (timeline->duration / (timeline->numframes-1)) * i;
         mju_copy(membuf[i].qpos, timeline->qposes[i].q, 35);
         mju_zero(membuf[i].qvel, 32);
         mju_zero(membuf[i].torque, 10);
@@ -173,7 +173,7 @@ void timeline_export(traj_info_t* traj_info, timeline_t* timeline)
         mju_zero(membuf[i].mvel, 10);
     }
 
-    timeline_export_to_file(traj_info, membuf, timeline->numposes);
+    timeline_export_to_file(traj_info, membuf, timeline->numframes);
 
     traj_info->d->pstack = savestackptr; 
 }
@@ -185,9 +185,9 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
     int i;
 
     dest = malloc(sizeof(timeline_t));
-    dest->qposes = malloc(sizeof(qpos_t) * xcopy->numposes);
+    dest->qposes = malloc(sizeof(qpos_t) * xcopy->numframes);
 
-    for(i = 0; i < xcopy->numposes; i++)
+    for(i = 0; i < xcopy->numframes; i++)
     {
         mju_copy(dest->qposes[i].q, qpos->q, CASSIE_QPOS_SIZE);
         mju_copy(dest->qposes[i].q, xcopy->qposes[i].q, 1);    
@@ -195,14 +195,12 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
 
     dest->next = NULL;
     dest->prev = NULL;
-    dest->numposes = xcopy->numposes;
+    dest->numframes = xcopy->numframes;
     dest->node_type = NODE_NONE;
 
 
     return dest;
 }
-
-
 
 timeline_t* timeline_loop(timeline_t* ref, int loopcount)
 {
@@ -212,22 +210,22 @@ timeline_t* timeline_loop(timeline_t* ref, int loopcount)
     int big;
     int start;
 
-    qposbytecount = sizeof(qpos_t) * ref->numposes * loopcount;
+    qposbytecount = sizeof(qpos_t) * ref->numframes * loopcount;
 
     dest = malloc(sizeof(timeline_t));
     dest->qposes = malloc(qposbytecount);
 
-    for(i = 0; i < ref->numposes * loopcount; i++)
+    for(i = 0; i < ref->numframes * loopcount; i++)
     {
         mju_copy(dest->qposes[i].q, 
-            ref->qposes[i % ref->numposes].q,
+            ref->qposes[i % ref->numframes].q,
             CASSIE_QPOS_SIZE);
     }
 
     for(big = 1; big <= loopcount-1; big++)
     {
-        start = ref->numposes * big;
-        for(i = start; i < start + ref->numposes; i++)
+        start = ref->numframes * big;
+        for(i = start; i < start + ref->numframes; i++)
         {
             mju_add(dest->qposes[i].q,
                 dest->qposes[i].q,
@@ -238,19 +236,19 @@ timeline_t* timeline_loop(timeline_t* ref, int loopcount)
 
     dest->next = NULL;
     dest->prev = NULL;
-    dest->numposes = ref->numposes * loopcount;
+    dest->numframes = ref->numframes * loopcount;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
     return dest;
 }
 
-timeline_t*  timeline_truncate(timeline_t* ref, int numposes)
+timeline_t*  timeline_truncate(timeline_t* ref, int numframes)
 {
     timeline_t* dest;
     int qposbytecount;
 
-    qposbytecount = sizeof(qpos_t) * numposes;
+    qposbytecount = sizeof(qpos_t) * numframes;
 
     dest = malloc(sizeof(timeline_t));
     dest->qposes = malloc(qposbytecount);
@@ -258,7 +256,7 @@ timeline_t*  timeline_truncate(timeline_t* ref, int numposes)
     memcpy(dest->qposes, ref->qposes, qposbytecount);
     dest->next = NULL;
     dest->prev = NULL;
-    dest->numposes = numposes;
+    dest->numframes = numframes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
@@ -270,7 +268,7 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     timeline_t* dest;
     int qposbytecount;
 
-    qposbytecount = sizeof(qpos_t) * ref->numposes;
+    qposbytecount = sizeof(qpos_t) * ref->numframes;
 
     dest = malloc(sizeof(timeline_t));
     dest->qposes = malloc(qposbytecount);
@@ -278,7 +276,7 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     memcpy(dest->qposes, ref->qposes, qposbytecount);
     dest->next = NULL;
     dest->prev = NULL;
-    dest->numposes = ref->numposes;
+    dest->numframes = ref->numframes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
@@ -302,7 +300,7 @@ void timeline_free(timeline_t* ref)
 
 qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, int frame)
 {
-    frame = timeline_make_frame_safe(frame, timeline->numposes);
+    frame = timeline_make_frame_safe(frame, timeline->numframes);
 
     return timeline->qposes + frame ;
 }
@@ -323,7 +321,7 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timel
     if(!timeline)
         panic();
 
-    frame = timeline_make_frame_safe(frame, timeline->numposes);
+    frame = timeline_make_frame_safe(frame, timeline->numframes);
 
     timeline_set_mj_qpose(traj_info, timeline->qposes + frame);
 }

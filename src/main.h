@@ -40,7 +40,8 @@ enum scale_type_e
 
 struct _timeline_t_
 {
-    int numposes;
+    int numframes;
+    int numnoloopframes;
     double duration;
     qpos_t* qposes;
     enum node_type_e node_type;
