@@ -10,7 +10,6 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdbool.h"
-
 #include "main.h"
 #include "control.h"
  
@@ -21,7 +20,6 @@
 mjModel* m = 0;
 mjData* d = 0;
 char lastfile[1000] = "";
-
 
 // user state
 bool paused = false;
