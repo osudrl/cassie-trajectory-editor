@@ -26,14 +26,7 @@ Error | Solution
 # Controls
 
 
-## Initialization
-
-
-
-## "Old" Commands
-
-
-### "New" Commands
+## "New" Commands
 
 Input Command | Context | Effect
 --- | --- | ---
