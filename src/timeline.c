@@ -90,6 +90,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
 
     free(fulls);
 
+    traj_info->timeline->numnoloopframes = bytecount;
     traj_info->timeline->numframes = bytecount * loopcount;
     traj_info->timeline->next = NULL;
     traj_info->timeline->prev = NULL;
@@ -197,7 +198,7 @@ timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy)
     dest->prev = NULL;
     dest->numframes = xcopy->numframes;
     dest->node_type = NODE_NONE;
-
+    dest->numnoloopframes = xcopy->numnoloopframes;
 
     return dest;
 }
@@ -210,22 +211,22 @@ timeline_t* timeline_loop(timeline_t* ref, int loopcount)
     int big;
     int start;
 
-    qposbytecount = sizeof(qpos_t) * ref->numframes * loopcount;
+    qposbytecount = sizeof(qpos_t) * ref->numnoloopframes * loopcount;
 
     dest = malloc(sizeof(timeline_t));
     dest->qposes = malloc(qposbytecount);
 
-    for(i = 0; i < ref->numframes * loopcount; i++)
+    for(i = 0; i < ref->numnoloopframes * loopcount; i++)
     {
         mju_copy(dest->qposes[i].q, 
-            ref->qposes[i % ref->numframes].q,
+            ref->qposes[i % ref->numnoloopframes].q,
             CASSIE_QPOS_SIZE);
     }
 
     for(big = 1; big <= loopcount-1; big++)
     {
-        start = ref->numframes * big;
-        for(i = start; i < start + ref->numframes; i++)
+        start = ref->numnoloopframes * big;
+        for(i = start; i < start + ref->numnoloopframes; i++)
         {
             mju_add(dest->qposes[i].q,
                 dest->qposes[i].q,
@@ -237,18 +238,19 @@ timeline_t* timeline_loop(timeline_t* ref, int loopcount)
     dest->next = NULL;
     dest->prev = NULL;
     dest->numframes = ref->numframes * loopcount;
+    dest->numnoloopframes = ref->numnoloopframes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
     return dest;
 }
 
-timeline_t*  timeline_truncate(timeline_t* ref, int numframes)
+timeline_t* timeline_noloop(timeline_t* ref)
 {
     timeline_t* dest;
     int qposbytecount;
 
-    qposbytecount = sizeof(qpos_t) * numframes;
+    qposbytecount = sizeof(qpos_t) * ref->numnoloopframes;
 
     dest = malloc(sizeof(timeline_t));
     dest->qposes = malloc(qposbytecount);
@@ -256,7 +258,8 @@ timeline_t*  timeline_truncate(timeline_t* ref, int numframes)
     memcpy(dest->qposes, ref->qposes, qposbytecount);
     dest->next = NULL;
     dest->prev = NULL;
-    dest->numframes = numframes;
+    dest->numframes = ref->numnoloopframes;
+    dest->numnoloopframes = ref->numnoloopframes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
@@ -277,6 +280,7 @@ timeline_t* timeline_duplicate(timeline_t* ref)
     dest->next = NULL;
     dest->prev = NULL;
     dest->numframes = ref->numframes;
+    dest->numnoloopframes = ref->numnoloopframes;
     dest->duration = ref->duration;
     dest->node_type = NODE_NONE;
 
@@ -310,17 +314,9 @@ void timeline_set_mj_qpose(traj_info_t* traj_info, qpos_t* desired)
     mju_copy(traj_info->d->qpos, desired->q, CASSIE_QPOS_SIZE);
 }
 
-void panic()
-{
-    fprintf(stderr, "PANIC!\n");
-    exit(1);
-}
 
 void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame)
 {   
-    if(!timeline)
-        panic();
-
     frame = timeline_make_frame_safe(frame, timeline->numframes);
 
     timeline_set_mj_qpose(traj_info, timeline->qposes + frame);
@@ -329,9 +325,6 @@ void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timel
 void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame)
 {
     qpos_t* qposes;
-
-    if(!timeline)
-       panic();
     
     qposes = timeline_get_qposes_from_frame(timeline, frame);
 

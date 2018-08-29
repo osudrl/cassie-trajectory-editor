@@ -21,20 +21,37 @@ typedef struct _full_traj_state_t_ full_traj_state_t;
 
 #include "timeline.h"
 
-
-timeline_t* timeline_init_with_single_pose(qpos_t* qpos, timeline_t* xcopy);
-timeline_t* timeline_loop(timeline_t* ref, int loopcount);
-timeline_t*  timeline_truncate(timeline_t* ref, int numposes);
+void timeiline_init_from_input_file(traj_info_t* traj_info);
 timeline_t* timeline_duplicate(timeline_t* ref);
-void timeline_safe_link(timeline_t* next, timeline_t* prev);
+void timeline_export_to_file(traj_info_t* traj_info, 
+	full_traj_state_t* fulls, 
+	int numframes);
+void timeline_export(traj_info_t* traj_info, 
+	timeline_t* timeline);
+uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, 
+	uint8_t** buf);
 void timeline_free(timeline_t* ref);
-qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, int frame);
-void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, timeline_t* timeline, int frame);
-void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, timeline_t* timeline, int frame);
-int timeline_make_frame_safe(int frame, int numposes);
 int timeline_get_frame_from_time(traj_info_t* traj_info);
+qpos_t* timeline_get_qposes_from_frame(timeline_t* timeline, 
+	int frame);
+timeline_t* timeline_init_with_single_pose(qpos_t* qpos, 
+	timeline_t* xcopy);
+timeline_t* timeline_loop(timeline_t* ref, 
+	int loopcount);
+int timeline_make_frame_safe(int frame, 
+	int numframes);
+timeline_t* timeline_noloop(timeline_t* ref);
+void timeline_overwrite_frame_using_curr_pose(traj_info_t* traj_info, 
+	timeline_t* timeline, 
+	int frame);
+void timeline_safe_link(timeline_t* next, 
+	timeline_t* prev);
+void timeline_set_mj_qpose(traj_info_t* traj_info, 
+	qpos_t* desired);
+void timeline_set_qposes_to_pose_frame(traj_info_t* traj_info, 
+	timeline_t* timeline, 
+	int frame);
 void timeline_update_mj_poses_from_realtime(traj_info_t* traj_info);
-void timeline_export(traj_info_t* traj_info, timeline_t* timeline);
 
 
 #endif

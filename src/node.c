@@ -337,7 +337,7 @@ void node_perform_pert(
 
     failed = 0;
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_truncate(timeline_old, timeline_old->numframes/2);
+    timeline_new = timeline_noloop(timeline_old);
     rootframe = timeline_make_frame_safe(rootframe, timeline_new->numframes);
     node_calc_frame_lowhigh(
         &low_frame,
