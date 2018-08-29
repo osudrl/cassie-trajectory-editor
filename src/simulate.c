@@ -62,7 +62,7 @@ double window2buffer = 1;           // framebuffersize / windowsize (for scaled 
 
 // help strings
 const char help_title[] = 
-"More Help\n"
+"Cycle Help\n"
 "Option\n"
 "Info\n"
 "Full screen\n"
@@ -94,6 +94,7 @@ const char help_content[] =
 ". /";
 
 const char help2_title[] = 
+"Cycle Help\n"
 "Fwd/Bk\n"
 "Fwd/Bk 20\n"
 "Advance Nodes\n"
@@ -109,6 +110,7 @@ const char help2_title[] =
 ;
 
 const char help2_content[] = 
+"F1\n"
 "R/L arrows\n"
 "U/D arrows\n"
 "Ctrl L/R\n"
@@ -162,7 +164,7 @@ void reset_traj_info()
     traj_info.selection.joint_cycle_list_size = sizeof(joint_cycle_list);
     traj_info.selection.joint_cycle_list_index = sizeof(joint_cycle_list)-1;
     traj_info.selection.joint_cycle_list = malloc(sizeof(joint_cycle_list));
-    traj_info.selection.loop_enabled = 0;
+    traj_info.selection.loop_enabled = 1;
 
     memcpy(traj_info.selection.joint_cycle_list,joint_cycle_list,sizeof(joint_cycle_list));
 
