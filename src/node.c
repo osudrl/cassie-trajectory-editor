@@ -140,24 +140,27 @@ void node_calclate_global_target_using_transformation_type(
 {
     double filter;
     v3_t body_init_xpos;
-    double plus,minus;
+    int i;
+    double temp;
 
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
         SEL.nodesigma, 
         SEL.nodeheight);
 
-    #warning "fix this"
-
-    plus = node_calculate_filter_from_frame_offset(
-        frame_offset + traj_info->timeline->numframes/2,
-        SEL.nodesigma, 
-        SEL.nodeheight);
-    minus = node_calculate_filter_from_frame_offset(
-        frame_offset - traj_info->timeline->numframes/2,
-        SEL.nodesigma, 
-        SEL.nodeheight);
-    filter = mju_max(mju_max(plus,minus),filter);
+    for(i = 0; i * traj_info->timeline->numnoloopframes < traj_info->timeline->numframes; i++)
+    {
+        temp = node_calculate_filter_from_frame_offset(
+            frame_offset + i * traj_info->timeline->numnoloopframes,
+            SEL.nodesigma, 
+            SEL.nodeheight);
+        filter = mju_max(temp,filter);
+        temp = node_calculate_filter_from_frame_offset(
+            frame_offset - i * traj_info->timeline->numnoloopframes,
+            SEL.nodesigma, 
+            SEL.nodeheight);
+        filter = mju_max(temp,filter);        
+    }
 
     body_init_xpos = node_get_body_xpos_by_frame(
         traj_info, 
@@ -475,7 +478,9 @@ void node_perform_pert(
             (iktimedelta/1000000.0),
             1000.0*params->ik_accuracy_cutoff);
 
-        timeline_final = timeline_loop(timeline_new,2);
+        timeline_final = timeline_loop(
+            timeline_new,
+            mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
         timeline_free(timeline_new);
         timeline_new = timeline_final;
         timeline_safe_link(timeline_new, timeline_old);
