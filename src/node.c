@@ -354,8 +354,6 @@ void node_perform_pert(
         global_body_init_xpos_at_rootframe,
         node_get_body_xpos_by_frame(traj_info, timeline_new, rootframe, body_id));
 
-  
-
     node_calclate_global_target_using_transformation_type(
         traj_info,
         timeline_new,
