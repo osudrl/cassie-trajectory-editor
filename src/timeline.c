@@ -138,7 +138,7 @@ void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, i
    snprintf(filename, 256, "%s%s", infilename, timestring);
    outfile = fopen(filename, "w");
 
-   if(!outfile)
+   if(!outfile )
    {
        fprintf(stderr, "File %s cannot be opened!\n", filename);
        exit(1);
