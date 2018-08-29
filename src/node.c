@@ -352,7 +352,9 @@ void node_perform_pert(
     init_time = traj_calculate_runtime_micros(traj_info);
     mju_copy3(
         global_body_init_xpos_at_rootframe,
-        node_get_body_xpos_curr(traj_info, body_id));    
+        node_get_body_xpos_by_frame(traj_info, timeline_new, rootframe, body_id));
+
+  
 
     node_calclate_global_target_using_transformation_type(
         traj_info,
@@ -778,6 +780,7 @@ void node_scale_visually_positional(
         rootframe_transform_vector,
         body_id,
         node_id);
+
 
     rootframe = get_frame_from_node_body_id(traj_info,
         traj_info->timeline,
