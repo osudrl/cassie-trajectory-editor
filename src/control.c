@@ -161,9 +161,9 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         if(key == GLFW_KEY_LEFT)
             traj_info->time_frozen -= 50000;
         if(key == GLFW_KEY_DOWN)
-            traj_info->time_frozen -= 500000;
+            traj_info->time_frozen -= 1000000;
         if (key == GLFW_KEY_UP)
-            traj_info->time_frozen += 500000;
+            traj_info->time_frozen += 1000000;
     }
     else if (mods & GLFW_MOD_CONTROL)
     {
@@ -241,14 +241,6 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
 
      if( mods & GLFW_MOD_CONTROL )
      {
-        // if( key==GLFW_KEY_A )
-        //     SEL.nodesigma *= .95;
-        // else if( key==GLFW_KEY_D)
-        //     SEL.nodesigma *= 1.05;
-        // else if( key==GLFW_KEY_S )
-        //     SEL.nodeheight *= .95;
-        // else if( key==GLFW_KEY_W)
-        //     SEL.nodeheight *= 1.05;
         if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)

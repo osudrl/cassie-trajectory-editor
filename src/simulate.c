@@ -29,7 +29,6 @@ bool showoption = false;
 bool showinfo = true;
 bool showfullscreen = false;
 bool slowmotion = false;
-bool showdepth = false;
 bool showsensor = false;
 bool showprofiler = true;
 int showhelp = 1;                   // 0: none; 1: brief; 2: full
@@ -220,311 +219,38 @@ void reset_traj_info()
 // init profiler
 void profilerinit(void)
 {
-   /* int i, n;
-
-    // set figures to default
-    mjv_defaultFigure(&figconstraint);
-    mjv_defaultFigure(&figcost);
-    mjv_defaultFigure(&figtimer);
-    mjv_defaultFigure(&figsize);
-
-    // titles
-    strcpy(figconstraint.title, "Counts");
-    strcpy(figcost.title, "Convergence (log 10)");
-    strcpy(figsize.title, "Dimensions");
-    strcpy(figtimer.title, "CPU time (msec)");
-
-    // x-labels
-    strcpy(figconstraint.xlabel, "Solver iteration");
-    strcpy(figcost.xlabel, "Solver iteration");
-    strcpy(figsize.xlabel, "Video frame");
-    strcpy(figtimer.xlabel, "Video frame");
-
-    // y-tick nubmer formats
-    strcpy(figconstraint.yformat, "%.0f");
-    strcpy(figcost.yformat, "%.1f");
-    strcpy(figsize.yformat, "%.0f");
-    strcpy(figtimer.yformat, "%.2f");
-
-    // colors
-    figconstraint.figurergba[0]  = 0.1f;
-    figcost.figurergba[2] =  0.2f;
-    figsize.figurergba[0] =  0.1f;
-    figtimer.figurergba[2] =  0.2f;
-
-    // legends
-    strcpy(figconstraint.linename[0], "total");
-    strcpy(figconstraint.linename[1], "active");
-    strcpy(figconstraint.linename[2], "changed");
-    strcpy(figconstraint.linename[3], "evals");
-    strcpy(figconstraint.linename[4], "updates");
-    strcpy(figcost.linename[0], "improvement");
-    strcpy(figcost.linename[1], "gradient");
-    strcpy(figcost.linename[2], "lineslope");
-    strcpy(figsize.linename[0], "dof");
-    strcpy(figsize.linename[1], "body");
-    strcpy(figsize.linename[2], "constraint");
-    strcpy(figsize.linename[3], "sqrt(nnz)");
-    strcpy(figsize.linename[4], "contact");
-    strcpy(figsize.linename[5], "iteration");
-    strcpy(figtimer.linename[0], "total");
-    strcpy(figtimer.linename[1], "collision");
-    strcpy(figtimer.linename[2], "prepare");
-    strcpy(figtimer.linename[3], "solve");
-    strcpy(figtimer.linename[4], "other");
-
-    // grid sizes
-    figconstraint.gridsize[0] = 5;
-    figconstraint.gridsize[1] = 5;
-    figcost.gridsize[0] = 5;
-    figcost.gridsize[1] = 5;
-    figsize.gridsize[0] = 3;
-    figsize.gridsize[1] = 5;
-    figtimer.gridsize[0] = 3;
-    figtimer.gridsize[1] = 5;
-
-    // minimum ranges
-    figconstraint.range[0][0] = 0;
-    figconstraint.range[0][1] = 20;
-    figconstraint.range[1][0] = 0;
-    figconstraint.range[1][1] = 80;
-    figcost.range[0][0] = 0;
-    figcost.range[0][1] = 20;
-    figcost.range[1][0] = -15;
-    figcost.range[1][1] = 5;
-    figsize.range[0][0] = -200;
-    figsize.range[0][1] = 0;
-    figsize.range[1][0] = 0;
-    figsize.range[1][1] = 100;
-    figtimer.range[0][0] = -200;
-    figtimer.range[0][1] = 0;
-    figtimer.range[1][0] = 0;
-    figtimer.range[1][1] = 0.4f;
-
-    // init x axis on history figures (do not show yet)
-    for( n=0; n<6; n++ )
-        for( i=0; i<mjMAXLINEPNT; i++ )
-        {
-            figtimer.linedata[n][2*i] = (float)-i;
-            figsize.linedata[n][2*i] = (float)-i;
-        }*/
+   
 }
 
 // show profiler
 void profilerupdate(void)
 {
-    /*int i, n;
-
-    // update constraint figure
-    figconstraint.linepnt[0] = mjMIN(mjMIN(d->solver_iter, mjNSOLVER), mjMAXLINEPNT);
-    for( i=1; i<5; i++ )
-        figconstraint.linepnt[i] = figconstraint.linepnt[0];
-    if( m->opt.solver==mjSOL_PGS )
-    {
-        figconstraint.linepnt[3] = 0;
-        figconstraint.linepnt[4] = 0;
-    }
-    if( m->opt.solver==mjSOL_CG )
-        figconstraint.linepnt[4] = 0;
-    for( i=0; i<figconstraint.linepnt[0]; i++ )
-    {
-        // x
-        figconstraint.linedata[0][2*i] = (float)i;
-        figconstraint.linedata[1][2*i] = (float)i;
-        figconstraint.linedata[2][2*i] = (float)i;
-        figconstraint.linedata[3][2*i] = (float)i;
-        figconstraint.linedata[4][2*i] = (float)i;
-
-        // y
-        figconstraint.linedata[0][2*i+1] = (float)d->nefc;
-        figconstraint.linedata[1][2*i+1] = (float)d->solver[i].nactive;
-        figconstraint.linedata[2][2*i+1] = (float)d->solver[i].nchange;
-        figconstraint.linedata[3][2*i+1] = (float)d->solver[i].neval;
-        figconstraint.linedata[4][2*i+1] = (float)d->solver[i].nupdate;
-    }
     
-
-    // update cost figure
-    figcost.linepnt[0] = mjMIN(mjMIN(d->solver_iter, mjNSOLVER), mjMAXLINEPNT);
-    for( i=1; i<3; i++ )
-        figcost.linepnt[i] = figcost.linepnt[0];
-    if( m->opt.solver==mjSOL_PGS )
-    {
-        figcost.linepnt[1] = 0;
-        figcost.linepnt[2] = 0;
-    }
-
-    for( i=0; i<figcost.linepnt[0]; i++ )
-    {
-        // x
-        figcost.linedata[0][2*i] = (float)i;
-        figcost.linedata[1][2*i] = (float)i;
-        figcost.linedata[2][2*i] = (float)i;
-
-        // y
-        figcost.linedata[0][2*i+1] = (float)mju_log10(mju_max(mjMINVAL, d->solver[i].improvement));
-        figcost.linedata[1][2*i+1] = (float)mju_log10(mju_max(mjMINVAL, d->solver[i].gradient));
-        figcost.linedata[2][2*i+1] = (float)mju_log10(mju_max(mjMINVAL, d->solver[i].lineslope));
-    }
-    
-
-
-    // get timers: total, collision, prepare, solve, other
-    int itotal = (d->timer[mjTIMER_STEP].duration > d->timer[mjTIMER_FORWARD].duration ?
-                    mjTIMER_STEP : mjTIMER_FORWARD);
-    float tdata[5] = { 
-        (float)(d->timer[itotal].duration/mjMAX(1,d->timer[itotal].number)),
-        (float)(d->timer[mjTIMER_POS_COLLISION].duration/mjMAX(1,d->timer[mjTIMER_POS_COLLISION].number)),
-        (float)(d->timer[mjTIMER_POS_MAKE].duration/mjMAX(1,d->timer[mjTIMER_POS_MAKE].number)) +
-            (float)(d->timer[mjTIMER_POS_PROJECT].duration/mjMAX(1,d->timer[mjTIMER_POS_PROJECT].number)),
-        (float)(d->timer[mjTIMER_CONSTRAINT].duration/mjMAX(1,d->timer[mjTIMER_CONSTRAINT].number)),
-        0
-    };
-    tdata[4] = tdata[0] - tdata[1] - tdata[2] - tdata[3];
-
-    // update figtimer
-    int pnt = mjMIN(201, figtimer.linepnt[0]+1);
-    for( n=0; n<5; n++ )
-    {
-        // shift data
-        for( i=pnt-1; i>0; i-- )
-            figtimer.linedata[n][2*i+1] = figtimer.linedata[n][2*i-1];
-
-        // assign new
-        figtimer.linepnt[n] = pnt;
-        figtimer.linedata[n][1] = tdata[n];
-    }
-
-    // get sizes: nv, nbody, nefc, sqrt(nnz), ncont, iter
-    float sdata[6] = {
-        (float)m->nv,
-        (float)m->nbody,
-        (float)d->nefc,
-        (float)mju_sqrt((mjtNum)d->solver_nnz),
-        (float)d->ncon,
-        (float)d->solver_iter
-    };
-    
-    // update figsize
-    pnt = mjMIN(201, figsize.linepnt[0]+1);
-    for( n=0; n<6; n++ )
-    {
-        // shift data
-        for( i=pnt-1; i>0; i-- )
-            figsize.linedata[n][2*i+1] = figsize.linedata[n][2*i-1];
-
-        // assign new
-        figsize.linepnt[n] = pnt;
-        figsize.linedata[n][1] = sdata[n];
-    }
-    */
 } 
-
-
 
 // show profiler
 void profilershow(mjrRect rect)
 {
-    /*mjrRect viewport = {rect.width - rect.width/5, rect.bottom, rect.width/5, rect.height/4};
-    mjr_figure(viewport, &figtimer, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figsize, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figcost, &con);
-    viewport.bottom += rect.height/4;
-    mjr_figure(viewport, &figconstraint, &con);*/
-}
 
-
+} 
 
 // init sensor figure
 void sensorinit(void)
 {
-    /*// set figure to default
-    mjv_defaultFigure(&figsensor);
-
-    // set flags
-    figsensor.flg_extend = 1;
-    figsensor.flg_barplot = 1;
-
-    // title
-    strcpy(figsensor.title, "Sensor data");
-
-    // y-tick nubmer format
-    strcpy(figsensor.yformat, "%.0f");
-
-    // grid size
-    figsensor.gridsize[0] = 2;
-    figsensor.gridsize[1] = 3;
-
-    // minimum range
-    figsensor.range[0][0] = 0;
-    figsensor.range[0][1] = 0;
-    figsensor.range[1][0] = -1;
-    figsensor.range[1][1] = 1;*/
+    
 }
-
 
 // update sensor figure
 void sensorupdate(void)
 {
-    /*static const int maxline = 10;
-
-    // clear linepnt
-    for( int i=0; i<maxline; i++ )
-        figsensor.linepnt[i] = 0;
-
-    // start with line 0
-    int lineid = 0;
-
-    // loop over sensors
-    for( int n=0; n<m->nsensor; n++ )
-    {
-        // go to next line if type is different
-        if( n>0 && m->sensor_type[n]!=m->sensor_type[n-1] )
-            lineid = mjMIN(lineid+1, maxline-1);
-
-        // get info about this sensor
-        mjtNum cutoff = (m->sensor_cutoff[n]>0 ? m->sensor_cutoff[n] : 1);
-        int adr = m->sensor_adr[n];
-        int dim = m->sensor_dim[n];
-
-        // data pointer in line
-        int p = figsensor.linepnt[lineid];
-
-        // fill in data for this sensor
-        for( int i=0; i<dim; i++ )
-        {
-            // check size
-            if( (p+2*i)>=mjMAXLINEPNT/2 )
-                break;
-
-            // x
-            figsensor.linedata[lineid][2*p+4*i] = (float)(adr+i);
-            figsensor.linedata[lineid][2*p+4*i+2] = (float)(adr+i);
-
-            // y
-            figsensor.linedata[lineid][2*p+4*i+1] = 0;
-            figsensor.linedata[lineid][2*p+4*i+3] = (float)(d->sensordata[adr+i]/cutoff);
-        }
-
-        // update linepnt
-        figsensor.linepnt[lineid] = mjMIN(mjMAXLINEPNT-1, 
-                                          figsensor.linepnt[lineid]+2*dim);
-    }*/
+   
 }
-
-
 
 // show sensor figure
 void sensorshow(mjrRect rect)
 {
-    /*// render figure on the right
-    mjrRect viewport = {rect.width - rect.width/4, rect.bottom, rect.width/4, rect.height/3};
-    mjr_figure(viewport, &figsensor, &con);*/
+
 }
-
-
 
 //-------------------------------- utility functions ------------------------------------
 
@@ -622,7 +348,17 @@ void cleartimers(mjData* d)
     }
 }
 
-
+bool option_key_whitelisted(int key)
+{
+    return
+        key == GLFW_KEY_S ||
+        key == GLFW_KEY_W ||
+        key == GLFW_KEY_F ||
+        key == GLFW_KEY_J ||
+        key == GLFW_KEY_T ||
+        key == GLFW_KEY_E ||
+        key == GLFW_KEY_D;
+}
 
 //--------------------------------- GLFW callbacks --------------------------------------
 
@@ -657,10 +393,6 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         showinfo = !showinfo;
         break;
 
-    case GLFW_KEY_F4:                   // depth
-        showdepth = !showdepth;
-        break;
-
     case GLFW_KEY_F5:                   // toggle full screen
         showfullscreen = !showfullscreen;
         if( showfullscreen )
@@ -669,20 +401,8 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
             glfwRestoreWindow(window);
         break;
 
-    case GLFW_KEY_F6:                   // stereo
-        scn.stereo = (scn.stereo==mjSTEREO_NONE ? mjSTEREO_QUADBUFFERED : mjSTEREO_NONE);
-        break;
-
-    case GLFW_KEY_F7:                   // sensor figure
-        showsensor = !showsensor;
-        break;
-
-    case GLFW_KEY_F8:                   // profiler
-        showprofiler = !showprofiler;
-        break;
-
-    // case GLFW_KEY_ENTER:                // slow motion
-    //     slowmotion = !slowmotion;
+    // case GLFW_KEY_F6:                   // stereo
+    //     scn.stereo = (scn.stereo==mjSTEREO_NONE ? mjSTEREO_QUADBUFFERED : mjSTEREO_NONE);
     //     break;
 
     case GLFW_KEY_SPACE:                // pause
@@ -690,49 +410,9 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
 
         break;
 
-    // case GLFW_KEY_PAGE_UP:              // previous keyreset
-    // case GLFW_KEY_PAGE_DOWN:            // next keyreset
-    //     if( key==GLFW_KEY_PAGE_UP )
-    //         keyreset = mjMAX(-1, keyreset-1);
-    //     else
-    //         keyreset = mjMIN(m->nkey-1, keyreset+1);
-
-        // continue with reset
-
-    case GLFW_KEY_BACKSPACE:            // reset
-        mj_resetData(m, d);
-        if( keyreset>=0 && keyreset<m->nkey )
-        {
-            d->time = m->key_time[keyreset];
-            mju_copy(d->qpos, m->key_qpos+keyreset*m->nq, m->nq);
-            mju_copy(d->qvel, m->key_qvel+keyreset*m->nv, m->nv);
-            mju_copy(d->act, m->key_act+keyreset*m->na, m->na);
-        }
-        mj_forward(m, d);
-        profilerupdate();
-        sensorupdate();
-        break;
-
-   
     case GLFW_KEY_ESCAPE:               // free camera
         cam.type = mjCAMERA_FREE;
         break;
-
-    // case '=':                           // bigger font
-    //     if( fontscale<200 )
-    //     {
-    //         fontscale += 50;
-    //         mjr_makeContext(m, &con, fontscale);
-    //     }
-    //     break;
-
-    // case '-':                           // smaller font
-    //     if( fontscale>100 )
-    //     {
-    //         fontscale -= 50;
-    //         mjr_makeContext(m, &con, fontscale);
-    //     }
-    //     break;
 
     case '[':                           // previous fixed camera or free
         if( m->ncam && cam.type==mjCAMERA_FIXED )
@@ -777,34 +457,26 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
         // control keys
         if( mods & GLFW_MOD_CONTROL )
         {
-            // if( key==GLFW_KEY_A )
-            //     autoscale(window);
+            if( key==GLFW_KEY_A )
+                autoscale(window);
             if( key==GLFW_KEY_L && lastfile[0] )
                 loadmodel(window, lastfile);          
 
             break;
-
         }
 
-        // toggle visualization flag
-        for( int i=0; i<mjNVISFLAG; i++ )
-            if( key==mjVISSTRING[i][2][0] )
-                vopt.flags[i] = !vopt.flags[i];
+        if(option_key_whitelisted(key))
+        {
+            // toggle visualization flag
+            for( int i=0; i<mjNVISFLAG; i++ )
+                if( key==mjVISSTRING[i][2][0] )
+                    vopt.flags[i] = !vopt.flags[i];
 
-        // toggle rendering flag
-        for( int i=0; i<mjNRNDFLAG; i++ )
-            if( key==mjRNDSTRING[i][2][0] )
-                scn.flags[i] = !scn.flags[i];
-
-        // // toggle geom/site group
-        // for( int i=0; i<mjNGROUP; i++ )
-        //     if( key==i+'0')
-        //     {
-        //         if( mods & GLFW_MOD_SHIFT )
-        //             vopt.sitegroup[i] = !vopt.sitegroup[i];
-        //         else
-        //             vopt.geomgroup[i] = !vopt.geomgroup[i];
-        //     }
+            // toggle rendering flag
+            for( int i=0; i<mjNRNDFLAG; i++ )
+                if( key==mjRNDSTRING[i][2][0] )
+                    scn.flags[i] = !scn.flags[i];
+        }
     }
 }
 
@@ -859,15 +531,6 @@ void mouse_button(GLFWwindow* window, int button, int act, int mods)
             traj_info.selection.scale_type = SCALING_B;
             traj_info.selection.nodeheight = 1;
         }
-        // else if( button_left )
-        //     newperturb = mjPERT_ROTATE;
-        // else if( button_left )
-        // {
-        //     newperturb = mjPERT_TRANSLATE;
-        //     traj_info.pert_type = PERT_TRANSLATION;
-        //     traj_info.nodeheight = 1;
-        // }
-
         // perturbation onset: reset reference
         if( newperturb && !pert.active )
             mjv_initPerturb(m, d, &scn, &pert);
@@ -1091,35 +754,7 @@ void simulation(void)
     else
     {
     }
-   traj_foreach_frame(&traj_info);
-    /*
-    // running
-    else
-    {
-        // slow motion factor: 10x
-        mjtNum factor = (slowmotion ? 10 : 1);
-
-        // advance effective simulation time by 1/refreshrate
-        mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/refreshrate )
-        {
-            // clear old perturbations, apply new
-            mju_zero(d->xfrc_applied, 6*m->nbody);
-            if( pert.select>0 )
-            {
-                mjv_applyPerturbPose(m, d, &pert, 0);  // move mocap bodies only
-                mjv_applyPerturbForce(m, d, &pert);
-            }
-
-            // run mj_step and count
-            mj_step(m, d);
-
-            // break on reset
-            if( d->time<startsimtm )
-                break;
-        }
-    }
-    */
+        traj_foreach_frame(&traj_info);
 }
 
 // render
@@ -1159,45 +794,7 @@ void render(GLFWwindow* window)
         strcpy(camstr, "Tracking");
     else
         sprintf(camstr, "Fixed %d", cam.fixedcamid);
-    // if( !paused )
-    // {
-        // camera string
-        
 
-        // keyreset string
-        // char keyresetstr[20];
-        // if( keyreset<0 )
-        //     strcpy(keyresetstr, "qpos0");
-        // else 
-        //     sprintf(keyresetstr, "Key %d", keyreset);
-
-        // // solver error
-        // mjtNum solerr = 0;
-        // if( d->solver_iter )
-        // {
-        //     int ind = mjMIN(d->solver_iter-1,mjNSOLVER-1);
-        //     solerr = mju_min(d->solver[ind].improvement, d->solver[ind].gradient);
-        //     if( solerr==0 )
-        //         solerr = mju_max(d->solver[ind].improvement, d->solver[ind].gradient);
-        // }
-        // solerr = mju_log10(mju_max(mjMINVAL, solerr));
-
-        // status
-
-        // sprintf(status, "%-20.1f\n%d  (%d con)\n%.3f\n%.0f\n%.2f\n%.1f  (%d it)\n%.1f %.1f\n%s\n%s",
-        //         d->time, 
-        //         d->nefc, 
-        //         d->ncon,
-        //         d->timer[mjTIMER_STEP].duration / mjMAX(1, d->timer[mjTIMER_STEP].number),
-        //         d->energy[0]+d->energy[1],
-        //         solerr,
-        //         d->solver_iter, 
-        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[0])),
-        //         mju_log10(mju_max(mjMINVAL,d->solver_fwdinv[1])),
-        //         camstr, 
-        //         keyresetstr
-        //     );
-    // }
     overlay_fill_info_status_buf(info_status, &traj_info, camstr, 1.0/(glfwGetTime()-lastrendertm));
     overlay_fill_selection_status_buf(selection_status, &traj_info);
 
@@ -1210,36 +807,6 @@ void render(GLFWwindow* window)
     decor_showdecor(&traj_info, &scn);
     // render
     mjr_render(rect, &scn, &con);
-
-    // show depth map
-    if( showdepth )
-    {
-        // get the depth buffer
-        mjr_readPixels(NULL, depth_buffer, rect, &con);
-
-        // convert to RGB, subsample by 4
-        for( int r=0; r<rect.height; r+=4 )
-            for( int c=0; c<rect.width; c+=4 )
-            {
-                // get subsampled address
-                int adr = (r/4)*(rect.width/4) + c/4;
-
-                // assign rgb
-                depth_rgb[3*adr] = depth_rgb[3*adr+1] = depth_rgb[3*adr+2] = 
-                    (unsigned char)((1.0f-depth_buffer[r*rect.width+c])*255.0f);
-            }
-
-        // show in bottom-right corner, offset for profiler and sensor
-        mjrRect bottomright = {
-            smallrect.left+(3*smallrect.width)/4, 
-            smallrect.bottom, 
-            smallrect.width/4, 
-            smallrect.height/4
-        };
-        if( showsensor )
-            bottomright.left -= smallrect.width/4;
-        mjr_drawPixels(depth_rgb, NULL, bottomright, &con);
-    }
 
     // show overlays
     if( showhelp==1 )
@@ -1268,16 +835,23 @@ void render(GLFWwindow* window)
         {
             for( i=0; i<mjNRNDFLAG; i++)
             {
-                makeoptionstring(mjRNDSTRING[i][0], mjRNDSTRING[i][2][0], buf);
-                strcat(opt_title, buf);
-                strcat(opt_title, "\n");
+                if(option_key_whitelisted(mjRNDSTRING[i][2][0]))
+                {
+                    makeoptionstring(mjRNDSTRING[i][0], mjRNDSTRING[i][2][0], buf);
+                    strcat(opt_title, buf);
+                    strcat(opt_title, "\n");
+                }
+               
             }
             for( i=0; i<mjNVISFLAG; i++)
             {
-                makeoptionstring(mjVISSTRING[i][0], mjVISSTRING[i][2][0], buf);
-                strcat(opt_title, buf);
-                if( i<mjNVISFLAG-1 )
-                    strcat(opt_title, "\n");
+                if(option_key_whitelisted(mjVISSTRING[i][2][0]))
+                {
+                    makeoptionstring(mjVISSTRING[i][0], mjVISSTRING[i][2][0], buf);
+                    strcat(opt_title, buf);
+                    if( i<mjNVISFLAG-1 )
+                        strcat(opt_title, "\n");
+                }
             }
         }
 
@@ -1285,14 +859,20 @@ void render(GLFWwindow* window)
         opt_content[0] = 0;
         for( i=0; i<mjNRNDFLAG; i++)
         {
-            strcat(opt_content, scn.flags[i] ? " + " : "   ");
-            strcat(opt_content, "\n");
+            if(option_key_whitelisted(mjRNDSTRING[i][2][0]))
+            {
+                strcat(opt_content, scn.flags[i] ? " + " : "   ");
+                strcat(opt_content, "\n");
+            }            
         }
         for( i=0; i<mjNVISFLAG; i++)
         {
-            strcat(opt_content, vopt.flags[i] ? " + " : "   ");
-            if( i<mjNVISFLAG-1 )
-                strcat(opt_content, "\n");
+            if(option_key_whitelisted(mjVISSTRING[i][2][0]))
+            {
+                strcat(opt_content, vopt.flags[i] ? " + " : "   ");
+                if( i<mjNVISFLAG-1 )
+                    strcat(opt_content, "\n");
+            }
         }
 
         // show
