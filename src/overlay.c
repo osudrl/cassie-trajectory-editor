@@ -15,7 +15,7 @@ FPS\n\
 N StdDev (F1)\n\
 N Height (F1)\n\
 Loop (L)\n\
-Contact (C)\n \
+Contact (C)\n\
 Undo (Ctrl+Z)\n\
 Redo (Ctrl+Y)\n\
 Refine (Ctrl+R)\n\
