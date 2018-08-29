@@ -64,25 +64,10 @@ double window2buffer = 1;           // framebuffersize / windowsize (for scaled 
 
 // help strings
 const char help_title[] = 
-"Help\n"
+"More Help\n"
 "Option\n"
 "Info\n"
-"Depth\n"
 "Full screen\n"
-"Stereo\n"
-"Profiler\n"
-"Slow motion\n"
-"Key reset\n"
-"Pause\n"
-"Reset\n"
-"Forward\n"
-"Back\n"
-"Forward 100\n"
-"Back 100\n"
-"Autoscale\n"
-"Reload\n"
-"Geoms\n"
-"Sites\n"
 "Select\n"
 "Center\n"
 "Track\n"
@@ -91,32 +76,14 @@ const char help_title[] =
 "Rotate\n"
 "Perturb\n"
 "Free Camera\n"
-"Camera\n"
-"Frame\n"
-"Label\n"
-"Fontsize";
-
+"Orientations\n"
+"Label";
 
 const char help_content[] = 
 "F1\n"
 "F2\n"
 "F3\n"
-"F4\n"
 "F5\n"
-"F6\n"
-"F7\n"
-"Enter\n"
-"Page Up/Down\n"
-"Space\n"
-"BackSpace\n"
-"Right arrow\n"
-"Left arrow\n"
-"Down arrow\n"
-"Up arrow\n"
-"Ctrl A\n"
-"Ctrl L\n"
-"0 - 4\n"
-"Shift 0 - 4\n"
 "L dblclick\n"
 "R dblclick\n"
 "Ctrl R dblclick\n"
@@ -125,10 +92,37 @@ const char help_content[] =
 "L drag\n"
 "Ctrl [Shift] L/R drag\n"
 "Esc\n"
-"[ ]\n"
 "; '\n"
-". /\n"
-"- =";
+". /";
+
+const char help2_title[] = 
+"Fwd/Bk\n"
+"Fwd/Bk 20\n"
+"Advance Nodes\n"
+"Advance Nodes x20\n"
+"Playback Speed\n"
+"Decrease Nodes\n"
+"Increase Nodes\n"
+"Autoscale\n"
+"Reload\n"
+"Load Last Perturbation\n"
+"Expand Current Pose\n"
+"Save To File"
+;
+
+const char help2_content[] = 
+"R/L arrows\n"
+"U/D arrows\n"
+"Ctrl L/R\n"
+"Ctrl U/D\n"
+"Ctrl PgUp/Dn\n"
+"Minus (-)\n"
+"Equal (=)\n"
+"Ctrl A\n"
+"Ctrl L\n"
+"Ctrl P\n"
+"Ctrl E\n"
+"Ctrl S";
 
 char opt_title[1000] = "";
 char opt_content[1000];
@@ -353,7 +347,7 @@ bool option_key_whitelisted(int key)
     return
         key == GLFW_KEY_S ||
         key == GLFW_KEY_W ||
-        key == GLFW_KEY_F ||
+        key == GLFW_KEY_G ||
         key == GLFW_KEY_J ||
         key == GLFW_KEY_T ||
         key == GLFW_KEY_E ||
@@ -381,7 +375,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods)
     {
     case GLFW_KEY_F1:                   // help
         showhelp++;
-        if( showhelp>2 )
+        if( showhelp>3 )
             showhelp = 0;
         break;
 
@@ -812,6 +806,8 @@ void render(GLFWwindow* window)
     if( showhelp==1 )
         mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, "Help  ", "F1  ", &con);
     else if( showhelp==2 )
+        mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, help2_title, help2_content, &con);
+    else if( showhelp==3 )
         mjr_overlay(mjFONT_NORMAL, mjGRID_TOPLEFT, smallrect, help_title, help_content, &con);
 
     // show info
