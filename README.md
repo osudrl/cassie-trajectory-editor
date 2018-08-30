@@ -210,6 +210,36 @@ Yet wrapping these ints in a struct provides strong type checking, preventing th
 Furthermore, the function prototypes in the header are able to clearly communicate what kind of body (cassie or node) is needed for the calculations.
 To revert this type checking, all uses of these types can be replaced with unsigned ints, and the functions for wrapping the ids can be deleted.
 
+### Function Reference
+
+Function | Description | Changes to Qpos | Changes to Timeline
+node get frame from node body id() | Uses the node's index to calculate it's corresponding frame in the timeline | No | No
+node calc frame lowhigh() | Calculates the first and last frame that the solver should plan to solve | No | No
+node calclate global target using transformation type() | Acts as a sort of wrapper for `node calculate arbitrary target using scale type()`. Given a frame, fills the global target vector for that frame | **YES** (set to rootframe + frame_offset) | No
+node calculate arbitrary target using scale type() | Scales a target vector given the initial perturbation and other scaling information | No | No
+node calculate filter from frame offset() | Uses Gaussian filtering to return a scale factor given a frames a distance from the root of the perturbation | No | No
+node calculate rootframe transformation vector() | Given a node that was dropped, calculate the root perturbation that should be applied to the trajectory | **YES** set to the frame which corresponds to the supplied node | No
+node caluclate jointdiff() | Returns a difference in joint value based on the Z-translation of the node | No | No
+node compare looped filters() | Decides what rootframe and frame_offset should be used for scaling a perturbation when looping is enabled | No | No
+node dropped jointmove() | Applies a jointmove transformation when a node is dropped | **YES\*** | **YES**
+node dropped positional() | Applies a positional transformation when a node is dropped | **YES\*** | **YES**
+node get body id from node index() | Returns a node_body_id given the index (starting at 0) of a node | No | No
+node get body id from real body id() | Returns a node_body_id given the body id (starting at 26) of a node | No | No
+node get body xpos by frame() | Returns a vector with the xpos coordinates of a body at the specified frame | **YES, sets all qposes to the specified frame** | No
+node get body xpos curr() | Returns a vector with the current xpos coordinates of body | No | No
+node get cassie id from index() | Returns a cassie_body_id given the body id (starting at 0) of a Cassie body | No | No
+<!-- node get qpos by node id() | 
+node perform ik on xpos transformation() | 
+node perform pert() | 
+node position initial positional() | 
+node position initial using cassie body() | 
+node position jointid() | 
+node position jointmove() | 
+node refine pert() | 
+node scale visually jointmove() | 
+node scale visually positional() |  -->
+
+
 
 ### node_get_body_id_from_node_index()
 
