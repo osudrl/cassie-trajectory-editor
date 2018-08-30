@@ -13,6 +13,7 @@
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
 #define DECOR_BUF_SIZE 400
 #define IK_STEP_CUTOFF 1500
+#define LOOP_TRAJECTORY 1
 
 struct _qpos_t_
 {

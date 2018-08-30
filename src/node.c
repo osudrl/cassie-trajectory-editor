@@ -502,7 +502,7 @@ void node_perform_pert(
             &ik_iter_total);
         }
 
-        if(frame_offset > 1 && ik_iter_total > (.95 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
+        if(frame_offset > 1 && ik_iter_total > (.6 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
         {
             printf("TOO HARD. ABORTING. \n");
             failed = 1;

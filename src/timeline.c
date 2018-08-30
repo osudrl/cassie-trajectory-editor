@@ -54,7 +54,7 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     int start;
     int loopcount;
 
-    loopcount = 3;
+    loopcount = LOOP_TRAJECTORY;
 
     bytecount = timeline_fill_full_traj_state_array(traj_info, (uint8_t**) &fulls);
     bytecount /= sizeof(full_traj_state_t);
