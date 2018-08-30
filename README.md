@@ -212,7 +212,7 @@ To revert this type checking, all uses of these types can be replaced with unsig
 
 ### Function Reference
 
-Function | Description | Changes to Qpos | Changes to Timeline
+Function | Description | Changes to d->qpos | Changes to any Timeline
 --- | --- | --- | --- 
 node get frame from node body id() | Uses the node's index to calculate it's corresponding frame in the timeline | No | No
 node calc frame lowhigh() | Calculates the first and last frame that the solver should plan to solve | No | No
@@ -226,19 +226,19 @@ node dropped jointmove() | Applies a jointmove transformation when a node is dro
 node dropped positional() | Applies a positional transformation when a node is dropped | **YES\*** | **YES**
 node get body id from node index() | Returns a node_body_id given the index (starting at 0) of a node | No | No
 node get body id from real body id() | Returns a node_body_id given the body id (starting at 26) of a node | No | No
-node get body xpos by frame() | Returns a vector with the xpos coordinates of a body at the specified frame | **YES\*\*** | No
+node get body xpos by frame() | Returns a vector with the 3d coordinates of a body at the specified frame | **YES\*\*** | No
 node get body xpos curr() | Returns a vector with the current xpos coordinates of body | No | No
 node get cassie id from index() | Returns a cassie_body_id given the body id (starting at 0) of a Cassie body | No | No
-<!-- node get qpos by node id() | 
-node perform ik on xpos transformation() | 
-node perform pert() | 
-node position initial positional() | 
+node get qpos by node id() | Returns the vector of the 3d coordinates of a specified node | No | No
+node perform ik on xpos transformation() | Calls the IK solver in ik.c for the given frame and target | **YES\*** | **YES**
+node perform pert() | Performs a scaled, positional transformation | **YES\*** | **YES**
+<!-- node position initial positional() | 
 node position initial using cassie body() | 
 node position jointid() | 
 node position jointmove() | 
 node refine pert() | 
 node scale visually jointmove() | 
-node scale visually positional() |  -->
+node scale visually positional() |   -->
 
 
 
