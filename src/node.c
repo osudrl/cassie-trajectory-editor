@@ -161,7 +161,7 @@ void node_calclate_global_target_using_transformation_type(
         filter);
 }
 
-int get_frame_from_node_body_id(traj_info_t* traj_info, 
+int node_get_frame_from_node_body_id(traj_info_t* traj_info, 
     timeline_t* timeline, 
     node_body_id_t node_id)
 {
@@ -188,7 +188,7 @@ void node_calculate_rootframe_transformation_vector(
     v3_t body_init_xpos;
     v3_t node_final_xpos;
 
-    rootframe = get_frame_from_node_body_id(traj_info, timeline, node_id);
+    rootframe = node_get_frame_from_node_body_id(traj_info, timeline, node_id);
     body_init_xpos = node_get_body_xpos_by_frame(traj_info, timeline, rootframe, body_id);
     node_final_xpos = node_get_qpos_by_node_id(traj_info, node_id);
 
@@ -492,7 +492,7 @@ void node_dropped_jointmove(
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
 
-    rootframe = get_frame_from_node_body_id(traj_info,
+    rootframe = node_get_frame_from_node_body_id(traj_info,
         timeline_new,
         node_id);
 
@@ -542,7 +542,7 @@ void node_dropped_positional(
 
     ik_default_fill_solver_params(&params);
 
-    rootframe = get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
+    rootframe = node_get_frame_from_node_body_id(traj_info, traj_info->timeline, node_id);
     node_calculate_rootframe_transformation_vector(
         traj_info, 
         traj_info->timeline,
@@ -597,7 +597,7 @@ void node_position_jointmove(
 
     for (i = 0; i < NODECOUNT; i++)
     {
-        currframe = get_frame_from_node_body_id(traj_info, 
+        currframe = node_get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
         node_qpos = node_get_qpos_by_node_id(traj_info, 
@@ -668,7 +668,7 @@ void node_scale_visually_jointmove(
     v3_t body_init_xpos;
 
     mju_copy(qpos_cache, traj_info->d->qpos, CASSIE_QPOS_SIZE);   
-    rootframe = get_frame_from_node_body_id(traj_info,
+    rootframe = node_get_frame_from_node_body_id(traj_info,
         traj_info->timeline,
         node_id);
 
@@ -756,7 +756,7 @@ void node_scale_visually_positional(
         body_id,
         node_id);
 
-    rootframe = get_frame_from_node_body_id(traj_info,
+    rootframe = node_get_frame_from_node_body_id(traj_info,
         traj_info->timeline,
         node_id);
     mju_copy3(global_body_init_xpos_at_rootframe,
@@ -774,7 +774,7 @@ void node_scale_visually_positional(
         if(node_get_body_id_from_node_index(i).id == node_id.id)
             continue;
 
-        currframe = get_frame_from_node_body_id(traj_info, 
+        currframe = node_get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
         
@@ -813,7 +813,7 @@ void node_position_initial_positional(
    
     for (i = 0; i < NODECOUNT; i++)
     {
-        frame = get_frame_from_node_body_id(traj_info, 
+        frame = node_get_frame_from_node_body_id(traj_info, 
             traj_info->timeline,
             node_get_body_id_from_node_index(i));
         node_qpos = node_get_qpos_by_node_id(traj_info, node_get_body_id_from_node_index(i) );
