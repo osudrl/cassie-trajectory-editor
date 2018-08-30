@@ -486,6 +486,36 @@ Changes to timeline: No
 
 ### node_perform_pert()
 
+Definition:
+```c
+void node_perform_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
+    v3_t rootframe_transform_vector,
+    cassie_body_id_t body_id,
+    int rootframe);
+```
+
+1. Duplicates the current (traj_info->timeline) timeline
+2. Calculates IK target at rootframe
+3. Performs PDIK at rootframe using the IK target
+4. Calculate, scale, and use IK targets for nearby frames
+5. New timeline becomes current timeline
+6. Revisualize the nodes
+
+Can perform a perturbtion with only the following information:
+* What rootframe (time)
+* Direction and magnitude of perturbation
+* Body that was perturbed (foot,pelvis,etc)
+* Scaling information:
+  * Scaling type
+  * Scaling std deviation
+  * Scaling height
+* Parameters for solving IK
+
+Therefore, the user can load and apply perturbations from a file ([#9](https://github.com/osudrl/cassie-trajectory-editor/issues/9)).
+
+
 
 # Contact
 
