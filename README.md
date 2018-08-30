@@ -496,6 +496,8 @@ void node_perform_pert(
     int rootframe);
 ```
 
+[#33](https://github.com/osudrl/cassie-trajectory-editor/pull/33) ([#29](https://github.com/osudrl/cassie-trajectory-editor/issues/29)) will introduce some discrepancies with the following general logic flow:
+
 1. Duplicates the current (traj_info->timeline) timeline
 2. Calculates IK target at rootframe
 3. Performs PDIK at rootframe using the IK target
@@ -525,6 +527,14 @@ Notes:
 May fail if the perturbation is too large.
 Upon failure, the function will notify the user via stdout and revert changes to the timeline.
 
+Changes to qposes:
+
+Qposes are overwritten, and the resulting qposes are **not defined**.
+Instead, the the node module will leave it to the main module set qposes from the new timeline
+
+Changes to timeline:
+
+Yes.
 
 
 # Contact
