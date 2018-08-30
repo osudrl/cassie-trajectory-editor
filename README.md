@@ -536,6 +536,56 @@ Changes to timeline:
 
 Yes.
 
+### node_dropped_jointmove()
+
+Definition:
+```c
+void node_dropped_jointmove(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+```
+
+Equivalent to `node perform pert()` but for jointmove perturbations not positional
+
+### node_dropped_positional()
+
+Definition:
+```c
+void node_dropped_positional(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id);
+```
+
+Called by the main module.
+Calculates and simplifies the call to `node perform pert()`
+
+### node_position_jointmove()
+
+Definition:
+
+```c
+void node_position_jointmove(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    int rootframe,
+    double jointdiff);
+```
+
+1. Sets qposes to rootframe, finds initial joint pos given the joinnum from the selection struct
+2. Foeach frame
+  * Sets qposes to that frame
+  * Calculates filter
+  * Sets the node to that body-relative position
+
+Changes to qposes: Yes, qposes are overwritten and left in an intermediate state
+
+Changes to timeline: No
+
+
+
+
 
 # Contact
 
