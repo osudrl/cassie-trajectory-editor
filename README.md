@@ -520,7 +520,7 @@ Therefore, the user can load and apply perturbations from a file ([#9](https://g
 
 Assumtions:
 
-* Non null references
+Non null references
 
 Notes:
 
