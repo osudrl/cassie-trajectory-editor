@@ -147,7 +147,7 @@ struct _traj_info_
     int64_t time_start;
     int64_t time_frozen;
     bool* paused;
-    char* filename_step_data;
+    char filename_step_data[256];
 
     int target_list_size;
     double playback_time_scale;  

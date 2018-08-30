@@ -55,6 +55,10 @@ void load_pert(traj_info_t* traj_info)
 
         SEL.id_last_non_node_select = body_id;
     }
+    if(!pfile)
+    {
+       fprintf(stderr, "File %s cannot be opened!\n", "last.pert");
+    }
 }
 
 ik_solver_params_t* globparams = NULL;
@@ -161,9 +165,9 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         if(key == GLFW_KEY_LEFT)
             traj_info->time_frozen -= 50000;
         if(key == GLFW_KEY_DOWN)
-            traj_info->time_frozen -= 500000;
+            traj_info->time_frozen -= 1000000;
         if (key == GLFW_KEY_UP)
-            traj_info->time_frozen += 500000;
+            traj_info->time_frozen += 1000000;
     }
     else if (mods & GLFW_MOD_CONTROL)
     {
@@ -187,12 +191,12 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             SEL.frame_offset += 10;
             REVISUALIZE;
         }
-        if( key==GLFW_KEY_PAGE_DOWN)
+        if(!(*(traj_info->paused)) && key==GLFW_KEY_PAGE_DOWN)
         {
             traj_info->playback_time_scale *= 1.2;
             traj_info->time_start += traj_info->time_start*(.2) - traj_time_in_micros()*(.2);
         }
-        else if( key==GLFW_KEY_PAGE_UP)
+        else if(!(*(traj_info->paused)) && key==GLFW_KEY_PAGE_UP)
         {
             traj_info->playback_time_scale *= .8;
             traj_info->time_start -= traj_info->time_start*(.2) - traj_time_in_micros()*(.2);
@@ -214,7 +218,13 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         }
     }
 
-    
+    if(key== GLFW_KEY_C)
+    {
+        if( traj_info->m->opt.disableflags & (mjDSBL_CONTACT))
+            traj_info->m->opt.disableflags &= ~(mjDSBL_CONTACT);
+        else
+            traj_info->m->opt.disableflags |= (mjDSBL_CONTACT);
+    }
     if (key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;
@@ -241,14 +251,6 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
 
      if( mods & GLFW_MOD_CONTROL )
      {
-        // if( key==GLFW_KEY_A )
-        //     SEL.nodesigma *= .95;
-        // else if( key==GLFW_KEY_D)
-        //     SEL.nodesigma *= 1.05;
-        // else if( key==GLFW_KEY_S )
-        //     SEL.nodeheight *= .95;
-        // else if( key==GLFW_KEY_W)
-        //     SEL.nodeheight *= 1.05;
         if( key==GLFW_KEY_P)
             load_pert(traj_info);
         else if( key==GLFW_KEY_R)

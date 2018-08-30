@@ -8,6 +8,12 @@ uint32_t timeline_fill_full_traj_state_array(traj_info_t* traj_info, uint8_t** b
     int readsofar = 0;
 
     fd_in = fopen(traj_info->filename_step_data, "r");
+
+    if(!fd_in)
+    {
+        fprintf(stderr, "File %s cannot be opened!\n", traj_info->filename_step_data);
+        exit(1);
+    }
     
     size = 131072;
     *buf = malloc(size);
@@ -90,15 +96,53 @@ void timeiline_init_from_input_file(traj_info_t* traj_info)
     traj_info->timeline->node_type = NODE_NONE;
 }
 
-void timeline_export_to_file(full_traj_state_t* fulls, int numposes)
+void filename_replace_dots(char* filename)
 {
-   char filename[64];
+    int stack[256];
+    int stackptr = -1;
+    char* strptr;
+
+    strptr = filename;
+    while(strptr && *strptr)
+    {
+        strptr = strchr(strptr, '.');
+        if(strptr)
+        {
+            stack[++stackptr] = strptr - filename;
+            strptr++;
+        }
+    }
+
+    if(stackptr >= 0)
+    {
+        filename[stack[stackptr--]] = '\0';
+    }
+    while(stackptr >= 0)
+    {
+        filename[stack[stackptr--]] = '-';
+    }
+}
+
+void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, int numposes)
+{
+   char filename[256];
+   char infilename[256];
+   char timestring[256];
    time_t now;
    FILE* outfile;
 
    now = time(NULL);
-   strftime(filename, 64, "stepdata-%Y-%m-%d--%H-%M-%S.bin", localtime(&now));
+   strncpy(infilename, traj_info->filename_step_data, 256);
+   filename_replace_dots(infilename);
+   strftime(timestring, 256, "%Y-%m-%d-%H-%M-%S.bin", localtime(&now));
+   snprintf(filename, 256, "%s%s", infilename, timestring);
    outfile = fopen(filename, "w");
+
+   if(!outfile )
+   {
+       fprintf(stderr, "File %s cannot be opened!\n", filename);
+       exit(1);
+   }
 
    // printf("bytes: %d, doubles: %f\n", sizeof(full_traj_state_t), (sizeof(full_traj_state_t)+0.0)/sizeof(double));
    fwrite(fulls, sizeof(full_traj_state_t), numposes, outfile);
@@ -129,7 +173,7 @@ void timeline_export(traj_info_t* traj_info, timeline_t* timeline)
         mju_zero(membuf[i].mvel, 10);
     }
 
-    timeline_export_to_file(membuf, timeline->numposes);
+    timeline_export_to_file(traj_info, membuf, timeline->numposes);
 
     traj_info->d->pstack = savestackptr; 
 }
