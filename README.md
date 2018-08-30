@@ -504,6 +504,7 @@ void node_perform_pert(
 6. Revisualize the nodes
 
 Can perform a perturbtion with only the following information:
+
 * What rootframe (time)
 * Direction and magnitude of perturbation
 * Body that was perturbed (foot,pelvis,etc)
@@ -514,6 +515,15 @@ Can perform a perturbtion with only the following information:
 * Parameters for solving IK
 
 Therefore, the user can load and apply perturbations from a file ([#9](https://github.com/osudrl/cassie-trajectory-editor/issues/9)).
+
+Assumtions:
+
+* Non null references
+
+Notes:
+
+May fail if the perturbation is too large.
+Upon failure, the function will notify the user via stdout and revert changes to the timeline.
 
 
 
