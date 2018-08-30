@@ -127,6 +127,37 @@ void node_calculate_arbitrary_target_using_scale_type(
     traj_info->d->pstack = stack_mark;
 }
 
+void node_gimme_target_friendly_rf_init_body_xpos(
+    traj_info_t* traj_info,
+    timeline_t* timeline,
+    v3_t fixed_body_init_xpos_at_rootframe, 
+    v3_t global_body_init_xpos_at_rootframe,
+    int rootframe,
+    int frame_offset,
+    cassie_body_id_t body_id)
+{
+    double pelvis_start[3];
+    double pelvis_end[3];
+    double pelvis_delta[3];
+    int numdeltas;
+
+    numdeltas = mju_round((frame_offset + 0.0) / (timeline->numnoloopframes + 0.0));
+    mju_copy3(pelvis_start, node_get_body_xpos_by_frame(
+        traj_info,
+        timeline,
+        0,
+        node_get_cassie_id_from_index(1)));
+    mju_copy3(pelvis_end, node_get_body_xpos_by_frame(
+        traj_info,
+        timeline,
+        timeline->numnoloopframes-1,
+        node_get_cassie_id_from_index(1)));
+    mju_sub3(pelvis_delta, pelvis_end, pelvis_start);
+    mju_addScl3(fixed_body_init_xpos_at_rootframe,
+        global_body_init_xpos_at_rootframe,
+        pelvis_delta, 
+        numdeltas);
+}
 
 void node_calclate_global_target_using_transformation_type(
     traj_info_t* traj_info,
@@ -142,6 +173,7 @@ void node_calclate_global_target_using_transformation_type(
     v3_t body_init_xpos;
     int i;
     double temp;
+    double fixed_body_init_xpos_at_rootframe[3];
 
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
@@ -162,18 +194,27 @@ void node_calclate_global_target_using_transformation_type(
         filter = mju_max(temp,filter);        
     }
 
+    node_gimme_target_friendly_rf_init_body_xpos(
+        traj_info,
+        timeline,
+        fixed_body_init_xpos_at_rootframe,
+        global_body_init_xpos_at_rootframe,
+        rootframe,
+        frame_offset,
+        body_id);
+
     body_init_xpos = node_get_body_xpos_by_frame(
         traj_info, 
         timeline, 
         rootframe + frame_offset, 
-        body_id);
+        body_id);    
     
     node_calculate_arbitrary_target_using_scale_type(
         traj_info,
         global_body_target_xpos,
         rootframe_transform_vector,
         body_init_xpos,
-        global_body_init_xpos_at_rootframe,
+        fixed_body_init_xpos_at_rootframe,
         3,
         filter);
 }
