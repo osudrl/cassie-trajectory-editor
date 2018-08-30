@@ -197,7 +197,7 @@ void node_calclate_global_target_using_transformation_type(
     }
 
     frame_offset = timeline_make_frame_safe( rootframe + frame_offset,
-        timeline->numnoloopframes) - rootframe;
+        timeline->numframes) - rootframe;
 
     node_gimme_target_friendly_rf_init_body_xpos(
         traj_info,
