@@ -175,6 +175,8 @@ void node_calclate_global_target_using_transformation_type(
     double temp;
     double fixed_body_init_xpos_at_rootframe[3];
 
+    // printf("fo: %d \n", frame_offset);
+
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
         SEL.nodesigma, 
@@ -193,6 +195,9 @@ void node_calclate_global_target_using_transformation_type(
             SEL.nodeheight);
         filter = mju_max(temp,filter);        
     }
+
+    frame_offset = timeline_make_frame_safe( rootframe + frame_offset,
+        timeline->numnoloopframes) - rootframe;
 
     node_gimme_target_friendly_rf_init_body_xpos(
         traj_info,
