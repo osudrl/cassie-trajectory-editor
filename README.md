@@ -213,6 +213,7 @@ To revert this type checking, all uses of these types can be replaced with unsig
 ### Function Reference
 
 Function | Description | Changes to Qpos | Changes to Timeline
+--- | --- | --- | ---
 node get frame from node body id() | Uses the node's index to calculate it's corresponding frame in the timeline | No | No
 node calc frame lowhigh() | Calculates the first and last frame that the solver should plan to solve | No | No
 node calclate global target using transformation type() | Acts as a sort of wrapper for `node calculate arbitrary target using scale type()`. Given a frame, fills the global target vector for that frame | **YES** (set to rootframe + frame_offset) | No
