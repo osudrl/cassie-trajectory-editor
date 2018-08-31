@@ -198,10 +198,10 @@ void overlay_set_time_and_frame(traj_info_t* traj_info, int frame)
 {
     float result;
 
-    frame = timeline_make_frame_safe(frame, traj_info->timeline->numposes);
+    frame = timeline_make_frame_safe(frame, traj_info->timeline->numframes);
 
     result = frame;
-    result /= traj_info->timeline->numposes;
+    result /= traj_info->timeline->numframes;
     result *= traj_info->timeline->duration;
 
     OV.sec = result;

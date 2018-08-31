@@ -127,6 +127,37 @@ void node_calculate_arbitrary_target_using_scale_type(
     traj_info->d->pstack = stack_mark;
 }
 
+void node_gimme_target_friendly_rf_init_body_xpos(
+    traj_info_t* traj_info,
+    timeline_t* timeline,
+    v3_t fixed_body_init_xpos_at_rootframe, 
+    v3_t global_body_init_xpos_at_rootframe,
+    int rootframe,
+    int frame_offset,
+    cassie_body_id_t body_id)
+{
+    double pelvis_start[3];
+    double pelvis_end[3];
+    double pelvis_delta[3];
+    int numdeltas;
+
+    numdeltas = mju_round((frame_offset + 0.0) / (timeline->numnoloopframes + 0.0));
+    mju_copy3(pelvis_start, node_get_body_xpos_by_frame(
+        traj_info,
+        timeline,
+        0,
+        node_get_cassie_id_from_index(1)));
+    mju_copy3(pelvis_end, node_get_body_xpos_by_frame(
+        traj_info,
+        timeline,
+        timeline->numnoloopframes-1,
+        node_get_cassie_id_from_index(1)));
+    mju_sub3(pelvis_delta, pelvis_end, pelvis_start);
+    mju_addScl3(fixed_body_init_xpos_at_rootframe,
+        global_body_init_xpos_at_rootframe,
+        pelvis_delta, 
+        numdeltas);
+}
 
 void node_calclate_global_target_using_transformation_type(
     traj_info_t* traj_info,
@@ -140,23 +171,55 @@ void node_calclate_global_target_using_transformation_type(
 {
     double filter;
     v3_t body_init_xpos;
+    int i;
+    double temp;
+    double fixed_body_init_xpos_at_rootframe[3];
+
+    // printf("fo: %d \n", frame_offset);
 
     filter = node_calculate_filter_from_frame_offset(
         frame_offset, 
         SEL.nodesigma, 
         SEL.nodeheight);
+
+    for(i = 0; i * traj_info->timeline->numnoloopframes < traj_info->timeline->numframes; i++)
+    {
+        temp = node_calculate_filter_from_frame_offset(
+            frame_offset + i * traj_info->timeline->numnoloopframes,
+            SEL.nodesigma, 
+            SEL.nodeheight);
+        filter = mju_max(temp,filter);
+        temp = node_calculate_filter_from_frame_offset(
+            frame_offset - i * traj_info->timeline->numnoloopframes,
+            SEL.nodesigma, 
+            SEL.nodeheight);
+        filter = mju_max(temp,filter);        
+    }
+
+    frame_offset = timeline_make_frame_safe( rootframe + frame_offset,
+        timeline->numframes) - rootframe;
+
+    node_gimme_target_friendly_rf_init_body_xpos(
+        traj_info,
+        timeline,
+        fixed_body_init_xpos_at_rootframe,
+        global_body_init_xpos_at_rootframe,
+        rootframe,
+        frame_offset,
+        body_id);
+
     body_init_xpos = node_get_body_xpos_by_frame(
         traj_info, 
         timeline, 
         rootframe + frame_offset, 
-        body_id);
+        body_id);    
     
     node_calculate_arbitrary_target_using_scale_type(
         traj_info,
         global_body_target_xpos,
         rootframe_transform_vector,
         body_init_xpos,
-        global_body_init_xpos_at_rootframe,
+        fixed_body_init_xpos_at_rootframe,
         3,
         filter);
 }
@@ -169,11 +232,11 @@ int node_get_frame_from_node_body_id(traj_info_t* traj_info,
     int frame;
     offset = SEL.frame_offset;
     while(offset < 0)
-        offset += timeline->numposes;
-    offset = SEL.frame_offset % timeline->numposes;
-    frame = (timeline->numposes / NODECOUNT) * (node_id.id - 26); // or maybe 28
+        offset += timeline->numframes;
+    offset = SEL.frame_offset % timeline->numframes;
+    frame = (timeline->numframes / NODECOUNT) * (node_id.id - 26); // or maybe 28
     frame += offset;
-    frame %= timeline->numposes;
+    frame %= timeline->numframes;
     return frame;
 }
 
@@ -229,7 +292,7 @@ void node_refine_pert(
     timeline_new = timeline_duplicate(timeline_old);
 
     init_time = traj_calculate_runtime_micros(traj_info);
-    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numframes);
     for(i = 0; i < traj_info->target_list_size; i++)
     {
         frame = rootframe + traj_info->target_list[i].frame_offset;
@@ -269,7 +332,7 @@ void node_calc_frame_lowhigh(
     int* low_frame,
     int* high_frame,
     int rootframe,
-    int numposes,
+    int numframes,
     traj_info_t* traj_info)
 {
     int i;
@@ -288,7 +351,7 @@ void node_calc_frame_lowhigh(
     if(!SEL.loop_enabled)
     {
         *low_frame = mju_max(0, rootframe - i);
-        *high_frame = mju_min(numposes-1, rootframe + i);
+        *high_frame = mju_min(numframes-1, rootframe + i);
     }
     else
     {
@@ -318,27 +381,28 @@ void node_perform_pert(
     int loopcount;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
+    timeline_t* timeline_final;
     bool failed;
 
     failed = 0;
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_duplicate(timeline_old);
-    rootframe = timeline_make_frame_safe(rootframe, timeline_old->numposes);
+    timeline_new = timeline_noloop(timeline_old);
+    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numframes);
     node_calc_frame_lowhigh(
         &low_frame,
         &high_frame,
         rootframe,
-        timeline_old->numposes,
+        timeline_new->numframes,
         traj_info);
 
     init_time = traj_calculate_runtime_micros(traj_info);
     mju_copy3(
         global_body_init_xpos_at_rootframe,
-        node_get_body_xpos_curr(traj_info, body_id));    
+        node_get_body_xpos_by_frame(traj_info, timeline_new, rootframe, body_id));
 
     node_calclate_global_target_using_transformation_type(
         traj_info,
-        timeline_old,
+        timeline_new,
         global_body_init_xpos_at_rootframe,
         global_body_target_xpos, 
         rootframe_transform_vector,
@@ -387,7 +451,7 @@ void node_perform_pert(
         {
         node_calclate_global_target_using_transformation_type(
             traj_info,
-            timeline_old,
+            timeline_new,
             global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
@@ -416,7 +480,7 @@ void node_perform_pert(
 
         node_calclate_global_target_using_transformation_type(
             traj_info,
-            timeline_old,
+            timeline_new,
             global_body_init_xpos_at_rootframe,
             global_body_target_xpos, 
             rootframe_transform_vector,
@@ -443,7 +507,7 @@ void node_perform_pert(
             &ik_iter_total);
         }
 
-        if(frame_offset > 1 && ik_iter_total > (.95 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
+        if(frame_offset > 1 && ik_iter_total > (.6 * IK_STEP_CUTOFF * (2*frame_offset + 1)))
         {
             printf("TOO HARD. ABORTING. \n");
             failed = 1;
@@ -460,6 +524,11 @@ void node_perform_pert(
             (iktimedelta/1000000.0),
             1000.0*params->ik_accuracy_cutoff);
 
+        timeline_final = timeline_loop(
+            timeline_new,
+            mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
+        timeline_free(timeline_new);
+        timeline_new = timeline_final;
         timeline_safe_link(timeline_new, timeline_old);
         traj_info->timeline = timeline_new;
         timeline_new->node_type = NODE_POSITIONAL;
@@ -486,8 +555,12 @@ void node_dropped_jointmove(
     double rootframe_init;
     double filter;
     double jointdiff;
+    double temp;
+    int i;
+    int frame_offset;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
+    timeline_t* timeline_final;
 
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
@@ -495,7 +568,7 @@ void node_dropped_jointmove(
     rootframe = node_get_frame_from_node_body_id(traj_info,
         timeline_new,
         node_id);
-
+    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numnoloopframes);
     timeline_set_qposes_to_pose_frame(
         traj_info,
         timeline_old,
@@ -507,12 +580,27 @@ void node_dropped_jointmove(
     jointdiff = node_caluclate_jointdiff(traj_info,
         node_get_body_xpos_curr(traj_info, body_id));
 
-    for (frame = 0; frame < timeline_new->numposes; frame++)
+    for (frame = 0; frame < timeline_new->numnoloopframes; frame++)
     {
+        frame_offset = frame - rootframe;
         filter = node_calculate_filter_from_frame_offset(
-            frame - rootframe, 
+            frame_offset, 
             SEL.nodesigma, 
             SEL.nodeheight);
+
+        for(i = 0; SEL.loop_enabled && i * traj_info->timeline->numnoloopframes <= traj_info->timeline->numframes; i++)
+        {
+            temp = node_calculate_filter_from_frame_offset(
+                frame_offset + i * traj_info->timeline->numnoloopframes,
+                SEL.nodesigma, 
+                SEL.nodeheight);
+            filter = mju_max(temp,filter);
+            temp = node_calculate_filter_from_frame_offset(
+                frame_offset - i * traj_info->timeline->numnoloopframes,
+                SEL.nodesigma, 
+                SEL.nodeheight);
+            filter = mju_max(temp,filter);        
+        }
 
         node_calculate_arbitrary_target_using_scale_type(
             traj_info,
@@ -524,8 +612,14 @@ void node_dropped_jointmove(
             filter);
     }
 
-    timeline_safe_link(timeline_new, timeline_old);
+    // timeline_final = timeline_loop(
+    //            timeline_new,
+    //            mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
+    // timeline_free(timeline_new);
+     // timeline_new = timeline_final;
+     timeline_safe_link(timeline_new, timeline_old);
     traj_info->timeline = timeline_new;
+     timeline_new->node_type = NODE_JOINTMOVE;
 
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
@@ -708,23 +802,23 @@ void node_compare_looped_filters(
 
     if(SEL.loop_enabled && 
         filter < node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            oldcurrframe - rootframe - traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight))
     {
-        *currframe = oldcurrframe - traj_info->timeline->numposes;
+        *currframe = oldcurrframe - traj_info->timeline->numframes;
         filter = node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe - traj_info->timeline->numposes,
+            oldcurrframe - rootframe - traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight);
     }
     if(SEL.loop_enabled &&
         filter < node_calculate_filter_from_frame_offset(
-            oldcurrframe - rootframe + traj_info->timeline->numposes,
+            oldcurrframe - rootframe + traj_info->timeline->numframes,
             SEL.nodesigma,
             SEL.nodeheight))
     {
-        *currframe = oldcurrframe + traj_info->timeline->numposes;
+        *currframe = oldcurrframe + traj_info->timeline->numframes;
     }
 
     *frame_offset = *currframe - rootframe;

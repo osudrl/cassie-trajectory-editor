@@ -168,6 +168,33 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             traj_info->time_frozen -= 1000000;
         if (key == GLFW_KEY_UP)
             traj_info->time_frozen += 1000000;
+        if( key==GLFW_KEY_PAGE_UP)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
+        else if( key==GLFW_KEY_PAGE_DOWN)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
+    }
+    else if (!(*traj_info->paused) && !(mods & GLFW_MOD_CONTROL))
+    {
+        if( key==GLFW_KEY_PAGE_UP)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
+        else if( key==GLFW_KEY_PAGE_DOWN)
+        {
+            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
+            if(SEL.node_type == NODE_JOINTID)
+                REVISUALIZE;
+        }
     }
     else if (mods & GLFW_MOD_CONTROL)
     {
@@ -200,21 +227,6 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         {
             traj_info->playback_time_scale *= .8;
             traj_info->time_start -= traj_info->time_start*(.2) - traj_time_in_micros()*(.2);
-        }
-    }
-    else
-    {
-        if( key==GLFW_KEY_PAGE_UP)
-        {
-            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index + 1) % SEL.joint_cycle_list_size;
-            if(SEL.node_type == NODE_JOINTID)
-                REVISUALIZE;
-        }
-        else if( key==GLFW_KEY_PAGE_DOWN)
-        {
-            SEL.joint_cycle_list_index = (SEL.joint_cycle_list_index - 1 + SEL.joint_cycle_list_size) % SEL.joint_cycle_list_size;
-            if(SEL.node_type == NODE_JOINTID)
-                REVISUALIZE;
         }
     }
 
