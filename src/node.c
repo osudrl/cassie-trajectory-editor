@@ -563,14 +563,12 @@ void node_dropped_jointmove(
     timeline_t* timeline_final;
 
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_noloop(timeline_old);
+    timeline_new = timeline_duplicate(timeline_old);
 
     rootframe = node_get_frame_from_node_body_id(traj_info,
         timeline_new,
         node_id);
-
-    // rootframe = timeline_make_frame_safe(rootframe, timeline_new->numnoloopframes);
-
+    rootframe = timeline_make_frame_safe(rootframe, timeline_new->numnoloopframes);
     timeline_set_qposes_to_pose_frame(
         traj_info,
         timeline_old,
@@ -581,8 +579,6 @@ void node_dropped_jointmove(
     mj_forward(traj_info->m, traj_info->d);
     jointdiff = node_caluclate_jointdiff(traj_info,
         node_get_body_xpos_curr(traj_info, body_id));
-
-
 
     for (frame = 0; frame < timeline_new->numnoloopframes; frame++)
     {
@@ -616,11 +612,11 @@ void node_dropped_jointmove(
             filter);
     }
 
-    timeline_final = timeline_loop(
-               timeline_new,
-               mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
-    timeline_free(timeline_new);
-     timeline_new = timeline_final;
+    // timeline_final = timeline_loop(
+    //            timeline_new,
+    //            mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
+    // timeline_free(timeline_new);
+     // timeline_new = timeline_final;
      timeline_safe_link(timeline_new, timeline_old);
     traj_info->timeline = timeline_new;
      timeline_new->node_type = NODE_JOINTMOVE;
