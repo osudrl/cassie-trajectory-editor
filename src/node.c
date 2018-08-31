@@ -555,15 +555,21 @@ void node_dropped_jointmove(
     double rootframe_init;
     double filter;
     double jointdiff;
+    double temp;
+    int i;
+    int frame_offset;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
+    timeline_t* timeline_final;
 
     timeline_old = traj_info->timeline;
-    timeline_new = timeline_duplicate(timeline_old);
+    timeline_new = timeline_noloop(timeline_old);
 
     rootframe = node_get_frame_from_node_body_id(traj_info,
         timeline_new,
         node_id);
+
+    // rootframe = timeline_make_frame_safe(rootframe, timeline_new->numnoloopframes);
 
     timeline_set_qposes_to_pose_frame(
         traj_info,
@@ -576,12 +582,29 @@ void node_dropped_jointmove(
     jointdiff = node_caluclate_jointdiff(traj_info,
         node_get_body_xpos_curr(traj_info, body_id));
 
-    for (frame = 0; frame < timeline_new->numframes; frame++)
+
+
+    for (frame = 0; frame < timeline_new->numnoloopframes; frame++)
     {
+        frame_offset = frame - rootframe;
         filter = node_calculate_filter_from_frame_offset(
-            frame - rootframe, 
+            frame_offset, 
             SEL.nodesigma, 
             SEL.nodeheight);
+
+        for(i = 0; SEL.loop_enabled && i * traj_info->timeline->numnoloopframes <= traj_info->timeline->numframes; i++)
+        {
+            temp = node_calculate_filter_from_frame_offset(
+                frame_offset + i * traj_info->timeline->numnoloopframes,
+                SEL.nodesigma, 
+                SEL.nodeheight);
+            filter = mju_max(temp,filter);
+            temp = node_calculate_filter_from_frame_offset(
+                frame_offset - i * traj_info->timeline->numnoloopframes,
+                SEL.nodesigma, 
+                SEL.nodeheight);
+            filter = mju_max(temp,filter);        
+        }
 
         node_calculate_arbitrary_target_using_scale_type(
             traj_info,
@@ -593,8 +616,14 @@ void node_dropped_jointmove(
             filter);
     }
 
-    timeline_safe_link(timeline_new, timeline_old);
+    timeline_final = timeline_loop(
+               timeline_new,
+               mju_round(timeline_old->numframes/timeline_old->numnoloopframes));
+    timeline_free(timeline_new);
+     timeline_new = timeline_final;
+     timeline_safe_link(timeline_new, timeline_old);
     traj_info->timeline = timeline_new;
+     timeline_new->node_type = NODE_JOINTMOVE;
 
     node_position_initial_using_cassie_body(traj_info,  body_id);
 }
