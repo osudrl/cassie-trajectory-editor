@@ -159,7 +159,7 @@ Type / Name | Description | Usages
 **int** nodecount | Total number of nodes displayed along the trajectory | Used by nearly all the functions which transform nodes. May still need a bug fix ([#4](https://github.com/osudrl/cassie-trajectory-editor/issues/4)) or may be changed completely ([#10](https://github.com/osudrl/cassie-trajectory-editor/issues/10)/[#1](https://github.com/osudrl/cassie-trajectory-editor/issues/1))
 **double** nodesigma | The standard deviation of the Gaussian filtering used for transformations | Used in node functions which apply transformation or scale nodes visually while a node is being dragged
 **double** nodeheight | Technically the height scaling of the Gaussian filtering | Used as an argument for `node calculate filter from frame offset()` to change the shape of the nearby nodes' transformations
-**int** jointnum | The specific joint being transformed in the jointid/jointnum selection modes | Used in all the node jointmove functions to display / apply transformations for a specific joint
+~**int** jointnum~ | See [#25](https://github.com/osudrl/cassie-trajectory-editor/issues/25) ~The specific joint being transformed in the jointid/jointnum selection modes~ | ~Used in all the node jointmove functions to display / apply transformations for a specific joint~
 **double[3]** localpos | A copy of the localpos vector in the [mjvPerturb struct](http://www.mujoco.org/book/reference.html#mjvPerturb), copied when the user has clicked on a Cassie body | Used to display nodes going through the selection point on the body in the jointid and jointnum selection types; we care about where the user clicked on the Cassie body, even when a node is selected and this pert->localpos value is overwritten by this new selection
 **double[3]** joint move ref | Saves the mjvPerturb refpos while the nodes are being dragged | Saved in `node scale visually jointmove()` so that when the node is dropped, `node calculate jointdiff()` can know where the mouse was when the node was dropped (using the node's position is unsatisfactory because the nodes do not track directly with the mouse in this mode)
 
@@ -209,6 +209,37 @@ Functions with v3_t as a parameter will expect to be able to index the array at 
 Yet wrapping these ints in a struct provides strong type checking, preventing the functions which use these types from mistakenly interchanging these two different types.
 Furthermore, the function prototypes in the header are able to clearly communicate what kind of body (cassie or node) is needed for the calculations.
 To revert this type checking, all uses of these types can be replaced with unsigned ints, and the functions for wrapping the ids can be deleted.
+
+### Function Reference
+
+Function | Description | Changes to d->qpos | Changes to any Timeline
+--- | --- | --- | --- 
+node get frame from node body id() | Uses the node's index to calculate it's corresponding frame in the timeline | No | No
+node calc frame lowhigh() | Calculates the first and last frame that the solver should plan to solve | No | No
+node calclate global target using transformation type() | Acts as a sort of wrapper for `node calculate arbitrary target using scale type()`. Given a frame, fills the global target vector for that frame | **YES** | No
+node calculate arbitrary target using scale type() | Scales a target vector given the initial perturbation and other scaling information | No | No
+node calculate filter from frame offset() | Uses Gaussian filtering to return a scale factor given a frames a distance from the root of the perturbation | No | No
+node calculate rootframe transformation vector() | Given a node that was dropped, calculate the root perturbation that should be applied to the trajectory | **YES**  | No
+node caluclate jointdiff() | Returns a difference in joint value based on the Z-translation of the node | No | No
+node compare looped filters() | Decides what rootframe and frame_offset should be used for scaling a perturbation when looping is enabled | No | No
+node dropped jointmove() | Applies a jointmove transformation when a node is dropped | **YES\*** | **YES**
+node dropped positional() | Applies a positional transformation when a node is dropped | **YES\*** | **YES**
+node get body id from node index() | Returns a node_body_id given the index (starting at 0) of a node | No | No
+node get body id from real body id() | Returns a node_body_id given the body id (starting at 26) of a node | No | No
+node get body xpos by frame() | Returns a vector with the 3d coordinates of a body at the specified frame | **YES\*\*** | No
+node get body xpos curr() | Returns a vector with the current xpos coordinates of body | No | No
+node get cassie id from index() | Returns a cassie_body_id given the body id (starting at 0) of a Cassie body | No | No
+node get qpos by node id() | Returns the vector of the 3d coordinates of a specified node | No | No
+node perform ik on xpos transformation() | Calls the IK solver in ik.c for the given frame and target | **YES\*** | **YES**
+node perform pert() | Performs a scaled, positional transformation | **YES\*** | **YES**
+<!-- node position initial positional() | 
+node position initial using cassie body() | 
+node position jointid() | 
+node position jointmove() | 
+node refine pert() | 
+node scale visually jointmove() | 
+node scale visually positional() |   -->
+
 
 
 ### node_get_body_id_from_node_index()
@@ -483,6 +514,108 @@ Assumptions:
 Changes to qposes: **YES: qposes are overwritten** with the qposes from the timeline at the calculated rootframe (calculated using the node_body)
 
 Changes to timeline: No
+
+### node_perform_pert()
+
+Definition:
+```c
+void node_perform_pert(
+    traj_info_t* traj_info,
+    ik_solver_params_t* params,
+    v3_t rootframe_transform_vector,
+    cassie_body_id_t body_id,
+    int rootframe);
+```
+
+[#33](https://github.com/osudrl/cassie-trajectory-editor/pull/33) ([#29](https://github.com/osudrl/cassie-trajectory-editor/issues/29)) will introduce some discrepancies with the following general logic flow:
+
+1. Duplicates the current (traj_info->timeline) timeline
+2. Calculates IK target at rootframe
+3. Performs PDIK at rootframe using the IK target
+4. Calculate, scale, and use IK targets for nearby frames
+5. New timeline becomes current timeline
+6. Revisualize the nodes
+
+Can perform a perturbtion with only the following information:
+
+* What rootframe (time)
+* Direction and magnitude of perturbation
+* Body that was perturbed (foot,pelvis,etc)
+* Scaling information:
+  * Scaling type
+  * Scaling std deviation
+  * Scaling height
+* Parameters for solving IK
+
+Therefore, the user can load and apply perturbations from a file ([#9](https://github.com/osudrl/cassie-trajectory-editor/issues/9)).
+
+Assumtions:
+
+Non null references
+
+Notes:
+
+May fail if the perturbation is too large.
+Upon failure, the function will notify the user via stdout and revert changes to the timeline.
+
+Changes to qposes:
+
+Qposes are overwritten, and the resulting qposes are **not defined**.
+Instead, the the node module will leave it to the main module set qposes from the new timeline
+
+Changes to timeline:
+
+Yes.
+
+### node_dropped_jointmove()
+
+Definition:
+```c
+void node_dropped_jointmove(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id)
+```
+
+Equivalent to `node perform pert()` but for jointmove perturbations not positional
+
+### node_dropped_positional()
+
+Definition:
+```c
+void node_dropped_positional(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    node_body_id_t node_id);
+```
+
+Called by the main module.
+Calculates and simplifies the call to `node perform pert()`
+
+### node_position_jointmove()
+
+Definition:
+
+```c
+void node_position_jointmove(
+    traj_info_t* traj_info,
+    cassie_body_id_t body_id,
+    int rootframe,
+    double jointdiff);
+```
+
+1. Sets qposes to rootframe, finds initial joint pos given the joinnum from the selection struct
+2. Foeach frame
+  * Sets qposes to that frame
+  * Calculates filter
+  * Sets the node to that body-relative position
+
+Changes to qposes: Yes, qposes are overwritten and left in an intermediate state
+
+Changes to timeline: No
+
+
+
 
 
 # Contact
