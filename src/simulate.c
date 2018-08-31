@@ -156,6 +156,7 @@ void reset_traj_info()
     traj_info.ik.m = m;
     traj_info.ik.d = d;
     traj_info.ik.doik = 0;
+    traj_info.visually_loop_count = 1;
     strcpy(traj_info.filename_step_data,FILENAME_STEP_DATA);
     traj_info.playback_time_scale = 10000;
     traj_info.selection.nodesigma = 100;

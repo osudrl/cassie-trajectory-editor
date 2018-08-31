@@ -11,7 +11,6 @@
 #define XMLNODECOUNT 50
 #define NODECOUNT (traj_info->selection.nodecount)
 #define FILENAME_STEP_DATA "stepdata.bin" //used in simulate.c : reset_traj_info()
-#define LOOP_TRAJECTORY 2
 #define IK_STEP_CUTOFF 1500
 
 #define DECOR_BUF_SIZE 400
@@ -30,11 +29,8 @@ enum node_type_e
     NODE_JOINTMOVE
 };
 
-#if (LOOP_TRAJECTORY == 1)
+
 #define NODE_TYPE_E_COUNT 3
-#else
-#define NODE_TYPE_E_COUNT 1
-#endif
 
 enum scale_type_e
 {
@@ -150,7 +146,8 @@ struct _traj_info_
     selection_t selection;
     info_overlay_t info_overlay;
     timeline_t* timeline;
-    
+
+    int visually_loop_count;
     int64_t time_start;
     int64_t time_frozen;
     bool* paused;
