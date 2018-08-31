@@ -825,9 +825,7 @@ void node_scale_visually_positional(
         body_id,
         node_id);
 
-
     rootframe = node_get_frame_from_node_body_id(traj_info,
-        nodedocs
         traj_info->timeline,
         node_id);
     mju_copy3(global_body_init_xpos_at_rootframe,
