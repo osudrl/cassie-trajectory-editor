@@ -197,6 +197,7 @@ void reset_traj_info()
     traj_info.target_list_size = -1;
 
     showinfo = 1;
+    showhelp = 1;
 
     for( int i=0; i<mjNRNDFLAG; i++ )
         if ( strcmp(mjRNDSTRING[i][0], "Shadow") == 0)
@@ -979,7 +980,7 @@ int main(int argc, const char** argv)
     {
         parse_command_line(argc, argv);
     }
-    
+
     // print version, check compatibility
     printf("MuJoCo Pro library version %.2lf\n", 0.01*mj_version());
     if( mjVERSION_HEADER!=mj_version() )
