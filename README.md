@@ -16,11 +16,16 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 2. Add a [MuJoCo key](https://www.roboti.us/license.html) to the repository root directory and name it mjkey.txt
 3. Install `libglfw3-dev` and `wget`
 4. `make`
-5. `./traj <trajectory file name>`
+5. `./traj [-l loopcount [trajectory_filename]`
 
-## Known Bug
+## Known Issue: Loopcount
 
-The user may choose to turn on 
+Looping a trajectory one or more times may help the user edit more effieciently.
+
+Loopcount = 1 | Loopcount = 2
+--- | ---
+`./traj` | `./traj -l 2`
+![lc1](https://i.imgur.com/YWtxRSI.png) | ![lc2](https://i.imgur.com/UWZL2YB.png)
 
 ## Compilation: Troubleshooting
 
