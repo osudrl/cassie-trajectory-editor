@@ -974,6 +974,12 @@ void control(const mjModel* m, mjData* d)
 
 int main(int argc, const char** argv)
 {
+
+    if(argc > 1)
+    {
+        parse_command_line(argc, argv);
+    }
+    
     // print version, check compatibility
     printf("MuJoCo Pro library version %.2lf\n", 0.01*mj_version());
     if( mjVERSION_HEADER!=mj_version() )
@@ -1034,10 +1040,6 @@ int main(int argc, const char** argv)
 
     // load model if filename given as argument
     loadmodel(window, "model/cassie.xml");
-    if(argc > 1)
-    {
-        parse_command_line(argc, argv);
-    }
 
     // main loop
     while( !glfwWindowShouldClose(window) )

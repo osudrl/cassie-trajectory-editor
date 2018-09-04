@@ -16,7 +16,7 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 2. Add a [MuJoCo key](https://www.roboti.us/license.html) to the repository root directory and name it mjkey.txt
 3. Install `libglfw3-dev` and `wget`
 4. `make`
-5. `./traj [-l loopcount [trajectory_filename]`
+5. `./traj [-l loopcount#] [trajectory_filename]`
 
 ## Loopcount Flag
 
