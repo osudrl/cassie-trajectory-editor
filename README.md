@@ -18,21 +18,21 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 4. `make`
 5. `./traj [-l loopcount [trajectory_filename]`
 
-## Known Issue: Loopcount
+## Loopcount Flag
 
-Looping a trajectory one or more times may help the user edit more efficiently.
+Showing more than one cycle of a trajectory may help the user edit more efficiently.
 
 Loopcount = 1 | Loopcount = 2
 --- | ---
 `./traj` | `./traj -l 2`
 ![lc1](https://i.imgur.com/YWtxRSI.png) | ![lc2](https://i.imgur.com/UWZL2YB.png)
 
-In both modes, there is only one cycle of the trajectory when exported.
+In both modes, there is **only one cycle of the trajectory when exported**.
 Increasing loopcount above 1 can make editing more intuitive and natural.
 However, there are a few remaining bugs ([#34](https://github.com/osudrl/cassie-trajectory-editor/issues/34) and [#35](https://github.com/osudrl/cassie-trajectory-editor/issues/35)) with the editing tools when the loopcount is greater than 1.
 
-By default, loopcount is set to 1, where the tool's behavior is stable.
-Yet for certain types of trajectories, the user may find that a looped view is more intuitive and easy to use, and can choose to start the tool with a looped view with the `-l` flag.
+By **default**, loopcount is **set to 1**, where the tool's behavior is **stable**.
+Yet for certain types of trajectories, the user may find that a multi-cycle view is more intuitive and easy to use, and can choose to edit while displaying trajectory cycles with the `-l` flag.
 
 ## Compilation: Troubleshooting
 
