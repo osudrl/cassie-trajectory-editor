@@ -12,6 +12,8 @@ This tool was developed [Kevin Kellar](https://github.com/kkevlar) and with the 
 
 ## Getting Started: Compilation / Dependencies
 
+This tool was developed and tested on Ubuntu 18.
+
 1. Clone
 2. Add a [MuJoCo key](https://www.roboti.us/license.html) to the repository root directory and name it mjkey.txt
 3. Install `libglfw3-dev` and `wget`
