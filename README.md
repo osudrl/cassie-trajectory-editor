@@ -24,7 +24,7 @@ Looping a trajectory one or more times may help the user edit more effieciently.
 
 Loopcount = 1 | Loopcount = 2
 --- | ---
-`./traj` | `./traj -l 2`
+`<pre>$</pre> ./traj` | `<pre>$</pre> ./traj -l 2`
 ![lc1](https://i.imgur.com/YWtxRSI.png) | ![lc2](https://i.imgur.com/UWZL2YB.png)
 
 ## Compilation: Troubleshooting
