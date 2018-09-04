@@ -208,6 +208,71 @@ void reset_traj_info()
     firsttrajinforeset++;
 }
 
+char* validate_command_line(int argc, const char** argv, int* dash_index, long* loopcount)
+{
+    int i;
+    char* s;
+
+    *dash_index = -1;
+    for(i = 0; i < argc; i++)
+    {
+        if(argv[i] && argv[i][0] == '-')
+        {
+            if(*dash_index < 0)
+                *dash_index = i;
+            else
+                return "only zero or one arguments may have a dash";
+        }
+    }
+
+    if (*dash_index < 0)
+        return NULL;
+
+    if(*dash_index + 1 >= argc || !(argv[*dash_index + 1]))
+        return "the last argument cannot have a dash";
+
+    *loopcount = strtol(argv[*dash_index + 1], &s, 10);
+    if(argv[*dash_index + 1] == s) 
+        return "the argument following the -l flag must be a decimal number";
+
+    return NULL;
+}
+
+void parse_command_line(int argc, const char** argv)
+{
+    int dash_index;
+    long loopcount;
+    char* errmsg;
+    int filename_index = 0;
+    int i;
+
+    errmsg = validate_command_line(argc, argv, &dash_index, &loopcount);
+
+    if(errmsg)
+    {
+        fprintf(stderr, "Command Line Parse Error: %s\n", errmsg);
+        exit(1);
+    }
+
+    if(dash_index > 0 && loopcount > 0)
+        traj_info.visually_loop_count = loopcount;
+    else
+        traj_info.visually_loop_count = 1;
+
+    for(i = 1; i < argc; i++)
+    {
+        if(dash_index > 0 && (
+            i == dash_index || i == dash_index + 1))
+            continue;
+        filename_index = i;
+    }
+
+    if (filename_index > 0)
+        strcpy(traj_info.filename_step_data,argv[filename_index]);
+    else
+        strcpy(traj_info.filename_step_data,FILENAME_STEP_DATA);
+}
+
 
 //-------------------------------- profiler and sensor ----------------------------------
 
@@ -970,7 +1035,9 @@ int main(int argc, const char** argv)
     // load model if filename given as argument
     loadmodel(window, "model/cassie.xml");
     if(argc > 1)
-        strcpy(traj_info.filename_step_data,argv[1]);
+    {
+        parse_command_line(argc, argv);
+    }
 
     // main loop
     while( !glfwWindowShouldClose(window) )

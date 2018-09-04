@@ -560,7 +560,6 @@ void node_dropped_jointmove(
     int frame_offset;
     timeline_t* timeline_old;
     timeline_t* timeline_new;
-    timeline_t* timeline_final;
 
     timeline_old = traj_info->timeline;
     timeline_new = timeline_duplicate(timeline_old);
