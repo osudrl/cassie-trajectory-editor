@@ -27,7 +27,7 @@ Loopcount = 1 | Loopcount = 2
 `./traj` | `./traj -l 2`
 ![lc1](https://i.imgur.com/YWtxRSI.png) | ![lc2](https://i.imgur.com/UWZL2YB.png)
 
-Even though the trajectory is looped visually on when loopcount is 2, there is only one true copy of the trajectory.
+In both modes, there is only one cycle of the trajectory when exported.
 Increasing loopcount above 1 can make editing more intuitive and natural.
 However, there are a few remaining bugs ([#34](https://github.com/osudrl/cassie-trajectory-editor/issues/34) and [#35](https://github.com/osudrl/cassie-trajectory-editor/issues/35)) with the editing tools when the loopcount is greater than 1.
 
