@@ -115,7 +115,11 @@ link to presentation: [here](https://docs.google.com/presentation/d/115BN4p42PcM
 
 [crouch no nodes](https://user-images.githubusercontent.com/10334426/44609652-72ae3380-a7ad-11e8-82da-ce38924ba7b5.png)
 
+[looping and wraparound issues](https://imgur.com/a/HpIVZe1)
 
+[loopcount 1](https://i.imgur.com/YWtxRSI.png)
 
+[loopcount 2](https://i.imgur.com/UWZL2YB.png)
 
+[simple small jump](https://i.imgur.com/TFTHFed.gif)
 
