@@ -254,8 +254,7 @@ node perform pert() | Performs a scaled, positional transformation | **YES\*** |
 node position initial positional() | Moves the nodes based on the body's position throughout the timeline | **YES\*** | No
 node position initial using cassie body() | Calls `node position initial positional()`, `node position jointmove()`, or `node position jointid()` based on the current tool | **YES\*\*** | No
 node position jointid() | Displays extreme movement of a single joint for a single pose to allow the user to identify which joint is selected | No | No
-node position jointmove() | Displays a transformation of a single joint, scaled across a number of frames | **YES\*** 
-| No
+node position jointmove() | Displays a transformation of a single joint, scaled across a number of frames | **YES\***  | No
 node refine pert() | Refines the last perturbation to improve IK target accuracy (triggered by Ctrl+R) | **YES\*** | No
 node scale visually jointmove() | Calls `node position jointmove()` after calculating a transformation | **YES\*\*** | No
 node scale visually positional() | Shows a preview of the positional transformation while the user drags the nodes | **YES\*** | No
