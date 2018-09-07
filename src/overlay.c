@@ -157,11 +157,11 @@ char* overlay_get_cassie_body_string(int body)
 char* overlay_get_selection_type_name(traj_info_t* traj_info)
 {
     if(SEL.node_type == NODE_POSITIONAL)
-        return "Positional";
+        return "Positional\nDrag and drop\nnodes to perturb\nand solve IK";
     else if(SEL.node_type == NODE_JOINTID)
-        return "Joint Identification";
+        return "Joint Identification\nUse PgUp/Dn to\nmake a joint\nselection";
     else if(SEL.node_type == NODE_JOINTMOVE)
-        return "Single-Joint Tuning";
+        return "Single-Joint Tuning\nDrag nodes up/down\nto modify the\nseleced joint values";
     else
         return NULL;
 }
@@ -180,7 +180,7 @@ void overlay_fill_selection_status_buf(char* buf, traj_info_t* traj_info)
 char* overlay_get_selection_string()
 {
    return 
-"Tool (Enter)\n\
+"Tool (Enter)\n\n\n\n\
 BodId (LMouse)\n\
 BodName\n\
 JId (PgUpDn)\n\

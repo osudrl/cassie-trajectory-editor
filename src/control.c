@@ -133,6 +133,7 @@ void control_collapse_timeline(traj_info_t* traj_info)
 
     timeline_safe_link(collapsed, traj_info->timeline);
     traj_info->timeline = collapsed;
+    REVISUALIZE;
 }
 
 // void transform_qpos(traj_info_t* traj_info, double sign)
