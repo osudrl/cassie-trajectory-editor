@@ -124,6 +124,17 @@ void control_expand_pose(traj_info_t* traj_info)
     traj_info->timeline = expanded;
 }
 
+void control_collapse_timeline(traj_info_t* traj_info)
+{
+    timeline_t* collapsed;
+
+    collapsed = timeline_duplicate(traj_info->timeline);
+    timeline_collapse(collapsed);
+
+    timeline_safe_link(collapsed, traj_info->timeline);
+    traj_info->timeline = collapsed;
+}
+
 // void transform_qpos(traj_info_t* traj_info, double sign)
 // {
 //     timeline_t* modified;
@@ -237,7 +248,7 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
         else
             traj_info->m->opt.disableflags |= (mjDSBL_CONTACT);
     }
-    if (key == GLFW_KEY_MINUS)
+    if (!(mods & GLFW_MOD_CONTROL) && key == GLFW_KEY_MINUS)
     {
         NODECOUNT /= 1.5;
         NODECOUNT = (int) (mju_max(2,NODECOUNT));
@@ -276,6 +287,8 @@ void control_key_event(traj_info_t* traj_info, int key, int mods)
             redo_pert(traj_info);
         else if(key == GLFW_KEY_S)
             timeline_export(traj_info, traj_info->timeline);
+        else if(key == GLFW_KEY_C)
+            control_collapse_timeline(traj_info);
     }
 
 }

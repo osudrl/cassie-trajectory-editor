@@ -21,6 +21,7 @@ typedef struct _full_traj_state_t_ full_traj_state_t;
 
 #include "timeline.h"
 
+void timeline_collapse(timeline_t* ref);
 void timeiline_init_from_input_file(traj_info_t* traj_info);
 timeline_t* timeline_duplicate(timeline_t* ref);
 void timeline_export_to_file(traj_info_t* traj_info, full_traj_state_t* fulls, int numframes);

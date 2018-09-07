@@ -266,6 +266,16 @@ timeline_t* timeline_noloop(timeline_t* ref)
     return dest;
 }
 
+void timeline_collapse(timeline_t* ref)
+{
+    int i;
+
+    for(i = 0; i < ref->numframes; i++)
+    {
+        ref->qposes[i].q[0] = 0;
+    }
+}
+
 timeline_t* timeline_duplicate(timeline_t* ref)
 {
     timeline_t* dest;

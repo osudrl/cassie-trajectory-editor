@@ -104,8 +104,9 @@ const char help2_title[] =
 "Increase Nodes\n"
 "Autoscale\n"
 "Reload\n"
-"Load Last Perturbation\n"
+"Collapse: (Walk in Place)\n"
 "Expand Current Pose\n"
+"Load Last Perturbation\n"
 "Save To File"
 ;
 
@@ -120,8 +121,9 @@ const char help2_content[] =
 "Equal (=)\n"
 "Ctrl A\n"
 "Ctrl L\n"
-"Ctrl P\n"
+"Ctrl C\n"
 "Ctrl E\n"
+"Ctrl P\n"
 "Ctrl S";
 
 char opt_title[1000] = "";
