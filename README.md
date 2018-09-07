@@ -262,7 +262,7 @@ node scale visually positional() | Shows a preview of the positional transformat
 **YES\*:** These functions leave the qposes in **some intermediate state** which needs to **be overwritten** with their previous, cached values (as done in `node position initial using cassie body()`) or with the poses from the timeline with a call to `timeline update mj poses from realtime()`.
 
 
-**YES\*\*:** These functions do modify the `d->qpos` values, but **reset the qposes** to their initial state before returning
+**YES\*\*:** These functions do modify the `d->qpos` values, but **reset the qposes** to their initial state before returning.
 
 
 
