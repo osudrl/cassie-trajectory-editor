@@ -259,6 +259,8 @@ node refine pert() | Refines the last perturbation to improve IK target accuracy
 node scale visually jointmove() | Calls `node position jointmove()` after calculating a transformation | **YES\*\*** | No
 node scale visually positional() | Shows a preview of the positional transformation while the user drags the nodes | **YES\*** | No
 
+\*These functions leave the qposes in some intermediate state which needs to be corrected or overwritten with their previous, cached values (as done in `node position initial using cassie body()`) or with the poses from the timeline with a call to `timeline update mj poses from realtime()`.
+
 
 
 
